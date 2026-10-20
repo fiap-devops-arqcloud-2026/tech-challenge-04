@@ -1,0 +1,220 @@
+
+<section id="plano">
+<h2>Plano de ação em etapas</h2>
+<p>Oito etapas em sequência, porque você implementa sozinho. A regra que organiza a ordem: <strong>tudo o que dá para provar sem cluster é provado antes de ligar o cluster.</strong> Cada hora de EKS gasta crédito da conta; cada hora no Compose não gasta nada. As marcas <span class="tag local">local</span> e <span class="tag aws">AWS</span> dizem onde a etapa roda.</p>
+
+<div class="step">
+<h3>E0 — Fundação <span class="tag local">local</span> <span class="tag aws">AWS só leitura</span></h3>
+<dl>
+<dt>Objetivo</dt><dd>Código no repositório certo, contas criadas, estado da AWS conhecido.</dd>
+<dt>Tarefas</dt><dd><ul>
+<li>Inventário somente leitura: clusters EKS, repositórios ECR, conteúdo do bucket de estado e <code>terraform state list</code> nas três camadas. Nada de <code>apply</code>.</li>
+<li>Trazer a Fase 3 para o 04 com histórico e trocar os pontos acoplados ao nome do repositório (ver <a href="#mudancas">inventário</a>).</li>
+<li>Criar as contas: New Relic (license key), PagerDuty (serviço com integração Events API v2), Slack (workspace, canal, webhook de entrada) e o token do GitHub.</li>
+<li>Conferir o crédito AWS restante e o fim do suporte padrão do EKS 1.34 na região.</li>
+</ul></dd>
+<dt>Pronto quando</dt><dd>O CI roda verde na <code>dev</code> do 04, as chaves estão guardadas fora do Git e você sabe o que existe na conta.</dd>
+<dt>Requisitos</dt><dd>prepara REQ-OBR-01 a 05, 12, 17 e 18</dd>
+</dl>
+</div>
+
+<div class="step">
+<h3>E1 — Instrumentação <span class="tag local">local</span></h3>
+<dl>
+<dt>Objetivo</dt><dd>Um trace com os cinco serviços, fila incluída, visível no New Relic — sem cluster.</dd>
+<dt>Tarefas</dt><dd><ul>
+<li>Go primeiro (<code>auth</code>, <code>evaluation</code>): é onde está o trabalho manual — contexto de ponta a ponta e span da SQS.</li>
+<li>Python depois (<code>flag</code>, <code>targeting</code>, <code>analytics</code>): instrumentação automática, mais o consumidor da fila.</li>
+<li>Um Collector local no Compose, exportando para o console e para o New Relic. O Compose de integração já emula SQS e DynamoDB com o moto.</li>
+</ul></dd>
+<dt>Pronto quando</dt><dd>Um <code>GET /evaluate</code> no Compose aparece no New Relic como um único trace passando pelos cinco serviços, e o Service Map mostra os cinco conectados.</dd>
+<dt>Requisitos</dt><dd>REQ-OBR-13, 14, 15, 21 · REQ-BON-02</dd>
+</dl>
+</div>
+
+<div class="step">
+<h3>E2 — Plataforma no cluster <span class="tag aws">AWS</span></h3>
+<dl>
+<dt>Objetivo</dt><dd>A base da Fase 3 rodando de novo, agora a partir do repositório 04, com capacidade para a stack nova.</dd>
+<dt>Tarefas</dt><dd><ul>
+<li>Terraform: terceiro nó, namespace <code>observability</code>, Secrets novos.</li>
+<li><code>apply</code> nas três camadas; merge <code>dev</code> → <code>main</code> para publicar as imagens instrumentadas.</li>
+</ul></dd>
+<dt>Pronto quando</dt><dd>Os cinco pods estão Running com as imagens novas e o ArgoCD mostra <em>Synced</em>.</dd>
+<dt>Requisitos</dt><dd>REQ-OBR-01 a 05</dd>
+</dl>
+</div>
+
+<div class="step">
+<h3>E3 — Stack de observabilidade por GitOps <span class="tag aws">AWS</span></h3>
+<dl>
+<dt>Objetivo</dt><dd>Prometheus, Loki, Grafana e as duas releases do Collector instaladas pelo ArgoCD a partir de <code>gitops/observability/</code>.</dd>
+<dt>Tarefas</dt><dd><ul>
+<li>As 4 Applications Helm e a Application <code>observability</code>; <code>enableRemoteWriteReceiver: true</code>; Alertmanager desligado.</li>
+<li>Variáveis <code>OTEL_*</code> nos ConfigMaps apontando para o gateway.</li>
+<li>Conferir: nome real da métrica do <code>spanmetrics</code>; HPA contra <code>selfHeal</code>; se a sincronização das CRDs do chart falhar, testar a opção <code>ServerSideApply=true</code> na Application.</li>
+</ul></dd>
+<dt>Pronto quando</dt><dd>O Prometheus tem as métricas do <code>spanmetrics</code>, o Loki tem logs de todos os namespaces e o New Relic recebe traces vindos do cluster.</dd>
+<dt>Requisitos</dt><dd>REQ-OBR-06, 07, 08, 09, 11, 20</dd>
+</dl>
+</div>
+
+<div class="step">
+<h3>E4 — Dashboard e alerta <span class="tag aws">AWS</span></h3>
+<dl>
+<dt>Objetivo</dt><dd>O dashboard com os três painéis e a regra de alerta chegando aos três destinos.</dd>
+<dt>Tarefas</dt><dd><ul>
+<li>Dashboard e regra como ConfigMaps versionados; contact points de PagerDuty, Slack e webhook; política de notificação agrupando por serviço.</li>
+<li>Decidir janela e duração (<code>for</code>) da regra.</li>
+</ul></dd>
+<dt>Pronto quando</dt><dd>Um erro provocado leva a regra a Firing, o PagerDuty abre incidente, o Slack recebe a mensagem e o GitHub recebe o <code>repository_dispatch</code>.</dd>
+<dt>Requisitos</dt><dd>REQ-OBR-10, 16, 17, 18</dd>
+</dl>
+</div>
+
+<div class="step">
+<h3>E5 — Self-Healing <span class="tag aws">AWS</span></h3>
+<dl>
+<dt>Objetivo</dt><dd>O ciclo completo sem intervenção humana.</dd>
+<dt>Tarefas</dt><dd><ul>
+<li>Role própria com confiança OIDC restrita ao repositório; access entry com <code>AmazonEKSEditPolicy</code> limitada ao namespace <code>togglemaster</code>.</li>
+<li>Workflow e script com filtro de <code>status</code>, allowlist e cooldown.</li>
+<li>O mecanismo da falha proposital (ver <a href="#duvidas">perguntas em aberto</a>).</li>
+</ul></dd>
+<dt>Pronto quando</dt><dd>O ciclo roda três vezes seguidas sem intervenção, e um segundo disparo dentro do cooldown é recusado.</dd>
+<dt>Requisitos</dt><dd>REQ-OBR-19, 22</dd>
+</dl>
+</div>
+
+<div class="step">
+<h3>E6 — Ensaio e matriz de evidências <span class="tag aws">AWS</span></h3>
+<dl>
+<dt>Objetivo</dt><dd>Provar que tudo funciona junto, em ordem, dentro de 25 minutos.</dd>
+<dt>Tarefas</dt><dd><ul>
+<li>Matriz de evidências (SUG-01): para cada REQ-OBR, a tela, o print e o minuto do vídeo que o comprova.</li>
+<li>Ensaio cronometrado seguindo a ordem da p. 5–6: infraestrutura, Grafana, APM, incidente.</li>
+</ul></dd>
+<dt>Pronto quando</dt><dd>O ensaio fecha abaixo de 25 minutos e nenhuma linha da matriz fica vazia.</dd>
+<dt>Requisitos</dt><dd>REQ-OBR-23</dd>
+</dl>
+</div>
+
+<div class="step">
+<h3>E7 — Gravação, relatório e entrega <span class="tag aws">AWS</span> <span class="tag local">local</span></h3>
+<dl>
+<dt>Objetivo</dt><dd>Vídeo, relatório PDF e submissão.</dd>
+<dt>Tarefas</dt><dd><ul>
+<li>Gravar; capturar os quatro prints obrigatórios; escrever o relatório (nomes, RMs, usernames, links, arquitetura OTel, justificativas das escolhas).</li>
+<li>Destruir as camadas caras assim que a gravação for aprovada.</li>
+</ul></dd>
+<dt>Pronto quando</dt><dd>Entrega submetida antes de 2026-11-17.</dd>
+<dt>Requisitos</dt><dd>REQ-OBR-24 a 42</dd>
+</dl>
+</div>
+
+<p>Os 42 obrigatórios estão cobertos: E0 e E2 cobrem 01–05; E1, 13–15 e 21; E3, 06–09, 11 e 20; E4, 10 e 16–18; E5, 19 e 22; E6, 23; E7, 24–42 — este último grupo inclui o que só existe na gravação e no relatório.</p>
+</section>
+
+<section id="calendario">
+<h2>Calendário sugerido</h2>
+<p>Proposta para 55 dias, trabalhando sozinho. As três primeiras semanas não ligam o cluster. A meta de submissão é <strong>2026-11-12</strong>, cinco dias antes do prazo, para absorver uma regravação.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>Semana</th><th>Datas</th><th>Etapa</th><th>Cluster</th><th>Marco de fim de semana</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>2026-09-23 a 09-27</td><td>E0</td><td>desligado</td><td>repositório 04 com CI verde; contas criadas</td></tr>
+<tr><td>2</td><td>09-28 a 10-04</td><td>E1 — Go</td><td>desligado</td><td><code>evaluation</code> e <code>auth</code> no New Relic, fila instrumentada</td></tr>
+<tr><td>3</td><td>10-05 a 10-11</td><td>E1 — Python</td><td>desligado</td><td>trace com os 5 serviços no Service Map</td></tr>
+<tr><td>4</td><td>10-12 a 10-18</td><td>E2 + E3</td><td>sessões</td><td>stack no cluster recebendo os três sinais</td></tr>
+<tr><td>5</td><td>10-19 a 10-25</td><td>E4 + início da E5</td><td>sessões</td><td>alerta chegando a PagerDuty, Slack e GitHub</td></tr>
+<tr><td>6</td><td>10-26 a 11-01</td><td>E5</td><td>sessões</td><td>ciclo de self-healing três vezes seguidas</td></tr>
+<tr><td>7</td><td>11-02 a 11-08</td><td>E6 + gravação</td><td>sessões</td><td>vídeo gravado</td></tr>
+<tr><td>8</td><td>11-09 a 11-17</td><td>E7</td><td>só se regravar</td><td>submissão até 11-12; folga até 11-17</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="custos">
+<h2>Custo</h2>
+<p>Base: a estimativa oficial da Fase 3 (AWS Pricing Calculator, us-east-2, consultada em 2026-09-11), arquivada em <code>tech-challenge-03/docs/00_COLAB_IA/_ARQUIVO_MORTO/ESTIMATIVA_CUSTOS_AWS.md</code>.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>Item</th><th>Valor</th><th>Conta</th></tr></thead>
+<tbody>
+<tr><td>Tudo ligado, 2 nós</td><td>≈ US$ 0,385/h</td><td>US$ 281,03 por mês ÷ 730 h</td></tr>
+<tr><td>Terceiro nó <code>c7i-flex.large</code></td><td>≈ US$ 0,087/h</td><td>US$ 126,99 dos 2 nós ÷ 2 ÷ 730 h</td></tr>
+<tr><td>Tudo ligado, 3 nós</td><td>≈ US$ 0,47/h</td><td>soma das duas linhas</td></tr>
+<tr><td>New Relic, PagerDuty, Slack</td><td>US$ 0</td><td>planos gratuitos</td></tr>
+</tbody></table></div>
+<p>A estimativa não inclui S3, ECR, SQS, DynamoDB, transferência de dados nem os volumes novos que Prometheus e Loki vão pedir. Preços podem ter mudado depois de 2026-09-11. Exemplo de conta, não previsão: 10 sessões de 4 horas somam 40 h, cerca de US$ 19.</p>
+<div class="warn">
+<p><strong>O recurso escasso é o crédito, não o dinheiro.</strong> A descrição de <code>kubernetes_version</code> em <code>terraform/cluster/variables.tf</code> registra que, em 2026-09-09, o crédito da conta cobria cerca de 190 horas a US$ 0,385/h. Com 3 nós, a mesma quantia rende menos horas, e as gravações da Fase 3 já consumiram parte. Quanto sobrou é a pergunta 1 abaixo.</p>
+<p>O mesmo registro mostra que o EKS 1.34 está em suporte padrão até <strong>2026-12-01</strong> (consulta de 2026-09-09) — depois da entrega de 2026-11-17, mas perto. Fora do suporte padrão, o plano de controle sobe de US$ 0,10/h para US$ 0,60/h. Reconfirmar na E0 com o comando do guia de reprodução da Fase 3.</p>
+</div>
+</section>
+
+<section id="riscos">
+<h2>Riscos e pontos a conferir</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>Risco</th><th>Efeito</th><th>Mitigação</th><th>Etapa</th></tr></thead>
+<tbody>
+<tr><td>Crédito AWS insuficiente</td><td>cluster não sobe na hora da gravação</td><td>medir o crédito na E0; ligar o cluster só a partir da semana 4; destruir as camadas caras entre sessões</td><td>E0</td></tr>
+<tr><td>Cluster sem capacidade</td><td>pods em <em>Pending</em></td><td>terceiro nó; Alertmanager desligado; <code>requests</code> revisados. O node group já permite até 4 nós (<code>node_group_max_size</code>); conferir a cota de vCPU On-Demand, que o guia da Fase 3 pede que seja 8 ou mais</td><td>E2 · E3</td></tr>
+<tr><td>HPA contra <code>selfHeal</code></td><td>ArgoCD desfaz o escalonamento</td><td><code>ignoreDifferences</code> em <code>/spec/replicas</code></td><td>E3</td></tr>
+<tr><td>gunicorn e <code>fork</code></td><td>serviços Python sem traces ou travados</td><td>testar no Compose; hook <code>post_fork</code> se necessário</td><td>E1</td></tr>
+<tr><td>Nome da métrica do <code>spanmetrics</code></td><td>painel e alerta sem dados</td><td>ler o nome no Prometheus antes de escrever as consultas</td><td>E3</td></tr>
+<tr><td>Webhook manda também <code>resolved</code></td><td>segundo reinício no fim do incidente</td><td>o workflow ignora <code>status: resolved</code></td><td>E5</td></tr>
+<tr><td>Token do GitHub no Grafana</td><td>quem vê o Secret escreve no repositório</td><td>escopo mínimo, Secret criado pelo Terraform, revogar depois da entrega</td><td>E4 · E5</td></tr>
+<tr><td>Cota de 100 GB do New Relic</td><td>ingestão bloqueada até o mês virar</td><td>só traces e logs do <code>togglemaster</code> vão para o New Relic</td><td>E3</td></tr>
+<tr><td>Cache de 30 s</td><td>a falha demora a aparecer na gravação</td><td>gerador de carga variando as flags</td><td>E5 · E6</td></tr>
+<tr><td>Estado do Terraform compartilhado entre 03 e 04</td><td>dois repositórios mexendo nos mesmos recursos</td><td>decidir no inventário; nunca mais aplicar a partir do 03</td><td>E0</td></tr>
+<tr><td>Grupo × implementação solo</td><td>dedução se a entrega em grupo for exigida (REQ-OBR-41)</td><td>confirmar a composição antes do relatório</td><td>E7</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="duvidas">
+<h2>Perguntas em aberto</h2>
+<p>Coisas que o código e o enunciado não respondem. Nenhuma bloqueia a E0 ou a E1.</p>
+<div class="card">
+<ol>
+<li><strong>Quanto crédito AWS resta?</strong> Aparece em Billing → Credits. Define quantas horas de cluster o plano pode gastar.</li>
+<li><strong>Estado do Terraform depois da migração:</strong> o 04 assume o mesmo bucket e as mesmas chaves, ou começa em chaves novas? Depende do inventário da E0 — se a base da Fase 3 ainda existe, chaves novas colidiriam nos nomes dos repositórios ECR.</li>
+<li><strong>Qual falha provocar no vídeo?</strong> (a) Um endpoint administrativo no <code>flag</code> que liga um estado de erro só na memória: o reinício cura de verdade. (b) Parar o banco do <code>flag</code>, exemplo da p. 6: mostra a tentativa, mas o reinício não resolve. (c) Outra ideia sua.</li>
+<li><strong>Qual serviço o self-healing reinicia?</strong> Uma falha no <code>flag</code> gera erro no <code>flag</code> (500) e no <code>evaluation</code> (502), e a regra por serviço dispara para os dois. A allowlist define se o workflow reinicia só a origem ou ambos.</li>
+<li><strong>O grupo continua?</strong> Você implementa sozinho, mas o relatório pede nomes, RMs e usernames (REQ-OBR-33) e o PDF diz "em princípio" em grupo (Q-03).</li>
+<li><strong>Grafana, Prometheus e Loki também no Compose?</strong> Mais trabalho na semana 3, menos horas de cluster nas semanas 4 e 5 para desenhar o dashboard.</li>
+<li><strong>Registrar o prazo no README de requisitos?</strong> A dúvida Q-05 diz que o PDF não informa data; posso anotar que você informou 2026-11-17, deixando claro que a fonte é você, não o enunciado.</li>
+</ol>
+</div>
+</section>
+
+<section id="fontes">
+<h2>Fontes</h2>
+<h3>Código e registros (lidos em 2026-09-23)</h3>
+<ul>
+<li><code>tech-challenge-03/.github/workflows/</code>: <code>_ci-go.yml</code>, <code>_ci-python.yml</code>, <code>evaluation-service.yml</code>, <code>terraform-check.yml</code>, <code>compose-integration.yml</code></li>
+<li><code>tech-challenge-03/terraform/</code>: <code>variables.tf</code>, <code>backend.tf</code>, <code>cluster/variables.tf</code>, <code>k8s/argocd.tf</code>, <code>k8s/variables.tf</code>, <code>k8s/secrets.tf</code>, <code>modules/iam-ci/main.tf</code>, <code>modules/eks/main.tf</code></li>
+<li><code>tech-challenge-03/gitops/</code>: <code>base/kustomization.yaml</code>, <code>base/evaluation-service/*.yaml</code>, <code>overlays/prod/kustomization.yaml</code>, <code>SECRETS-CONTRATO.md</code></li>
+<li><code>tech-challenge-03/services/</code>: os cinco <code>Dockerfile</code>, <code>requirements.txt</code> e <code>go.mod</code>; <code>evaluation-service/main.go</code>, <code>handlers.go</code>, <code>evaluator.go</code>, <code>sqs.go</code>; <code>auth-service/main.go</code>; os três <code>app.py</code></li>
+<li><code>tech-challenge-03/docker-compose.yaml</code> e <code>docker-compose.integration.yaml</code></li>
+<li><code>tech-challenge-03/docs/</code>: <code>ARQUITETURA.md</code>, <code>GUIA_DE_REPRODUCAO.md</code>, <code>00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md</code>, <code>00_COLAB_IA/_ARQUIVO_MORTO/ESTIMATIVA_CUSTOS_AWS.md</code></li>
+<li><code>tech-challenge-04/docs/requisitos/README.md</code> e o guia de Automação de incidentes (Aulas 2 e 4)</li>
+</ul>
+<h3>Documentação externa</h3>
+<ul>
+<li>New Relic — <a href="https://newrelic.com/pricing">preços</a> e <a href="https://docs.newrelic.com/docs/opentelemetry/best-practices/opentelemetry-otlp/">endpoint OTLP</a> (2026-09-21); <a href="https://docs.newrelic.com/docs/opentelemetry/get-started/apm-monitoring/opentelemetry-apm-ui/">telas de APM para OpenTelemetry</a> (2026-09-23)</li>
+<li>Datadog — <a href="https://www.datadoghq.com/pricing/">preços</a> e <a href="https://telemtra.io/blog/datadog-pricing-explained-2026/">comparativo do plano gratuito</a> (2026-09-21)</li>
+<li>PagerDuty — <a href="https://www.pagerduty.com/pricing/">preços</a> (2026-09-21)</li>
+<li>Grafana Loki — <a href="https://grafana.com/docs/loki/latest/send-data/otel/">ingestão OTLP</a> (2026-09-23)</li>
+<li>Grafana — <a href="https://grafana.com/docs/grafana/latest/alerting/configure-notifications/manage-contact-points/integrations/webhook-notifier/">contact point de webhook</a> (2026-09-23)</li>
+<li>OpenTelemetry — <a href="https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/connector/spanmetricsconnector">conector spanmetrics</a>, <a href="https://opentelemetry-python.readthedocs.io/en/latest/examples/fork-process-model/README.html">Python com fork</a>, <a href="https://github.com/open-telemetry/opentelemetry-go-contrib/tree/main/instrumentation/github.com/aws">instrumentações AWS para Go</a>, <a href="https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/instrumentation/opentelemetry-instrumentation-psycopg2">instrumentação psycopg2</a> e o chart <a href="https://github.com/open-telemetry/opentelemetry-helm-charts/tree/main/charts/opentelemetry-collector">opentelemetry-collector</a> 0.173.1 (2026-09-23)</li>
+<li>Prometheus Community — <a href="https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack">kube-prometheus-stack</a> 91.5.0, <code>values.yaml</code> (2026-09-23)</li>
+<li>Argo CD — <a href="https://argo-cd.readthedocs.io/en/stable/user-guide/diffing/">customização de diff</a> (2026-09-23)</li>
+<li>GitHub — <a href="https://docs.github.com/en/rest/repos/repos#create-a-repository-dispatch-event">repository dispatch</a> (2026-09-23)</li>
+<li>AWS — <a href="https://docs.aws.amazon.com/eks/latest/userguide/access-policies.html">access policies do EKS</a> (2026-09-23)</li>
+<li>Go — <a href="https://github.com/XSAM/otelsql">otelsql</a> e <a href="https://github.com/go-redis/redis/tree/v8/extra/redisotel">redisotel para go-redis v8</a> (2026-09-23)</li>
+<li>Atlassian — fim da venda do OpsGenie, achado F-008 (2026-09-20)</li>
+</ul>
+</section>
+
+<p class="meta">Arquivo de trabalho em <code>00_COLAB_IA/02_TRABALHO/</code>. Substitui o plano v01 de 2026-09-21 (Markdown), movido para <code>_ARQUIVO_MORTO</code>. Montado a partir de <code>plano-fase4/partes/</code>.</p>
+</div>
+</body>
+</html>

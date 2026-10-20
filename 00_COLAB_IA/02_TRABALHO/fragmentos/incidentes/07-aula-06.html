@@ -1,0 +1,235 @@
+<section id="aula-06"><h2>Aula 6 — Runbook Automation: Automação com Functions</h2><div class="section-rule"></div><article class="lesson"><div class="lesson-head"><span class="num">06</span><div><h3>Runbook Automation — Automação com Functions</h3><span class="badge ok">Essencial no projeto</span></div></div><p><a class="badge obrigatorio" href="../../requisitos/REQUISITOS.html#req-obr-19">OBRIGATÓRIO · REQ-OBR-19</a><a class="badge obrigatorio" href="../../requisitos/REQUISITOS.html#req-obr-22">OBRIGATÓRIO · REQ-OBR-22</a><a class="badge obrigatorio" href="../../requisitos/REQUISITOS.html#req-obr-31">OBRIGATÓRIO · REQ-OBR-31</a><a class="badge obrigatorio" href="../../requisitos/REQUISITOS.html#req-obr-38">OBRIGATÓRIO · REQ-OBR-38</a><a class="badge sugestao" href="../../requisitos/REQUISITOS.html#sug-04">SUGESTÃO · SUG-04</a></p><dl class="facets"><div><dt>Em miúdos</dt><dd>Transformar um procedimento em programa permite executá-lo quando um evento acontece. O programa também precisa saber quando parar e como verificar o resultado.</dd></div><div><dt>Siglas e termos</dt><dd>Function, Lambda, boto3, CloudWatch, ASG, rollback, RCA.</dd></div><div><dt>Para que serve</dt><dd>Automatizar diagnóstico e ações conhecidas, com evidências de cada execução.</dd></div><div><dt>Caso de uso</dt><dd>A aula usa um serviço de pagamentos, métricas/logs AWS e um Auto Scaling Group; depois apresenta aprovação, análise e predição simuladas.</dd></div><div><dt>Na Fase 4</dt><dd>Estudar as funções necessárias ao runbook; implementar integração real ao alerta e entregar seus scripts. O exemplo de ASG não equivale ao Deployment Kubernetes do projeto.</dd></div></dl><p class="source">Fonte: <a href="POSTECH%20-%20Automacao%20de%20Incidentes%20-%20Aula%206.pdf#page=3">Automação de incidentes — Aula 6, p. 3–13</a>.</p><h4>Cinco camadas, com capacidades diferentes</h4><div class="tablewrap"><table><thead><tr><th scope="col">Camada</th><th scope="col">Intenção da aula</th><th scope="col">O que o exemplo efetivamente contém</th></tr></thead><tbody><tr><td>Diagnóstico</td><td>Coletar contexto automaticamente.</td><td>Chamadas CloudWatch/Logs e retorno de dados.</td></tr><tr><td>Mitigação</td><td>Agir e verificar recuperação.</td><td>Altera capacidade de ASG, mas validação/saúde retornam True fixo.</td></tr><tr><td>Remediação com aprovação</td><td>Decidir e executar ação autorizada.</td><td>Simulação por espera e mensagens em print.</td></tr><tr><td>Causa raiz</td><td>Correlacionar dados e encaminhar correções.</td><td>Pontuações constantes e mensagens simulando integrações.</td></tr><tr><td>Predição</td><td>Antecipar degradação e agir.</td><td>Listas fixas, projeções matemáticas e ação somente impressa.</td></tr></tbody></table></div><p class="source">Fonte: <a href="POSTECH%20-%20Automacao%20de%20Incidentes%20-%20Aula%206.pdf#page=5">Automação de incidentes — Aula 6, p. 5–13</a>.</p><aside class="warning"><strong>Leitura de código, sem execução</strong> Os cinco blocos abaixo preservam o conteúdo da aula. Quebras causadas pela largura da página foram normalizadas, mantendo tokens e indentação lógica. A presença de chamadas AWS reais e funções simuladas no mesmo exemplo exige distinguir intenção didática de comportamento implementado. Nenhum destes blocos foi executado.</aside><h4>Código-fonte 1 — Diagnóstico</h4><figure class="code-example"><figcaption>Aula 6, p. 5–6 · transcrição conferida nas páginas renderizadas; quebras de linha da diagramação normalizadas; tokens preservados</figcaption><pre><code>import json
+import boto3
+from datetime import datetime, timedelta
+
+cloudwatch = boto3.client(&#x27;cloudwatch&#x27;)
+logs = boto3.client(&#x27;logs&#x27;)
+
+def lambda_handler(event, context):
+    &quot;&quot;&quot;Coleta dados de diagnóstico para Taxa de Erro Alta&quot;&quot;&quot;
+    try:
+        incident_data = json.loads(event[&#x27;body&#x27;])
+        service_name = incident_data[&#x27;incident&#x27;][&#x27;service&#x27;][&#x27;summary&#x27;]
+
+        # Coleta: Métricas de Taxa de Erro
+        error_rate = cloudwatch.get_metric_statistics(
+            Namespace=&#x27;PaymentService&#x27;,
+            MetricName=&#x27;ErrorRate&#x27;,
+            Dimensions=[{&#x27;Name&#x27;: &#x27;ServiceName&#x27;, &#x27;Value&#x27;: service_name}],
+            StartTime=datetime.utcnow() - timedelta(minutes=5),
+            EndTime=datetime.utcnow(),
+            Period=60,
+            Statistics=[&#x27;Average&#x27;]
+        )
+
+        # Coleta: Últimos logs de erro
+        error_logs = logs.filter_log_events(
+            logGroupName=f&#x27;/aws/lambda/{service_name}&#x27;,
+            filterPattern=&#x27;[ERROR]&#x27;,
+            limit=10
+        )
+
+        # Consolidar dados
+        diagnostic_data = {
+            &#x27;timestamp&#x27;: datetime.utcnow().isoformat(),
+            &#x27;service&#x27;: service_name,
+            &#x27;error_rate&#x27;: error_rate[&#x27;Datapoints&#x27;],
+            &#x27;recent_errors&#x27;: [e[&#x27;message&#x27;] for e in error_logs[&#x27;events&#x27;]]
+        }
+
+        return {&#x27;statusCode&#x27;: 200, &#x27;body&#x27;: json.dumps(diagnostic_data)}
+    except Exception as e:
+        return {&#x27;statusCode&#x27;: 500, &#x27;body&#x27;: json.dumps({&#x27;error&#x27;: str(e)})}</code></pre><p>Lê o corpo do evento, identifica o serviço, consulta média de ErrorRate em janela de cinco minutos e busca até dez eventos de log. Consolida os dados e retorna JSON. O trecho não envia esses dados ao PagerDuty, apesar de a descrição mencionar enriquecimento do incidente.</p></figure><p class="source">Fonte: <a href="POSTECH%20-%20Automacao%20de%20Incidentes%20-%20Aula%206.pdf#page=5">Automação de incidentes — Aula 6, p. 5–6</a>.</p><aside class="complemento"><strong>📘 Complemento — elaboração didática do Codex</strong><p><strong>Leitura crítica:</strong> o nome do grupo de logs é de Lambda e o namespace da métrica é PaymentService; eles não se tornam válidos no Kubernetes apenas por copiar o código. A serialização de valores de data nos Datapoints também precisa ser tratada numa adaptação real. O código original foi mantido.</p></aside><h4>Código-fonte 2 — Mitigação automática</h4><figure class="code-example"><figcaption>Aula 6, p. 7–8 · transcrição conferida nas páginas renderizadas; quebras de linha da diagramação normalizadas; tokens preservados</figcaption><pre><code>import boto3
+import time
+
+autoscaling = boto3.client(&#x27;autoscaling&#x27;)
+cloudwatch = boto3.client(&#x27;cloudwatch&#x27;)
+
+def lambda_handler(event, context):
+    &quot;&quot;&quot;Executa mitigação automática: escalar o serviço&quot;&quot;&quot;
+    try:
+        service_name = event[&#x27;service&#x27;]
+
+        # Validação: Verificar se é seguro escalar
+        if not validate_mitigation(service_name):
+            return {&#x27;statusCode&#x27;: 400, &#x27;body&#x27;: &#x27;Validação falhou&#x27;}
+
+        # Executar: Escalar o serviço
+        autoscaling.set_desired_capacity(
+            AutoScalingGroupName=f&#x27;{service_name}-asg&#x27;,
+            DesiredCapacity=5
+        )
+
+        # Monitorar: Aguardar 30 segundos
+        time.sleep(30)
+
+        # Verificar: Se resolvido, sucesso; senão, rollback
+        if is_resolved(service_name):
+            return {&#x27;statusCode&#x27;: 200, &#x27;body&#x27;: &#x27;Resolvido automaticamente&#x27;}
+        else:
+            rollback_mitigation(service_name)
+            return {&#x27;statusCode&#x27;: 206, &#x27;body&#x27;: &#x27;Escalar para humano&#x27;}
+    except Exception as e:
+        return {&#x27;statusCode&#x27;: 500, &#x27;body&#x27;: json.dumps({&#x27;error&#x27;: str(e)})}
+
+def validate_mitigation(service_name):
+    &quot;&quot;&quot;Valida se é seguro executar mitigação&quot;&quot;&quot;
+    # Verificar: múltiplas instâncias, sem manutenção, capacidade disponível
+    return True
+
+def is_resolved(service_name):
+    &quot;&quot;&quot;Verifica se taxa de erro voltou ao normal&quot;&quot;&quot;
+    # Obter métrica atual e comparar com limiar
+    return True
+
+def rollback_mitigation(service_name):
+    &quot;&quot;&quot;Desfaz a mitigação se não funcionou&quot;&quot;&quot;
+    autoscaling.set_desired_capacity(
+        AutoScalingGroupName=f&#x27;{service_name}-asg&#x27;,
+        DesiredCapacity=3
+    )</code></pre><p>Solicita capacidade 5 no ASG, aguarda 30 segundos e consulta is_resolved. O rollback definido coloca capacidade 3. Os valores pertencem ao exemplo e não são dimensionamento do ToggleMaster.</p></figure><p class="source">Fonte: <a href="POSTECH%20-%20Automacao%20de%20Incidentes%20-%20Aula%206.pdf#page=7">Automação de incidentes — Aula 6, p. 7–8</a>.</p><aside class="note"><strong>INC-A06-01 · [INCERTO] no material</strong>validate_mitigation e is_resolved não executam as validações prometidas: ambas devolvem True. O bloco usa json.dumps no tratamento de erro sem importar json. O rollback fixa 3, sem consultar a capacidade anterior. Não interpretar o retorno “Resolvido automaticamente” como prova de recuperação.</aside><h4>Código-fonte 3 — Remediação com aprovação</h4><figure class="code-example"><figcaption>Aula 6, p. 8–9 · transcrição conferida nas páginas renderizadas; quebras de linha da diagramação normalizadas; tokens preservados</figcaption><pre><code>import json
+import time
+from datetime import datetime, timedelta
+
+def lambda_handler(event, context):
+    &quot;&quot;&quot;Remediação com aprovação: rollback de deployment&quot;&quot;&quot;
+    try:
+        service_name = event[&#x27;service&#x27;]
+
+        # Análise: Detectar deployment recente
+        deployment = get_recent_deployment(service_name)
+        if deployment and deployment[&#x27;minutes_ago&#x27;] &lt; 15:
+            # Solicitar aprovação
+            request_approval(service_name, deployment)
+
+            # Aguardar aprovação (timeout: 5 minutos)
+            if wait_for_approval(timeout_minutes=5):
+                execute_rollback(service_name, deployment)
+                return {&#x27;statusCode&#x27;: 200, &#x27;body&#x27;: &#x27;Rollback executado&#x27;}
+
+        return {&#x27;statusCode&#x27;: 200, &#x27;body&#x27;: &#x27;Nenhuma ação necessária&#x27;}
+    except Exception as e:
+        return {&#x27;statusCode&#x27;: 500, &#x27;body&#x27;: json.dumps({&#x27;error&#x27;: str(e)})}
+
+def get_recent_deployment(service_name):
+    return {&#x27;commit&#x27;: &#x27;abc123&#x27;, &#x27;minutes_ago&#x27;: 7}
+
+def request_approval(service_name, deployment):
+    print(f&quot;[SLACK] Solicitando aprovação para rollback de {deployment[&#x27;commit&#x27;]}&quot;)
+
+def wait_for_approval(timeout_minutes=5):
+    time.sleep(5)  # Simular espera
+    return True
+
+def execute_rollback(service_name, deployment):
+    print(f&quot;[AÇÃO] Fazendo rollback para {deployment[&#x27;commit&#x27;]}&quot;)</code></pre><p>Procura um deployment recente; no exemplo, a consulta devolve um dicionário constante. A solicitação e o rollback são prints. wait_for_approval simula a espera e sempre retorna True.</p></figure><p class="source">Fonte: <a href="POSTECH%20-%20Automacao%20de%20Incidentes%20-%20Aula%206.pdf#page=8">Automação de incidentes — Aula 6, p. 8–9</a>.</p><aside class="note"><strong>INC-A06-02 · [INCERTO] no material</strong>O texto da p.8 afirma execução após timeout mesmo sem aprovação, mas o código p.9 só chama rollback se wait_for_approval for verdadeiro; esta função espera cinco segundos e retorna True. Não existe aprovação humana real nem timeout de cinco minutos implementado.</aside><aside class="complemento"><strong>📘 Complemento — elaboração didática do Codex</strong><p><strong>Regra para uma implementação real:</strong> silêncio ou timeout não é aprovação. Separe ações previamente autorizadas para execução automática das ações que exigem decisão humana. A tentativa automática de mitigação exigida na Fase 4 pode ser limitada a um procedimento específico; a simulação acima não demonstra esse requisito.</p></aside><h4>Código-fonte 4 — Análise de causa raiz</h4><figure class="code-example"><figcaption>Aula 6, p. 9–11 · transcrição conferida nas páginas renderizadas; quebras de linha da diagramação normalizadas; tokens preservados</figcaption><pre><code>import json
+
+def lambda_handler(event, context):
+    &quot;&quot;&quot;Análise de causa raiz após incidente resolvido&quot;&quot;&quot;
+    try:
+        service_name = event[&#x27;service&#x27;]
+
+        # Análise 1: Correlação com deployment
+        deployment_score = analyze_deployment(service_name)
+        # Análise 2: Correlação com mudanças de config
+        config_score = analyze_config_changes(service_name)
+        # Análise 3: Padrões em logs
+        log_score = analyze_log_patterns(service_name)
+
+        # Determinar causa provável
+        analyses = [deployment_score, config_score, log_score]
+        probable_cause = max(analyses, key=lambda x: x[&#x27;score&#x27;])
+
+        # Criar ticket para correção
+        create_jira_ticket(service_name, probable_cause)
+        # Notificar team
+        notify_team(service_name, probable_cause)
+
+        return {&#x27;statusCode&#x27;: 200, &#x27;body&#x27;: &#x27;Análise completa&#x27;}
+    except Exception as e:
+        return {&#x27;statusCode&#x27;: 500, &#x27;body&#x27;: json.dumps({&#x27;error&#x27;: str(e)})}
+
+def analyze_deployment(service_name):
+    return {&#x27;type&#x27;: &#x27;deployment&#x27;, &#x27;score&#x27;: 0.95, &#x27;recommendation&#x27;: &#x27;Rollback&#x27;}
+
+def analyze_config_changes(service_name):
+    return {&#x27;type&#x27;: &#x27;config&#x27;, &#x27;score&#x27;: 0.7, &#x27;recommendation&#x27;: &#x27;Revisar mudança&#x27;}
+
+def analyze_log_patterns(service_name):
+    return {&#x27;type&#x27;: &#x27;logs&#x27;, &#x27;score&#x27;: 0.8, &#x27;recommendation&#x27;: &#x27;Otimizar queries&#x27;}
+
+def create_jira_ticket(service_name, analysis):
+    print(f&quot;[JIRA] Criando ticket: {analysis[&#x27;recommendation&#x27;]}&quot;)
+
+def notify_team(service_name, analysis):
+    print(f&quot;[SLACK] Causa provável: {analysis[&#x27;recommendation&#x27;]}&quot;)</code></pre><p>Compara três escores e escolhe o maior. Os escores são fixos; os nomes das funções descrevem a integração desejada, mas a criação do ticket e a notificação apenas imprimem mensagens.</p></figure><p class="source">Fonte: <a href="POSTECH%20-%20Automacao%20de%20Incidentes%20-%20Aula%206.pdf#page=9">Automação de incidentes — Aula 6, p. 9–11</a>.</p><h4>Código-fonte 5 — Detecção preditiva</h4><figure class="code-example"><figcaption>Aula 6, p. 11–13 · transcrição conferida nas páginas renderizadas; quebras de linha da diagramação normalizadas; tokens preservados</figcaption><pre><code>import math
+
+def lambda_handler(event, context):
+    &quot;&quot;&quot;Monitoramento preditivo: prevenir incidentes&quot;&quot;&quot;
+    try:
+        services = [&#x27;payment-service&#x27;, &#x27;auth-service&#x27;]
+
+        for service in services:
+            # Predição 1: Vazamento de memória?
+            memory = predict_memory_issue(service)
+            if memory[&#x27;will_fail&#x27;]:
+                take_preventive_action(service, &#x27;scale_up&#x27;)
+
+            # Predição 2: Latência aumentando?
+            latency = predict_latency_issue(service)
+            if latency[&#x27;will_violate_slo&#x27;]:
+                take_preventive_action(service, &#x27;scale_up&#x27;)
+
+            # Predição 3: Taxa de erro aumentando?
+            errors = predict_error_increase(service)
+            if errors[&#x27;will_exceed&#x27;]:
+                take_preventive_action(service, &#x27;alert&#x27;)
+
+        return {&#x27;statusCode&#x27;: 200, &#x27;body&#x27;: &#x27;Monitoramento preditivo completo&#x27;}
+    except Exception as e:
+        return {&#x27;statusCode&#x27;: 500, &#x27;body&#x27;: json.dumps({&#x27;error&#x27;: str(e)})}
+
+def predict_memory_issue(service_name):
+    &quot;&quot;&quot;Prediz vazamento de memória usando tendência exponencial&quot;&quot;&quot;
+    history = [50, 55, 60, 66, 73]  # Exemplo: crescimento exponencial
+    growth_rate = calculate_growth_rate(history)
+    projected = history[-1] * (1 + growth_rate) ** 5
+    return {
+        &#x27;will_fail&#x27;: projected &gt; 95,
+        &#x27;current&#x27;: history[-1],
+        &#x27;projected&#x27;: projected,
+        &#x27;hours_until_failure&#x27;: 5 if projected &gt; 95 else None
+    }
+
+def predict_latency_issue(service_name):
+    &quot;&quot;&quot;Prediz violação de SLO de latência&quot;&quot;&quot;
+    history = [100, 110, 120, 130, 140]  # Crescimento linear
+    projected = history[-1] + (history[-1] - history[0]) / len(history)
+    return {
+        &#x27;will_violate_slo&#x27;: projected &gt; 200,
+        &#x27;current&#x27;: history[-1],
+        &#x27;projected&#x27;: projected,
+        &#x27;slo_threshold&#x27;: 200
+    }
+
+def predict_error_increase(service_name):
+    &quot;&quot;&quot;Prediz aumento de taxa de erro&quot;&quot;&quot;
+    history = [1.0, 1.5, 2.0, 2.5, 3.0]
+    projected = history[-1] + (history[-1] - history[0]) / len(history)
+    return {
+        &#x27;will_exceed&#x27;: projected &gt; 5,
+        &#x27;current&#x27;: history[-1],
+        &#x27;projected&#x27;: projected,
+        &#x27;threshold&#x27;: 5
+    }
+
+def calculate_growth_rate(history):
+    &quot;&quot;&quot;Calcula taxa de crescimento exponencial&quot;&quot;&quot;
+    if len(history) &lt; 2:
+        return 0
+    log_history = [math.log(max(h, 0.1)) for h in history]
+    growth = (log_history[-1] - log_history[0]) / (len(history) - 1)
+    return math.exp(growth) - 1
+
+def take_preventive_action(service_name, action):
+    print(f&quot;[PREVENÇÃO] Executando {action} em {service_name}&quot;)</code></pre><p>Calcula projeções a partir de listas definidas no código. Compara memória, latência e erros com limiares do exemplo e chama uma função que imprime a ação. Não coleta telemetria real nem efetua escalonamento.</p></figure><p class="source">Fonte: <a href="POSTECH%20-%20Automacao%20de%20Incidentes%20-%20Aula%206.pdf#page=11">Automação de incidentes — Aula 6, p. 11–13</a>.</p><aside class="note"><strong>INC-A06-03 · [INCERTO] no material</strong>Os códigos 4 e 5 são simulações de análise/integração. No código 5 falta import json no ramo de exceção. Os históricos não documentam a duração entre amostras; “hours_until_failure” não comprova horizonte real. Os percentuais de sucesso/redução apresentados ao lado dos códigos não decorrem de testes exibidos nestes PDFs.</aside><p><strong>Para memorizar:</strong> função com nome de validação precisa validar; print não envia mensagem; escalar capacidade não comprova resolução; código demonstrativo não é evidência de operação.</p></article></section>
