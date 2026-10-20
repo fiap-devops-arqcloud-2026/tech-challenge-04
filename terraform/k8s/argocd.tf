@@ -15,6 +15,8 @@
 #      diferenca no cluster.
 #
 # O passo 5 e este arquivo. Do 1 ao 4 e .github/workflows/.
+# Fase 4 (2026-10-20): destino tech-challenge-04/main e publicacao
+# futura. O trabalho atual esta somente na dev e nao houve deploy.
 # ============================================================
 
 # ------------------------------------------------------------
@@ -34,8 +36,8 @@ resource "kubernetes_namespace_v1" "argocd" {
 # ------------------------------------------------------------
 # BLOCO 2 - CREDENCIAL DE LEITURA DO REPOSITORIO
 # ------------------------------------------------------------
-# O repositorio do grupo e PRIVADO ate a entrega (F-014). Repositorio
-# privado exige credencial: sem ela o ArgoCD falha ao clonar com
+# Se o repositorio 04 for privado, ele exige credencial de leitura
+# especifica para o 04: sem ela o ArgoCD falha ao clonar com
 # "authentication required" e a Application nunca sai de Unknown.
 #
 # O ArgoCD descobre credenciais lendo Secrets do proprio namespace que
@@ -52,7 +54,7 @@ resource "kubernetes_secret_v1" "argocd_repo" {
   count = var.github_token != "" ? 1 : 0
 
   metadata {
-    name      = "repo-tech-challenge-03"
+    name      = "repo-tech-challenge-04"
     namespace = kubernetes_namespace_v1.argocd.metadata[0].name
 
     labels = {

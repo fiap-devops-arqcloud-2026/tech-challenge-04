@@ -9,12 +9,13 @@ Uso: python -X utf8 mapear-modulos-readme-2026-09-20_v01.py [--conferir]
 Autor: Claude (Opus 5), 2026-09-20.
 """
 from pathlib import Path
+from fontes_fase4 import guias_fase4
 import re
 import sys
 
 R = Path(__file__).resolve().parents[2]
 README = R / 'docs/requisitos/README.md'
-GUIAS = sorted((R / 'docs/aulas-fiap').glob('*/GUIA-ESTUDO-*.html'))
+GUIAS = guias_fase4()
 
 # Requisitos herdados das fases anteriores ou puramente de entrega: nenhum módulo da Fase 4 os ensina.
 FORA_DOS_MODULOS = {

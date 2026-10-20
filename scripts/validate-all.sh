@@ -38,7 +38,7 @@ if command -v terraform >/dev/null 2>&1; then
   # confere sintaxe e referencia entre modulos.
   for camada in terraform terraform/cluster terraform/k8s; do
     echo "[terraform] validando ${camada}"
-    terraform -chdir="${camada}" init -backend=false -input=false >/dev/null
+    terraform -chdir="${camada}" init -backend=false -input=false -lockfile=readonly >/dev/null
     terraform -chdir="${camada}" validate
   done
 else

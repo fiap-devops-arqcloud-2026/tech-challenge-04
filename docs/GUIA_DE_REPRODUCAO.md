@@ -1,3 +1,5 @@
+> **Referência histórica da Fase 3 — importada em 2026-10-20.** Este documento preserva a entrega e os parâmetros da conta anterior. Não é evidência da Fase 4 nem roteiro de implantação na nova conta. Para o estado atual, consulte o [README da Fase 4](../README.md), [Terraform](../terraform/README.md) e [GitOps](../gitops/README.md). Não executar os comandos históricos com os valores antigos.
+
 # Guia de reprodução do ToggleMaster
 
 Este guia recria do zero, **na sua própria conta AWS e na sua própria cópia do repositório**, o ambiente completo da Fase 3: rede, cluster EKS, bancos, fila, pipeline de CI com DevSecOps, GitOps e ArgoCD. No fim, mostra como destruir tudo e conferir que nada ficou cobrando.

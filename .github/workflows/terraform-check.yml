@@ -33,9 +33,9 @@ on:
       - "terraform/**"
       - ".github/workflows/terraform-check.yml"
 
-  # Em push na main: confirma que o que foi mesclado continua valido.
+  # Em push na dev e main: valida a infraestrutura sem credenciais AWS.
   push:
-    branches: [main]
+    branches: [main, dev]
     paths:
       - "terraform/**"
       - ".github/workflows/terraform-check.yml"

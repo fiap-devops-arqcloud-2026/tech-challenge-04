@@ -60,19 +60,21 @@ patches:
 
 
 
+# CONTA NOVA PENDENTE: .invalid e conta-pendente sao sentinelas.
+# Publicar imagens da Fase 4 e substituir pelos outputs do ECR antes de sincronizar.
 images:
 - name: analytics-service
-  newName: 891376952395.dkr.ecr.us-east-2.amazonaws.com/analytics-service
-  newTag: v1.0.0-ff441a1
+  newName: registry.conta-pendente.invalid/analytics-service
+  newTag: conta-pendente
 - name: auth-service
-  newName: 891376952395.dkr.ecr.us-east-2.amazonaws.com/auth-service
-  newTag: v1.0.0-7ab0602
+  newName: registry.conta-pendente.invalid/auth-service
+  newTag: conta-pendente
 - name: evaluation-service
-  newName: 891376952395.dkr.ecr.us-east-2.amazonaws.com/evaluation-service
-  newTag: v1.0.0-7ab0602
+  newName: registry.conta-pendente.invalid/evaluation-service
+  newTag: conta-pendente
 - name: flag-service
-  newName: 891376952395.dkr.ecr.us-east-2.amazonaws.com/flag-service
-  newTag: v1.0.0-a509d67
+  newName: registry.conta-pendente.invalid/flag-service
+  newTag: conta-pendente
 - name: targeting-service
-  newName: 891376952395.dkr.ecr.us-east-2.amazonaws.com/targeting-service
-  newTag: v1.0.0-ff441a1
+  newName: registry.conta-pendente.invalid/targeting-service
+  newTag: conta-pendente

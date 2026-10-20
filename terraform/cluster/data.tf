@@ -20,9 +20,9 @@ data "terraform_remote_state" "base" {
 
   # Aponta para o MESMO bucket, mas para a chave da base.
   config = {
-    bucket = "togglemaster-tfstate-891376952395-us-east-2-an"
-    key    = "prod/base.tfstate"
-    region = "us-east-2"
+    bucket = var.state_bucket
+    key    = var.base_state_key
+    region = var.state_region
   }
 }
 

@@ -1,3 +1,5 @@
+> **Referência histórica da Fase 3 — importada em 2026-10-20.** Este documento preserva a entrega e os parâmetros da conta anterior. Não é evidência da Fase 4 nem roteiro de implantação na nova conta. Para o estado atual, consulte o [README da Fase 4](../README.md), [Terraform](../terraform/README.md) e [GitOps](../gitops/README.md). Não executar os comandos históricos com os valores antigos.
+
 # Arquitetura do ToggleMaster
 
 Este documento é a referência técnica da Fase 3 e complementa o [README](../README.md). Aqui ficam as tabelas: portas, recursos, versões, probes, permissões, Secrets e criptografia.

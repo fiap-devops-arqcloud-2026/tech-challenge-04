@@ -1,0 +1,3 @@
+# Configuracao do backend por conta, apenas local. Os .example sao versionados.
+backend.hcl
+**/backend.hcl

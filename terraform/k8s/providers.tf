@@ -14,7 +14,8 @@
 # AWS
 # ------------------------------------------------------------
 provider "aws" {
-  region = var.aws_region
+  region              = var.aws_region
+  allowed_account_ids = [var.expected_aws_account_id]
 
   # Mesmas tags das outras camadas, para o Cost Explorer somar tudo no
   # mesmo grupo (D-009).

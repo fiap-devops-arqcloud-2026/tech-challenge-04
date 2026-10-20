@@ -1,3 +1,5 @@
+> **Referência histórica da Fase 3 — importada em 2026-10-20.** Este documento preserva a entrega e os parâmetros da conta anterior. Não é evidência da Fase 4 nem roteiro de implantação na nova conta. Para o estado atual, consulte o [README da Fase 4](../README.md), [Terraform](../terraform/README.md) e [GitOps](../gitops/README.md). Não executar os comandos históricos com os valores antigos.
+
 # FIAP - Tech Challenge - Fase 3 - Grupo 203
 
 > **Status em 2026-09-15:** versão entregue; revisada em 2026-09-15. Participantes, links do projeto, desafios/decisões, evidências e estimativa de custos estão documentados. O link do vídeo entra no lugar do marcador `PREENCHER_URL_DO_VIDEO`.

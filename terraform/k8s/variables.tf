@@ -8,6 +8,46 @@ variable "aws_region" {
   default     = "us-east-2"
 }
 
+variable "expected_aws_account_id" {
+  description = "ID confirmado da NOVA conta AWS da Fase 4. O provider recusa credenciais de outra conta."
+  type        = string
+  nullable    = false
+
+  validation {
+    condition     = can(regex("^[0-9]{12}$", var.expected_aws_account_id))
+    error_message = "Informe o ID real da nova conta AWS, com 12 digitos."
+  }
+}
+
+variable "state_bucket" {
+  description = "Bucket novo e exclusivo do estado da Fase 4; deve coincidir com backend.hcl. Nunca reutilizar o estado da Fase 3."
+  type        = string
+  nullable    = false
+
+  validation {
+    condition     = can(regex("^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$", var.state_bucket))
+    error_message = "Informe o nome real do bucket S3 criado para a Fase 4."
+  }
+}
+
+variable "state_region" {
+  description = "Regiao do bucket de estado da Fase 4; deve coincidir com backend.hcl."
+  type        = string
+  nullable    = false
+}
+
+variable "base_state_key" {
+  description = "Chave da base da Fase 4 no bucket de estado."
+  type        = string
+  default     = "phase4/prod/base.tfstate"
+}
+
+variable "cluster_state_key" {
+  description = "Chave da camada cluster da Fase 4 no bucket de estado."
+  type        = string
+  default     = "phase4/prod/cluster.tfstate"
+}
+
 variable "project_name" {
   description = "Prefixo dos nomes. Mesmo valor das outras camadas."
   type        = string
@@ -19,7 +59,7 @@ variable "default_tags" {
   type        = map(string)
   default = {
     project = "fiap"
-    phase   = "3"
+    phase   = "4"
   }
 }
 
@@ -62,7 +102,7 @@ variable "gitops_repo_url" {
     (O-22 e R-07).
   EOT
   type        = string
-  default     = "https://github.com/fiap-devops-arqcloud-2026/tech-challenge-03.git"
+  default     = "https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04.git"
 }
 
 variable "gitops_repo_path" {
@@ -73,47 +113,23 @@ variable "gitops_repo_path" {
 
 variable "gitops_repo_branch" {
   description = <<-EOT
-    Branch observada. E a `main` porque e nela que o job `gitops` do CI
-    comita a nova tag da imagem (O-24). Apontar para outra branch faria
-    o ArgoCD nunca ver a atualizacao publicada pelo pipeline.
+    Branch de publicacao futura: main. O trabalho atual ocorre somente
+    na dev, sem publicacao ou sincronizacao do cluster. A main precisa
+    receber um PR aprovado antes de este caminho existir no remoto.
   EOT
   type        = string
   default     = "main"
 }
 
-# O passo a passo do token fine-grained (so para copia privada do
-# repositorio) esta em docs/GUIA_DE_REPRODUCAO.md, secao 7 (Camada k8s e
-# ArgoCD). Ele substitui o RUNBOOK-SESSAO.md citado na descricao abaixo;
-# o texto da descricao nao foi alterado para nao mudar codigo.
+# Token somente se o repositorio 04 for privado. Nunca copiar tokens do 03.
 variable "github_token" {
   description = <<-EOT
-    Token de leitura do repositorio, para o ArgoCD conseguir clonar.
-
-    NECESSARIO ENQUANTO O REPOSITORIO FOR PRIVADO. O grupo decidiu
-    manter o repo privado ate a entrega (F-014), e um repositorio
-    privado exige credencial: sem ela o ArgoCD mostra o erro
-    "authentication required" e a Application nunca sincroniza.
-
-    COMO PASSAR SEM COMITAR NADA - preferir a variavel de ambiente:
-
-        $env:TF_VAR_github_token = "github_pat_xxxx"   (PowerShell)
-        export TF_VAR_github_token=github_pat_xxxx     (Git Bash)
-
-    O Terraform le TF_VAR_<nome> automaticamente. Um terraform.tfvars
-    tambem funciona e esta protegido pelo .gitignore (`*.tfvars`), mas a
-    variavel de ambiente nao deixa o valor em disco.
-
-    O token precisa APENAS de leitura de conteudo do repositorio. Um
-    fine-grained token com permissao "Contents: Read-only" basta.
-
-    ATENCAO: o repositorio pertence a uma ORGANIZACAO. Ao criar o token,
-    o campo "Resource owner" precisa apontar para a organizacao, e nao
-    para a conta pessoal - com o dono errado o token e criado sem erro e
-    so falha na hora de clonar. Passo a passo no RUNBOOK-SESSAO.md,
-    FASE 0.
-
-    Deixe vazio se o repositorio for publico: neste caso o bloco de
-    credencial nem e criado.
+    Credencial de leitura do repositorio tech-challenge-04 para ArgoCD,
+    somente se ele for privado; a visibilidade atual nao foi verificada
+    nesta importacao. Fine-grained token com Contents: Read-only e acesso
+    ao repositorio 04, com Resource owner da organizacao correspondente.
+    Informar por TF_VAR_github_token, sem valor em arquivo versionado.
+    Deixar vazio se publico: nesse caso o Secret de repositorio nao nasce.
   EOT
   type        = string
   default     = ""

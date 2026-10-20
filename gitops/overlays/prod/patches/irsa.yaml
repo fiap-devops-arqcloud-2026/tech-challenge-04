@@ -11,9 +11,9 @@
 # ------------------------------------------------------------
 # VALOR PREVISIVEL: arn:aws:iam::<conta>:role/togglemaster-<svc>-irsa
 # ------------------------------------------------------------
-# Os ARNs abaixo estao no formato final e sao previsiveis, porque o
-# Terraform nomeia as roles deterministicamente (conta nova: ver
-# docs/GUIA_DE_REPRODUCAO.md, secao 2). Ainda assim, confira com:
+# Os ARNs abaixo sao sentinelas intencionais e NAO autenticam.
+# Substituir pelos outputs da nova conta da Fase 4, sem reaproveitar
+# identidades da Fase 3. Conferir com:
 #   terraform -chdir=terraform/cluster output irsa_role_arns
 # ============================================================
 
@@ -28,7 +28,7 @@ metadata:
     # Anotacao lida pelo EKS. Ao ver isto, ele injeta no pod um token de
     # identidade e as variaveis que o SDK da AWS usa para assumir a role.
     # Permissao desta role: apenas sqs:SendMessage na fila do projeto.
-    eks.amazonaws.com/role-arn: arn:aws:iam::891376952395:role/togglemaster-evaluation-irsa
+    eks.amazonaws.com/role-arn: arn:aws:iam::CONTA_AWS_PENDENTE:role/togglemaster-evaluation-irsa
 
 ---
 # Documento 2: ServiceAccount do analytics-service.
@@ -40,4 +40,4 @@ metadata:
     # Permissoes desta role: ReceiveMessage e DeleteMessage na fila, mais
     # PutItem na tabela DynamoDB. Nao pode publicar na fila - separacao
     # de responsabilidades entre produtor e consumidor (S-06).
-    eks.amazonaws.com/role-arn: arn:aws:iam::891376952395:role/togglemaster-analytics-irsa
+    eks.amazonaws.com/role-arn: arn:aws:iam::CONTA_AWS_PENDENTE:role/togglemaster-analytics-irsa

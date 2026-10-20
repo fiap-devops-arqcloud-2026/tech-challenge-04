@@ -44,16 +44,16 @@ on:
 # VARIAVEIS COMPARTILHADAS POR TODOS OS JOBS
 # ------------------------------------------------------------
 env:
-  # Regiao da conta (F-012). Toda a infra do projeto vive em Ohio.
-  AWS_REGION: us-east-2
+  # Variables do repositorio tech-challenge-04, preenchidas quando a
+  # nova conta estiver pronta. Ohio permanece apenas como regiao padrao.
+  AWS_REGION: ${{ vars.AWS_REGION || 'us-east-2' }}
 
-  # Endereco do registro de imagens do ECR. O numero da conta nao e
-  # credencial: sem token OIDC deste repositorio nao da acesso a nada.
-  ECR_REGISTRY: 891376952395.dkr.ecr.us-east-2.amazonaws.com
+  # Formato: <account>.dkr.ecr.<regiao>.amazonaws.com. Sem fallback
+  # para a conta da Fase 3: publicar exige configurar o destino novo.
+  ECR_REGISTRY: ${{ vars.ECR_REGISTRY }}
 
-  # Role assumida na AWS via OIDC (S-01). Substitui a dupla
-  # AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY usada na Fase 2.
-  AWS_ROLE_ARN: arn:aws:iam::891376952395:role/togglemaster-github-actions
+  # Role OIDC autorizada para este repositorio. Nao usa chave estatica.
+  AWS_ROLE_ARN: ${{ vars.AWS_ROLE_ARN }}
 
   # Versao fixa do kustomize standalone usada no job gitops. Fixa para
   # que release nova nao mude o comportamento sem ninguem pedir.
@@ -378,6 +378,27 @@ jobs:
 
     # Passos deste job, executados de cima para baixo.
     steps:
+      # Esta trava so roda em publicacao (push main). A validacao de
+      # codigo em dev/PR independe de conta AWS e destas variables.
+      - name: Validar destino AWS da Fase 4
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "${ECR_REGISTRY}" || -z "${AWS_ROLE_ARN}" ]]; then
+            echo "::error::Configure ECR_REGISTRY e AWS_ROLE_ARN nas repository variables do tech-challenge-04 antes de publicar. A nova conta AWS ainda nao foi configurada."
+            exit 1
+          fi
+          if [[ ! "${ECR_REGISTRY}" =~ ^([0-9]{12})\.dkr\.ecr\.([a-z0-9-]+)\.amazonaws\.com$ ]]; then
+            echo "::error::ECR_REGISTRY deve ser <account>.dkr.ecr.<regiao>.amazonaws.com."
+            exit 1
+          fi
+          ecr_account="${BASH_REMATCH[1]}"
+          ecr_region="${BASH_REMATCH[2]}"
+          if [[ "${ecr_region}" != "${AWS_REGION}" || "${AWS_ROLE_ARN}" != "arn:aws:iam::${ecr_account}:role/"* ]]; then
+            echo "::error::ECR_REGISTRY, AWS_REGION e AWS_ROLE_ARN devem apontar para a mesma conta/regiao da Fase 4."
+            exit 1
+          fi
+
       # Baixa o codigo do repositorio para dentro deste runner.
       - name: Checkout do codigo
         # Baixa o codigo. Repetido em todo job porque cada um roda numa maquina isolada.

@@ -1,22 +1,14 @@
 # ============================================================
-# BACKEND REMOTO E VERSOES - CAMADA CLUSTER (efemera)
+# BACKEND REMOTO E VERSOES - FASE 4 / CAMADA CLUSTER
 # ============================================================
-# Esta pasta concentra TUDO que cobra por hora: EKS, node group, os 2
-# RDS e o ElastiCache. Ela sobe no inicio da sessao de trabalho e e
-# destruida no fim.
-#
-# A camada base (terraform/) fica de pe permanentemente e nao e tocada
-# por um destroy aqui. E isso que preserva os repositorios ECR, as
-# imagens ja publicadas, a fila e a tabela entre uma sessao e outra.
-#
-# Ordem obrigatoria:
-#   1. terraform -chdir=terraform apply          (base, uma vez so)
-#   2. terraform -chdir=terraform/cluster apply  (a cada sessao)
-#   3. ... trabalho ...
-#   4. terraform -chdir=terraform/cluster destroy
-#
-# O passo 2 FALHA se o passo 1 nunca rodou, porque este modulo le as
-# saidas da base por remote state (ver data.tf).
+# Backend S3 parcial: a conta e o bucket novos ainda estao pendentes.
+# Configuracao futura: copiar backend.hcl.example para backend.hcl e
+# informar bucket/regiao confirmados. Nunca copiar .terraform/ ou
+# arquivos tfstate da Fase 3; as chaves abaixo sao exclusivas da Fase 4.
+# O init -backend=false usado na validacao nao acessa S3.
+# Ordem de dependencias: base -> cluster -> k8s. Qualquer destruicao
+# exige plano separado e autorizacao explicita; preservar EBS CSI ate
+# confirmar remocao dos PVCs/PVs/discos do banco no cluster.
 # ============================================================
 
 terraform {
@@ -48,18 +40,12 @@ terraform {
     }
   }
 
+  # Configuracao parcial da Fase 4. Fornecer bucket e regiao via
+  # -backend-config=backend.hcl, criado a partir de backend.hcl.example.
+  # Nao reutilizar nem migrar o estado da Fase 3.
   backend "s3" {
-    # Mesmo bucket da base - um bucket por projeto, nao por camada.
-    bucket = "togglemaster-tfstate-891376952395-us-east-2-an"
-
-    # Chave DIFERENTE da base. E isto que cria dois estados independentes
-    # dentro do mesmo bucket e permite destruir um sem afetar o outro.
-    key = "prod/cluster.tfstate"
-
-    region  = "us-east-2"
-    encrypt = true
-
-    # Lock nativo do S3 (R-03), igual a base.
+    key          = "phase4/prod/cluster.tfstate"
+    encrypt      = true
     use_lockfile = true
   }
 }

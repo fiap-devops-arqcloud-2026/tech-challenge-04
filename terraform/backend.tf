@@ -1,31 +1,16 @@
 # ============================================================
-# BACKEND REMOTO E VERSOES - CAMADA BASE (preservavel entre sessoes)
+# BACKEND REMOTO E VERSOES - FASE 4 / CAMADA BASE
 # ============================================================
-# O terraform.tfstate NAO fica local (O-09). Ele vive no bucket S3
-# criado uma unica vez pelo procedimento de docs/GUIA_DE_REPRODUCAO.md,
-# secao 3 (Bucket de estado do Terraform).
-#
-# Por que isso importa: o estado guarda o mapa de tudo que foi criado,
-# incluindo senhas de banco em texto puro. Se ficasse no notebook de
-# uma pessoa, o grupo nao conseguiria aplicar em paralelo e um HD
-# queimado deixaria a infraestrutura orfa cobrando na fatura.
-#
-# ------------------------------------------------------------
-# POR QUE EXISTEM DOIS ESTADOS SEPARADOS (D-017)
-# ------------------------------------------------------------
-# Esta pasta e a camada BASE: rede, ECR, SQS, DynamoDB e IAM. Tudo aqui
-# custa praticamente zero parado e NUNCA e destruido.
-#
-# A camada CARA - EKS, RDS e ElastiCache - vive em terraform/cluster/,
-# com estado proprio, e sobe e desce a cada sessao de trabalho.
-#
-# Se as duas dividissem o mesmo estado, o `terraform destroy` feito para
-# parar de gastar credito levaria junto os repositorios ECR. Como eles
-# usam force_delete, as imagens iriam junto, e o CI teria de reconstruir
-# e reenviar as 5 imagens antes de cada sessao.
+# Backend S3 parcial: a conta e o bucket novos ainda estao pendentes.
+# Configuracao futura: copiar backend.hcl.example para backend.hcl e
+# informar bucket/regiao confirmados. Nunca copiar .terraform/ ou
+# arquivos tfstate da Fase 3; as chaves abaixo sao exclusivas da Fase 4.
+# O init -backend=false usado na validacao nao acessa S3.
+# Ordem de dependencias: base -> cluster -> k8s. Qualquer destruicao
+# exige plano separado e autorizacao explicita; preservar EBS CSI ate
+# confirmar remocao dos PVCs/PVs/discos do banco no cluster.
 # ============================================================
 
-# Bloco de configuracao do proprio Terraform (nao cria recurso na AWS).
 terraform {
 
   # Versao minima do Terraform aceita para rodar este projeto.
@@ -51,33 +36,12 @@ terraform {
     }
   }
 
-  # Onde o arquivo de estado sera gravado. "s3" e o tipo de backend.
+  # Configuracao parcial da Fase 4. Fornecer bucket e regiao via
+  # -backend-config=backend.hcl, criado a partir de backend.hcl.example.
+  # Nao reutilizar nem migrar o estado da Fase 3.
   backend "s3" {
-
-    # Bucket criado manualmente pelo bootstrap (a unica excecao do projeto
-    # a regra "se nao esta no codigo, nao existe" - ver docs/GUIA_DE_REPRODUCAO.md,
-    # secao 3 (Bucket de estado do Terraform)).
-    bucket = "togglemaster-tfstate-891376952395-us-east-2-an"
-
-    # Caminho do arquivo de estado DENTRO do bucket.
-    # Ha um unico ambiente (D-011), por isso o prefixo "prod/".
-    # O sufixo "base" separa este estado do "prod/cluster.tfstate", usado
-    # pela camada efemera em terraform/cluster/.
-    key = "prod/base.tfstate"
-
-    # Regiao do bucket. Precisa ser a mesma onde ele foi criado, senao o
-    # terraform init falha dizendo que a regiao nao confere.
-    region = "us-east-2"
-
-    # Criptografa o objeto do estado no envio.
-    # Redundante com a criptografia padrao do bucket, e de proposito: garante
-    # protecao mesmo se alguem desligar o padrao do bucket por engano.
-    encrypt = true
-
-    # Lock nativo do S3 (atende R-03). Durante o apply, o Terraform cria um
-    # arquivo prod/base.tfstate.tflock ao lado do estado. Se outra pessoa
-    # tentar aplicar ao mesmo tempo, ela recebe erro em vez de corromper o
-    # estado. Substitui a antiga tabela DynamoDB de lock, hoje depreciada.
+    key          = "phase4/prod/base.tfstate"
+    encrypt      = true
     use_lockfile = true
   }
 }

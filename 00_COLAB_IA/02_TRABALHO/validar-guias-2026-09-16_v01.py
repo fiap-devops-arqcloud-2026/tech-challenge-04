@@ -7,6 +7,7 @@ Saída: relatório por arquivo; código de saída 1 se houver ERRO.
 Autor: Claude (Opus 5), 2026-09-16. Não altera nenhum arquivo.
 """
 from pathlib import Path
+from fontes_fase4 import guias_fase4
 from html.parser import HTMLParser
 from urllib.parse import unquote, urlsplit
 import json, re, sys, unicodedata
@@ -255,7 +256,7 @@ def main(args):
         base_dir, fragment, args = (R / 'docs/aulas-fiap' / args[1]).resolve(), True, args[2:]
         if not base_dir.is_dir():
             raise SystemExit(f'pasta de módulo inexistente: {base_dir}')
-    files = [Path(a).resolve() for a in args] or sorted((R / 'docs/aulas-fiap').glob('*/GUIA-ESTUDO-*.html'))
+    files = [Path(a).resolve() for a in args] or guias_fase4()
     total_err = 0
     for f in files:
         e, w, i = check_html(f, base_dir, fragment)

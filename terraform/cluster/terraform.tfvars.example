@@ -1,0 +1,7 @@
+# Copiar para terraform.tfvars local somente apos confirmar a nova conta.
+# Sentinelas intencionais: estes valores NAO permitem uma implantacao.
+aws_region              = "us-east-2"
+expected_aws_account_id = "CONTA_AWS_PENDENTE"
+state_bucket            = "NOVO_BUCKET_ESTADO_FASE4"
+state_region            = "us-east-2"
+base_state_key          = "phase4/prod/base.tfstate"

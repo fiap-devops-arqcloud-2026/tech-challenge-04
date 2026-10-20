@@ -1,7 +1,7 @@
 # ============================================================
 # VARIAVEIS DE ENTRADA
 # ============================================================
-# Toda variavel tem `default`, entao o projeto roda sem nenhum tfvars.
+# A conta de destino precisa ser informada; nao existe default de conta.
 # O terraform.tfvars.example existe para deixar explicito o que da para
 # ajustar - principalmente o enable_nat_gateway, que mexe no custo.
 # ============================================================
@@ -12,13 +12,24 @@
 
 variable "aws_region" {
   # `description` aparece no terraform plan e na documentacao gerada.
-  description = "Regiao AWS onde toda a infraestrutura e criada. Mesma regiao da Fase 2 (F-012)."
+  description = "Regiao AWS da Fase 4. Confirmar disponibilidade e cotas da nova conta antes de implantar."
 
   # Tipo de dado esperado. O Terraform recusa qualquer outro valor.
   type = string
 
   # Valor usado quando ninguem informa nada.
   default = "us-east-2"
+}
+
+variable "expected_aws_account_id" {
+  description = "ID confirmado da NOVA conta AWS da Fase 4. O provider recusa credenciais de outra conta."
+  type        = string
+  nullable    = false
+
+  validation {
+    condition     = can(regex("^[0-9]{12}$", var.expected_aws_account_id))
+    error_message = "Informe o ID real da nova conta AWS, com 12 digitos."
+  }
 }
 
 variable "project_name" {
@@ -40,12 +51,11 @@ variable "default_tags" {
   type = map(string)
 
   # ATENCAO: chave de tag na AWS e sensivel a maiuscula/minuscula.
-  # Estas estao em minusculo porque foi assim que o bucket de estado foi
-  # criado manualmente. Se divergir, o Cost Explorer mostra dois grupos
-  # separados e a soma de custo do projeto fica errada.
+  # Manter em minusculo tambem no futuro bootstrap do bucket da Fase 4.
+  # Ainda nao ha bucket confirmado na conta de destino.
   default = {
     project = "fiap"
-    phase   = "3"
+    phase   = "4"
   }
 }
 
@@ -164,8 +174,8 @@ variable "github_repository" {
   EOT
   type        = string
 
-  # Confirmado em 2026-08-27 pelo `git remote -v` deste repositorio.
-  default = "fiap-devops-arqcloud-2026/tech-challenge-03"
+  # Destino da importacao autorizada em 2026-10-20.
+  default = "fiap-devops-arqcloud-2026/tech-challenge-04"
 }
 
 # ------------------------------------------------------------

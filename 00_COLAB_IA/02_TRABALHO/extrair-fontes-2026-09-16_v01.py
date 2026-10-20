@@ -1,4 +1,5 @@
 from pathlib import Path
+from fontes_fase4 import pastas_fase4
 import json, hashlib, re
 from pypdf import PdfReader
 
@@ -6,7 +7,7 @@ ROOT = Path(__file__).resolve().parents[2]
 WORK = Path(__file__).parent
 OUT = WORK / 'extracoes'
 OUT.mkdir(exist_ok=True)
-files = [ROOT / 'POSTECH - Tech Challenge - Fase 4.pdf'] + sorted((ROOT / 'docs/aulas-fiap').rglob('*.pdf'))
+files = [ROOT / 'POSTECH - Tech Challenge - Fase 4.pdf'] + sorted(p for folder in pastas_fase4() for p in folder.glob('*.pdf'))
 inventory=[]
 for index, source in enumerate(files):
     reader=PdfReader(source)

@@ -7,24 +7,25 @@
 # O .gitignore versiona apenas este .example - o terraform.tfvars real
 # fica de fora, porque no futuro ele pode conter valor sensivel.
 #
-# Todos os valores abaixo ja sao o padrao em variables.tf. O arquivo
-# existe para deixar visivel o que da para ajustar, e principalmente
-# por causa do enable_nat_gateway.
+# Valores herdados ilustram a base importada. A conta e obrigatoria e
+# ainda nao foi informada. Confirmar regiao, tipos, cotas e orcamento
+# antes de qualquer implantacao; nao presumir beneficio Free Tier.
 # ============================================================
 
-# Regiao de toda a infraestrutura. Precisa ser a mesma do bucket de estado.
+# Regiao proposta para a infraestrutura; confirmar na nova conta.
 aws_region = "us-east-2"
+
+# Obrigatorio: substituir somente quando o usuario confirmar a nova conta.
+# O provider rejeita credenciais que nao correspondam a este ID.
+expected_aws_account_id = "CONTA_AWS_PENDENTE"
 
 # Prefixo dos nomes. Mudar aqui obriga a mudar os manifestos em gitops/.
 project_name = "togglemaster"
 
-# Tags aplicadas a todo recurso (D-009).
-# EM MINUSCULAS de proposito: chave de tag na AWS e sensivel a caixa, e foi
-# assim que o bucket de estado foi criado no console. Divergir aqui faria o
-# Cost Explorer mostrar dois grupos separados.
+# Tags da Fase 4; nao sao confirmacao de bucket/recurso ja criado.
 default_tags = {
   project = "fiap"
-  phase   = "3"
+  phase   = "4"
 }
 
 # ------------------------------------------------------------
@@ -65,7 +66,7 @@ ecr_image_tag_mutability = "MUTABLE"
 ecr_images_to_keep = 10
 
 # Unico repositorio autorizado a assumir a role do CI via OIDC.
-github_repository = "fiap-devops-arqcloud-2026/tech-challenge-03"
+github_repository = "fiap-devops-arqcloud-2026/tech-challenge-04"
 
 # ------------------------------------------------------------
 # Provedor OIDC do GitHub

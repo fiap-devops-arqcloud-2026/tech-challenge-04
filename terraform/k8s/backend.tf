@@ -1,32 +1,14 @@
 # ============================================================
-# BACKEND E VERSOES - CAMADA K8S (objetos dentro do cluster)
+# BACKEND REMOTO E VERSOES - FASE 4 / CAMADA K8S
 # ============================================================
-# TERCEIRA e ultima camada do projeto. Enquanto as duas anteriores
-# criam recursos NA AWS, esta cria objetos DENTRO do cluster: os Secrets
-# das aplicacoes, a StorageClass padrao e o ArgoCD.
-#
-# POR QUE UMA CAMADA SEPARADA, e nao tudo em terraform/cluster/
-# ------------------------------------------------------------
-# Os providers kubernetes e helm precisam do endereco e do certificado
-# do cluster para se configurar. Se estivessem na mesma raiz que cria o
-# cluster, o Terraform teria de configurar o provider com valores que so
-# existem DEPOIS do apply - e falha no plan com "Provider configuration
-# cannot be evaluated".
-#
-# Separando, o problema desaparece: quando esta camada roda, o cluster ja
-# existe e seus dados vem prontos do estado da camada anterior.
-#
-# ORDEM OBRIGATORIA DE APLICACAO
-#   1. terraform -chdir=terraform         apply   (base, permanente)
-#   2. terraform -chdir=terraform/cluster apply   (EKS, RDS, Redis)
-#   3. terraform -chdir=terraform/k8s     apply   (ESTA camada)
-#   4. ... trabalho / gravacao ...
-#   5. terraform -chdir=terraform/k8s     destroy
-#   6. terraform -chdir=terraform/cluster destroy
-#
-# O destroy segue a ordem inversa. Na pratica, destruir o cluster (passo
-# 6) leva junto tudo que esta dentro dele, mas rodar o passo 5 antes
-# mantem o estado coerente e evita recurso orfao no proximo apply.
+# Backend S3 parcial: a conta e o bucket novos ainda estao pendentes.
+# Configuracao futura: copiar backend.hcl.example para backend.hcl e
+# informar bucket/regiao confirmados. Nunca copiar .terraform/ ou
+# arquivos tfstate da Fase 3; as chaves abaixo sao exclusivas da Fase 4.
+# O init -backend=false usado na validacao nao acessa S3.
+# Ordem de dependencias: base -> cluster -> k8s. Qualquer destruicao
+# exige plano separado e autorizacao explicita; preservar EBS CSI ate
+# confirmar remocao dos PVCs/PVs/discos do banco no cluster.
 # ============================================================
 
 terraform {
@@ -66,17 +48,12 @@ terraform {
     }
   }
 
+  # Configuracao parcial da Fase 4. Fornecer bucket e regiao via
+  # -backend-config=backend.hcl, criado a partir de backend.hcl.example.
+  # Nao reutilizar nem migrar o estado da Fase 3.
   backend "s3" {
-    # Mesmo bucket das outras camadas.
-    bucket = "togglemaster-tfstate-891376952395-us-east-2-an"
-
-    # Terceira chave, terceiro estado independente.
-    key = "prod/k8s.tfstate"
-
-    region  = "us-east-2"
-    encrypt = true
-
-    # Lock nativo do S3 (R-03).
+    key          = "phase4/prod/k8s.tfstate"
+    encrypt      = true
     use_lockfile = true
   }
 }

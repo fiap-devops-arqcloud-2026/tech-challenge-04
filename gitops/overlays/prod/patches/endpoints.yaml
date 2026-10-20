@@ -1,3 +1,4 @@
+# FASE 4: endpoints pendentes, sem acesso aos recursos da conta anterior.
 # ============================================================
 # PATCH - endereços gerados pela AWS
 # ============================================================
@@ -26,8 +27,8 @@ data:
   # Endereco do ElastiCache. Sai do output redis_url da camada terraform/cluster.
   # O evaluation consulta este cache antes de chamar flag e targeting;
   # e o que mantem o hot path rapido.
-  # Valor da ultima recriacao; troque em conta nova.
-  REDIS_URL: "redis://togglemaster-redis.ewbn3x.ng.0001.use2.cache.amazonaws.com:6379"
+  # Sentinela intencional: substituir somente pelo output da Fase 4.
+  REDIS_URL: "redis://redis.conta-pendente.invalid:6379"
 
   # URL da fila SQS. Sai de `terraform output sqs_queue_url` (camada base,
   # terraform/). Contem o numero da conta, por isso nao fica na base.
@@ -35,7 +36,7 @@ data:
   # Observe que isto esta num ConfigMap e nao num Secret: na Fase 2 a URL
   # vivia dentro do Secret junto com as chaves da AWS. URL de fila nao e
   # segredo - sem credencial, conhecer o endereco nao da acesso a nada.
-  AWS_SQS_URL: "https://sqs.us-east-2.amazonaws.com/891376952395/togglemaster-events"
+  AWS_SQS_URL: "https://sqs.conta-pendente.invalid/togglemaster-events"
 
 ---
 # Documento 2: ConfigMap do analytics-service.
@@ -45,4 +46,4 @@ metadata:
   name: analytics-service-config
 data:
   # Mesma fila, lado consumidor. O evaluation publica, o analytics le.
-  AWS_SQS_URL: "https://sqs.us-east-2.amazonaws.com/891376952395/togglemaster-events"
+  AWS_SQS_URL: "https://sqs.conta-pendente.invalid/togglemaster-events"

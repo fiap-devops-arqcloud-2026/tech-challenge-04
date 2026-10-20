@@ -3,7 +3,7 @@ name: Compose Integration
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [main, dev]
   workflow_dispatch:
 
 permissions:
@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
-      COMPOSE_PROJECT_NAME: tc03-integration
+      COMPOSE_PROJECT_NAME: tc04-integration
     steps:
       - uses: actions/checkout@v4
       - name: Build and test the Compose stack

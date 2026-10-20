@@ -1,83 +1,70 @@
-# Terraform do ToggleMaster
+# Terraform do ToggleMaster — Fase 4
 
-Esta pasta cria, por código, toda a infraestrutura AWS do projeto. Tecnicamente, são três raízes Terraform (camadas) em `us-east-2`, cada uma com estado próprio no S3, e cada camada lê as saídas da anterior por `terraform_remote_state`.
+TL;DR: base da Fase 3 importada e adaptada ao repositório `fiap-devops-arqcloud-2026/tech-challenge-04`. A nova conta AWS ainda não foi informada. Nenhum estado, credencial ou recurso da conta anterior foi transportado. Não executar implantação antes de confirmar conta, orçamento, backend e parâmetros.
 
-## Camadas
+Última atualização: 2026-10-20, Codex. Fonte: arquivos `.tf`, exemplos e lockfiles deste diretório; configuração local, sem comprovação de infraestrutura ativa.
 
-| Pasta | O que cria | Chave de estado | Lê de |
+## Camadas e estados separados
+
+| Pasta | O que declara | Chave de estado da Fase 4 | Lê de |
 |---|---|---|---|
-| `terraform/` (base) | VPC com subnets públicas e privadas, IGW e NAT; 5 repositórios ECR; SQS com DLQ; DynamoDB; provedor OIDC do GitHub (criado ou só lido) e role do CI | `prod/base.tfstate` | nada (só precisa do bucket de estado, criado à mão) |
-| `terraform/cluster/` | EKS com node group e addons; 2 RDS PostgreSQL com senhas no Secrets Manager; ElastiCache Redis; roles IRSA | `prod/cluster.tfstate` | estado da base |
-| `terraform/k8s/` | ArgoCD via Helm e a Application; 5 Secrets; StorageClass `gp3` padrão | `prod/k8s.tfstate` | estados da base e do cluster |
+| `terraform/` (base) | VPC, subnets, NAT, 5 ECR, SQS/DLQ, DynamoDB e OIDC/role do GitHub | `phase4/prod/base.tfstate` | nenhum estado anterior |
+| `terraform/cluster/` | EKS, 2 RDS, Redis e IRSA | `phase4/prod/cluster.tfstate` | base da Fase 4 |
+| `terraform/k8s/` | ArgoCD, Application, Secrets e StorageClass | `phase4/prod/k8s.tfstate` | base e cluster da Fase 4 |
 
-Suba na ordem base → (imagens publicadas no ECR) → cluster → k8s. Destrua na ordem inversa: k8s → cluster → base. O destroy da camada k8s **não é opcional**: é ele que remove o PVC e, com isso, o disco EBS do banco do targeting, que não pertence a nenhum estado.
+A ordem de dependências é base → publicação das imagens → cluster → k8s. São raízes independentes: cada uma recebe suas próprias variáveis. O estado guarda valores sensíveis e não deve entrar no Git.
 
-A base custa quase nada parada e é preservável entre sessões, mas também pode ser destruída. A camada k8s fica separada do cluster porque os providers `kubernetes` e `helm` precisam de um endpoint que só existe depois do apply do cluster. O primeiro apply da k8s é feito em duas etapas, por causa do CRD do ArgoCD.
+As três raízes usam backend S3 parcial: `backend.tf` fixa a chave, criptografia e lock; bucket/região vêm de um arquivo local `backend.hcl`, preparado a partir de `backend.hcl.example`. O arquivo local é ignorado por `terraform/.gitignore`. Os exemplos têm sentinelas explícitas que precisam ser substituídas pelos dados confirmados da nova conta.
 
-## Estrutura
+**Não copiar `terraform.tfstate`, planos, `.terraform/` ou o bucket/objetos da Fase 3. Não usar `init -migrate-state` para esta importação.** A base da Fase 4 deve começar com estados próprios e vazios, em um bucket novo. Nenhum bootstrap foi executado nesta etapa.
 
-```text
-terraform/
-├── backend.tf               # estado prod/base.tfstate
-├── providers.tf             # provider AWS e default_tags
-├── variables.tf
-├── main.tf                  # composição dos módulos da base
-├── outputs.tf               # lidos pelo CI, pelo gitops/ e pelas outras camadas
-├── terraform.tfvars.example
-├── .terraform.lock.hcl
-├── modules/
-│   ├── ecr/                 # 5 repositórios e lifecycle
-│   ├── messaging/           # SQS, DLQ e DynamoDB
-│   ├── iam-ci/              # provedor OIDC do GitHub e role do CI
-│   ├── eks/                 # cluster, node group, addons e OIDC do cluster
-│   ├── rds/                 # as 2 instâncias PostgreSQL
-│   ├── elasticache/         # Redis
-│   └── irsa/                # roles assumidas pelos pods
-├── cluster/                 # backend, data (lê a base), providers, variables, main, outputs
-└── k8s/                     # backend, data (lê base e cluster), providers,
-                             # secrets, storageclass, argocd, variables, outputs
-```
+## Parâmetros pendentes da conta
 
-A VPC usa o módulo da comunidade `terraform-aws-modules/vpc/aws`; os demais módulos são próprios.
+| Parâmetro | Camadas | Origem/condição |
+|---|---|---|
+| `expected_aws_account_id` | três | ID real da nova conta, obrigatório, 12 dígitos; `allowed_account_ids` recusa credenciais de outra conta |
+| bucket/região em `backend.hcl` | três | bucket novo da Fase 4; configuração de backend é separada de variáveis Terraform |
+| `state_bucket`, `state_region` | cluster e k8s | mesmos bucket/região dos backends, obrigatórios para ler as camadas anteriores |
+| `base_state_key` | cluster e k8s | padrão `phase4/prod/base.tfstate`; coincidir com a base |
+| `cluster_state_key` | k8s | padrão `phase4/prod/cluster.tfstate`; coincidir com o cluster |
+| `aws_region`, AZs, tipos/tamanhos | conforme raiz | padrões herdados como base de código; revalidar cotas, disponibilidade, suporte e custo da nova conta |
+| `create_github_oidc_provider` | base | `true` somente se a nova conta ainda não tiver o emissor do GitHub; não assumir o estado da conta anterior |
+| imagens, IRSA, SQS e Redis | overlay GitOps | substituir sentinelas somente pelos outputs/imagens da nova conta |
 
-## Variáveis que mais importam
+Para preparar a configuração futura, preencher os `.example` em arquivos locais, definir o perfil AWS correto e conferir a identidade. A inicialização real usará `terraform -chdir=<camada> init -backend-config=backend.hcl -input=false`, **somente após o bucket e a conta terem sido confirmados**. Não executar esse comando enquanto houver sentinelas. A inicialização com `-backend=false` usada abaixo é outra operação: baixa dependências sem acessar S3.
 
-| Variável | Camada | Padrão | Quando mudar |
-|---|---|---|---|
-| `create_github_oidc_provider` | base | `true` | `false` se a conta já tiver o provedor `token.actions.githubusercontent.com` (com `false`, ele só é lido e nunca é destruído) |
-| `enable_nat_gateway` | base | `true` | Mantenha `true` para o cluster; o `terraform.tfvars.example` vem com `false` |
-| `github_repository` | base | `fiap-devops-arqcloud-2026/tech-challenge-03` | Em outra cópia do repositório (`<owner>/<repo>`) |
-| `kubernetes_version` | cluster | `1.34` | Quando a versão sair do suporte padrão da AWS (a 1.34 fica até 2026-12-01) |
-| `node_instance_type` | cluster | `c7i-flex.large` | Se a conta recusar o tipo |
-| `github_token` | k8s | `""` | Só se a cópia do repositório for privada |
+Há `terraform.tfvars.example` por raiz. Os arquivos reais `terraform.tfvars` são ignorados pelo Git. `expected_aws_account_id` também pode ser passado por `TF_VAR_expected_aws_account_id`; nas raízes cluster/k8s, `TF_VAR_state_bucket` e `TF_VAR_state_region`. Os valores de backend não são preenchidos automaticamente por essas variáveis.
 
-Recomenda-se um `terraform.tfvars` local por camada, ignorado pelo `.gitignore`: assim o apply e o destroy leem os mesmos valores. Veja a [seção 2 do guia](../docs/GUIA_DE_REPRODUCAO.md#2-valores-fixos-a-trocar-em-outra-conta).
+## Destino GitHub e ArgoCD
 
-## Validação local (os mesmos passos do Terraform Check do CI, sem AWS)
+- OIDC: `github_repository` padrão = `fiap-devops-arqcloud-2026/tech-challenge-04`.
+- ArgoCD: `gitops_repo_url` padrão = `https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04.git`; Secret `repo-tech-challenge-04`.
+- A branch observada continua `main`, destino futuro de publicação do pipeline. O trabalho autorizado atual ocorre na `dev`; não houve push, PR ou integração na `main`. Portanto, as alterações locais ainda não estão disponíveis ao ArgoCD.
+- `github_token` precisa de leitura do conteúdo do repositório 04 se ele for privado; passar como variável sensível, nunca versionar token. A visibilidade/acesso remoto atual não foi validada nesta importação.
+- Tags AWS: `project=fiap`, `phase=4` nas três raízes. Nomes dos serviços e do namespace permanecem consistentes com os manifests e o código importado.
+
+## Validação local, sem acesso à AWS
 
 ```bash
-# Confere a formatação de todos os arquivos .tf, sem alterar nada
 terraform fmt -check -recursive terraform
-# Baixa os providers da base sem conectar ao backend S3
-terraform -chdir=terraform init -backend=false -input=false
-# Valida sintaxe e referências da base
+terraform -chdir=terraform init -backend=false -input=false -lockfile=readonly
 terraform -chdir=terraform validate
-# Baixa os providers da camada cluster sem conectar ao backend S3
-terraform -chdir=terraform/cluster init -backend=false -input=false
-# Valida sintaxe e referências da camada cluster
+terraform -chdir=terraform/cluster init -backend=false -input=false -lockfile=readonly
 terraform -chdir=terraform/cluster validate
-# Baixa os providers da camada k8s sem conectar ao backend S3
-terraform -chdir=terraform/k8s init -backend=false -input=false
-# Valida sintaxe e referências da camada k8s
+terraform -chdir=terraform/k8s init -backend=false -input=false -lockfile=readonly
 terraform -chdir=terraform/k8s validate
+kubectl kustomize gitops/overlays/prod
 ```
 
-O `.terraform.lock.hcl` de cada camada **deve** ser versionado; `terraform.tfstate`, `*.tfvars`, `*.tfplan` e `.terraform/` nunca.
+A inicialização baixa módulos/providers do registro, sem conectar ao backend e sem executar `plan`/`apply`. Os lockfiles originais foram preservados: não atualizar providers apenas para importar o projeto. Validação sintática e renderização local não demonstram acesso à conta, pull de imagens, funcionamento do cluster ou implantação.
 
-## Onde está o resto
+## Cuidados operacionais e referências
 
-- Passo a passo completo de subida e destruição: [docs/GUIA_DE_REPRODUCAO.md](../docs/GUIA_DE_REPRODUCAO.md)
-- Criação do bucket de estado: [guia, seção 3](../docs/GUIA_DE_REPRODUCAO.md#3-bucket-de-estado-do-terraform)
-- Por que três camadas e as demais escolhas: [README, seção 5](../README.md#5-decisões-e-o-porquê)
-- Recursos, variáveis e versões em detalhe: [docs/ARQUITETURA.md](../docs/ARQUITETURA.md)
-- Custo: [README, seção 8](../README.md#8-custo)
+A topologia herdada ainda precisa ser revista conforme o [plano da Fase 4](../00_COLAB_IA/02_TRABALHO/PLANO_E_ARQUITETURA_FASE4_2026-09-23_v02.html); esta importação não implementa a stack de observabilidade. Não assumir elegibilidade Free Tier nem preços pelos comentários históricos do código.
+
+Qualquer destruição exige inventário/plano e autorização explícita separados. Antes de remover cluster/CSI, confirmar a remoção dos PVCs/PVs/EBS do PostgreSQL targeting; remover o bucket de estado por último. O [guia importado](../docs/GUIA_DE_REPRODUCAO.md) e a [arquitetura importada](../docs/ARQUITETURA.md) documentam a base técnica histórica e precisam ser lidos com o estado/pêndencias atuais. Para a nova conta, prevalecem os parâmetros e limites deste README.
+
+- [Contrato dos Secrets](../gitops/SECRETS-CONTRATO.md)
+- [GitOps e parâmetros pendentes](../gitops/README.md)
+- [Requisitos da Fase 4](../docs/requisitos/README.md)
+- [Backlog atual](../00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md)

@@ -12,6 +12,40 @@ variable "aws_region" {
   default     = "us-east-2"
 }
 
+variable "expected_aws_account_id" {
+  description = "ID confirmado da NOVA conta AWS da Fase 4. O provider recusa credenciais de outra conta."
+  type        = string
+  nullable    = false
+
+  validation {
+    condition     = can(regex("^[0-9]{12}$", var.expected_aws_account_id))
+    error_message = "Informe o ID real da nova conta AWS, com 12 digitos."
+  }
+}
+
+variable "state_bucket" {
+  description = "Bucket novo e exclusivo do estado da Fase 4; deve coincidir com backend.hcl. Nunca reutilizar o estado da Fase 3."
+  type        = string
+  nullable    = false
+
+  validation {
+    condition     = can(regex("^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$", var.state_bucket))
+    error_message = "Informe o nome real do bucket S3 criado para a Fase 4."
+  }
+}
+
+variable "state_region" {
+  description = "Regiao do bucket de estado da Fase 4; deve coincidir com backend.hcl."
+  type        = string
+  nullable    = false
+}
+
+variable "base_state_key" {
+  description = "Chave da base da Fase 4 no bucket de estado."
+  type        = string
+  default     = "phase4/prod/base.tfstate"
+}
+
 variable "project_name" {
   description = "Prefixo dos nomes de recurso. Mesmo valor da base."
   type        = string
@@ -23,7 +57,7 @@ variable "default_tags" {
   type        = map(string)
   default = {
     project = "fiap"
-    phase   = "3"
+    phase   = "4"
   }
 }
 
@@ -33,26 +67,10 @@ variable "default_tags" {
 
 variable "kubernetes_version" {
   description = <<-EOT
-    Versao do Kubernetes no EKS.
-
-    1.34, e NAO 1.31. O motivo e custo, nao funcionalidade: a partir do
-    fim do suporte padrao a AWS cobra SUPORTE ESTENDIDO pelo control
-    plane, e o preco sai de US$ 0,10/h para US$ 0,60/h - seis vezes mais.
-
-    Consultado em 2026-09-09 via `aws eks describe-cluster-versions`:
-
-      1.31  EXTENDED_SUPPORT  (padrao terminou em 2025-11-25)
-      1.32  EXTENDED_SUPPORT
-      1.33  EXTENDED_SUPPORT
-      1.34  STANDARD_SUPPORT  ate 2026-12-01   <-- escolhida
-      1.35  STANDARD_SUPPORT  ate 2027-03-26
-      1.36  STANDARD_SUPPORT  ate 2027-08-01
-
-    Com a 1.31 o custo total da pilha subiria de ~US$ 0,385/h para
-    ~US$ 0,87/h, o que reduziria o credito disponivel de ~190 horas para
-    ~80. A 1.34 e a mais conservadora entre as de suporte padrao - a
-    mais madura, com menor risco de incompatibilidade de addon - e o
-    suporte dela vai bem alem da entrega de 2026-09-15.
+    Versao herdada da Fase 3. Antes da implantacao da Fase 4, confirmar
+    disponibilidade da versao, suporte padrao e compatibilidade dos
+    addons na regiao/conta novas. O default nao comprova elegibilidade
+    nem representa orcamento ou consulta atual a AWS.
   EOT
   type        = string
   default     = "1.34"
@@ -60,11 +78,9 @@ variable "kubernetes_version" {
 
 variable "node_instance_type" {
   description = <<-EOT
-    Tipo de instancia dos nos. `c7i-flex.large` (2 vCPU / 4 GB) e nao
-    `t3.medium` por bloqueio da conta: o plano gratuito recusa a t3.medium
-    com "The specified instance type is not eligible for Free Tier"
-    (F-023, D-016). A t3.micro e inviavel: ~4 pods por no e 1 GB de RAM.
-    A familia t4g e ARM e as imagens do projeto sao x86.
+    Tipo x86 herdado da Fase 3. As restricoes daquela conta nao provam
+    as cotas/beneficios da nova; revalidar capacidade e custo antes de
+    implantar. A stack de observabilidade da Fase 4 ainda exige sizing.
   EOT
   type        = string
   default     = "c7i-flex.large"
@@ -97,7 +113,7 @@ variable "node_group_max_size" {
 # ------------------------------------------------------------
 
 variable "rds_instance_class" {
-  description = "Classe das instancias RDS. db.t3.micro e a menor elegivel ao Free Tier."
+  description = "Classe RDS herdada. Confirmar disponibilidade, cotas, custo e elegibilidade na nova conta."
   type        = string
   default     = "db.t3.micro"
 }
@@ -110,11 +126,10 @@ variable "rds_allocated_storage" {
 
 variable "rds_databases" {
   description = <<-EOT
-    Bancos que ficam no RDS. Apenas DOIS, nao tres: o plano gratuito da
-    conta recusa a terceira instancia com "maximum number of instances
-    available with free plan accounts" (F-023). O terceiro banco,
-    targeting_db, roda como StatefulSet no cluster (D-015), com aprovacao
-    do professor. Os manifestos estao em gitops/base/postgres-targeting/.
+    Base importada: auth/flag no RDS e targeting_db no StatefulSet
+    gitops/base/postgres-targeting/. A restricao e a aprovacao registradas
+    na Fase 3 sao historicas; revalidar cotas e adequacao ao enunciado
+    atual antes de definir a topologia final da Fase 4.
   EOT
   type        = map(string)
   default = {

@@ -8,7 +8,7 @@
 # arquivo NAO remove do historico.
 #
 # Corrigido em 2026-09-09 (F-048/P-049): a regra de "conta legada"
-# apontava para 891376952395, que e a conta ATUAL do projeto. Como esse
+# apontava para 891376952395, que era a conta da Fase 3. Como esse
 # numero aparece legitimamente no registry do ECR, na ARN da role de CI
 # e no nome do bucket de estado, o script reprovava sempre - e por
 # tabela derrubava o validate-all.sh, que o executa no primeiro passo.
@@ -70,10 +70,9 @@ check "Possivel chave privada encontrada" 'BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY
 # numero em si, e a configuracao velha que veio junto (LabRole, endpoint
 # antigo, ARN que nao existe mais).
 #
-# A conta ATUAL, 891376952395, e propositalmente NAO verificada aqui:
-# ela precisa aparecer no registry do ECR, na ARN da role do OIDC e no
-# nome do bucket de estado. ID de conta nao e credencial - sem chave ou
-# federacao, conhece-lo nao da acesso a nada.
+# IDs antigos podem permanecer em evidencias historicas preservadas.
+# Eles nao sao credenciais; o destino operacional da Fase 4 e conferido
+# separadamente nos workflows, Terraform e GitOps antes de publicar.
 check "ID da conta da Fase 2 (AWS Academy) encontrado" '557849629939'
 
 # Atribuicao direta de um valor longo a uma variavel de segredo conhecida.

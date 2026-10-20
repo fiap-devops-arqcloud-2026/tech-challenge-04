@@ -10,7 +10,8 @@ provider "aws" {
 
   # Regiao onde TODOS os recursos deste projeto serao criados.
   # Vem de variavel para nao ficar espalhado pelo codigo. Padrao: us-east-2.
-  region = var.aws_region
+  region              = var.aws_region
+  allowed_account_ids = [var.expected_aws_account_id]
 
   # Bloco especial do provider AWS: aplica estas tags automaticamente em
   # todo recurso criado por este Terraform, sem precisar repetir um bloco

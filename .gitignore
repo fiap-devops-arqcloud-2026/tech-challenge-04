@@ -94,3 +94,13 @@ output/
 # passa a ser ignorada, para nao virar deposito de arquivo solto.
 tmp/
 
+
+# Trabalho de leitura/QA preservado localmente, reconstruível a partir das fontes.
+00_COLAB_IA/**/__pycache__/
+00_COLAB_IA/02_TRABALHO/extracoes*/
+00_COLAB_IA/02_TRABALHO/qa-*/
+00_COLAB_IA/02_TRABALHO/validacao-ci04-2026-10-20/
+00_COLAB_IA/02_TRABALHO/validacao-local-*/
+00_COLAB_IA/02_TRABALHO/obs-aula1-p4.png
+00_COLAB_IA/02_TRABALHO/*.log
+00_COLAB_IA/02_TRABALHO/gitops-renderizado-*.yaml

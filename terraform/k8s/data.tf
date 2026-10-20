@@ -17,9 +17,9 @@ data "terraform_remote_state" "base" {
   backend = "s3"
 
   config = {
-    bucket = "togglemaster-tfstate-891376952395-us-east-2-an"
-    key    = "prod/base.tfstate"
-    region = "us-east-2"
+    bucket = var.state_bucket
+    key    = var.base_state_key
+    region = var.state_region
   }
 }
 
@@ -35,9 +35,9 @@ data "terraform_remote_state" "cluster" {
   backend = "s3"
 
   config = {
-    bucket = "togglemaster-tfstate-891376952395-us-east-2-an"
-    key    = "prod/cluster.tfstate"
-    region = "us-east-2"
+    bucket = var.state_bucket
+    key    = var.cluster_state_key
+    region = var.state_region
   }
 }
 
