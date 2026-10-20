@@ -1,0 +1,4674 @@
+{
+  "date": "2026-10-20T16:20:06.732886-03:00",
+  "source_commit": "61008794090f582c098e2edc42041339c556f14c",
+  "phase4_main": "003a7075a8908011ece83d317d5c700ac2525b58",
+  "phase4_dev": "9696185edcbe57d66c185d04158b59242ed3a07f",
+  "source_status": "",
+  "files": [
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/analise-modelo-guia-2026-09-16_v01.md",
+      "sha256": "3eaf478c779be1d68f3c486bebcf9ffb2b3b0c06c6bcddfc6bfe76525d5b3df0",
+      "size": 2370
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/ANALISE_ESTADO_E_OPCOES_CLOUD_2026-10-13_v01.md",
+      "sha256": "6528018999b13d59e01f6686beb69b549faeae0dd30ac5194a76c76aacdbc7eb",
+      "size": 10004
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/aplicar-auditoria-readme-2026-09-20_v01.py",
+      "sha256": "04c1047fb9bb73ad9a32e126682508a5c9d331ef0fab45cf18069288b22a369d",
+      "size": 13961
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/auditoria-opensource-2026-09-17_v01.md",
+      "sha256": "3ad57d0a98e9fea10b8f5eb88c24d5ac78aae60030395b5180aa739491fd43b6",
+      "size": 7171
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/auditorias/auditoria-readme-requisitos-2026-09-16_v01.md",
+      "sha256": "f699d86ebb8ccbe97a01b4f22d3159d4f2635486c7d34b4949264f0f66817cdf",
+      "size": 28370
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/cobertura-apm-2026-09-16_v01.md",
+      "sha256": "087c879754499f70fa785cc3c8f11cef46c0f3fcf70c215e0b703b5292c7be4c",
+      "size": 2656
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/cobertura-fundamentos-2026-09-16_v01.md",
+      "sha256": "c4e460ede7bc4b2dcf3152829575506ca54150f28fc19ba26d6aba6f00e78db2",
+      "size": 1696
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/cobertura-fundamentos-2026-09-17_v02.md",
+      "sha256": "1c746accab814c502f42d6c15ed4a9ddf5581f6e6e3b6d3c064a0810784cc589",
+      "size": 1894
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/cobertura-opensource-2026-09-16_v01.md",
+      "sha256": "ed0af5a683118e8171a527524829b5da787abee5b85fbe33e5b11afe28f8c980",
+      "size": 4242
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/cobertura-opensource-2026-09-17_v02.md",
+      "sha256": "c2841425611f67ecc804b5277bee4869446e63293e5382d462cc5cab90cb86ba",
+      "size": 3887
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/conferir-codigo-2026-09-21_v01.py",
+      "sha256": "08205c6ab64485dbb78dbfdc199dc6ec41b2a53f05b0edec6ef63401177b2b28",
+      "size": 2586
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/criar-fragmentos-incidentes-2026-09-17_v01.py",
+      "sha256": "9aaf10a924f79da45f288d922969d3ca949b9995402c4602d9024f9d6d2a8963",
+      "size": 55453
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/criar-guia-opensource-2026-09-16_v01.py",
+      "sha256": "a9394c242ab15d3adfcb169734b8fbb16ff41a725629f575b29dc33cc8631435",
+      "size": 43484
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/criar-guia-opensource-2026-09-17_v02.py",
+      "sha256": "f8db2dc7fdc9849655dd4f577928130b550fa72bdb7127f649d87eaec97537f1",
+      "size": 44271
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/criar-guias-fundamentos-2026-09-16_v01.py",
+      "sha256": "2e85e25ec1dfdbe56b2d7d87831e3c984ecbe61a90d91d1199984615bd0f7421",
+      "size": 29297
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/criar-guias-fundamentos-2026-09-17_v02.py",
+      "sha256": "5e5370f0e774e2213b732dd6d3f3c3a66580268a79bbf61c999d8d35cd8502b0",
+      "size": 31074
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/criar-requisitos-2026-09-16_v01.py",
+      "sha256": "1ee5cb2d043f7486c60c18aff7eaa0cd8d115e841a16623739b77480e44c10d7",
+      "size": 16639
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/dossies/apm-aula-01-2026-09-17_v01.md",
+      "sha256": "d8491fbc8c1a20b8c87ddb1c4144478fce894c2b098fc0b0cc1d8fd89ff10633",
+      "size": 1219
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/dossies/apm-aula-02-2026-09-17_v01.md",
+      "sha256": "dc4c72dffa6995d881b6259ee6424c4682858c649f457ee043ad04676294db78",
+      "size": 1169
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/dossies/apm-aula-03-2026-09-17_v01.md",
+      "sha256": "4edabeb353165fbc537a835421f834fdcc3cf94bc42a9c2d93760081975949d6",
+      "size": 1238
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/dossies/apm-aula-04-2026-09-17_v01.md",
+      "sha256": "2c1254368ec273d88f1ece0270607c7911bb58d90e47addebf610582dd9ad2c3",
+      "size": 1213
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/dossies/apm-aula-05-2026-09-17_v01.md",
+      "sha256": "789c0e27aed67ab3b9e358c15388fdf1f063ba63ad91e10013a7f7f13c50de07",
+      "size": 1177
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/dossies/apm-aula-06-2026-09-17_v01.md",
+      "sha256": "6fcdc1444e934a4edc54d8616ecb2718d49e0a3fa7196f3505b4dbd044dc6e41",
+      "size": 1259
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/dossies/apm-aula-07-2026-09-17_v01.md",
+      "sha256": "05b70d5b64382e0f1a2cef7a9f3f1e27bc19b37de4a92dfd3d748f7f18c87354",
+      "size": 1276
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/dossies/apm-aula-08-2026-09-17_v01.md",
+      "sha256": "0313e68d68188393b03ee1a57207bb2157de11558187ba9ac80935b59049bc9d",
+      "size": 1153
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/dossies/apm-aula-09-2026-09-17_v01.md",
+      "sha256": "a07c34e9a5f807d1727ec974c74d63a8f07b57da4046977078fdaf6e4e81bb6d",
+      "size": 1195
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/dossies/apm-aula-10-2026-09-17_v01.md",
+      "sha256": "b23082c6dcbc55243a08d1b612dd1132d080626cfe6a4383298a82e7df89ac6d",
+      "size": 1221
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/dossies/dossie-incidentes-aula-01-2026-09-17_v01.md",
+      "sha256": "737c3d2c6bf7027ec33e4eabe9f5a86e22aedc2a20e6f4b95f7f1c8da99c8c80",
+      "size": 1042
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/dossies/dossie-incidentes-aula-02-2026-09-17_v01.md",
+      "sha256": "5c46ce5fbdeef7be257a9edad664ad6871e26e7bc42244c7bc51fc6efae90f7e",
+      "size": 1037
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/dossies/dossie-incidentes-aula-03-2026-09-17_v01.md",
+      "sha256": "e6797654078e08ad2aafaea8b01fd2a34d8de5a16b6aae4d18e52bf4a19f2147",
+      "size": 1004
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/dossies/dossie-incidentes-aula-04-2026-09-17_v01.md",
+      "sha256": "f5580620429c0c8181a8d6f1a6778740d717eb69fbf89135eb8f6e5bfd660f61",
+      "size": 1132
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/dossies/dossie-incidentes-aula-05-2026-09-17_v01.md",
+      "sha256": "0494f80a93edbcd2dec9e9bd0dfbff404f2dcb93e97eb817ce9234a6542b0f0c",
+      "size": 1079
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/dossies/dossie-incidentes-aula-06-2026-09-17_v01.md",
+      "sha256": "826d0325db3dfd567fecb0a311423f87115f2e622bfc96cb203f2fb28344a9b6",
+      "size": 1278
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/dossies/dossie-incidentes-aula-07-2026-09-17_v01.md",
+      "sha256": "73d6bd6191724be29567a57e9d288ce18521c7995a5a337490fa2e25fbf349bf",
+      "size": 1072
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/dossies/dossie-welcome-capitulo-2026-09-16_v01.md",
+      "sha256": "8015af4bb6cc267ef645e5d91351c3fc40474e8f5efa3e8cae63277d08ca8bc6",
+      "size": 28008
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/especificacao-fragmentos-guia-2026-09-16_v01.md",
+      "sha256": "e098ca845da42820af0932ae5de92e2f61942e70629e5aaead5fdeb139f61f35",
+      "size": 7944
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/00-POSTECH - Tech Challenge - Fase 4.json",
+      "sha256": "fb6f7d8daf20025c4a6743490248d96c51b061924f037a95cc55a12ac9de5951",
+      "size": 10313
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/00-POSTECH - Tech Challenge - Fase 4.txt",
+      "sha256": "6688b913f2853ae7c361e3a917bbf45f2c9f922c54b71179d1be973892ad8df3",
+      "size": 10064
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/01-POSTECH - Capítulo de Projeto - Fase 4.json",
+      "sha256": "6bf20d408a5b184f8d276a2803236cb3260c20afb46c439fe8818a0567175654",
+      "size": 1609
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/01-POSTECH - Capítulo de Projeto - Fase 4.txt",
+      "sha256": "6cf02db624de9680cdfa793dc61d8ba7a840cc55458133ea02a0f6fceb14d1c5",
+      "size": 1466
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/02-POSTECH - Observabilidade e Monitoramento - Aula 1.json",
+      "sha256": "7706a83de31b693d6e173a1bb0c6ae7ca331770274915ce862d9e5dd505c28dd",
+      "size": 7773
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/02-POSTECH - Observabilidade e Monitoramento - Aula 1.txt",
+      "sha256": "6ba1cdcfd3410e070aa99b6532cb606fc34c367c334ffa03d0498d6d7f20f125",
+      "size": 7120
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/03-POSTECH - Observabilidade e Monitoramento - Aula 2.json",
+      "sha256": "e31b00e1eedaeccadb4aebd3705b828b26dc24c0142c8c1cdd574d5b58ae5116",
+      "size": 7770
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/03-POSTECH - Observabilidade e Monitoramento - Aula 2.txt",
+      "sha256": "f0464260a5ca761ce899a2e4f7254ce40a5499930e932df29ffb72913df35377",
+      "size": 7185
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/04-POSTECH - Observabilidade e Monitoramento - Aula 3.json",
+      "sha256": "f6e66a4df3b098b673b1814a5b99c9421174bfa804e2e2a44687e9e7762eedcb",
+      "size": 7248
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/04-POSTECH - Observabilidade e Monitoramento - Aula 3.txt",
+      "sha256": "a4ba7ddc424440054fd9d6a457bad615075569ee84e37f5fd0e36e1b36df2e81",
+      "size": 6697
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/05-POSTECH - Observabilidade e Monitoramento - Aula 4.json",
+      "sha256": "bddcc9675c2c092d665ba89d681dd2311b273bdec8d49a209977c6f24e7ed60a",
+      "size": 7663
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/05-POSTECH - Observabilidade e Monitoramento - Aula 4.txt",
+      "sha256": "f9a50c39dd9b19558ba95a45767427c4d1ba77eab239059c04740f6ba0ba10c9",
+      "size": 7078
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/06-POSTECH - Observabilidade e Monitoramento - Aula 5.json",
+      "sha256": "cf57ee4cdd5e803ad183042bea9cc85e66dc16e893d855d79615611f4f319004",
+      "size": 6344
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/06-POSTECH - Observabilidade e Monitoramento - Aula 5.txt",
+      "sha256": "2c089163c39380172291fd1b769e258890d1907aff29f8c5a473eb2591c9295c",
+      "size": 5861
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/07-POSTECH - Monitoramento Opensource - Aula 1.json",
+      "sha256": "6e215373857f6da996a8c83f9bb1b8f7d21238ae07b8d3ac239de7effebb08a5",
+      "size": 5964
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/07-POSTECH - Monitoramento Opensource - Aula 1.txt",
+      "sha256": "2f05f6c0c7130070ead812a2a12c8d754c5c33cf08a22720ccd88c162680079d",
+      "size": 5447
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/08-POSTECH - Monitoramento Opensource - Aula 2.json",
+      "sha256": "8c524c5f52e737915ddace26a0020df0b63250b3490b66e825d268aa821ea8b0",
+      "size": 5929
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/08-POSTECH - Monitoramento Opensource - Aula 2.txt",
+      "sha256": "5395c14e5176c5552e1f31a4a13ecbb316b31f2f4bba94a1f5057770482bc45c",
+      "size": 5446
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/09-POSTECH - Monitoramento Opensource - Aula 3.json",
+      "sha256": "b9a276acf839c08de14559796ef4d39dd3a5b397128a2667a46ea96ae7109019",
+      "size": 5368
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/09-POSTECH - Monitoramento Opensource - Aula 3.txt",
+      "sha256": "3b61da34e4faffb17198462609d69cf85a6d2d0973889029c61d18da04570d44",
+      "size": 4919
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/10-POSTECH - Monitoramento Opensource - Aula 4.json",
+      "sha256": "2fbd0fc35734632928c053bf903eba65a888397cb1087876c8636d9fa7097e1c",
+      "size": 5463
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/10-POSTECH - Monitoramento Opensource - Aula 4.txt",
+      "sha256": "c325da1f1724cf9fb4fa354e86e09894439912e6ca1f29b08af5faeecbc5a972",
+      "size": 4980
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/11-POSTECH - Monitoramento Opensource - Aula 5.json",
+      "sha256": "7cbf0412da03930311e2fd19fd76e1f9709df7c85ea0a31afcd9625465b9cb65",
+      "size": 6329
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/11-POSTECH - Monitoramento Opensource - Aula 5.txt",
+      "sha256": "7c7c0a7d70a161aa68c35f7564415c24d30552079e659505b8b1a2ebb3b93f58",
+      "size": 5778
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/12-POSTECH - Monitoramento Opensource - Aula 6.json",
+      "sha256": "45e86688d0ced1fbbbf8f8d5b415d12ac6a9215efb661678e181bd4ab84c532a",
+      "size": 6477
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/12-POSTECH - Monitoramento Opensource - Aula 6.txt",
+      "sha256": "37e589dbb09dfafdca5aec1e282c5bc0b41e2f1c35d8ba68e8c1ab50808815ee",
+      "size": 5926
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/13-POSTECH - Monitoramento Opensource - Aula 7.json",
+      "sha256": "0fedc0e6982c59d06ba6a4abdf002e9bf8f3e59fc2e8619ee801d68e3a658610",
+      "size": 6086
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/13-POSTECH - Monitoramento Opensource - Aula 7.txt",
+      "sha256": "a3627708ce40ef52bdc8e9a663a1a344b3ce104de44ac2b6aba7d45e9899b858",
+      "size": 5569
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/14-POSTECH - Monitoramento Opensource - Aula 8.json",
+      "sha256": "baaf91c0c66ecbb14ab26fd45d9410cb244f49bbdc71417c422c9518f7c295ff",
+      "size": 6198
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/14-POSTECH - Monitoramento Opensource - Aula 8.txt",
+      "sha256": "478e4345afcab85f88a8d3e9d175ca8ffd0ede994b0a3b128ae9728093de9f83",
+      "size": 5681
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/15-POSTECH - APM - Aula 1.json",
+      "sha256": "27e631cd22da10bd9e591e62c788ac1c1988d2d35006b0f3907127941068b7b2",
+      "size": 15237
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/15-POSTECH - APM - Aula 1.txt",
+      "sha256": "e904a376a30729519be61c314ca6a784ad019a260c6fef31fd250811e6835b63",
+      "size": 14005
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/16-POSTECH - APM - Aula 10.json",
+      "sha256": "f52bb38bfe55789958e82ffd956c950d8b362fc9f8b9d666330b8b282e29355b",
+      "size": 13588
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/16-POSTECH - APM - Aula 10.txt",
+      "sha256": "c912e5ac9da41797cebd534501cece714fee43098eb7262cb899d4cbe7fbf662",
+      "size": 12535
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/17-POSTECH - APM - Aula 2.json",
+      "sha256": "ef18ebf9356026b71585d7d2fa42ac582867ac0ab7c3b1c25e0201eb0c3ce16d",
+      "size": 10915
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/17-POSTECH - APM - Aula 2.txt",
+      "sha256": "6744188f7ffa54f075038a07be7c00f800417b85bd9142affec79ed0c177d38b",
+      "size": 9990
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/18-POSTECH - APM - Aula 3.json",
+      "sha256": "4eb1dd1cc680c9433840cae69f8ec282a5d9550d06e4cf7ac404b5c378ceab4b",
+      "size": 17922
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/18-POSTECH - APM - Aula 3.txt",
+      "sha256": "2b3f412d06420ab04af01e1d374c259154be67b141225feffee0f59ba2630c1e",
+      "size": 16410
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/19-POSTECH - APM - Aula 4.json",
+      "sha256": "a41e8d9ffd8c0129e471e97950a77e01aee31207af987902cdb2d14bd0fb192e",
+      "size": 17555
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/19-POSTECH - APM - Aula 4.txt",
+      "sha256": "806d904b3f35ff0b2a5a6c6c0af6b5eacdef2731a19e11ee0d1d7d674f087102",
+      "size": 16113
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/20-POSTECH - APM - Aula 5.json",
+      "sha256": "0ad11f61828cf495600772b4366d55a0623b92592111107e3e730033bc05bd80",
+      "size": 21108
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/20-POSTECH - APM - Aula 5.txt",
+      "sha256": "f2c878db8bc3a3796adfe6cddaeb8736661d28b7b842d5c101cffbc0cee48ab1",
+      "size": 19434
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/21-POSTECH - APM - Aula 6.json",
+      "sha256": "d913d3ac9633e9f49b643b8c0377b7077b7364c6b48db40ce0e9445e7101ca56",
+      "size": 13854
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/21-POSTECH - APM - Aula 6.txt",
+      "sha256": "ccbde75ea24a5d11390467b541e790e264d838e14ce6c27ffcbe3e95e8250094",
+      "size": 12657
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/22-POSTECH - APM - Aula 7.json",
+      "sha256": "3cdd7ee34262ba3befc7ca72a3bf14e2bce0d8912cabfa264fec52490cfa0231",
+      "size": 12149
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/22-POSTECH - APM - Aula 7.txt",
+      "sha256": "814d9d3ff2307414c26dfb4d7fb9689e78eb77db82709ec50a4e9408a32436be",
+      "size": 11156
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/23-POSTECH - APM - Aula 8.json",
+      "sha256": "01038e48f527aaa242cd91f33ce0dbc3c0044225d4beb69af9e60d5e549c1203",
+      "size": 10887
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/23-POSTECH - APM - Aula 8.txt",
+      "sha256": "8dc352c79ee34eb4cc497c3327017f7d499d7233e0fdaf849b36c4855dc6733c",
+      "size": 9962
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/24-POSTECH - APM - Aula 9.json",
+      "sha256": "3d2641a37d510f23dc2154ad939e486e6974c18a10abcf943cd1034dcc395e50",
+      "size": 10314
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/24-POSTECH - APM - Aula 9.txt",
+      "sha256": "804c534f81d6ecb13d340312199ccda2b8eb3953aeb2ec2e734e97ded6223f91",
+      "size": 9457
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/25-POSTECH - Automacao de Incidentes - Aula 1.json",
+      "sha256": "14e29fec30cbc8e710409aacae4ebae30560b2a295adb28c04672b72582a1b39",
+      "size": 6779
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/25-POSTECH - Automacao de Incidentes - Aula 1.txt",
+      "sha256": "919e734b7e0f95b17f62b4aff199b7f5c424553cc08dcdb7675a2149ed1dec5e",
+      "size": 6194
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/26-POSTECH - Automacao de Incidentes - Aula 2.json",
+      "sha256": "03cb7c6a4aadea8463a51620db72bdda7d584b7a6eddbc9fd6ad648063a36aa7",
+      "size": 9163
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/26-POSTECH - Automacao de Incidentes - Aula 2.txt",
+      "sha256": "36c14b8966927af12137e91e3257cb22c85f3ee88ff40dae13a56d3ea618acf7",
+      "size": 8362
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/27-POSTECH - Automacao de Incidentes - Aula 3.json",
+      "sha256": "ad6fe76b25b0b51ff62e0770661d1cba4a9383b5162ab1e32d69cab9fa19aa2d",
+      "size": 9179
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/27-POSTECH - Automacao de Incidentes - Aula 3.txt",
+      "sha256": "503fbb3cdea251b96706afe75f830931e0330ae87b4dc79c05a4372b0a130734",
+      "size": 8390
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/28-POSTECH - Automacao de Incidentes - Aula 4.json",
+      "sha256": "81afc75f100be384aca0fc6ce69144c58eb4a28f86c0e475853caeacd8a67a69",
+      "size": 8619
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/28-POSTECH - Automacao de Incidentes - Aula 4.txt",
+      "sha256": "cb057e4b19bbb8cb88b8a4bfcc0ae5213abc7f54a5f1e163990068c3377074d6",
+      "size": 7898
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/29-POSTECH - Automacao de Incidentes - Aula 5.json",
+      "sha256": "df9ded66a240e754df1985ff8b1458e0ed69aac6d9fd81e80e1f0500c6761126",
+      "size": 8864
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/29-POSTECH - Automacao de Incidentes - Aula 5.txt",
+      "sha256": "a4daa47a6cb6c71e412f4f726a440c72a782ecf39bf447e4ca4304dc4ca52d89",
+      "size": 8143
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/30-POSTECH - Automacao de Incidentes - Aula 6.json",
+      "sha256": "4f29a9eaa6a608bdca1cfd55efea99cd88ceb78727f6cd2c8a92267c41dbc92d",
+      "size": 7564
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/30-POSTECH - Automacao de Incidentes - Aula 6.txt",
+      "sha256": "281984505fcf4fc8137e928f2a8ad298094ee286453f584f6a697afc1d17c14d",
+      "size": 6945
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/31-POSTECH - Automacao de Incidentes - Aula 7.json",
+      "sha256": "010b4d36b0c3918961f6286aeea1e639328a49a7fbe0c8168c088c414e11fec3",
+      "size": 8143
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes/31-POSTECH - Automacao de Incidentes - Aula 7.txt",
+      "sha256": "a8e31fed0d614444373263ad31282b4794ed572131b678ecb712aa03db69aa39",
+      "size": 7456
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/00-POSTECH - Tech Challenge - Fase 4.json",
+      "sha256": "5c048175b365b3c65a025f87e0362be66232e370a33ab18b87614e9dd9eb57bc",
+      "size": 7899
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/00-POSTECH - Tech Challenge - Fase 4.txt",
+      "sha256": "4c07f32a0dc314a21adda48351cdf0c8c94e29aebbcc1d15fdfee19d901d0305",
+      "size": 7776
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/01-POSTECH - Capítulo de Projeto - Fase 4.json",
+      "sha256": "6bd21796a5a4b86c4454bd28b01df65db7e505b7fa215e87c0546cc23762deea",
+      "size": 3515
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/01-POSTECH - Capítulo de Projeto - Fase 4.txt",
+      "sha256": "b3c1a1d235c10180c45197b4bfdd471be9d3d27a29c095699f635efe76e698e2",
+      "size": 3444
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/02-POSTECH - Observabilidade e Monitoramento - Aula 1.json",
+      "sha256": "42f933f580ac1d3253c6d003f67370cfa2a9f68268e2593386996a375abbeba6",
+      "size": 26970
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/02-POSTECH - Observabilidade e Monitoramento - Aula 1.txt",
+      "sha256": "a1fb661e46887ad98bf58f960cd70df0c86736a8429c5e09962d585d75d1a401",
+      "size": 26649
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/03-POSTECH - Observabilidade e Monitoramento - Aula 2.json",
+      "sha256": "e39e3f6fd5e3380de23907fd737c6d4f931e17c41395a05199287fbff88ea617",
+      "size": 23396
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/03-POSTECH - Observabilidade e Monitoramento - Aula 2.txt",
+      "sha256": "63874aea10bd085afb350abe5cae93a41b59606e04d93799d2cb2dc0de812992",
+      "size": 23113
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/04-POSTECH - Observabilidade e Monitoramento - Aula 3.json",
+      "sha256": "640ca6d0ecf02f0d0353a17699210a7a6bf6de5658d0da8bd9a1540bfdc10064",
+      "size": 24684
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/04-POSTECH - Observabilidade e Monitoramento - Aula 3.txt",
+      "sha256": "a7d71e44e44d0f07b2db004b58088444d50943481a81e4a6c2c03e6df5465c8f",
+      "size": 24421
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/05-POSTECH - Observabilidade e Monitoramento - Aula 4.json",
+      "sha256": "3f2506d1293cd1acc767da8551d80c61dabcf9a344450fe97164b30c24f26563",
+      "size": 26128
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/05-POSTECH - Observabilidade e Monitoramento - Aula 4.txt",
+      "sha256": "55a060fb38f8622127ed926fa977eb2474e4411f98e9c70b9b4c49ca8e7e85d3",
+      "size": 25849
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/06-POSTECH - Observabilidade e Monitoramento - Aula 5.json",
+      "sha256": "be59a0fc5a9cfe499402afa1c8c1e0014c32e0760b66a2c5ec3528bdf01d70bd",
+      "size": 23175
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/06-POSTECH - Observabilidade e Monitoramento - Aula 5.txt",
+      "sha256": "940542ae4794f65a1b96f2e29b711b36b47bdfbeca679e777995ede4ae6ef14b",
+      "size": 22944
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/07-POSTECH - Monitoramento Opensource - Aula 1.json",
+      "sha256": "428d6620c493184093cd36013c1009554022428e26698a1d6d6e592b8fe78338",
+      "size": 16407
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/07-POSTECH - Monitoramento Opensource - Aula 1.txt",
+      "sha256": "4b504d5b1655ec8cfb36a16a74c7f3ee8a43619e58c094f100e3f4027fb35cfd",
+      "size": 16154
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/08-POSTECH - Monitoramento Opensource - Aula 2.json",
+      "sha256": "841cd894302fe8214f49bd9cb419f3e0c8a794a9dcd8b02505fa074f76ae8c08",
+      "size": 14135
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/08-POSTECH - Monitoramento Opensource - Aula 2.txt",
+      "sha256": "ab5c3d52754dd22e873e8591deba0b2b7eacc471cb1f6e68b565db7827cded60",
+      "size": 13896
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/09-POSTECH - Monitoramento Opensource - Aula 3.json",
+      "sha256": "1608faaa88ac4b7a3bbd1298a2ae61eee4269a24c3961908576e7e72992dde88",
+      "size": 12680
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/09-POSTECH - Monitoramento Opensource - Aula 3.txt",
+      "sha256": "f288d528838e5c3bb8fdfee18fbdd7050cdac424d09a8287a5aee77ae6d3b454",
+      "size": 12465
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/10-POSTECH - Monitoramento Opensource - Aula 4.json",
+      "sha256": "b3b81fd10d813ccdadc3f57c9ef742166737b84ab6754218c4681124a036c6fb",
+      "size": 13531
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/10-POSTECH - Monitoramento Opensource - Aula 4.txt",
+      "sha256": "32a0d724806fa131ad671ae52bbc8d7b81a3b5b372f66eb2c365374dd434ffe0",
+      "size": 13282
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/11-POSTECH - Monitoramento Opensource - Aula 5.json",
+      "sha256": "b73cfd4344768bef3a870f836d82e6b7e4801fe7a56374f9006c57f67673b455",
+      "size": 18006
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/11-POSTECH - Monitoramento Opensource - Aula 5.txt",
+      "sha256": "c6b3f5e844a660044894d77ecadc19391bf1f7518b5739d567d2e4f990582ae1",
+      "size": 17731
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/12-POSTECH - Monitoramento Opensource - Aula 6.json",
+      "sha256": "b7ce538a8902363e8573d7eabf1fb9024917f08db507862941c9e121f0d04628",
+      "size": 18588
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/12-POSTECH - Monitoramento Opensource - Aula 6.txt",
+      "sha256": "1c4aa8586b94c6f43dc97a0c6415a79d25f9c712a6b2c184d01c3ac9388532e4",
+      "size": 18319
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/13-POSTECH - Monitoramento Opensource - Aula 7.json",
+      "sha256": "6ded5dc7d10850cfa4693bc86139551da6d6ae363ba6cd2efaa29349cef3a3d6",
+      "size": 14566
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/13-POSTECH - Monitoramento Opensource - Aula 7.txt",
+      "sha256": "5fce7d37dc721bbd76842c2feef64bfe0cc7806c1071ac3cd2f6d8a7931a7de0",
+      "size": 14311
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/14-POSTECH - Monitoramento Opensource - Aula 8.json",
+      "sha256": "0a3fb698174e5f5cdd556f29fa2e7fd3b9f9274598cabfd03d48d9003d6da6f9",
+      "size": 15402
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/14-POSTECH - Monitoramento Opensource - Aula 8.txt",
+      "sha256": "2dce850d1e60249822c2a9f1c5349048dc14653373084e535781cfbf5d4fd1c6",
+      "size": 15143
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/15-POSTECH - APM - Aula 1.json",
+      "sha256": "f586fc5daed3108f3f149103187ce149181edfb34785abc70db076529705f4e0",
+      "size": 53920
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/15-POSTECH - APM - Aula 1.txt",
+      "sha256": "8ff7da76e5ca8b4c9d754a9431be1dc50a6c60e2de08571fd9e72ede814c3939",
+      "size": 53244
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/16-POSTECH - APM - Aula 10.json",
+      "sha256": "048bc27d1bb86c2fab49baefa125872fed53fbc2f30745b0218ef031c54132e2",
+      "size": 53149
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/16-POSTECH - APM - Aula 10.txt",
+      "sha256": "50da1515b2291980a6557802940258ed2aca61424128d3efa47dc5bd28efc87d",
+      "size": 52476
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/17-POSTECH - APM - Aula 2.json",
+      "sha256": "98d17851089c68a525d5b0b8c639fe733be93928bd349639cc6535e40ab04078",
+      "size": 43685
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/17-POSTECH - APM - Aula 2.txt",
+      "sha256": "ea65396d2e3c0703cc541a16a2d2790028f0aad64434bb877bb538905e0c2956",
+      "size": 43244
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/18-POSTECH - APM - Aula 3.json",
+      "sha256": "ac50d8fa2e5a2e20c683c80e1d7b8ac800af8d30738a61ee79ceaa377d4503f9",
+      "size": 70645
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/18-POSTECH - APM - Aula 3.txt",
+      "sha256": "f4583e0bb8683b912350c26eb2a2c566fad88c1c084f4f0835b23382414d93c6",
+      "size": 69882
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/19-POSTECH - APM - Aula 4.json",
+      "sha256": "ddff2cde9049e5586ba89a5d21c8b88736bbe22f16a00c8ac2a5a278554233d5",
+      "size": 73507
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/19-POSTECH - APM - Aula 4.txt",
+      "sha256": "39f65d2dad41b12b2f3b8564a3f6417f58ad2b07c473b14b8cd2530f75fcc870",
+      "size": 72765
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/20-POSTECH - APM - Aula 5.json",
+      "sha256": "5cd07e7b9828fb0a2824a182b9b07353f7afee7a7144cd7ae7d7761a92c9f220",
+      "size": 78198
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/20-POSTECH - APM - Aula 5.txt",
+      "sha256": "58dea7567a1fae3a538e19f4dbd8315b47650ad79b9c2c4f6dbe3c4145dfebe3",
+      "size": 77243
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/21-POSTECH - APM - Aula 6.json",
+      "sha256": "b969cd8c77782f6ef9fe69685bbed1cd5276feb3692346af5b253f60ba18eb37",
+      "size": 52164
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/21-POSTECH - APM - Aula 6.txt",
+      "sha256": "15b712083a71d38d2b1e09fbddeedb8f30f65cb09556fe317ab60d23132f1b77",
+      "size": 51571
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/22-POSTECH - APM - Aula 7.json",
+      "sha256": "46fcdf5164aa36f5b6fa392326b0edb19fedc8b2f48c2fca93040c76f0e24146",
+      "size": 43113
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/22-POSTECH - APM - Aula 7.txt",
+      "sha256": "6d352fa9a2bf1e8b5eb866c5944d6365d7aa6fc63bb738591783169668b5575a",
+      "size": 42585
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/23-POSTECH - APM - Aula 8.json",
+      "sha256": "1884356223b7118a1279f6f6268b3587c78ff19d9501cb053719289d227dbf69",
+      "size": 49077
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/23-POSTECH - APM - Aula 8.txt",
+      "sha256": "2095a153fd487851348f0aaba987c00f39a66a53971043ddb3032ec4c5d0ad26",
+      "size": 48612
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/24-POSTECH - APM - Aula 9.json",
+      "sha256": "a1ba4f703b2056c3f30ed16d63d7583e3405737d672c4326ffaf06591a191804",
+      "size": 44362
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/24-POSTECH - APM - Aula 9.txt",
+      "sha256": "c28c2ac07e8e1a46d4f86f5fa1706793fa439357594de7ddcf12430fb55b0045",
+      "size": 43955
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/25-POSTECH - Automacao de Incidentes - Aula 1.json",
+      "sha256": "a9930ac399efca1b9762b0d844fcd6d02ebe45a41dc815cea50623cababcd696",
+      "size": 20995
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/25-POSTECH - Automacao de Incidentes - Aula 1.txt",
+      "sha256": "c98b5cb0ac71ea8eed7deedeac932e5ef03790b00e786f9f4c28c2518be72277",
+      "size": 20678
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/26-POSTECH - Automacao de Incidentes - Aula 2.json",
+      "sha256": "2b08ef81d8fe8df8b796e56a55b4f8a309d6de605d72cfa0668a473bd7adbc4f",
+      "size": 33360
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/26-POSTECH - Automacao de Incidentes - Aula 2.txt",
+      "sha256": "6992ebc3e235ff9d9a7cacbdd04784272073c3bc1aa4b6cd96dee25cf318a44f",
+      "size": 32810
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/27-POSTECH - Automacao de Incidentes - Aula 3.json",
+      "sha256": "5452ecf1d33c789b261663d179aba8ba56a946152354be9b6c4e2e99e8324e43",
+      "size": 33418
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/27-POSTECH - Automacao de Incidentes - Aula 3.txt",
+      "sha256": "74b06db4508c63fa581e50f761f04d3fb2bdebdddf4d6fcec718b696c9f358e2",
+      "size": 33043
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/28-POSTECH - Automacao de Incidentes - Aula 4.json",
+      "sha256": "fa50456e2f24290144b4f52aa49b09d84de9ff55f849d8473744962a63030d6b",
+      "size": 27326
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/28-POSTECH - Automacao de Incidentes - Aula 4.txt",
+      "sha256": "f0cd3757cddefe3e815f42e71a832ae46bbd4a1f8cefdeaeb2b8f438b329058a",
+      "size": 26983
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/29-POSTECH - Automacao de Incidentes - Aula 5.json",
+      "sha256": "46c6296a2a69f70a241973c5e50e4c9d78581422d9d4bc11417d9b7317d07215",
+      "size": 26568
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/29-POSTECH - Automacao de Incidentes - Aula 5.txt",
+      "sha256": "ead66f60e0c224ba56da5f7584ff07d4bbf4f4d5e5c64f9f57ca1b925f507a2b",
+      "size": 26221
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/30-POSTECH - Automacao de Incidentes - Aula 6.json",
+      "sha256": "95b0b63498d419d9dbdb2bd300fd9aef2c3951d77f90bf44f0d201d40a5f8465",
+      "size": 19574
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/30-POSTECH - Automacao de Incidentes - Aula 6.txt",
+      "sha256": "c4b91abd5de050261a0fcd9a0e00464ab4c2a00acc8bda979aaab23b80e773fd",
+      "size": 19197
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/31-POSTECH - Automacao de Incidentes - Aula 7.json",
+      "sha256": "be31b3e7db11e3727468c555705b3104ec02650125118170512ce40c6ee9183f",
+      "size": 25916
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/31-POSTECH - Automacao de Incidentes - Aula 7.txt",
+      "sha256": "e8511f3286987cd6d04629d0e8cda523c78c4be2060100e6da54a0fb08807980",
+      "size": 25507
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extrair-fontes-2026-09-16_v01.py",
+      "sha256": "d23dfcddc31975bb094176c1c1568c89463d642c4b4eacad6a9fe216703e598b",
+      "size": 1423
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extrair-pdfium-2026-09-16_v01.py",
+      "sha256": "0dd6050dafe72521f8af01b7a9e1ccf380bc20aa39bbb445f016e9b05c958437",
+      "size": 1137
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/apm/00-visao-geral.html",
+      "sha256": "09104479942409b98348248701399673d1405c16155b904ac01efd36707fc670",
+      "size": 3560
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/apm/01-glossario.html",
+      "sha256": "414d3f93528c6ad38452b3f5e8db8d3cbe01ad73e245985e998460c962124b6f",
+      "size": 10032
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/apm/02-aula-01.html",
+      "sha256": "af2d7eb7f4724ce6241a49095b6598e43b367938c2aef63942603f8081e024e8",
+      "size": 37899
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/apm/03-aula-02.html",
+      "sha256": "fa55849d045858244f8ac0ddabd3c3634f99292f7df85674a189fe30a05b8f58",
+      "size": 26858
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/apm/04-aula-03.html",
+      "sha256": "b2e302181177442b9af3cb936c9d551e25716b9af98ba313a4dab2cebd9c6c44",
+      "size": 33077
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/apm/05-aula-04.html",
+      "sha256": "e346a2d804d66867d7a623c3fc7b46aef66c18e018daabad491bf321a3ae4756",
+      "size": 28107
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/apm/06-aula-05.html",
+      "sha256": "84c82921baf609714e10353ab72e742639349029f518a95cf57c2b915aefd792",
+      "size": 25362
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/apm/07-aula-06.html",
+      "sha256": "6bbfcacdf78a75cb9976599edee84f5d70e23599eb1fa3c701639cf29c1c729e",
+      "size": 21340
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/apm/08-aula-07.html",
+      "sha256": "0c1d8337fd9e324453dd2bc46e63e17de2ea5499b5dadb1137560707c92fa275",
+      "size": 51465
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/apm/09-aula-08.html",
+      "sha256": "ba2029bca0934d4df99a97d4e0040f31cee5bbd64b34de4d566d797957736e41",
+      "size": 39477
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/apm/10-aula-09.html",
+      "sha256": "56ed8ec5831e8a2f481e4b2a87514c28679c628ce63b03fc7cbc43c7c166053d",
+      "size": 39428
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/apm/11-aula-10.html",
+      "sha256": "161648721be20325810a58664f730003cb72cf5dd16be2ecdadaa794e19965ec",
+      "size": 20461
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/apm/12-comparativo.html",
+      "sha256": "3e87a80a3c0f3ead21c2af7f673880775e51ecdaf7d88eeff13011006447ab02",
+      "size": 8681
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/apm/13-aplicacao.html",
+      "sha256": "782b3af2ffdc5515c00bebe6517009cdd072d64977a28d8e201a9874c73cebb4",
+      "size": 5471
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/apm/14-boas-praticas.html",
+      "sha256": "692312b91978b2f804eed663830b011b3fb16b36ac2bee21b12e5f127c4a2330",
+      "size": 5942
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/apm/15-outros-modulos.html",
+      "sha256": "d5962756eef9e4d7f7e961a1c80e1aebaf1e14815189d84fa4fdf5903d611328",
+      "size": 2473
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/apm/16-limites.html",
+      "sha256": "ca235ede65ff6910f9a697f11480f71c67219e545cdb96a7cfd429f807841ee2",
+      "size": 7457
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/apm/17-revisao.html",
+      "sha256": "17cb08009a7a1ccbc72de4e4e7586c0453226a98dd26248741f484ef616bbe54",
+      "size": 10418
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/apm/conexoes.json",
+      "sha256": "502b6fbc077f986761eee69bb762f5baab66c505411c740d73a2ef2f71e259d4",
+      "size": 4522
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/apm/config.json",
+      "sha256": "22e6fed49dac5c3aae90232fc55f321b8b42074908d246be1582adddde3547ed",
+      "size": 871
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/incidentes/00-visao-geral.html",
+      "sha256": "58b9afa41a571bd497dba7743602d8e45e24125cfc0aa755bdf996e1eb070878",
+      "size": 1997
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/incidentes/01-glossario.html",
+      "sha256": "25ae450c96932232ce2c6b201a60d65e1a2ccd7834584652fd2efc170a2a9fac",
+      "size": 3200
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/incidentes/02-aula-01.html",
+      "sha256": "db1c5992da88971b18ddedcedc99b79d79ab765e3f2fabd9199a443fa9dcebad",
+      "size": 4450
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/incidentes/03-aula-02.html",
+      "sha256": "7a58a06e810ff7213fa09d70bbb92de9e0b9d4248b7160e2649c175632cce246",
+      "size": 5947
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/incidentes/04-aula-03.html",
+      "sha256": "379abe679de73e6a98c69bbc46336ea0dbbc4a9ca18789b74b0438fa402e359d",
+      "size": 5144
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/incidentes/05-aula-04.html",
+      "sha256": "d70a413a70dd14c24df97721d327a4b4f7ebd268a4b05e223e50a11958b97c96",
+      "size": 4657
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/incidentes/06-aula-05.html",
+      "sha256": "3928b4bbb37834896ac9a958c06c2bab1de39bb6ac31c7e8c551e6e93631ea06",
+      "size": 4651
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/incidentes/07-aula-06.html",
+      "sha256": "d6963a129d19c9ef37b07550f510e80768d83a31284f16c9a74f0593aff63aaa",
+      "size": 19300
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/incidentes/08-aula-07.html",
+      "sha256": "1849319ff6a8be847b1ede7b03c7e927794a8d6e8da33c17f1a26e2747951bfa",
+      "size": 6868
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/incidentes/09-ciclo.html",
+      "sha256": "14a54c25fee85af13103b0c0d023fa2c2ab8c223fc196f15aca2c55f767dee4d",
+      "size": 1910
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/incidentes/10-comparativo.html",
+      "sha256": "c2d1c031cf345bc49c161b9fc6884d4098e532d4e386636e71e4b35a7f050c51",
+      "size": 3330
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/incidentes/11-aplicacao.html",
+      "sha256": "7984875606190e0eb8097cdc1f0df0ed00c3d76581f352fe5503b34ed744bfc1",
+      "size": 3420
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/incidentes/12-boas-praticas.html",
+      "sha256": "5197c03ca28d4c571b73f1f8186561aeafed64e0ded279052157806191e1e996",
+      "size": 2013
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/incidentes/13-outros-modulos.html",
+      "sha256": "799f8811311e81276340333c2f8c4c2c525ff645cfba0210826c79a26dc91a7b",
+      "size": 1391
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/incidentes/14-limites.html",
+      "sha256": "bea0a769bb69e6d5db34f9a20251a9a10bb61591e1726fcc59034266710038e9",
+      "size": 2895
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/incidentes/15-revisao.html",
+      "sha256": "9095e294ed251ba8b31f02d801442d239bbe22c4de7dc21f10b09e8d559a5a53",
+      "size": 2644
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/incidentes/conexoes.json",
+      "sha256": "da9e461b42721f39dcb2ec52b24a56ae3dd8d45fdd49df6e52d9c9741066e5af",
+      "size": 2046
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/incidentes/config.json",
+      "sha256": "85b508feff8dea7dca40e474ddda5419301e23aa3adb93054d45663da00e2f13",
+      "size": 848
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/gerar-espelho-requisitos-2026-09-20_v01.py",
+      "sha256": "302f07687e161acd838851208d3511bf08c520594937e7f769a8a5d7c35c1396",
+      "size": 6179
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/guia-base-2026-09-16_v01.css",
+      "sha256": "b366303441c41943978ee966ef87fd87a6b11ca727b258e3595b73545d301c24",
+      "size": 9474
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/guia_base.py",
+      "sha256": "a11f760da6f83e91df6705c2567fdc7db0bdaa6c7307ea57e8086a5e74ed588a",
+      "size": 5150
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/importar-fase3-preparacao-2026-10-20_v01.py",
+      "sha256": "0fcf58b2180ae5b1b9bf9d81e249953c8dcd561763f72da237819e6b800344fd",
+      "size": 4110
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/inventario-fontes-2026-09-16_v01.json",
+      "sha256": "7091a00b8f432251770d9dd13858aaa752f43fd0fc1880237a2db74daca74f46",
+      "size": 19386
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/mapear-modulos-readme-2026-09-20_v01.py",
+      "sha256": "9dc680ba56f53ec1c6d4e6f85b62442976edef7117cf07a1f91cdbd1955ce33c",
+      "size": 3743
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/montar-guia-2026-09-16_v01.py",
+      "sha256": "f6e13c620e23e0eff11016a61c8213f3c5bfe33907681980c031ef4c7e89c867",
+      "size": 2178
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/obs-aula1-p4.png",
+      "sha256": "13ccc004ef954d286a6cd296b1f1918509ade5f78b188cc3633b0ced50ba6e5f",
+      "size": 117632
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/plano-fase4/partes/01-cabecalho.html",
+      "sha256": "d63dd1d2883488fb2d57828ff96b155df3f5403ee3e39ef4a3acc199a2cfda94",
+      "size": 11397
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/plano-fase4/partes/02-alto-nivel.html",
+      "sha256": "ee774380836510ef43befbd937e7ab8ac44f02c4f4f575ce8443371ee3f9f91d",
+      "size": 10426
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/plano-fase4/partes/03-entrega.html",
+      "sha256": "e730a4c30a0f717be77f5ba948ebbddf9c0d1e710c83712b8a2ca3d453776f64",
+      "size": 10378
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/plano-fase4/partes/04-plataforma.html",
+      "sha256": "9abb721e2e124328ce3ca5cccbefd12c6309529bd84568e88c320992fa71034c",
+      "size": 10065
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/plano-fase4/partes/05-requisicao.html",
+      "sha256": "5209ac284b4edef5ee1814132c8552712840f64dfec80ae4238a22f549d24a93",
+      "size": 12178
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/plano-fase4/partes/06-telemetria.html",
+      "sha256": "65a63fe39e9fa39d62d3bbc1f746e2b76d4172a01f05a045c1496a3b9a5df81f",
+      "size": 10069
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/plano-fase4/partes/07-resposta.html",
+      "sha256": "792dabbf33dd7705a339b9b36cd9706fc43168b08074c80b78b5e778b3807c1e",
+      "size": 11481
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/plano-fase4/partes/08-exibicao-mudancas.html",
+      "sha256": "b5aae680d4edbe881a0ab6c815ed2c020c188d8757cc9d2623c0f5febfc8091e",
+      "size": 7057
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/plano-fase4/partes/09-plano-fontes.html",
+      "sha256": "2bb4070fa7bade878579abe7783fd81e481a10eead337c036a610a2765be2127",
+      "size": 18910
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/PLANO_E_ARQUITETURA_FASE4_2026-09-23_v02.html",
+      "sha256": "67bff9fd65a92520b50398052ead51ed5e980885f82310959ea9d263733e58f6",
+      "size": 101961
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/PLANO_IMPORTACAO_FASE3_2026-10-20_v01.md",
+      "sha256": "ea5d4eece8e6c13168d6be34f7e5469eb875b290c90c3e3dab34b134fd6b1685",
+      "size": 5475
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/preparar-leitura-2026-09-21_v01.py",
+      "sha256": "4dde806b83d0b4cac7df5d01466650a64e3c0922ddb5b0889200a8920dd848e8",
+      "size": 3142
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a01-folha1.jpg",
+      "sha256": "cd1ae3dd969b047666b2171b2db6388d54bedfe63b6c830d4ab47cfd45de0da2",
+      "size": 1249036
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a01-folha2.jpg",
+      "sha256": "f70da669f67323aefe0e0b922a4d20e107b4ecd0dd8bf4d4f27911556af4552c",
+      "size": 1024566
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a01-folha3.jpg",
+      "sha256": "31f0b8836df35b71d1849710cad6b633da18be3d52b89600f46a64b711b3592d",
+      "size": 581259
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a01-p05.png",
+      "sha256": "c30d788122d7398916d1f80acd4d50d11a81bb1723af42c4e0df838b83eeaf1f",
+      "size": 275921
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a01-p08.png",
+      "sha256": "187cb9e01ccc9d0855c9321f499cce2488c0fb68eddf8ede5074dd391065c493",
+      "size": 283447
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a01-p10.png",
+      "sha256": "dc321913691bf360fc87d744ec0206a7468b693c3c52828f1c0b8af8b641defc",
+      "size": 311136
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a01-p15.png",
+      "sha256": "d957322d095effa594e1622095d23a52db5ad67a623d086465b205141b0e447a",
+      "size": 288605
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a01-p17.png",
+      "sha256": "c1c61e5f1984bf24fbacc81ae305a5d67d8aece6574a538806959874453c6756",
+      "size": 260812
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a01-p19.png",
+      "sha256": "bffd2fcf48feffc43daf26656fd0d4185e39463e3b3b316bd76e35453eea3336",
+      "size": 209692
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a01-p22.png",
+      "sha256": "b2cb96995d0f2ddc2bfdf197790d738a5c03116b0818e583357b42d54270ac2c",
+      "size": 240798
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a01-p24.png",
+      "sha256": "4c7a6151984acb58c8358777713ee46bef1a88c5c6504d9071bd7c36db0a0049",
+      "size": 235872
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a01-p26.png",
+      "sha256": "bfb39a71a985304f9cf35093be6271e4b8f0d0abc6b438ef25492fc64bf110b6",
+      "size": 249997
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a01-p27.png",
+      "sha256": "4f2f15f286bc9e4c321c2173fe27f4752eb78784c3123893e2f8d66c1fd97880",
+      "size": 286946
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a02-folha1.jpg",
+      "sha256": "0c629e110bb9a88354915211c114a02bac351e3824868d57bbfb40a64e928d5e",
+      "size": 1129793
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a02-p06.png",
+      "sha256": "80d0e0b778b78344bdefbea4ccf108947ac1e9572e7a3eb5227c358ddff089be",
+      "size": 269404
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a02-p07.png",
+      "sha256": "bb5d8341b8613ff51c42d943029d345f2d4aed3cff704b7eb6e5209680ed36ca",
+      "size": 376547
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a02-p08.png",
+      "sha256": "c4b40f6585f3581d6c240766ab2e8169761e2aafe1bdc11eceefb881ee0a8b06",
+      "size": 351216
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a02-p09.png",
+      "sha256": "e885d7293f8bf00a6289a70f6c095190e3cd0cbd5bdf3cb35cfb953825e47714",
+      "size": 336129
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a02-p10.png",
+      "sha256": "78a161edd54edbb1269917ed6d517bfc89cb7ec39c6a5c5163a881fe76707327",
+      "size": 240297
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a02-p11.png",
+      "sha256": "c3b4a798d11ceb2600714d4b850b59f59a50a4a244ebd194d9d0aa42f2ffa64b",
+      "size": 280710
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a02-p12.png",
+      "sha256": "b3a6ab1b9dfa10eebe01fe1115c4e75719afbd0c44436473106a36bea05fb4b5",
+      "size": 298291
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a02-p13.png",
+      "sha256": "3f856893e91259b9708a55e544add28cd289a1053451d49b4be9b03bbbaa6749",
+      "size": 334637
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a02-p14.png",
+      "sha256": "56befe8981fc94d3cd3cf57260a4d5ace13443470a1cb84508b9634923eb9495",
+      "size": 369324
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a02-p15.png",
+      "sha256": "bbe13af6c7ca2f81fc5bd2a8aef79458b12db00a1e443505caa6deca76acabd5",
+      "size": 367865
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a02-p16.png",
+      "sha256": "7b05cf931d0648c999551643ec937fd105060a0e69fa29220e03bf0f5d285de1",
+      "size": 367854
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a02-p17.png",
+      "sha256": "d9d7dcd463f2d41c04ad70feb7957a9ce520c153dc0577d41598a8f6fac3ccda",
+      "size": 373226
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a02-p19.png",
+      "sha256": "8bcb47827ec655ff387fd23e349e0ed2abc06241b0952d6942759fdb3b7c8734",
+      "size": 397316
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a02-p21.png",
+      "sha256": "e6992a02944d9c6c59e4f828f0ca5d83024a3ce9fbd884367ead48b5bc0b2299",
+      "size": 352704
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a02-p22.png",
+      "sha256": "96d1492d87345161afdbd61cedf13cf2057b08f75cf4ea762369de14b68538a2",
+      "size": 384892
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a02-x3-p06.png",
+      "sha256": "f06276f719c7378b592b8ecba72155a654d45175531ab2db4674d1f9b98cb0cc",
+      "size": 687049
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a03-folha1.jpg",
+      "sha256": "c02918821303f7da39125249d2dbbe773d557032eb91aa7df57d64ba85ebfe31",
+      "size": 1226665
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a03-folha2.jpg",
+      "sha256": "8a971efe3e0ffcbe053a6b97d3bc7bbb45765f2aa21eb5caaf14b1ffd8fdd986",
+      "size": 1070853
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a03-folha3.jpg",
+      "sha256": "f92ef06d1177d2765af1f2cfb2a5880c724892fe0136bf6bbe4c2cf5ba278dd4",
+      "size": 1015192
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a03-folha4.jpg",
+      "sha256": "40d0c370c0476c3d19379605f792e6e70b0d16c093be7096058adf9f67be1a5f",
+      "size": 357421
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a03-p06.png",
+      "sha256": "84d51c1ed08649a488cba1336b0516a6c12897f9189fd98b388edc5a2f53b31b",
+      "size": 297825
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a03-p07.png",
+      "sha256": "2a0eeb7ecd63ddef68d2facedeacf74c3035b42daea842f1c4e4b23f47a7d8cc",
+      "size": 276228
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a03-p10.png",
+      "sha256": "024ea1d6b3269cfdfd64d0889bed6c5db9861242699af6a766691a4c76a179db",
+      "size": 256160
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a03-p11.png",
+      "sha256": "05e674ea25609e08f9e2556bd095cc590b81f1f9876a2e479965a69656232ee7",
+      "size": 316568
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a03-p12.png",
+      "sha256": "f3a4d04180e8ae0f59963bed9201648dbc1134c32a5f36212990eab0850a6052",
+      "size": 280865
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a03-p13.png",
+      "sha256": "b4b1b6b62c96907bdc1561a4daa754285efec6002ca2303b239f4fb24a19f917",
+      "size": 262452
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a03-p14.png",
+      "sha256": "40ffe08699470236228731f2ad8dbe3b4a21d0310192b84b0dd62f58ab0b689c",
+      "size": 323648
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a03-p15.png",
+      "sha256": "2b1f11dbdb2c8ced0204c3a679d9df3c34c01f4d65090e56c99f1ff1bb1fd435",
+      "size": 239188
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a03-p16.png",
+      "sha256": "c64e855408ca1431d1de74914fa03c11fd3e2cc9dcbe2f2f725d387b85742e9f",
+      "size": 229809
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a03-p18.png",
+      "sha256": "b5b26af5df8dd22ff7bf6356356413a02720f13890173eaac299615855f6dcaf",
+      "size": 229968
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a03-p25.png",
+      "sha256": "d6b513cef25ea48ddcf71d25b94d8c6e566e1088d25ad1d8132b730f0fe0fc68",
+      "size": 259161
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a03-p29.png",
+      "sha256": "89d10f22298088647def8d89172ebe23b664e09fe190700e0aebfb40903d66da",
+      "size": 261695
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a03-p32.png",
+      "sha256": "f5e0a2fd3da2bebad447df732de17c4e85a94ac4fd55f763f55bd93ecbbab281",
+      "size": 257630
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a03-x4-p06.png",
+      "sha256": "0854f27b210eba141042b251ffdd91f36c66354b68456d009804a5016f5e3ebe",
+      "size": 1138255
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a03-x4-p07.png",
+      "sha256": "3a3668db4d5849c5470c620f6797d37eb19365e426e26960fbd71892faf7f472",
+      "size": 886167
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a03-x4-p10.png",
+      "sha256": "24115be4dfd2291ebfa7e0f037f8622fbacf8da04f654de8146df1a1132ef2c9",
+      "size": 633964
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a03-x4-p13.png",
+      "sha256": "53eba475d2a5139a9ce9e35713959341eee10f0a7283eebaa24a7b3a4910b288",
+      "size": 591845
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a03-x4-p15.png",
+      "sha256": "3092f9e2c129db088145333597119a8a288a41ccd01f6395aa61db8eaf36408f",
+      "size": 563344
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a03-x4-p16.png",
+      "sha256": "20bf926a998d3fdbcd952755b507c5bd1ccdf7d81fd5a51b5844c04c87fc3ceb",
+      "size": 717954
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a03-x4-p18.png",
+      "sha256": "1113d3b025645e93dc49c8add4b79342a47ee3c95cbb40792ee3d9496b19b2f3",
+      "size": 584852
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a03-x4-p25.png",
+      "sha256": "79a2617eb5a5b440f8625fa7f9a6caf2b32d53ff5b6c41c6abb5be871b518497",
+      "size": 799147
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a03-x4-p29.png",
+      "sha256": "529b49b32ea8a799fd099fcc631ed85871b4de02b70b130d0f8a0b9432cc9cbc",
+      "size": 851429
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a03-x4-p32.png",
+      "sha256": "78b679bec17e48e63117f1de3028c27497b481b458551d2c95c672340b34df76",
+      "size": 849203
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a04-folha1.jpg",
+      "sha256": "260bb65263a34077160a07bdd047543cb598495b352edf55ec55d024743a1c8e",
+      "size": 1255957
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a04-folha2.jpg",
+      "sha256": "c0a8d184bec37394672944a43a60bb866d9508bde182d6939417f0ca5cfc7fb2",
+      "size": 699510
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a04-p07.png",
+      "sha256": "624a7382c54a824216de392301c76929c9c65c936c5a26ebd4721b6bf762795e",
+      "size": 294564
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a04-p12.png",
+      "sha256": "05c50384f536d2863268e1b33c8997b0bff4fd872e603ad4a2b40d908de7bbd0",
+      "size": 378490
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a04-p13.png",
+      "sha256": "a3b510938f92ddfca009f86fc85130085ae50c19f575400fcc89608c31bcc2ed",
+      "size": 360636
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a04-p14.png",
+      "sha256": "bec89fe567c92685f4e358ec297cd00026cb3427fa9d053f7aadf29b624b0fa5",
+      "size": 342956
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a04-p16.png",
+      "sha256": "e96f6653be2ecd2123c31c82fc1b8dbd311b775ef7e93a9e55f36b5531ba9243",
+      "size": 300486
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a04-p17.png",
+      "sha256": "00af253ae4b418ac36a30713345f9f3e5785a6a3d31e98f91f519c6649cafb50",
+      "size": 293777
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a04-p18.png",
+      "sha256": "84df0b848800579cb255f866a5013dd70c26f4e782933808569a65375d409012",
+      "size": 265770
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a04-p32.png",
+      "sha256": "efc4ef0aaff5516e92beb387fb3a718f501c12768e0c8a1067f38b2ba627e213",
+      "size": 370881
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a04-p33.png",
+      "sha256": "2d9626d6de9b143f859dec1739350861f4cbb7856d844f53c34af39ea52176f6",
+      "size": 265994
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a04-p34.png",
+      "sha256": "a422ac6fc3d2309ca0b9165646c37062c661ea2c09ab0d10d66dcc4aabdf4244",
+      "size": 267801
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a04-p35.png",
+      "sha256": "28d01bdde008712ba7ac83f83d629203f839c7b6616b4e0966727459404035f2",
+      "size": 338576
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a04-p37.png",
+      "sha256": "324b2a67cb0f7e099f11e6db30f010f5130bea05935561381d37a53276fe77e7",
+      "size": 137047
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a05-folha1.jpg",
+      "sha256": "06d0effcdaba86ba34ddc89bcd03ef8e91d3f7a1e6e128babdc139a6a0824f8e",
+      "size": 1158113
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a05-folha2.jpg",
+      "sha256": "c511f93561000f595868ba1ad71e59a898106b7237d47a8c5e1a432fa0607c11",
+      "size": 1133381
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a05-folha3.jpg",
+      "sha256": "13151fb36cede16a92f7da2b2a987c088bf5b2704f53578f77f27cc08a5ff19a",
+      "size": 609338
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a05-p09.png",
+      "sha256": "ea92d888e713ba27acb62643bc85d2865b6a5acc5fe5f05a0fe3cea882f46497",
+      "size": 263303
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a05-p10.png",
+      "sha256": "6839d7250bed11d54c08a1be5b6a59b244d502686b8f75f4e4887cd446236680",
+      "size": 276809
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a05-p12.png",
+      "sha256": "60e9947b53901fea7f4a2c0808a8e658553b5d6e6d4c8afa51c053427500f7bf",
+      "size": 279732
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a05-p13.png",
+      "sha256": "27bc1dd9f048deb3917298439eb345bbbdcb42cad69cc024c58070bca6a9ae43",
+      "size": 375030
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a05-p14.png",
+      "sha256": "89c47b77226268296c562d78b8fb86f23e2f9e70db29c7ba42cdcc7a85b03af4",
+      "size": 294798
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a05-p15.png",
+      "sha256": "c35beaeb4efcef2ee4fb884c649ec60a445c27967563b4b9cb5eb39363b42142",
+      "size": 277547
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a05-p16.png",
+      "sha256": "74bbad985e77637fe490ad02ec867a705d48cf8dbebce4e970ec3e6262676c8e",
+      "size": 371322
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a05-p18.png",
+      "sha256": "eb8b582d3140b288756c962551ac9d3eeb73c35b259644c17818827040f0357b",
+      "size": 290903
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a05-p20.png",
+      "sha256": "25be84e9b370095832be66bfe19930fe4456c2892ba6910ff408b2682c0244d0",
+      "size": 271370
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a05-p21.png",
+      "sha256": "dcf93726e6ec9e0097f71851a028f596a7352eb7e85f241528f233d327a68196",
+      "size": 269773
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a05-p22.png",
+      "sha256": "bdb55767d665e1ee1b4634ef6054247af4143562d649a4b4445f21058d4abf23",
+      "size": 265026
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a05-p24.png",
+      "sha256": "0db618066ed1a04ba940bec871409892dfea50e363ba2db5b1f2a98d8739ae1c",
+      "size": 347243
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a05-p26.png",
+      "sha256": "3e097ec516a708be9527f54160f1598ebaa8d88ec858bb7476e6d07a0f359264",
+      "size": 235020
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a05-p27.png",
+      "sha256": "2cc5853ae53c975e9582055d2613cc47b248d24dda75f3c1b2e670e5ac6cbdca",
+      "size": 353002
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a05-p28.png",
+      "sha256": "249e4e91d137038fb0f58a6d6a13b4ca4af83ddf05fd6fde231ab3be73f26d11",
+      "size": 366920
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a05-p29.png",
+      "sha256": "74f988f991389613e7f58eb755c7ffb7ed524caadce63fe340830df260761a12",
+      "size": 365636
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a05-p34.png",
+      "sha256": "d292e117877749051f45af9436cbc3888bfa745eacae18e1d92b817d82500141",
+      "size": 376401
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a05-p37.png",
+      "sha256": "8c0981c713ab5a4ace57a50d1f0fa57f83a94affcd04b00b73447567a8669979",
+      "size": 359386
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a05-p38.png",
+      "sha256": "f7e0c7ecd7c7ac939852e0554f9d59e98732e47f32bfff752ae862fa23b09079",
+      "size": 381018
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a05-p39.png",
+      "sha256": "fe104c31a3e940dd6a9aa8461854f3147b8a192e3aa01df3b734f5e60f5b9a29",
+      "size": 379134
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a05-p40.png",
+      "sha256": "8297b28fb5bb7c05d57574353e377d5f124d12f40f0ae0d19a2e6842aff3106e",
+      "size": 381438
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a05-p41.png",
+      "sha256": "e6776647ea0d8525c1ea461fb601660e6cef6cb6a081c1652e0db83ae9d281ea",
+      "size": 386401
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a05-p42.png",
+      "sha256": "5cdce02327236081d57516703abb65e4ee8d09d2525495e3497a64e7c85d13e4",
+      "size": 297712
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-folha1.jpg",
+      "sha256": "7ac9263db4973264bc1191235e28b00279087c7c060009c50cc92cc9d3dc2102",
+      "size": 1118009
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-folha2.jpg",
+      "sha256": "f3605a4b2018a5914289f1f3204d2a899b4712b7972a6db2751d496318179d49",
+      "size": 1142955
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-folha3.jpg",
+      "sha256": "190c35654af2fc762c7002fef319f8def650edfb0fb0c6905f3a488b4a2d8bde",
+      "size": 1061949
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-folha4.jpg",
+      "sha256": "86f1728218d2ffa29e3d1f08e7f35f795ed4725eaa9b2e560f65a068f826c91b",
+      "size": 615055
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-p05.png",
+      "sha256": "f9745e2b3a9ca99492778ad8dae41e8f9f4c13a536867552b0a2badc17894a4f",
+      "size": 327456
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-p06.png",
+      "sha256": "3e6bddd6552aefa8e1236981cd3ac9efea2a6f758a5cf463e9a5296366aa7785",
+      "size": 235756
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-p07.png",
+      "sha256": "4fb8adfaf86991785df2e7516e060143d0280286af914717c87800372b717f2a",
+      "size": 279575
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-p08.png",
+      "sha256": "4d416bb65caf5e0ac487a79deb12d3d20f447b656a0d729f999ec2ead3889df7",
+      "size": 393138
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-p09.png",
+      "sha256": "cb482e8a1b04721f62792aa1e69b0913ae59c689080af6abcab3e84ed9986fe3",
+      "size": 354159
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-p10.png",
+      "sha256": "4a48fef6c7719c0507f906284863b2564ee5c09706eeecbc2200badf000b09d0",
+      "size": 303491
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-p11.png",
+      "sha256": "d01c4154ad08ffe0b757c1568b9fff767a1d980f3a7041b3ad79ac31fa99c03b",
+      "size": 275557
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-p12.png",
+      "sha256": "7446aa961cceb2c27bb01c86de98f10372ea766808becae921d5b4461ab62f55",
+      "size": 257648
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-p13.png",
+      "sha256": "9f5d3a30d88a3e1d8af1703aeef215cff6c5775d109a1b7566bc86c168aead68",
+      "size": 367072
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-p14.png",
+      "sha256": "9b4f9465df6c91406b7b7e7ca1ccec3e40666dfaa28e90e944521193219e1adf",
+      "size": 269388
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-p15.png",
+      "sha256": "de7a6866eba8c8bcae0eb9fcefddbdb4f894ff19e19b4da10f284900fa32920b",
+      "size": 347516
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-p16.png",
+      "sha256": "e5308c5be892e0b90186732748e5f700925c913b5c25e94377ad65a3c1ecae31",
+      "size": 301570
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-p17.png",
+      "sha256": "2b75fcf54f10158c1fe36592f336e0e683f0039634b39ae125821663e1180a6d",
+      "size": 347818
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-p18.png",
+      "sha256": "0ed1abb3df79cf4d39abd419f17f55bf3706d779af9a6d878b4f9dde34c26b46",
+      "size": 259915
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-p19.png",
+      "sha256": "f508ff80f01ff405acd1f389518e7e49cde9f2c7042490f1990e13574066f137",
+      "size": 365655
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-p20.png",
+      "sha256": "239ee49063113b59a45476d0ae7bb8e9c231a681ae33e7202ddcfdd57836863a",
+      "size": 248688
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-p21.png",
+      "sha256": "2ef8ed8058ec802a69027e3ec65f3ead12225e69043e051f0b80eb56f9f2c3f2",
+      "size": 356306
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-p22.png",
+      "sha256": "3e6586a7cda6e59ab3988e4e6e5e519b08cfa28aa2daa808465f05c990bb6bad",
+      "size": 247601
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-p23.png",
+      "sha256": "6d755d14b26ca94d4f76a712d77c9c2bb0e65d97301038babc8a1b06f2779b5d",
+      "size": 343747
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-p24.png",
+      "sha256": "84f46af90d872a696e687e6966b370b9d8a62bf6174152eea1e1b95215f4b19f",
+      "size": 247235
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-p25.png",
+      "sha256": "3fd03ee6b2d6d0bac9c4aa50053cd11bc29673fc7a287e9410bd55aae4188eee",
+      "size": 281837
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-p26.png",
+      "sha256": "95cb1ef2b61a6793dd5eee395624a8adaa8df9b623ab98956163898bdaf7ee09",
+      "size": 361064
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-p27.png",
+      "sha256": "e6091219204defb2d9e7e09328845660a10a7e2b28be3abde5664a6f59b65de2",
+      "size": 252054
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-p28.png",
+      "sha256": "883d9e438d7f88b6f1e08653c2dd53521da57ce6eb91a7cfa726673069299c18",
+      "size": 372899
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-p29.png",
+      "sha256": "1a410aceef421401c97a7789aeb7e18b7d0e8414330e4794419b6e1f278a7bf0",
+      "size": 262344
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-p30.png",
+      "sha256": "ef482265812f4da155aaab6c678cd9ee0f20657f52462795deaf9db65838557c",
+      "size": 272651
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a06-p31.png",
+      "sha256": "a32e8d922559e256271307c037779ae25ea169f49903e8036f32eec4fbcdadfd",
+      "size": 213472
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a07-folha1.jpg",
+      "sha256": "342f270a1380763e705c4558c5aa04a100c37b301c6dac2187d00949a590ed82",
+      "size": 917512
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a07-folha2.jpg",
+      "sha256": "25183211314688b3c7a398b6f8054e4737a39bf47a61fc0fbef0ac2a3e7c0ea0",
+      "size": 1015172
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a07-folha3.jpg",
+      "sha256": "4f2ba5ec6026f223df5366fd5dc8dbf11bdb5f58c037490c58830cdd60b15881",
+      "size": 302580
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a07-p06.png",
+      "sha256": "297ee4514262988143fd55a4c72ff4726b173511557eb63e0f92ffd046d6914b",
+      "size": 252270
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a07-p08.png",
+      "sha256": "107df98d9e6426fea92d381195f8ff8e9ac2fa3a1b22ff8dfbccd3f345af7ba1",
+      "size": 212830
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a07-p09.png",
+      "sha256": "87c9268665561c65584d6cd3727990ff489bebc3d5ddac24c731c9f3be983d55",
+      "size": 207503
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a07-p10.png",
+      "sha256": "0eff7b854be955f2a9eb266f73451b93b92ced3a6d1a96092b95377de6e7a8b4",
+      "size": 295310
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a07-p12.png",
+      "sha256": "36530b4152994da436eedff0a8760456c65a9360a5e65ee93c04dcb17273f8cd",
+      "size": 194493
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a07-p13.png",
+      "sha256": "e22c10e852d7f62b16bc4cc0494912d973d68f91fdd4f2b9b57a5e02e309cfbc",
+      "size": 254335
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a07-p14.png",
+      "sha256": "7a7fc97b18916d175534d559d8d4f4b81cab09ae7b29ba6d004876b30ba780ce",
+      "size": 255378
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a07-p16.png",
+      "sha256": "b6685456421f9a4624c36b492f723d83485f668633bc4da0bfb0aae287eda879",
+      "size": 297906
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a07-p17.png",
+      "sha256": "0e9f0093c989fcbe913e0854450f0a5638c03d04f9d68eaa3c76e855b92ec99c",
+      "size": 201594
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a07-p18.png",
+      "sha256": "6e443db42e614c07747a9d2cfcf1f0b46fac01245131483fff7e4c7d2b249337",
+      "size": 230760
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a07-p20.png",
+      "sha256": "d8c85a42b5490022ce30ec87cd290a8c1e6c93336ce3eea1e96b724006824228",
+      "size": 310477
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a07-p21.png",
+      "sha256": "5d69148f592c98b1bdc622e2c88cd5273761392da67898e45ab77ad708690579",
+      "size": 225386
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a07-p22.png",
+      "sha256": "13788fb3a4032fb677b555cf8026822a345a25a3387da587a6dd7da522a9318e",
+      "size": 255649
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a08-folha1.jpg",
+      "sha256": "f95c5292afde5c3e6614d0b27f227e4bc44ac50da9025322ddae2e35d0386e97",
+      "size": 922479
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a08-p08.png",
+      "sha256": "fa250414700bb2dcaaf879d2ec0553710fc21a8609708cec1e25992ffd907d21",
+      "size": 327326
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a08-p22.png",
+      "sha256": "78ac427d7dea9c3aeac33a997541794856602519a2f2d22f4e8aa03ce86689f8",
+      "size": 259973
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a08-p23.png",
+      "sha256": "ba155fd0c3fcf1c8152e708ef1fc7cad081fb57d5f45e184c1aa7c21296e5dc7",
+      "size": 226579
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a09-folha1.jpg",
+      "sha256": "b81088c4b278274b2ef619eac4d7dacd474f03047abead5a092a374a36370a27",
+      "size": 721527
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a09-p09.png",
+      "sha256": "80e6cfc45fd13b595bf2662a80dfd866e8ceb80c0c7aeba3b0e7c72417c8c2a1",
+      "size": 407669
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a09-p10.png",
+      "sha256": "5b00a425609a37973e97523391b41a40772dd90b248622685d49cee336dbfd47",
+      "size": 265990
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a09-p11.png",
+      "sha256": "1d21fd772cbbfcdf6920ae460c316ff63fcf7e45f619b4341aeba00b8dd3b24c",
+      "size": 386325
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a09-p12.png",
+      "sha256": "5266e7f145a7a90de1bc09951ef0a6f6783deae9e77668f5b95855844d92eff8",
+      "size": 384381
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a09-p14.png",
+      "sha256": "1f139cb2098113d7dd0848304a664111c3d08c480ab3f0bd191c59e79fab1ffc",
+      "size": 333112
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a09-p18.png",
+      "sha256": "0a09123734de51e8d1fd250d9a640880e60419421a3d3b31a9ece9e27856c445",
+      "size": 394187
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a09-p20.png",
+      "sha256": "5e762ac16efd62ea2f5974112a9bb7b65292e36946ae90e083f4a2d49244f5f2",
+      "size": 406444
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a09zoom-p10.png",
+      "sha256": "cf7e73080b76012d9e04ba0fc180b9f170ac8c0c87f1fe2e46087cdbecdfce42",
+      "size": 973259
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a10-folha1.jpg",
+      "sha256": "6bce844342c9dda8ccaf28b6317cb7fca9b149b8f3fe81c8dadc683f073070af",
+      "size": 1237478
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a10-folha2.jpg",
+      "sha256": "c5286739373d9eeccdb9e54f83a079e025c305d54bebdae974bb8e3670108555",
+      "size": 250395
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a10-p09.png",
+      "sha256": "7f0628ad6a150031af36d8628148d29d11570a2c66109555cbfbc5385041d825",
+      "size": 355581
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a10-p10.png",
+      "sha256": "f71983d87ad9a8c9b8f481dc861719db77610d5c0c5f3bd26bc6bdcec8c0e5f9",
+      "size": 373238
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a10-p11.png",
+      "sha256": "27d98368f879c86808e99b766f3bc062b335e3ae1e747ece20877695f319a836",
+      "size": 277345
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a10-p13.png",
+      "sha256": "4d8cae25c3c34a26d65e5db6099f2aacb68aab93069f3fbd51c395ac13d95163",
+      "size": 310776
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a10-p16.png",
+      "sha256": "57b2090d952cfe7bfbbd88fdad3b7feb0be8ef22195ce321a7c7fc2480661e47",
+      "size": 274786
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a10-p20.png",
+      "sha256": "a60bde1717564c27198730e9b4b3d4c7e8625db37f0537e7ac62b39f4d1a5461",
+      "size": 387657
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a10-p22.png",
+      "sha256": "cb2588c23880f34c4fde441fce4c6ed6ee9a9a94562232dd0ed038835abc831d",
+      "size": 388942
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a10-p24.png",
+      "sha256": "7f1ac6004ee608f17cd7918857e655f592c93d73b5df15d87ac19a8f349faac5",
+      "size": 316910
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a10-p25.png",
+      "sha256": "3a155f20e74f137c2f149784f7881e502ae2a3390b200f5a605f28d19a0c4de0",
+      "size": 167560
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a10-x4-p11.png",
+      "sha256": "a08c0f39fc8ad7c245bb408dd805607fa5dcb9050c77e145110d8dbddbda6f6c",
+      "size": 728589
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a10-x4-p13.png",
+      "sha256": "7ebb33277eaa5fbfba1903aab204fb814951e4d8d5a97839969fb5576f98d637",
+      "size": 824070
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a10-x4-p16.png",
+      "sha256": "243a6712fd417eac6e3c0a05863d363a8dda31c4a7d9ff57c46acfd00ebc5be2",
+      "size": 929052
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a10-x4-p24.png",
+      "sha256": "895796eadb11004d4056bbc9c6fa8f37b53f354d3c7b0bb75210acce3bb18f05",
+      "size": 844880
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/a10-x4-p25.png",
+      "sha256": "c880f302d0e5af33dbcac606e4deafa3a709399c085bf284ca9001a1cc359dca",
+      "size": 421151
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p01.png",
+      "sha256": "e03393c2b11b1b957be32e662ada26ee3e26c5fcf010a5f0b93a747b86d1c372",
+      "size": 126647
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p02.png",
+      "sha256": "1d2837b44168446f4fda12994ff59a86cdbb3d9a605de9a45cf03bfc6f593764",
+      "size": 68981
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p03.png",
+      "sha256": "8fc76c4e6a28b373915d3497a05f59d0a30ccbf49ae1fda00da31327962804b8",
+      "size": 151345
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p04.png",
+      "sha256": "f37d115b304c700047f8719100f7dcd7479d31721ffd6a4d0828e40e3ef61a99",
+      "size": 168833
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p05.png",
+      "sha256": "547e19a79621ad186c2f8cb11ec6817f858f4ae9429eadff56e19de4d79cbf07",
+      "size": 272772
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p06.png",
+      "sha256": "de91020929cbee820fe13f4cf5a70ecc0618eed95793d63621f10613f34777b1",
+      "size": 228675
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p07.png",
+      "sha256": "8b71dec926bfcc3ee5385d2477d572f6e4d6dda13b57063874c77cde60fa2ee1",
+      "size": 243715
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p08.png",
+      "sha256": "966e363da1a693bc1cc6b169f84fcbe5e971e19ea3b38a2b1b814e243de02323",
+      "size": 263679
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p09.png",
+      "sha256": "4f4a008f09fcc6c59cb58c4daff11ec95dc71dc0de414e05f93b33d98da275dc",
+      "size": 269064
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p10.png",
+      "sha256": "63dbe8878adf3670ebbfb301e5227fc183f5d10df25f230a2261717d19384ef5",
+      "size": 297757
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p11.png",
+      "sha256": "b4f742fa74c43cc863894fe7192388ba2d7ea10637699048e265f79bb340d46a",
+      "size": 279042
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p12.png",
+      "sha256": "cea4dd242d98f8fa1364f3713a3e564a9051272cef9e18817b02faf923212667",
+      "size": 279543
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p13.png",
+      "sha256": "cb50972c13d839678fd0f79a71650492f37701ee3464a1e203d7a0eabd6f9959",
+      "size": 246624
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p14.png",
+      "sha256": "f65720561cea4736d9e35ee745093257134cf439802e3e894be614c7638e9ee9",
+      "size": 243996
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p15.png",
+      "sha256": "f35a4e7421b3ee20bd4d68cc03a71275ff6e7558f87a1a4e2624763ec7635a63",
+      "size": 241193
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p16.png",
+      "sha256": "e935d83ce7411eae3977b951245097fb963e490d0730a3607557adecb21942fb",
+      "size": 230643
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p17.png",
+      "sha256": "daf9ab7f817846262d0b42819df9f0dcf8b608c095de21d6116ad9f88c41903a",
+      "size": 252114
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p18.png",
+      "sha256": "25aa576e80c130906f6a9b1122d587d4e5a18d5b99aa8aa77db43624c8fe9d9f",
+      "size": 263776
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p19.png",
+      "sha256": "3989f724f2e5739abab55a354f89e91fea731047e4684d0e3e3d8075c2f44a10",
+      "size": 204149
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p20.png",
+      "sha256": "33efe4dfde5e6100f0683b8d73f477d659c7926d430379963c108f9781ab5298",
+      "size": 203053
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p21.png",
+      "sha256": "d8fe1d23f1941b155a09c1f30a2558cc8b9ecd3675c441e464b42236f1c9cf64",
+      "size": 197790
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p22.png",
+      "sha256": "cdd62dded79fa7ff0e741a5e93654cad720ab8890832e9bfb830ecb74180a28a",
+      "size": 207495
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p23.png",
+      "sha256": "48bddf0dacc9640a3bc42fbae98ba8bda06c4b8f6594980e56f2c9daed74ac26",
+      "size": 227925
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p24.png",
+      "sha256": "8429af18975be20d304e8ae82fca31e39568d4a42c5fcc45574a0b63cb4af274",
+      "size": 216227
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p25.png",
+      "sha256": "fee6a5085ae3f55c14971d69000340962c51187b2b39e8e29a1f3e96a78a46b0",
+      "size": 181576
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p26.png",
+      "sha256": "67af024292caebc37f2037b6e2173d8519246ea57cf9a6909505159b110d3063",
+      "size": 205542
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p27.png",
+      "sha256": "df92b658450cc87944f1952e37124ccf962fcc2f2aee15ba9f33ced20a4686fe",
+      "size": 245375
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p28.png",
+      "sha256": "b97f2476e40180c114a60134d4b43c52e378251a38aab29272676caea18306df",
+      "size": 258052
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p29.png",
+      "sha256": "2ff73fd6263be06b6facdb9da238f20297604bf1a39081001d6dd81cf007a437",
+      "size": 230097
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p30.png",
+      "sha256": "7c481d38eb0110e9ec511ecb47880986ef0cb1ff9c860fc28290d1be2c3c88b1",
+      "size": 170208
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p31.png",
+      "sha256": "14bd1cffb610341ba9eecee0c171a2f3f85e91b9be8b8df070b1158fe66c6e93",
+      "size": 79153
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p32.png",
+      "sha256": "a996bbb1147b8eed2f384b6b1ba42b091281fd775e7f73c1af67329f147ee877",
+      "size": 155202
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p33.png",
+      "sha256": "31b2ade94a89cc81dd9d08bf5b76260a703b5a09172db8a780e43bfcb0087dea",
+      "size": 141672
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p34.png",
+      "sha256": "4ba0cde37e08d8a5eb6cc1873b4887b441749a2cbe879863177ae734e8367f34",
+      "size": 50773
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-p35.png",
+      "sha256": "12812565811f97703f49000f25f572809ae070ae508df07154955e8ff384bed0",
+      "size": 243163
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-x2-p06.png",
+      "sha256": "6853cb64286630fe93cf6e902d47bdadd986493b3e0ab09891462e27dcb9c10f",
+      "size": 326456
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-x2-p07.png",
+      "sha256": "896e17400290c224090ce4ac15611bf2529e2c88bb78d2be185114d79a72c245",
+      "size": 357056
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-x2-p15.png",
+      "sha256": "64d4ede928e349a0daa9a4b7120146a61f0c7b7aaea560e14d10a8c24f3d2f78",
+      "size": 350526
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-x2-p19.png",
+      "sha256": "2c7976b309e5ab6127ccd1b060a7c270a8293ee83c82f9182676c19cd5c3b534",
+      "size": 297911
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-x2-p20.png",
+      "sha256": "441979e835e8c749f37df673ea118f6fe728063669bfac8517a82edd0330c5a8",
+      "size": 291870
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-x2-p22.png",
+      "sha256": "af31f4b9d67ab88ada872ed65bc5bbc711e4e8ea89490f61f5942077071577b8",
+      "size": 295004
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-x2-p24.png",
+      "sha256": "2270500c653bf17e69a11dd651f8dac869e4ddcee4cfb024b35ae2bad2945678",
+      "size": 321299
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-x2-p25.png",
+      "sha256": "918d5a66d4c2ac44912a92bd028a6663401faaa3e447d45dcec5d4754f108244",
+      "size": 276027
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-x3-p05.png",
+      "sha256": "c3d3a15f0f962c3c07277a0e512ea4387248e438d42149208c9a1a68e5ea6be7",
+      "size": 668747
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-x3-p08.png",
+      "sha256": "1b51dd0eef42cac7d293e0a39423408347ceca226b5f644ea0127bf10af41247",
+      "size": 648087
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-x3-p15-cmd.png",
+      "sha256": "acf181c936b51cfe6014a587568a258b37a4d0d9088ab340e3c1f9b6ddeb0d27",
+      "size": 40372
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-x3-p15.png",
+      "sha256": "4554d13b27f70509835673f899bbf53a44e495a6f35ae187c292024bbff1897a",
+      "size": 586265
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-x3-p19.png",
+      "sha256": "294813c9dead76580d0cb76782c2c282bce8d6132f4d9d31f3973f04d62e9c43",
+      "size": 522136
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-x3-p24.png",
+      "sha256": "dcfcec8345d6bb6b6acdb983af507688b263fd510534e8307dd970fdd66b624f",
+      "size": 545471
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-x3-p25.png",
+      "sha256": "29172c3b907a3aec40c9717ef9e4047a8022aadf43d75cc9e0a3e2357f9ea2c6",
+      "size": 439283
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a01-x3-p26.png",
+      "sha256": "c4849d1737cd0bf96bf51c3b4f947f8b4f7db4344bf9b0cefe966a02037de4a7",
+      "size": 533418
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a05-x4-p15.png",
+      "sha256": "bf228345cec8d782f0195969ac1d35e02cbc619622c0cca12cb22c8036860596",
+      "size": 823929
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a05-x4-p21.png",
+      "sha256": "c4981b1468a44c078548d38af8992c2c4fb292f246d4210b504069025a095985",
+      "size": 903558
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a05-x4-p22.png",
+      "sha256": "2c6c967e48cf9292babefd618a7f0dff9af011ea63583ada2f84164c9abcad38",
+      "size": 791267
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a08-p05.png",
+      "sha256": "f47130e5a16027e2a27ce38828d3e8be1713629db641fe7642034ac0febd3b28",
+      "size": 322501
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a08-p06.png",
+      "sha256": "509f172d612089f99cff5be5f1753684f884f96be68473bcc2037a0a3d5d844c",
+      "size": 365976
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a08-p07.png",
+      "sha256": "9e24cf89efecaa072933d4146ca71e14e55719263e0f521d0cfa031f21479d9e",
+      "size": 390016
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a08-p09.png",
+      "sha256": "a1d96762efbdc37d30f611f3a991008fe3e16e3285c61c7d1eebfa5a022150d9",
+      "size": 364753
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a08-p10.png",
+      "sha256": "d125a1bd120d26ce654305073cb3d6cb36eeeab7d49157604cf1bc7a8435167f",
+      "size": 355752
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a08-p12.png",
+      "sha256": "e2c63b344ec92b6ac1de30d369de45e86eb1b464d4901bd3152308884fde6b06",
+      "size": 357026
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a08-p13.png",
+      "sha256": "5d5fb578bdc6e268ff8c4be389fa8c112038766105f5de54f40e5aa9b8eaca36",
+      "size": 345401
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a08-p15.png",
+      "sha256": "80032b4a11ffa5d0c8e52ec4ec2f7b3484abed381d30f0f80ce020b678eb904b",
+      "size": 352156
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a08-p16.png",
+      "sha256": "733e965ebd4c45b1e4ecbc180920ac4310a9f0f2ebc0ddf62e675ae11c5bc422",
+      "size": 385692
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a08-p17.png",
+      "sha256": "9ffad7bf6f4c60aae273268b1845fc58b41ebeea4e36d758bdf3af582f09a2a6",
+      "size": 341462
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a08-p19.png",
+      "sha256": "ee95c0b98f1681ea53f646720a13aea4f0301677b30c60d8afb32d1549e78044",
+      "size": 372427
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/apm-a08-p21.png",
+      "sha256": "dd609fbdf55c7933dcacefdb0a1ce96923e882603e54248cecd4575c623b755e",
+      "size": 390040
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/aula1-p4.png",
+      "sha256": "41156d52b382c714e37f9a1703015e31d5d754e3a383766bc0915fb74fd50959",
+      "size": 212972
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-apm/paginas-revisao.json",
+      "sha256": "5627657b169aa94252d2ee2568196485a1d29e7e2c026a08126e040b1cfed803",
+      "size": 366
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-enunciado/enun-p01.png",
+      "sha256": "1e5cf1cc957a4b9ffbab87908de1dac73a05a4e7459dc46bb9935a23c22390b1",
+      "size": 86354
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-enunciado/enun-p02.png",
+      "sha256": "ffb157cd7534a74d0fc1d2eadadbe98de81e09b3f4968c922a10b61517d6a3fc",
+      "size": 175423
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-enunciado/enun-p03.png",
+      "sha256": "53138a17d1e942b5612318d85e1bc8fdb0102df842275eb604e8cd2e7c33b89c",
+      "size": 172400
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-enunciado/enun-p04.png",
+      "sha256": "d432c70ed423ba508133f1ae629573fefa9d48720d3e1db34d57774aab5897df",
+      "size": 187163
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-enunciado/enun-p05.png",
+      "sha256": "8ecab32b0fdcaf7fd1fe54cb250e4f5109c5d7687008adfa2686e2e6c8fd5ed8",
+      "size": 213060
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-enunciado/enun-p06.png",
+      "sha256": "c878fbea6863c6cee05eb1f8f12161fa36e2d09602e51468f11b8dd733bedb39",
+      "size": 152402
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-enunciado/enun-p07.png",
+      "sha256": "6c27b5b252208f6b8ad7baae2346cd1cf219cec76e6cffa7830b5d17d1974f1a",
+      "size": 230662
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/01-p01.png",
+      "sha256": "1cac089db8fba5267a447917f37528dd86e82af82afc80da2052d28291a63488",
+      "size": 173938
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/01-p02.png",
+      "sha256": "da3472d97b5d5e4d8db97e64e74f470133cd302a33210c8d909734ecdd81060c",
+      "size": 388235
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/01-p03.png",
+      "sha256": "f21bf716e211ff381fc0d26d8b787f549d15445190368c8c0dfcdf49f729eff5",
+      "size": 162559
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/01-p04.png",
+      "sha256": "0f86282c5eed563bdf378f16cd9b38d87d1ca87884d9b82575c74f22a28f7d00",
+      "size": 352093
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/02-p07.png",
+      "sha256": "e9af709397938ff985a22e26ed90c9a93f9b834521d5970dc0b1e53efd64a15d",
+      "size": 407016
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/02-p10.png",
+      "sha256": "8f12963a81fecfe3b4a2f61001d0378cb1353f1d6856b3892d1b71d91da58d12",
+      "size": 409322
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/02-p11.png",
+      "sha256": "e88cd405b100a8d40a8eb16745857469c9fcc6c1a8aa7346b5269e1fbba34fd9",
+      "size": 621361
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/02-p12.png",
+      "sha256": "fb526d845bf58346d0fd97f2114512b84067dd3492d90d60257804db5632b58a",
+      "size": 391460
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/03-p05.png",
+      "sha256": "161b5b2185fc3f43e02fc532c62033024bc0cd45eb58563cf7dbf3a6b48c7a24",
+      "size": 315362
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/03-p09.png",
+      "sha256": "e313ac3011a355450d0c75bb49d727a913f1a18e020702e9c2e8c3ba1ee7aefb",
+      "size": 293943
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/03-p10.png",
+      "sha256": "979fdfb3d88b87415850ddce2cf84406e6ebd4c515d157d2bb1e92251cda747b",
+      "size": 335394
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/03-p11.png",
+      "sha256": "f874fc72c6a91e895a03b3293103f4f5b7f0603aadc333ec9dd537d90daa0d9d",
+      "size": 356909
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/03-p12.png",
+      "sha256": "71f115f6a2828bcf46894ff1996f538191865f0f5788d3c512c9960002415088",
+      "size": 354361
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/04-p06.png",
+      "sha256": "8868971f7986d5ae6298a72be38870be25574fc0055867d81097d60b3779557e",
+      "size": 401935
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/04-p07.png",
+      "sha256": "95284f2ca4bd1d34dda6fc24ee262e17c235dffda25c9e48e0181eb8eba7a4e0",
+      "size": 391297
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/05-p10.png",
+      "sha256": "f7b54cd6f3a26d49dd07ad701c5048b9a9639e2922b4b625a84363d8cf5a2ee0",
+      "size": 356255
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/codigo-original-aula4-p10.png",
+      "sha256": "6c860235ec0c9e8fa09359e74c1336a2b5ca09e0f74fb8fa476d2304f1d1b4da",
+      "size": 108908
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/contato-01-0.png",
+      "sha256": "8e838f8ea4421a1b8e033f19787e6ced4074cdec2448bf81f6fba9e6648c8aa0",
+      "size": 887970
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/contato-02-0.png",
+      "sha256": "3438660c3a7637795d12cacb44542935b8e6d6da117bd4964ff8835b042b5de8",
+      "size": 1405152
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/contato-03-0.png",
+      "sha256": "08d0bd667a7f0b71ccf00eaaa727424861927d86eddb9f5df15c9ab08bb60a3a",
+      "size": 1110473
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/contato-03-1.png",
+      "sha256": "5c0127565a286a3e66438f9468e8cb39a791928d6fb5d68a3a1501d562677268",
+      "size": 370390
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/contato-04-0.png",
+      "sha256": "ce68e77378fe42511158adc5b3eb5db04b6bb6ead4c6ddb502370d4dbbb3a8eb",
+      "size": 749510
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/contato-05-0.png",
+      "sha256": "216115722043d566e027d0f471b6b58903757cd8f938bc219bafa1e73f381a55",
+      "size": 347365
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a01-p01.png",
+      "sha256": "5cf4ca8a8fc7e70818121e45a40387577fdece2b835d5928354856a2b50aaef6",
+      "size": 120023
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a01-p02.png",
+      "sha256": "c86f9470d9b0807009b0a7e8cd1b7b640bc487f34b489d64d50787ed05b9104f",
+      "size": 66827
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a01-p03.png",
+      "sha256": "60b2b08280a1e43703afa05874f9d32eccae28fe7fa53d613dcea2bbfe237758",
+      "size": 123311
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a01-p04.png",
+      "sha256": "d8af835a17620a44abf60dc7cee2627dc83432fc4ba56c3ff33a67811e79b246",
+      "size": 90899
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a01-p05.png",
+      "sha256": "8c493f564e28280d1db24fe0daa587ae0fcf13ec6389b9135ee495530ae6fddf",
+      "size": 265361
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a01-p06.png",
+      "sha256": "3fc9907b21985e95abac1e78c4a79f8a0e942404c19bd2fd01111af3c70912f2",
+      "size": 268718
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a01-p07.png",
+      "sha256": "e9af709397938ff985a22e26ed90c9a93f9b834521d5970dc0b1e53efd64a15d",
+      "size": 407016
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a01-p08.png",
+      "sha256": "87baed88bcbc4d2b9e553965baf86f0aaa5e1669cedb5f75e9684ac87f3c2a91",
+      "size": 292186
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a01-p09.png",
+      "sha256": "7751dca6438cded5426c8414820ce3ecc71a27e4995c0d8b2b4a09dc6eb50b5f",
+      "size": 244960
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a01-p10-fig2-zoom.png",
+      "sha256": "53f339ec3504e39b5af255deb9b4257e38bcbbc646f0999ef046ccf7721fa9f7",
+      "size": 356318
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a01-p10.png",
+      "sha256": "8f12963a81fecfe3b4a2f61001d0378cb1353f1d6856b3892d1b71d91da58d12",
+      "size": 409322
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a01-p11-fig3-zoom-inferior.png",
+      "sha256": "430e9d84d57b94d9785c6a8878420098e266c80d67482b3af3b79cf2a743263c",
+      "size": 617930
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a01-p11-fig3-zoom-superior.png",
+      "sha256": "8738706a0d1403a6cb7a5c30c52cbd55d7b10aec49a94f155c00b208ea6a8478",
+      "size": 410952
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a01-p11-fig3-zoom.png",
+      "sha256": "c7e83ad620342a0e170b6b3be8cccada70c9d52552cb680805acc1d31233fa39",
+      "size": 1061789
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a01-p11.png",
+      "sha256": "e88cd405b100a8d40a8eb16745857469c9fcc6c1a8aa7346b5269e1fbba34fd9",
+      "size": 621361
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a01-p12-fig4-zoom-spans.png",
+      "sha256": "b70bd243a10594e3b1757cf319cc49f7fb0d51454d0c2814a24e2461d342183a",
+      "size": 280960
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a01-p12-fig4-zoom-topo.png",
+      "sha256": "d45545ff1509aa63890629d48de555e486699046010f150a50d0802582b33936",
+      "size": 219942
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a01-p12-fig4-zoom.png",
+      "sha256": "6f874cf7d932329189b6353c200c6bbae584e8fcdf550d60744e041d03d4c610",
+      "size": 289191
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a01-p12.png",
+      "sha256": "fb526d845bf58346d0fd97f2114512b84067dd3492d90d60257804db5632b58a",
+      "size": 391460
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a01-p13.png",
+      "sha256": "cde46f0e18af1b91e723a9f0800f7865bf590d911b87942b3fb62fa49cdbad6c",
+      "size": 285515
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a01-p14.png",
+      "sha256": "60ea12e318cf6b90b7a68ac69846e4794a6d2c5a2645455312c66547c781e6e8",
+      "size": 114639
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a01-p15.png",
+      "sha256": "5ecdbee7def74cc3c43ad2aa94672dd59db5917bffbaff9f3c28b1b98e352780",
+      "size": 131987
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a01-p16.png",
+      "sha256": "b8c503cb8722e6fc648b17f1c8d9157b70704358cc2f2228711cacbe7a0d0258",
+      "size": 266621
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a01-p17.png",
+      "sha256": "afea69ba9f3eae3f05462adc6c67bb093675fefaa83e91f2a6278d78c217de01",
+      "size": 132718
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a01-p18.png",
+      "sha256": "40e0bcaed96ef2a4f026cdaa868857fadde96812b57aed345ea88136c699fc00",
+      "size": 52463
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a01-p19.png",
+      "sha256": "027bb6e2af4b2c06e051c45e6e19c1e1da13e9078d03450005b035f5729cb580",
+      "size": 243408
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a02-fig-p05.png",
+      "sha256": "80fc9681750bcc75fd6165cc893137afa1786690d105b688943ee1db58d98366",
+      "size": 439956
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a02-fig-p09-zoom.png",
+      "sha256": "96f4e5da6255a8b45932cee6dfd96a8f54c7a62e63636fe366105f06657cf3aa",
+      "size": 238833
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a02-fig-p09.png",
+      "sha256": "325fc41bbbe5a26d39ad8f1624b98db0456200aac4f200700b72a046b5ca083b",
+      "size": 409415
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a02-fig-p10-zoom.png",
+      "sha256": "d885e4962a11866cca0bf9d4d78db1e1e70e09d01dd7bc617fc3044b26a497ca",
+      "size": 181446
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a02-fig-p10.png",
+      "sha256": "6db51aa2f0667188317341ea3a451d56b65915fd81bae6f1b0a1b66db5b769c3",
+      "size": 464328
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a02-fig-p11.png",
+      "sha256": "e005b959d55719a1c6a73f25fc7195ffbbec6b745816e4f2f0e15044ad1d0c1b",
+      "size": 496569
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a02-fig-p12.png",
+      "sha256": "e206ccf6097c391f20a8664db7edb16371c59c29bea71231d21917ab8bce12c7",
+      "size": 476667
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a02-p01.png",
+      "sha256": "9d301e68f7ca142400b8d815ebc794a7ae8e039420160d95061b25e8d4b42812",
+      "size": 125347
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a02-p02.png",
+      "sha256": "f3e7d837aa2721e9ac0f97c6d7f92477858363958a885c1f5cf879a81ca76e36",
+      "size": 72900
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a02-p03.png",
+      "sha256": "1fc202060f6c8ffd6447ed5a04e85df0bdfb3e7f14e8dca3d567dbc9326702a4",
+      "size": 181727
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a02-p04.png",
+      "sha256": "edf67a7e5507b63a83fb82b3c1080e1edc9a6e70b38455d57541fe484caf2958",
+      "size": 195575
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a02-p05.png",
+      "sha256": "0343076dea5d0286b4f0a6dfe8ccb6150aec11c4378c2191a2973741c880a57e",
+      "size": 224932
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a02-p06.png",
+      "sha256": "f9c7b3e7b5388e223506d40d9b8081099e247c61e252bb49c11b7ecd50285099",
+      "size": 274491
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a02-p07.png",
+      "sha256": "862432b2a8c0600f82d089860c395f9952962ece9329b8608508965178a6b9c4",
+      "size": 282389
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a02-p08.png",
+      "sha256": "eb6c3b7fb897b9968ad7426f3e586fdf5b9b1bbb8229568b797f239d42f9d4c5",
+      "size": 226744
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a02-p09.png",
+      "sha256": "a780e598fdfca05fa1570a69a7a78b23ac8c3be40edb0e9b9fce8f48a230b302",
+      "size": 209017
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a02-p10.png",
+      "sha256": "6eb7b53ac4e47756baf2a57b7f055ead50680c5988ed708a84d8caf51975e689",
+      "size": 235678
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a02-p11.png",
+      "sha256": "3d327737b22b6d18b1badf114196fa85479aa61c7ed0798c174addf6ba0bf95b",
+      "size": 245957
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a02-p12.png",
+      "sha256": "b94a0f654cbb921b4b6520b666be9d6de59187bc36342738ea0a6ac5736a583d",
+      "size": 252073
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a02-p13.png",
+      "sha256": "afe096c7d70434e54db8d5cf084c80084f10e3cb575ef96479f88e7ed2733fe5",
+      "size": 91557
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a02-p14.png",
+      "sha256": "7a3cfd2e6b232604565120b670c21f2a6512c5ce1396c5abdab9726fb0a2d4f3",
+      "size": 143722
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a02-p15.png",
+      "sha256": "2585702d37961be6dbfd27e9e402397b8cf8b36db163856ff29f118add13dd19",
+      "size": 125565
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a02-p16.png",
+      "sha256": "9c02ee84e1b185af956f9a642579001950e2298f5fa2f36ef7a85af1d6fbf469",
+      "size": 57942
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a02-p17.png",
+      "sha256": "027bb6e2af4b2c06e051c45e6e19c1e1da13e9078d03450005b035f5729cb580",
+      "size": 243408
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a02-z4-p10.png",
+      "sha256": "5174503287b384ddd1ef59be329a233002d20ab2a009092158cd68eb4112aeb9",
+      "size": 769231
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a03-e3-p06.png",
+      "sha256": "bce96a06ced1a303c802da4a40ff05f3d09ef3dc4a2dd1ab02e95aa47c9150b6",
+      "size": 674066
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a03-p01.png",
+      "sha256": "095d68bda108ea260684dbc03f6611e877abb7554999bcc82adff5314c4f7c4e",
+      "size": 124598
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a03-p02.png",
+      "sha256": "2a4109dad6e06d0cf6b37280bfc156bcdcd281b7e575d4350b72c10ba0c459c8",
+      "size": 74939
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a03-p03.png",
+      "sha256": "e8d2f268ab4a622c2b44577acaf44ebf6289c1a90f2f67b8ad61e865caac98ca",
+      "size": 190791
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a03-p04.png",
+      "sha256": "2ce985b9ccf58afddfdaf138b9f4202136ea26515c233c5f32f9cd62ee3ba423",
+      "size": 225093
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a03-p05.png",
+      "sha256": "60ab183e7c3134bc201fbcc5eea2b4c0479505b8b3153ce4e6f4aa29468771c8",
+      "size": 278646
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a03-p06-figura1-recorte.png",
+      "sha256": "7df37df72d51c0426672a46c61e6df2b255c6c312eebf34727f59969e9c5150b",
+      "size": 106705
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a03-p06.png",
+      "sha256": "84969bcecdb9dfaea6aa44f5930996cc54788f2d363bd59954fab5006b97e6a6",
+      "size": 286848
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a03-p07.png",
+      "sha256": "4c85f04c1306f19b17256a8407d153de8413784cf767217554b518f1cf0adcf5",
+      "size": 279868
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a03-p08.png",
+      "sha256": "864e19f8a4f6e51e03b1d953756fa75450cce6e708bdad71aa0c1f2861768b76",
+      "size": 279110
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a03-p09.png",
+      "sha256": "414e7ea72963eba9b81e640c32694029eb58e46d50f27387ba715255b51e382e",
+      "size": 274114
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a03-p10.png",
+      "sha256": "e380049d34add0f4487e3db2f863edcec531ae39a0f3803a39919c7d44a0b6f8",
+      "size": 274600
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a03-p11.png",
+      "sha256": "738d9f5b9c1295c92e624a97102285814210cc751a68da89f4ecf1a001761b2e",
+      "size": 131014
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a03-p12.png",
+      "sha256": "cc67b4724d9308f06b88e65ba4eb9ba33d20bc24eec37d591e2e0aea16cd4573",
+      "size": 87658
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a03-p13.png",
+      "sha256": "4acd3203bd28035502c685378d511fa833208e739b9c0c018f74b12e488bd78c",
+      "size": 200777
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a03-p14.png",
+      "sha256": "564fe99b15bd9e7ba688cafc88e66bf3d6b5aa3a4dffc86cd351b76b19035fe9",
+      "size": 155023
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a03-p15.png",
+      "sha256": "691376f37452e7a812cba4e947426cf1a06a50e1889e2de76d0e2b03c9b12431",
+      "size": 61242
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a03-p16.png",
+      "sha256": "a1109258102dab3cec642ae842fe261940d1aed0915b41257355a4f056194397",
+      "size": 243373
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a04-hd-p09.png",
+      "sha256": "7dff09cc51dc8fe46998ce529d4191b132e3202575ceb7e96bf3f3c95c37c5b6",
+      "size": 630346
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a04-hd-p10.png",
+      "sha256": "b7589ca50408755d113a1f321005a5bfa780763efbba690f8390fefa21d4f1f1",
+      "size": 583562
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a04-p01.png",
+      "sha256": "3093945df43e7e11a4216a22ff6927096ef4bec769ec5b7042fa12a795afe2b3",
+      "size": 123074
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a04-p02.png",
+      "sha256": "af7478eebc9abd277f468858b136d779d8f1922c07f1fa749d18a7c9eea3d376",
+      "size": 74238
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a04-p03.png",
+      "sha256": "3dbd7fe0848b260cd7310442e70d89462a59ff778f0203b8a9e53ddfb0187284",
+      "size": 211806
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a04-p04.png",
+      "sha256": "a93672664220c9a733f23f17a8bc8bff45f1e30ea6901bca2addaa9bda6f86f3",
+      "size": 174676
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a04-p05.png",
+      "sha256": "ef63728a6b2ad1cd0ed647cb6c0acfa682f520b5ba6d5b2ef6ced90e2fe0ab3f",
+      "size": 276874
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a04-p06.png",
+      "sha256": "f9cc96a615b6cf1bc30ca97702b15ff85b6d4c6f0743d6300acf0641536235c7",
+      "size": 281793
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a04-p07.png",
+      "sha256": "9bca15a2b6eb5ccdf08fae158e66018a37ee3e81e9bc508f23b71bdb5a83caf7",
+      "size": 274563
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a04-p08.png",
+      "sha256": "2d5d3b88a30703aa4724b90168a3faa8c24a19bcf0c0cfe4213999c92ba0b4c0",
+      "size": 281256
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a04-p09.png",
+      "sha256": "e1e1c84626eb2ccaf21594dc621a4231f0586a54fa453672aa865bdaca50a10d",
+      "size": 269892
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a04-p10.png",
+      "sha256": "eca8220602db275447e73ef20c39a6b60f58c2e94dd9525c498b66345486a62b",
+      "size": 253529
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a04-p11.png",
+      "sha256": "34b05093b7b1b5f34e5d38ecbba9b5a89b8c0aad36e56b86ab7f22de0c6d8c7e",
+      "size": 265010
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a04-p12.png",
+      "sha256": "54967416f32da84b98f7b5eb812e249a35831bf8996079655384d8d595d6920e",
+      "size": 123095
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a04-p13.png",
+      "sha256": "3952b7e8fab823f9ca5d29ade86a1bcf6198524fb821cf2a68b8f5e0c06b9b84",
+      "size": 83420
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a04-p14.png",
+      "sha256": "a40175497024b09f9ac9744e17e47f2fd4be23d6781edf343be24834a6e63e05",
+      "size": 202159
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a04-p15.png",
+      "sha256": "f43e43fbdf2f8d2110bf7779d5a6458cf89e20007c622812abbdcc46f4cf05d9",
+      "size": 113770
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a04-p16.png",
+      "sha256": "8c1cca1dfba091293997df0ca5b2b63ea895414da665d412037e7f0d05c48f9d",
+      "size": 60484
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a04-p17.png",
+      "sha256": "12812565811f97703f49000f25f572809ae070ae508df07154955e8ff384bed0",
+      "size": 243163
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a05-p01.png",
+      "sha256": "d9424d406473d0bf1ebaf2bc1f5d7ff4ca247a31f6d0d6941d630143c7b149ad",
+      "size": 123831
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a05-p02.png",
+      "sha256": "8ac3cd6bb7a3f68b7a79fe0b7b8ebc576698cb3a00b584e4f84078bf58215ac5",
+      "size": 74193
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a05-p03.png",
+      "sha256": "ab73f29b399cdedf7710b2971db56205c884f9eba6235ddb478869e7bce0fdf0",
+      "size": 181944
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a05-p04.png",
+      "sha256": "df76ed21212e12171660c219d849285fd9510e26269895bac01b84a22c31d797",
+      "size": 237669
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a05-p05.png",
+      "sha256": "64d900cdb01b9635046e7fdd3f30efb038151718d5ddb14ae433545ff98de62a",
+      "size": 274184
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a05-p06.png",
+      "sha256": "737bde34497246540647b22b70e535b0ac6722c521532a650b8f33a6095f848d",
+      "size": 294082
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a05-p07.png",
+      "sha256": "3aff6159a42f88624a798a62adf543b3dcbf6502b3fa7ff5737f1b96963e2ae9",
+      "size": 299908
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a05-p08.png",
+      "sha256": "5eb2c185b1ea6e7d8f208e168aeed96eccbe96ed4001ad8d52db7fd5ca15d3d6",
+      "size": 280095
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a05-p09.png",
+      "sha256": "bece0be68d115fc5f646f325bc6b14f3bd28e019d5d39133e70ad169d3724de5",
+      "size": 224495
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a05-p10.png",
+      "sha256": "b19dfddbc68510cab9487a8b681b327f76fbdc6bae8a194cb97917f3cc5d82a5",
+      "size": 157761
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a05-p11.png",
+      "sha256": "ca7e0e8d3b27e2b513383b28319e5743609a3dadc9df6dfe305b3cfa470400df",
+      "size": 190433
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a05-p12.png",
+      "sha256": "d4d9555a254b0200584326170e509a8f5bdc5d4a738c76565aca2305db614da7",
+      "size": 297066
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a05-p13.png",
+      "sha256": "849d368a54e3e6e1720faa7284ca818ab94af6a06e124c39d3dac47098dff139",
+      "size": 60881
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-fundamentos/obs-a05-p14.png",
+      "sha256": "12812565811f97703f49000f25f572809ae070ae508df07154955e8ff384bed0",
+      "size": 243163
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a1-p11.png",
+      "sha256": "9666ee5d370bd3b6db7ec1f76848f1588272f08e84abfc928c5f68bbff290f16",
+      "size": 411816
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a1-p12.png",
+      "sha256": "7873f41a71b91199f4dedc8ed2320f72201888e72aa1e454f68f2944f6e9583a",
+      "size": 554170
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a1-p4.png",
+      "sha256": "134faff57fa9d6f2424d021118f899e327e7fa5a216cbb64380fabf18db9a062",
+      "size": 95191
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a1-p8.png",
+      "sha256": "5a533c87fa36e491ada984a6d085bf920a02c855b288e4cd64d6291ad653985d",
+      "size": 467228
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a1-p9.png",
+      "sha256": "f50b265a9b3b210213bf9d5575b1d3d8903cda7a4a378bf90250cb6fa9ec3011",
+      "size": 401829
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a1-sheet-1.jpg",
+      "sha256": "9cebb21b2c2d3bd4082c93735b0a4fa69987466cce10de005f771b78bc858af4",
+      "size": 561519
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a1-sheet-2.jpg",
+      "sha256": "1199d3d36b260504433c8dc42804bfc483889f34df5760d118f189189d694795",
+      "size": 618356
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a2-p13.png",
+      "sha256": "e02211f3610044772916181bc36707c1a5ecf8c62aa011559d6ecc8f9e07725c",
+      "size": 357284
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a2-p6.png",
+      "sha256": "87f170c3c3016bdc189d2b9da7d16ecc0a97e15af64dd80713aa9047ca7a27db",
+      "size": 449147
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a2-sheet-1.jpg",
+      "sha256": "e1f1c8667a7aab6603864d040abfd2f01814946eb7bb00122b335807d7aad50d",
+      "size": 737968
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a3-p5.png",
+      "sha256": "3fb5eb95cbabe80c7163a1b84ea8ac1b599bf6b9ed77420e276fa281f9964301",
+      "size": 335123
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a3-p6.png",
+      "sha256": "6ac74c4e976063877412eb47eeb531ca15f79a7612a5a5cffc62de71cf85fbc4",
+      "size": 340348
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a3-sheet-1.jpg",
+      "sha256": "ca1f188e11a4be2a78fe365e8b207fce3899c5e699d7c4a181aa9bbca88462c6",
+      "size": 754794
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a4-p5.png",
+      "sha256": "fdbdf99f8a1892ab1879d8b0fac0ccb3fd52caae782be3fd67837493827aa95d",
+      "size": 339829
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a4-sheet-1.jpg",
+      "sha256": "4b19d3193a124c1be2509448c3c244bcb05ffba4c674a72c426d69581e84de8d",
+      "size": 302377
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a6-p10.png",
+      "sha256": "99754279e0082dc16461fbdc1da56ec545ce38080e01e559182740b4917bb780",
+      "size": 291347
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a6-p11.png",
+      "sha256": "2debab876cc3f65071b7e73b9979f9d6c2c487e91d8e47c99caaf4c6625bb86a",
+      "size": 275613
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a6-p12.png",
+      "sha256": "80677b2997bda2a305c2f0b0c0a0df97515c64fba746425c9176f5d4592bc7a0",
+      "size": 279121
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a6-p13.png",
+      "sha256": "1e691e9a861c537cf30f6ac61018abb3ddd73caf3092e725f6cd22bc64d62805",
+      "size": 140792
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a6-p5.png",
+      "sha256": "55bc064eef3d02a8b40a8676a22465419dd6039d85f3b6c4a6f6468f35a36c52",
+      "size": 279318
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a6-p6.png",
+      "sha256": "b0005893924e33b0c3f4bb69b41016041ecb4ba0b979dbcf9d6e4d95acb8fb8f",
+      "size": 283255
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a6-p7.png",
+      "sha256": "b376bac69e5b3f132a55f29456fec0bf77b0efe86bd3ce6a7222b30b8d08a77e",
+      "size": 267437
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a6-p8.png",
+      "sha256": "c96f72d13556ccb74e77f16cc94a0823ea5535b071f916279cb5a35c6946ea7c",
+      "size": 314112
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a6-p9.png",
+      "sha256": "438f58b333148c12e4537fc2d6be5a8f449abe4af01f38c299157f562ab70d0a",
+      "size": 307865
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a6-sheet-1.jpg",
+      "sha256": "0d3e4faa4c3850d32ee0e6e73466c4a509d64eaed640fc0a809dbbc17bd583dd",
+      "size": 578443
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a6-sheet-2.jpg",
+      "sha256": "ce1adac8c63e6eb0638a8fb08cee6cbb9fa449a10205606f07af87d596559d9b",
+      "size": 600981
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a6-sheet-3.jpg",
+      "sha256": "0b3bd92a53c27ad39686b37bf80effce3ec82ab67196b999ecee71982280c156",
+      "size": 612448
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a6-sheet-4.jpg",
+      "sha256": "ff070b1094789d9f1cae21249434a72f5aad07e26568a5e62ba7e97ca3880417",
+      "size": 577869
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a6-sheet-5.jpg",
+      "sha256": "0c3332101663d51ebe558a048591a7036241265c17fe5329fe9810211d8af4bf",
+      "size": 146913
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a7-p11.png",
+      "sha256": "04bb4f2398b99d8b62a80071fd57e8b30e436e6b9f47a11d7c27eadab9146133",
+      "size": 371239
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a7-p12.png",
+      "sha256": "47cc25f1d9849da50812feed6732ed55104212bc6468e200b406bb792824f9e1",
+      "size": 351820
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a7-p6.png",
+      "sha256": "f92d36ed1f2065eb3a0059f2f17fa61f12b3b5976a47417c6bb6bfdabaa66e1d",
+      "size": 398169
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a7-p7.png",
+      "sha256": "989aef5a8bf99cce4a546548f009874b24c4e8437abd17c5289edf32067831a6",
+      "size": 366358
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a7-p8.png",
+      "sha256": "b91c4a9f5bc6dc0f3c101c0021c8c2bddbccc6d1f50b593db685dc260c683b87",
+      "size": 396865
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a7-p9.png",
+      "sha256": "5210c217783ad2613651c0c23e905f12e5af79eadb019e5de2be7b1f6ab7048c",
+      "size": 334623
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a7-sheet-1.jpg",
+      "sha256": "f69c68e66dd32601efe9c2ab530055ad2414740e46535c2f61aa02f21403cc17",
+      "size": 797890
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a7-sheet-2.jpg",
+      "sha256": "c1134227ace188b0fefa0f0b2298cdf5d4fc9ee304603960588590b1390eeb09",
+      "size": 615921
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/a7-sheet-3.jpg",
+      "sha256": "11d97493ef1bef50fad9e045e8f7e8f09bdef0457d87c4334e15d0e64c1e03f1",
+      "size": 663477
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/aula1-plain.txt",
+      "sha256": "8064eb9423c8e91ef595b168ab10d679b9c97af5346d27d3de19125a3100349f",
+      "size": 22705
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/aula2-plain.txt",
+      "sha256": "3fff396e400e81a3cff47cc3b842e5e221b9a7f648fccea32425848f1979cb7a",
+      "size": 35384
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/aula3-plain.txt",
+      "sha256": "5918a9a74fd0f73cb53a3e149b55272a64035b3bffa42ae1d0df566bd3805c3e",
+      "size": 35790
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/aula4-plain.txt",
+      "sha256": "3c327ed67131031b5e646431ecf9e62f9e6083e603c4d6da137565aab3f0fb4b",
+      "size": 29387
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/aula5-plain.txt",
+      "sha256": "720b0cec8a0e7030c7c265ae1ce9d4f698f64b1042593be20b0a759827c725c4",
+      "size": 28608
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/aula6-plain.txt",
+      "sha256": "dfda57f7ba61fe84fb2c5039752e1cad2d1507339e645e62a07e04f34e387f16",
+      "size": 23081
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-incidentes/aula7-plain.txt",
+      "sha256": "aba051dba707f1e43463394941e99f6ce16a4c82ab7dc50627eb129ac1d50ca7",
+      "size": 27696
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula01-01.png",
+      "sha256": "b495f6cb1ab36c37a160f672d96047b05813ed8326fcbb0b09486254520db839",
+      "size": 184904
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula01-02.png",
+      "sha256": "07bacf7a3289bbf077fd08379c1882537dbe09d1eb6eb801f3f46367276b0323",
+      "size": 94139
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula01-03.png",
+      "sha256": "2f4da98ff04f306d2fa3dfd11132f0ed994c5724b8d4e64bb154a6fb4516c44d",
+      "size": 210197
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula01-04.png",
+      "sha256": "c0d5c28de326e6da0a31c690d436ecde2345fb8c7a5eb953967e370f4d850e1b",
+      "size": 222961
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula01-05.png",
+      "sha256": "8f7821c6e9f3ed7d05c92842d7a5f46b526a0e8af1248437cd8c975dbac0283a",
+      "size": 488289
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula01-06.png",
+      "sha256": "603a0e394f8fa6f4be94fecdec690870c82d75df20065e8438a62574bc22b277",
+      "size": 415536
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula01-07.png",
+      "sha256": "901fcd4bc52caf8652147dc6fe628a9019aef6312a240984300e29ed9b2c8d78",
+      "size": 403052
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula01-08.png",
+      "sha256": "2463ffedc2e19d5305e003c85e2735aa1ce304c7e49e029e54b3ae4c976dc5f5",
+      "size": 381127
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula01-09.png",
+      "sha256": "82ea875afc36285aaa3cc6a56a92532b2d28c1741a816846fdd7e2130de67b6a",
+      "size": 372351
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula01-10.png",
+      "sha256": "f6951ae87c72e2c7146049e79316b5564021dda1c0edf7cac090665940c8eae9",
+      "size": 179742
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula01-11.png",
+      "sha256": "f71a08bff60a6e3b84fb67dbe4ecc692af96bb7278e0a5ccaacbec760c7a698e",
+      "size": 107808
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula01-12.png",
+      "sha256": "f121c36d73c084888af01d013e177d61f5d02cd773d7de0d5b1aab20c230b8e0",
+      "size": 133388
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula01-13.png",
+      "sha256": "2c89853e396a2b4427c1c30d781edd2d70902c4c5cea4cde0d7dfde83a007595",
+      "size": 143967
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula01-14.png",
+      "sha256": "4c27f831b3c77dc1985f84faba7b245f3d7775bacd6e016b4821ab5727f7537a",
+      "size": 74553
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula01-15.png",
+      "sha256": "4bc36940ddb056550d1fa48b2a39e1ff2a6daa6dc507b5609322d34e7b01c1e8",
+      "size": 366205
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula02-01.png",
+      "sha256": "b107561790b14dd7c857c3363bb430ecbf616470f4e972285c9850e3082112f9",
+      "size": 194812
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula02-02.png",
+      "sha256": "9709c77aa9beb48f112011084ec53516b61f8f99baf73317ef4cf2d524164126",
+      "size": 97921
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula02-03.png",
+      "sha256": "a6adef2c8d71066ed10e639903ac933998550f94f1864f135a4c2db13b7fa793",
+      "size": 178108
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula02-04.png",
+      "sha256": "a0d81d4d029b9916e717183430e72c06362f867a0ee2415ea07e75085f079600",
+      "size": 238766
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula02-05.png",
+      "sha256": "413b48bda63fa15a29ad7ffb6d458473925784196c656bc9caed16aaffc8d62a",
+      "size": 427904
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula02-06.png",
+      "sha256": "b90c8bb3c5b7d6bb1c1d71b5a52af73e80c180dd78c8c2ade7b43ecfea69fcb1",
+      "size": 393144
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula02-07.png",
+      "sha256": "d2c89adf9c6bb089ae10301de0060a7aa8e6cdc8acebfac1eb99ecf545345b31",
+      "size": 438640
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula02-08.png",
+      "sha256": "de88983c4c241fcffe766db898e9f9aa789825bc6f0203d5431aee809e900d27",
+      "size": 484872
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula02-09.png",
+      "sha256": "0f7ff97e466e038758c449c67fba33318c8ab6bf03a228f79599adc0934edcaa",
+      "size": 205397
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula02-10.png",
+      "sha256": "d60a08c01f7d767c47355717acfd70ebdbe4ce5741c32fe4253c93489a6d8d23",
+      "size": 97898
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula02-11.png",
+      "sha256": "001e0093eb8d3b678e4646e0d71f473829e09ae3f2285d1590cfb7dbc5ca2df2",
+      "size": 130971
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula02-12.png",
+      "sha256": "eb28797493a6a4ef67f7ecf8c7040ceb78fea6b799102f44fdc32f6350230691",
+      "size": 133549
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula02-13.png",
+      "sha256": "cd36b7c7b90a6166f741fe0ece84a91eeee1dbd7dbb09d19e2b9b8cb69728a17",
+      "size": 81000
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula02-14.png",
+      "sha256": "d46fd6e6df86f8763aba46acfccbc32f1f5b36db08ee79ae719e7e5fa9eed02c",
+      "size": 366494
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula03-01.png",
+      "sha256": "67cf4a6ef9ea46948c440b3b4d711f51bfcf06e50b0cb4af00135280aa689f1a",
+      "size": 194144
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula03-02.png",
+      "sha256": "c5452a45e823a596e4799d52686afd5bb38e6d4fadbe4f1c0a2cdc21bbab1e9d",
+      "size": 96266
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula03-03.png",
+      "sha256": "d090dbc0e6f3901ea57ec2b06f6f0eb706db98dd22d2064f986b0dee157d0ba7",
+      "size": 163531
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula03-04.png",
+      "sha256": "53f85a7e2a4bb1d83e63ca723a3823423f908aae9a9f440e745038f4ba76e6a7",
+      "size": 187835
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula03-05.png",
+      "sha256": "5208ee8ae4f3a3351a08e51ed83794badb140d62385d6006f66ac837e5a56e2d",
+      "size": 406168
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula03-06.png",
+      "sha256": "46c8a28e55b3153cc8f6e2ee701eb0292253e77631251c34e157354bc4ec4e09",
+      "size": 385263
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula03-07.png",
+      "sha256": "a2078fe20eb044144a900dcb506c03a35cd15eba79df9d676e298f7a6a8e105d",
+      "size": 426123
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula03-08.png",
+      "sha256": "e3a25686c7fea5363c5781d50b26106a75636626c9d8704abfaf8c38b094c7b9",
+      "size": 263829
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula03-09.png",
+      "sha256": "1e8f5a87d14a2692fa6787c7ecca8f776fdc897dd4c999ba437c7655c678c14e",
+      "size": 118778
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula03-10.png",
+      "sha256": "8328bb5823ba67488c984b5c7f0cf35c007a0580c94898dc7d89d23d3fb17d05",
+      "size": 156589
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula03-11.png",
+      "sha256": "87cd9f21034318539ed50e2a8006a4331d0ba6b482d71e61127defca7ed0845a",
+      "size": 149331
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula03-12.png",
+      "sha256": "e30c8b6f5a64ad4fc6faf647dd2e98ca3fc0b3f872357c770ef80dd24555d4e2",
+      "size": 84142
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula03-13.png",
+      "sha256": "9895346da1dcd0a4c9d2e3b6f86bcd3371b93385f5c2ce8aca6a8481a9287a6a",
+      "size": 366456
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula04-01.png",
+      "sha256": "4ee6492046d602a17133f552db837f31355817df66aa4e5f67ea44acdecaffff",
+      "size": 181742
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula04-02.png",
+      "sha256": "fe1f316c590698b094ae2df5ed7f808a6d497dfd2c5008aafb07c95fde05439f",
+      "size": 91954
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula04-03.png",
+      "sha256": "8bcd7b736dd66635c586a9a276d49e40de27867169bf032fbd94b2d48a42eb9a",
+      "size": 215836
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula04-04.png",
+      "sha256": "5e07dfc35e9755097d2c9d979eeac531f1623ee4def9cc6bd1ed3b1ca932e918",
+      "size": 218265
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula04-05.png",
+      "sha256": "51a479178be1c1df1d11130265901a382999fdc307927c2efd0d52601b4e110b",
+      "size": 541003
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula04-06.png",
+      "sha256": "9e29185dbcd792a40bccf7bbbf94c843709f0df16f91a3205b2f1be58d797cb9",
+      "size": 356651
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula04-07.png",
+      "sha256": "82bdf2b0751a80a2104269220ee385b2089d6cfc2436f6c9440882b9513998f3",
+      "size": 525455
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula04-08.png",
+      "sha256": "9df4bea500d1be24a53df8c5052d7a466c92b1c96ce597bc6f661f2d7914bc8e",
+      "size": 566836
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula04-09.png",
+      "sha256": "05c06dc8d49ab35c6f23152c8a83bb87afd4e922390c0d8639693e5e8dbc7554",
+      "size": 422736
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula04-10.png",
+      "sha256": "5510723dc3353e7c9665ca7887433cae861e3292998bddea8be62cebd641715f",
+      "size": 106166
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula04-11.png",
+      "sha256": "e32189023cb4b9351ed586c0408b7ef4d21cd3635437954da40d560eea310f33",
+      "size": 145633
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula04-12.png",
+      "sha256": "3a484a4fae06982fbeda71d2123428779eb6617f060da243cc80fd0128d30e4d",
+      "size": 154177
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula04-13.png",
+      "sha256": "71cd3164c488a1477c835dd4123865dd1814cb6cc27aeb3561b1914b5fb781ca",
+      "size": 72478
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula04-14.png",
+      "sha256": "9895346da1dcd0a4c9d2e3b6f86bcd3371b93385f5c2ce8aca6a8481a9287a6a",
+      "size": 366456
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula05-01.png",
+      "sha256": "75fc95921fe2495ffe37577658be0e715aa146f885712a782897d973c695620b",
+      "size": 183659
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula05-02.png",
+      "sha256": "6237b37151af3b27efb16f4829f007425af10bad7172ae2d9cae3c3f5fcd826a",
+      "size": 93379
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula05-03.png",
+      "sha256": "a5fc9b42b2077e4d7d988efc973544ce3522f38ce3019319a6e4fb7e5b1503fe",
+      "size": 246170
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula05-04.png",
+      "sha256": "88c618b33bd8bb1d22d6a7f2338245cd169f95c99d90344ec26191b579a094c8",
+      "size": 212232
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula05-05.png",
+      "sha256": "8c3c176995ddcfdec7529733aa2ded4d05dfbdb8bdbecf4146ee5e65c6208e68",
+      "size": 356090
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula05-06.png",
+      "sha256": "d36643a9f8c27fc2f7ab30c18b2c9a3ca6225da322c0a8ce31ed12be0655e550",
+      "size": 509703
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula05-07.png",
+      "sha256": "100121e9399a2c0b15b9c6eb973d11d786a2939c0701b1426c2405d9d8cf4c5d",
+      "size": 417900
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula05-08.png",
+      "sha256": "6e3721c09621605fbe4ddf0ad0e041e5031df4572f2ccd3f73d7445af6950be3",
+      "size": 391847
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula05-09.png",
+      "sha256": "c6b97a15a38f3358ce8ee8e30c2b8a5748c6393d83887d784092ee3342825031",
+      "size": 684543
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula05-10.png",
+      "sha256": "3736738ce272c14d1a7beb45dabc10976562008954273460b52e8e42d0bcbe92",
+      "size": 372849
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula05-11.png",
+      "sha256": "f7b20dc9f445bc8799ed4709ac66e59a8c42fd5638413778aa7e5d03a6787572",
+      "size": 109186
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula05-12.png",
+      "sha256": "ea30791aefae4abeaf64fde9d26f01da27758044d850c7d02d61a6e79e5c1766",
+      "size": 92763
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula05-13.png",
+      "sha256": "7d67ce43899402d653ba288965db68b5bebaf4dc13a3d404a6d7337d6c66ea6e",
+      "size": 192270
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula05-14.png",
+      "sha256": "a3f7ed2b2945d4af30fd83aa184b51342d94e27bd8a7ef00030c7ab6b1a320fa",
+      "size": 127922
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula05-15.png",
+      "sha256": "31649b64b9610e89b9007f2fbb7f02c83809a24e38745db9fe824786838f67b7",
+      "size": 105314
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula05-16.png",
+      "sha256": "9364951cf0bc06b723c670ea8d24c08fa0d10c635211018627d07c56d14e73d0",
+      "size": 365206
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula06-01.png",
+      "sha256": "355ef572045ece67cf172036d830d6ada888b9d84050a9905ae714e276635df5",
+      "size": 187147
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula06-02.png",
+      "sha256": "1779761e7c0f7452ccbdcadc4d75625d8ad6a14cd0093b65d04f3dce5a5e0a5b",
+      "size": 95498
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula06-03.png",
+      "sha256": "176338642b84a955f8fa95c3eb59967259727fc40b94cb6a0051f653a629d875",
+      "size": 212138
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula06-04.png",
+      "sha256": "06143ef63206bbee4963ee574e50ccf2c3073e1467f07bc6d35855636375ce88",
+      "size": 209549
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula06-05.png",
+      "sha256": "5af4037a9be61b0855ab10f77ebfa8975c8848cf6e84893f1ef7cae990979cb1",
+      "size": 382314
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula06-06.png",
+      "sha256": "bc6da412c39f139643157f679c62bfb069a791051cc9cecfde30db8af1b989ef",
+      "size": 373997
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula06-07.png",
+      "sha256": "f9dba63fb7b9b3f4ccdc6b6897590b05d269b1d60c2fad135d182b13eae199c0",
+      "size": 344041
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula06-08.png",
+      "sha256": "32210abfaf3dcd985287d0445b7a8472dfb187037870f1b3c1f0eb9a1ae07751",
+      "size": 600662
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula06-09.png",
+      "sha256": "5779030dec42e8d082a7b800246d1c5561dda5e83930490d18391084b27c34f5",
+      "size": 341555
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula06-10.png",
+      "sha256": "274cc23515dd81b276735ae26797b637b22c64fcc0b33872dc5cbdc70023561a",
+      "size": 370209
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula06-11.png",
+      "sha256": "d34044effba096702a69b8840d271cc81ef332cdb2eadfbd63ed4e246a3d7ee8",
+      "size": 177531
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula06-12.png",
+      "sha256": "25e22f5b5ac48d0b256d34d162c4ed3a397f6747db39b8cd52a6c03fd4a7c832",
+      "size": 106816
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula06-13.png",
+      "sha256": "8405780175dcb00b03e5e11dcc640fbcf6b982f8cec685c55ba3bea56215b382",
+      "size": 147451
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula06-14.png",
+      "sha256": "e9bb6d8a6db499865907c823ba8c9f3b183eef1cd2ddc0b0272f61cea00860ac",
+      "size": 130478
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula06-15.png",
+      "sha256": "124a9439a67d714cd0f31c4352bdf9fdcfa2d01ecabdfd673b518d344a815422",
+      "size": 83999
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula06-16.png",
+      "sha256": "881d1e52d5382b748c8936125f7b16430e988c47e2849f07d53a365ad60e6c00",
+      "size": 365335
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula07-01.png",
+      "sha256": "a189d32eaa7d3e5e30e2e01629718d5288f9f0c88675f3a00c08c3a175f53eff",
+      "size": 190450
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula07-02.png",
+      "sha256": "dcfeb161f2f8edccb4b1788688af381664c0393e67cfefeb0edf8858a6770db1",
+      "size": 95426
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula07-03.png",
+      "sha256": "0cfb9aabf6691e0265e5405275ee237e2d2f4ad602c113fdc95769f79c5ee8bc",
+      "size": 136556
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula07-04.png",
+      "sha256": "f51b08b4c23ab3682423cfacb7113635ee87db309170d9d5ada4e99282e701bf",
+      "size": 154515
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula07-05.png",
+      "sha256": "dfe763c69983c2387f2e98fcdc9dc7f731d8ed682d572314445a7b30bf227c0c",
+      "size": 386608
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula07-06.png",
+      "sha256": "e01cc15a229ee4477cdbb94ca84a6a531137796a7be3ca134c744e6ebe3df53c",
+      "size": 607376
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula07-07.png",
+      "sha256": "135809d2c11c023d8c93f8a752a9076bb7a7a50f25c2a8843872547687b193a1",
+      "size": 302511
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula07-08.png",
+      "sha256": "63b746fe4ef5d9d3f67382d634c4cb3aa75184991516caffb4eea836d0bcc241",
+      "size": 596845
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula07-09.png",
+      "sha256": "45d15add141ccfcd33c14640c4e39d6cc2b21db303e6646bd43486f569a29bd1",
+      "size": 574125
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula07-10.png",
+      "sha256": "c3a76a34504ee0d8084ffbaadaf663e292ad3f0e55387060148f8869bbfd4564",
+      "size": 235532
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula07-11.png",
+      "sha256": "e252c8ba89b5eb2738831f680f02d90e61e0da06f5c2256f3ee732456e68f4ca",
+      "size": 83975
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula07-12.png",
+      "sha256": "c00c033eb2dc1a37e9f10270b10a990bda8cfb94761987cb83d6dad3ce9b798a",
+      "size": 136754
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula07-13.png",
+      "sha256": "35ddbc7ef666b36532d3471ca44f222a78b6d05c7b5755c6619d97e7a8f56a1d",
+      "size": 128420
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula07-14.png",
+      "sha256": "3428402841d78737c483d6c18831da717cacf423f5aa1ca94e17cf73402a3a46",
+      "size": 84695
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula07-15.png",
+      "sha256": "9364951cf0bc06b723c670ea8d24c08fa0d10c635211018627d07c56d14e73d0",
+      "size": 365206
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula08-01.png",
+      "sha256": "5bff067d544d8655f17a161dfe0c3a171b48a196d4bcbd760ecd00daf86bd628",
+      "size": 201582
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula08-02.png",
+      "sha256": "2d817d737a7d42f784b333b265caa6477544cebd2399bf7bfce29c9aa86c775d",
+      "size": 97562
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula08-03.png",
+      "sha256": "cc446eaa26018261c9efd70827e99587acd8f84980a28c0a56373915d853c0c1",
+      "size": 238003
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula08-04.png",
+      "sha256": "516637fd6a5018b5daea12433c703c6b06b7edfac867e4dfca0822962b632ba9",
+      "size": 181343
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula08-05.png",
+      "sha256": "3796fc50f0bc6e380ce942a020f2d27e4860123594ec84c4c4c0a2caced67d07",
+      "size": 631025
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula08-06.png",
+      "sha256": "f3488a44c4e9b1bf6eaecb655b9e0d72d1a2831d20a2fde70036de6afc5411ca",
+      "size": 379339
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula08-07.png",
+      "sha256": "13711444abc928953fbc784c885aa8f7e44a7445ff455a240a80886d4eb117bf",
+      "size": 683787
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula08-08.png",
+      "sha256": "440989a25d58c0fa1c141d1776d92a3e723ec3989e370fac21465f72f8d832c5",
+      "size": 523481
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula08-09.png",
+      "sha256": "637af4a2c3d0dcd0caad0a2f88866c17129b8ae752490cb14fe8710c3fbdd860",
+      "size": 533271
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula08-10.png",
+      "sha256": "5f4a22f6f76b54c794c58d3db986d3ea1fa73cff710514b72247708d1e23b144",
+      "size": 215611
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula08-11.png",
+      "sha256": "ee2d7c9600c1cc030913b1db6c59562e8deeb0c73532bac1a85bf42477bc835e",
+      "size": 105373
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula08-12.png",
+      "sha256": "2e6af39c57dfe3e361d1fec88e63975e032bf2a5151b696918c1d925c6b08dc4",
+      "size": 160229
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula08-13.png",
+      "sha256": "092769f71c7288118cad10f13578508d88d792094cb9f5834e59fe67ea7d7651",
+      "size": 226350
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula08-14.png",
+      "sha256": "e240b12d0d9645e41a12af92cc5f3e214b601956c0a01d69906f09af0d911c9b",
+      "size": 102750
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/aula08-15.png",
+      "sha256": "881d1e52d5382b748c8936125f7b16430e988c47e2849f07d53a365ad60e6c00",
+      "size": 365335
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-01-01.jpg",
+      "sha256": "485ef747e3c697b8d10546cbe7859a89530a0d331557e717e31d90b09e16669a",
+      "size": 556108
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-01-05.jpg",
+      "sha256": "5bef2a2ecbb27617f9bac612252fae7ef304fb3b65ed5309b1c53a47e5ac1300",
+      "size": 1213748
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-01-09.jpg",
+      "sha256": "1c4c2608e7e22fa0f7e7e9be1c859236e1a3fdc13df038a2644721a02a0f0543",
+      "size": 674050
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-01-13.jpg",
+      "sha256": "df20b10b542f9694597aa25a53bf4ebc2ddb7b6cee8535914f5a2ed094c012a9",
+      "size": 286794
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-02-01.jpg",
+      "sha256": "d14b50dd987fbab677fc2aa19d85caa4091d06c118604215166715976c9cc988",
+      "size": 558175
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-02-05.jpg",
+      "sha256": "cedba5fe01e4ae478346a8324a9676f0d4eebb9210342a625941444bda387375",
+      "size": 1197984
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-02-09.jpg",
+      "sha256": "7b37968d42a8301ae307d92455ae8209a2c09c3df6b75efab6abe2d79bb68bf8",
+      "size": 471329
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-02-13.jpg",
+      "sha256": "1e9336e03c7d43ba0b8c53d0e6614b4a2fa59f0bdffe74fd4b88d211749a763e",
+      "size": 204205
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-03-01.jpg",
+      "sha256": "4312de8327faa094ee5886d41db6cc1b61e3c2ba07c9bfcb0e3228b27ea50c06",
+      "size": 508167
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-03-05.jpg",
+      "sha256": "4f97b91395362cf471d945770428313c6fbfd1d51ada8c71dec6040da33b5bed",
+      "size": 1096111
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-03-09.jpg",
+      "sha256": "217148c1e8a5dfe0dcff79d6b9c1ca2212bbd681ae2465c91fb7744150723755",
+      "size": 406658
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-03-13.jpg",
+      "sha256": "9f91ee6bbbc43981208962653b9b3072002a2185a5c74f560154bbe3f4aa51c9",
+      "size": 156950
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-04-01.jpg",
+      "sha256": "0638859de6ff33c28693013c8fec984f939861dd5994e00dd14e3617a790863a",
+      "size": 550816
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-04-05.jpg",
+      "sha256": "43dd431d695384216adbcefe2316b708ec9e302e0e53d4fbcd7f06df93e688fa",
+      "size": 1191915
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-04-09.jpg",
+      "sha256": "ab095d612e57f2264acb9a07bad518dca0f74e1269aa358545b196d151bd2cee",
+      "size": 547966
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-04-13.jpg",
+      "sha256": "54be7d28dfadf7764f2fe31074ebaac888a9c753b2ce35cf648a07b7ba2f60d1",
+      "size": 194351
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-05-01.jpg",
+      "sha256": "e671f049854f37c67fb42fb5595e86f2f81a137cb02ada93b82cb32bec35e942",
+      "size": 580234
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-05-05.jpg",
+      "sha256": "02392099cf9f5d9dcf6dec542da6bc51cd8e16a336d91f26a609532c36cd1bd3",
+      "size": 1204774
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-05-09.jpg",
+      "sha256": "358b6518a4d4de8135dab1c235eaad8f0a394d74514b1119bd8611c3a951b27f",
+      "size": 811643
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-05-13.jpg",
+      "sha256": "0a1e43120088d154827c550d43b77ec5cb308ce80f3032295e2440f1896e7097",
+      "size": 448684
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-06-01.jpg",
+      "sha256": "00be23c61e0699ab179c8acd08f14d4ee479cf01ac51fe7c4f01bb3bb760065f",
+      "size": 552211
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-06-05.jpg",
+      "sha256": "5efb51da290e0e6ffa20c588a43b61b0f7e5bb78143ea58010f45e5b2ce73558",
+      "size": 1241957
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-06-09.jpg",
+      "sha256": "a3b94048b586104e58d76b5e37366f43410288f8434c4952c339c1c79fcff58b",
+      "size": 830782
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-06-13.jpg",
+      "sha256": "6275a58d75afc2729f942cc1daee728c5e7d868616a1eb72683035fac4b4f46b",
+      "size": 393278
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-07-01.jpg",
+      "sha256": "39be26888a43c2ce0201f6386d2c2a71b346fa32ab66a3ab5c284f73e17052d5",
+      "size": 442813
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-07-05.jpg",
+      "sha256": "55542248b5c1268ba782b930f615c13e9ed906c5d6071eccaf073688436982bc",
+      "size": 1224954
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-07-09.jpg",
+      "sha256": "1cecce19dcc8491b5b69270fd70ac5f30bc3a20ecb7b96bbfa3d6ca9d367854d",
+      "size": 669137
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-07-13.jpg",
+      "sha256": "8ec668d60aaee824e7e5c8db79570f53b48a16a64da9b25398dc4151585914a6",
+      "size": 287415
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-08-01.jpg",
+      "sha256": "4ce466019f44bfa82ed0d17dc4728d0b6e8bce69d20053b7263a2eb163a4d838",
+      "size": 566491
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-08-05.jpg",
+      "sha256": "5b75d953273b92bb706cde3a4a208167ee5f3f149071df56e7617dcb96361e83",
+      "size": 1186912
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-08-09.jpg",
+      "sha256": "a90e814a919ce9b4f5f6fd2e10bc8623631808973982eac062d1528decdd5214",
+      "size": 693407
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/grade-08-13.jpg",
+      "sha256": "dbb77d7b03d93989f4ff7fddcfd4e6419a82a2a3aae7458061cf7e38f986e4d4",
+      "size": 369929
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a01-p05-figura1-recorte.png",
+      "sha256": "17aa6b043ac25943b0c7ddd95ee24dac5e3d2c03b3495383eb6a7af75c21e67f",
+      "size": 323879
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a01-p05.png",
+      "sha256": "6006b1a7f69c3ea15b46f58454af4292c7fc5d0d781b4c8f576f615b1a898914",
+      "size": 805023
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a01-p07-figura2-recorte.png",
+      "sha256": "e791c6a2c3c286047d6a6119ee35175d9476f6db2447925c81b5e6b22f127c6e",
+      "size": 295604
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a01-p07.png",
+      "sha256": "e1be1179e1730775ef1b36415d43c0e101d34f2a3e8720cf2e185a4ef5d50713",
+      "size": 670264
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a02-e6-p07-baixo.png",
+      "sha256": "72ec8bd766b4fa5cdbdecab936b77f0b3d5ef620ee03ec2fa750d6ba80b29b9a",
+      "size": 311222
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a02-e6-p07-client.png",
+      "sha256": "dfb6d7b9d25c4e2145ee79b8cca5a693def4bc3111bee395357e4c54e3bc91bc",
+      "size": 176982
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a02-e6-p07.png",
+      "sha256": "93d3ff620792655672c8eff1ed6d9acd99be2a541382a496e9795da64781e098",
+      "size": 1793829
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a02-e6-p08-labels.png",
+      "sha256": "3d93933f50e8a8899911916349c55eb414a4b89a87b27093fb8b4fe808680639",
+      "size": 371751
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a02-e6-p08.png",
+      "sha256": "cf1b1b9a17565b9849f877b31a2af455bd492d3e2fd8758a4a33c619494f3091",
+      "size": 1977840
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a02-p07-fig2.png",
+      "sha256": "0151d96fda381bc1632bbd12a6aa10904d43dda050a28ab6f20aebba8e5382e8",
+      "size": 277664
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a02-p07.png",
+      "sha256": "0857f584f1d6a2ff710778845c40e04242bdd8b17a64e5721ae5b9ef71e85b02",
+      "size": 726547
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a02-p08-fig3.png",
+      "sha256": "0699a3c0593071d4dc48d202c03bce4ad2addc8ec4ac8841c00219402b7ea214",
+      "size": 293941
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a02-p08.png",
+      "sha256": "142dd77d4203f656444fad4a9b3706514dcfc2a00b9d7a8043f07717e4bc3019",
+      "size": 796370
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a02-p10.png",
+      "sha256": "ce694ba1e8e921cbef6489a477fa42bd95ecc61cf43497dd9447fc90df34531e",
+      "size": 167624
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a03-e6-p07.png",
+      "sha256": "328740191c6bf990f0296b8e0d69d3dbe9f43d4895a657f95422425b52a00569",
+      "size": 1746868
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a03-p07-figura-recorte.png",
+      "sha256": "d5589631f7fe3981cd8c85283454265aa5a5ac8965f450ada8aacb55b3f2e7a8",
+      "size": 285305
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a03-p07-recorte-core-fontes.png",
+      "sha256": "6d377abec956c7bf25f06af31410daf789815659566f8d23b647d4df1387a8b6",
+      "size": 381365
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a03-p07-recorte-dashboard.png",
+      "sha256": "b25c08ed78ff3614255b313ae0e4084ef7970b09d6cc6f75f3b9b02f636db4ec",
+      "size": 249851
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a03-p07.png",
+      "sha256": "dc3fa1d9111d9bd5d63a6839ced6022e72b25a4e7bbaafe81c60901ff5e297f4",
+      "size": 722273
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a04-p05-fig1.png",
+      "sha256": "84bc188594b9b30efae6bd851fadc731f2f34d663703e0b3811ae91c73cc5e41",
+      "size": 635991
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a04-p05.png",
+      "sha256": "644f72468cea3cd56c675e7ac3f6f531f2e3abf64d65c5efcafa859d24e97d61",
+      "size": 1261938
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a04-p06-labels.png",
+      "sha256": "67d944d31104d6dd0e95ee1a9b953795472f4c5424b1b53ae933c21b81741c36",
+      "size": 249893
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a04-p06-logql.png",
+      "sha256": "770e5f583c62313f090bc7f468e82eb29b5715734a13e80e82738d707e352b1a",
+      "size": 141363
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a04-p06.png",
+      "sha256": "00619efbf74471720bd13a27eb0791d5ddd66479ab6f27a25092e4452825d498",
+      "size": 762856
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a04-p07-fig2-chunks.png",
+      "sha256": "a24ab20007c66645c3addd16d96aad993edd3c5c4b15bcd22ed76b282aa89295",
+      "size": 327628
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a04-p07-fig2-raw.png",
+      "sha256": "cd7acf903229b040142273fcca01e2e0ca60bf8a52579592832537ab0087548a",
+      "size": 359066
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a04-p07-fig2.png",
+      "sha256": "eb78abfe5383a1cd54739fd9c7bd1d4ebcc9af5ddbdfad82b0f24f9eeed266ac",
+      "size": 655679
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a04-p07.png",
+      "sha256": "d417bfbd1df6ca0624777090c2886d6aa597695a2e3ec0df6b7da908eb370d73",
+      "size": 1249980
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a04-p08-fig3-meio.png",
+      "sha256": "ac9c0a1020579cb86b01c517baac1730a91b411cd52da06c182c3c0da623b787",
+      "size": 413526
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a04-p08-fig3.png",
+      "sha256": "94df622b51d9fe2cbcd227eb5ed17ec6c75ca2c3939ff2361b425095adad55f1",
+      "size": 852681
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a04-p08.png",
+      "sha256": "4653c4a5e6a39c923540135068b7c17e0b8227bb251d035a7fef517b61fc9c01",
+      "size": 1409352
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a04-p09-fig4.png",
+      "sha256": "33b1375834f2a9fc3c1c8ade079132a502131ac54f5966c9d1ab3d78371f382b",
+      "size": 629345
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a04-p09.png",
+      "sha256": "0a48834916ba145bc562130644e6e7bb961dc1f5a1378121a7c727faa9041254",
+      "size": 1026562
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a05-p06-fig.png",
+      "sha256": "3ff2fe1729cacd9bd04af2293b10d4de323182b56af02637418d8efee6644afa",
+      "size": 411085
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a05-p06.png",
+      "sha256": "dcd6fae002bf9d715d238c1c9d4914a81667569531ed2bc5b59a21044d5e9023",
+      "size": 854466
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a05-p07-fig.png",
+      "sha256": "41bef6c0ad98037159d5c3960587fa65df82f80a942b9e2666b39a81c3817c69",
+      "size": 278307
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a05-p07.png",
+      "sha256": "cffa3ca4d9b0f3b3ebcf9c65c9a77d8e855bd13238b4c38525cab8759596ef5c",
+      "size": 680525
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a05-p09-fig-zoom-baixo.png",
+      "sha256": "f795fe7cf9a793c02d45311c1f837d47b2a0e3b2e1ee840fd8b0740813b59d06",
+      "size": 1131039
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a05-p09-fig-zoom-topo.png",
+      "sha256": "0acc5415066d07c4cd61378fe2362427c62e0205265a4eae2624b08f444bb8fb",
+      "size": 542961
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a05-p09-fig.png",
+      "sha256": "4aa2e8737b741bc6b0f8540f745d9d32c3d34aec472fa6db0efb91a1e067700e",
+      "size": 692163
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a05-p09.png",
+      "sha256": "f9133856743b19bc3ba262768aabcc7dffa3538cf4cae068e0838487923b8a0e",
+      "size": 1134175
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a06-p08-figura1-recorte.png",
+      "sha256": "eed29a631fc1e880252cc6afbfc428a210f0cc9c75a67cddd844a2dc0fbe1417",
+      "size": 625659
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a06-p08.png",
+      "sha256": "4e62c6e5e30b44be9c808bf4b63416919151a6b2b1e7471fd83add483f96dc4a",
+      "size": 998408
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a07-p06-figura.png",
+      "sha256": "f69a97d28f80fcb0ec3b0051c31e9be11607afce49ddac0353617afa16552d0e",
+      "size": 569235
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a07-p06.png",
+      "sha256": "b8f050b5f2877bad2278d15880789f441120f1cb159a0f0677db8b06c2205bf8",
+      "size": 1001171
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a07-p08-figura.png",
+      "sha256": "53d635212247df672c34b1ff001b834bf26a31ec14517af2b97423f6134ef233",
+      "size": 544230
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a07-p08.png",
+      "sha256": "a02e25f3c918ffa164b50d9147d3db65204190c95eb8d5b457b6d99576e916fb",
+      "size": 1002151
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a07-p09-figura.png",
+      "sha256": "bc17f4aef905de65d187f86b9a354a7704983ff03209c0c4773bd755e873b7a1",
+      "size": 599360
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a07-p09.png",
+      "sha256": "f0ae2a5e61925d40b08ff0780105afc484251d0d8b7d6e116844797e8707c818",
+      "size": 965646
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a08-fig1-p05-nativa.png",
+      "sha256": "0f19886888429197836364deb9634f9eef629c051c642675f5d3a66df45f7d59",
+      "size": 517616
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a08-fig1-zoom-logs.png",
+      "sha256": "b43be2e883c310beb9654d6e460ca83f65f87be26a3de83281a853107ad200bb",
+      "size": 299212
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a08-fig1-zoom-metrics.png",
+      "sha256": "636b0aad6a47a12e2a5d647655839baab054ee108e9ac946818297c750bc7b2d",
+      "size": 442315
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a08-fig1-zoom-rodape.png",
+      "sha256": "c0c2aa46a7f057c458789357853590d99307ee0ad57817a353dbbe8ab6109dd4",
+      "size": 451560
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a08-fig1-zoom-traces.png",
+      "sha256": "71ffcc17de99602ce94cae1a412079ef732e032b5c50c70a65e1a06dc73511bd",
+      "size": 271917
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a08-fig2-p07-nativa.png",
+      "sha256": "e88a9f0fdde768e9b0800a35129956b6d815ae98bc6936efb8b0080d365e08e3",
+      "size": 305931
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a08-fig2-zoom-alloy.png",
+      "sha256": "b6e56d18276afbb2aa59061ca96b939f0352df237eec066718b70453baaa7a17",
+      "size": 442880
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a08-fig2-zoom-esq.png",
+      "sha256": "17677896369fb184d62ec72f8677c515ff9ed0e1c192aaf6cd3186623200b0ff",
+      "size": 578831
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a08-fig3-p07-nativa.png",
+      "sha256": "981aa7191bb26c52caa8285d6976cdd82838a9894aea4aac9c93b9fc6664e509",
+      "size": 456096
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a08-fig3-zoom-dir.png",
+      "sha256": "20ba343a37d4615b0290ec3752fdb39fdd2ecf3207a07d6fc4a792a9283c20fe",
+      "size": 637002
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a08-fig3-zoom-esq.png",
+      "sha256": "002d4ccb4d59fff12e381b673d67d77b64c6dd32089bcc6a5daa36e465aa88f9",
+      "size": 814530
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a08-fig4-p08-nativa.png",
+      "sha256": "0741123a3b39150c74d939359f3a87d7c15f09c5a7490f5ecebc585ecb4bb034",
+      "size": 472801
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/os-a08-fig5-p09-nativa.png",
+      "sha256": "968357242ccc7a7deac07416257feba1f6372cfff3b87c69602d207f3925c243",
+      "size": 417000
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/POSTECH - Monitoramento Opensource - Aula 1.txt",
+      "sha256": "2b40c5903bf7edef6fbae5cb232f4a047da3e1eaa9dfde8bad498ba81aceda7c",
+      "size": 17610
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/POSTECH - Monitoramento Opensource - Aula 2.txt",
+      "sha256": "54d30ba48adec964936625d09458aa98ef07996efd0a5633c909134b70db7fc0",
+      "size": 15216
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/POSTECH - Monitoramento Opensource - Aula 3.txt",
+      "sha256": "90912dc085cdd091fd552c377b2d6531b23fb27baa68c20b8d062c9bfc848153",
+      "size": 13712
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/POSTECH - Monitoramento Opensource - Aula 4.txt",
+      "sha256": "bf933b2a497829872ab97baeb82de0078e909a3791ff2f577be3dd1cafb86b33",
+      "size": 14611
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/POSTECH - Monitoramento Opensource - Aula 5.txt",
+      "sha256": "d2edd89c6f80c43c62c202584f7b467307250c30bc77879308cb4137c2909c4e",
+      "size": 19276
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/POSTECH - Monitoramento Opensource - Aula 6.txt",
+      "sha256": "68ad7ed2fc8ea765051f472c65234c543597b40245108e9ee530524b0953f529",
+      "size": 19881
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/POSTECH - Monitoramento Opensource - Aula 7.txt",
+      "sha256": "58dd0505307391a20e93ecf6b6c9df980964099d2645f0a7f1f4e27f9d8ac8f3",
+      "size": 15725
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/POSTECH - Monitoramento Opensource - Aula 8.txt",
+      "sha256": "602d0ea064d92692f373457f07c3ce0b17cdc6caedff83ea241219313c81b5c9",
+      "size": 16565
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-opensource/validacao-estatica-2026-09-17_v01.json",
+      "sha256": "46fba284bab14d09cca7f289a409eacab2f87fc3c5ac15de0b81edff4d0000c3",
+      "size": 3100
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/registrar-auditoria-2026-10-13_v01.py",
+      "sha256": "ba4b9935fa22735f99dd9ad35c696599cde9e9ff8daa9ed9f57d99ade521ccb2",
+      "size": 8686
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/registrar-importacao-proposta-2026-10-20_v01.py",
+      "sha256": "e8a29d0fa5a81ea9f687fc0f2829176a2d00578b46259c99b66d032915fab590",
+      "size": 8594
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/registro-requisitos-2026-09-16_v01.json",
+      "sha256": "6ca2c73edc43616cda69f9c5d84dd9b98b24c133f2707a35ffbfb0f52f23f70e",
+      "size": 11748
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/renderizar-fundamentos-2026-09-16_v01.py",
+      "sha256": "a676b95935f8ad9417d574c2ff606fba14c0f6a372992dc0aef3334aaf338f4f",
+      "size": 1067
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/renderizar-paginas-2026-09-16_v01.py",
+      "sha256": "9fc131c16ac7c29414fab3103a34701f061197f6b5ed61f9d531f67b2554665c",
+      "size": 2094
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/retomar-fundamentos-2026-09-17_v01.py",
+      "sha256": "6ad4d0a81224e9e26a0c4d43adc2df39c6a9f486e1ec01ec0b347dfe9f8df6d8",
+      "size": 6798
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/validar-guias-2026-09-16_v01.py",
+      "sha256": "6a1c610587002161a18f42fcd40b999e797cb69176544290529b94c61b9b99ca",
+      "size": 13416
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/verificacoes/verificacao-final-2026-09-21_v01.md",
+      "sha256": "7b6dc64e6126a7bea3428fcaed4632f5fe6785ab8181bb90b6eca2126f424451",
+      "size": 4991
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-09-17_revisao/GUIA-ESTUDO-Observabilidade-e-Monitoramento-2026-09-16_v01.html",
+      "sha256": "85ac0a4bf357ff83985977bc42d02b7110364de96f8edb87528c0e93ed65ced7",
+      "size": 189754
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-09-17_revisao/GUIA-ESTUDO-Welcome-to-Observabilidade-e-Monitoramento-2026-09-16_v01.html",
+      "sha256": "6393d772f6424fd4d077838570a2a17656b7cdf9734b094e36e8869f1c333625",
+      "size": 21283
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-09-17_revisao/guia_base-2026-09-16_v02-claude.py",
+      "sha256": "33100b3e74bc882dfd65c2e12a56f27ae94b9b3f14aad39f6a8785e5523b7b6e",
+      "size": 5026
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-13_auditoria/DECISOES.md",
+      "sha256": "6f1d5818f5c13078d7b55891fafb93d632a450e51f70c4e2791e86d6d1cc90be",
+      "size": 7028
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-13_auditoria/DOSSIE_CONTEXTO.md",
+      "sha256": "7a34130a2cc521bbe25d4e61f4e9b1b38cc7d57ffbf39495456e58307631f9a6",
+      "size": 5226
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-13_auditoria/LOG_DE_TRABALHO.md",
+      "sha256": "7cd95835da701fb090f71fcc17887a7b245af29a88f86c066def7435709aaacb",
+      "size": 17255
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-13_auditoria/PENDENCIAS_E_PROXIMOS_PASSOS.md",
+      "sha256": "cb069a8271b637dd6fba3f2d7ab5350fb5e4754f12842bcc35634e7534775124",
+      "size": 4411
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-20_importacao-proposta/DECISOES.md",
+      "sha256": "2ad8a1dad14d2131020ff5dca8d14f8d5d4b81eecd9c56a1fb454b5947d9d913",
+      "size": 7998
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-20_importacao-proposta/DOSSIE_CONTEXTO.md",
+      "sha256": "d3d0141443e4768b4d118c7b0a5084f6c957114cb8bde4e48229b661752c8aa7",
+      "size": 6362
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-20_importacao-proposta/LOG_DE_TRABALHO.md",
+      "sha256": "632e41b96d66174eb02f3128b5e69554d431a277c013d692ba01ce055a9cdde1",
+      "size": 19308
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-20_importacao-proposta/PENDENCIAS_E_PROXIMOS_PASSOS.md",
+      "sha256": "6f17da47b09e970f445c6a899fc98406755f633eeed806d27e9f96b8d862ffc8",
+      "size": 5526
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/GUIA-ESTUDO-Monitoramento-Opensource-2026-09-16_v01.html",
+      "sha256": "40d1c15a17902eb2ca11af3a9969731e2f22e9de13712f803dae5342bd5855d6",
+      "size": 74387
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/GUIA-ESTUDO-Observabilidade-e-Monitoramento-2026-09-16_v01-codex.html",
+      "sha256": "85ac0a4bf357ff83985977bc42d02b7110364de96f8edb87528c0e93ed65ced7",
+      "size": 189754
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/GUIA-ESTUDO-Welcome-to-Observabilidade-e-Monitoramento-2026-09-16_v01-codex.html",
+      "sha256": "6393d772f6424fd4d077838570a2a17656b7cdf9734b094e36e8869f1c333625",
+      "size": 21283
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/guia_base-2026-09-16_v01-codex.py",
+      "sha256": "5b35a738d4768600dcb92cf07296fc7ba2a39fd97cfd106f67938b09da0a1634",
+      "size": 4609
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/PLANO_E_ARQUITETURA_FASE4_2026-09-21_v01.md",
+      "sha256": "d07aff7c42b86d7ef0b4042bf640edfc90f46651f51e6b08f511d8906625124a",
+      "size": 18144
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/README-requisitos-2026-09-16_v01-codex.md",
+      "sha256": "f32fcdd7340f8f78bf78a9aa4294b46a415722adb7a56f504ebe1e99adde6bfe",
+      "size": 22532
+    },
+    {
+      "path": "00_COLAB_IA/DECISOES.md",
+      "sha256": "7f29752b3c2e11bb699748ba02ec485b5b700f56be916c135d944acfbfd05eca",
+      "size": 9703
+    },
+    {
+      "path": "00_COLAB_IA/DOSSIE_CONTEXTO.md",
+      "sha256": "4f35cc1e31b4fb6ab5afd6bf10eb6a24fb753f2bbe1668635a18582c83b24414",
+      "size": 7166
+    },
+    {
+      "path": "00_COLAB_IA/LEIA-PRIMEIRO.md",
+      "sha256": "a214f83097c817a1cef76f1d127dbac7b32226c905058edf21edfecc011438d1",
+      "size": 1665
+    },
+    {
+      "path": "00_COLAB_IA/LOG_DE_TRABALHO.md",
+      "sha256": "e71592c488c8584a78be4ee1b28a58df3fb99bb8fcf610ad81d9a18db41b38f3",
+      "size": 21215
+    },
+    {
+      "path": "00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md",
+      "sha256": "5699a8ab922f0e039f622909266cfbc906c68fbcfa2bd73fb755b03845ff01ff",
+      "size": 1007
+    },
+    {
+      "path": "00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md",
+      "sha256": "da317bf54e1015b5755e415acc1c09264c1d2d21660d8d554f749a21fefd875a",
+      "size": 5882
+    },
+    {
+      "path": "docs/aulas-fiap/00.Welcome to Observabilidade e Monitoramento/GUIA-ESTUDO-Welcome-to-Observabilidade-e-Monitoramento.html",
+      "sha256": "aaa614b3eb6078314d8dbca871f425a2cb239bcb7b327fca10e19e29acc31a60",
+      "size": 22375
+    },
+    {
+      "path": "docs/aulas-fiap/00.Welcome to Observabilidade e Monitoramento/POSTECH - Capítulo de Projeto - Fase 4.pdf",
+      "sha256": "7b2794ae1941c969a9ac510f2fb2b3a476ceac2c0cdd2905556e9b520dc443b8",
+      "size": 352158
+    },
+    {
+      "path": "docs/aulas-fiap/01.Observabilidade e Monitoramento/GUIA-ESTUDO-Observabilidade-e-Monitoramento.html",
+      "sha256": "44a758eedbc16bda2f8de1eeb0b516847b5c4a85d5962ab57cd15c36dbe56aee",
+      "size": 190775
+    },
+    {
+      "path": "docs/aulas-fiap/01.Observabilidade e Monitoramento/POSTECH - Observabilidade e Monitoramento - Aula 1.pdf",
+      "sha256": "5736496605e8869ff34c87712d8ecdbbea64d87bbdace5826aa855ce777fc1b1",
+      "size": 714925
+    },
+    {
+      "path": "docs/aulas-fiap/01.Observabilidade e Monitoramento/POSTECH - Observabilidade e Monitoramento - Aula 2.pdf",
+      "sha256": "4a1bf82b0a332bb9878bc05fc849b3afa3cd714c0fb4f82dde39c2bb5d6acf2c",
+      "size": 733965
+    },
+    {
+      "path": "docs/aulas-fiap/01.Observabilidade e Monitoramento/POSTECH - Observabilidade e Monitoramento - Aula 3.pdf",
+      "sha256": "c079d641db59ff5ecf5da2fe0194c6b0141a6b006d4ce72cf915342ebb6f6645",
+      "size": 524175
+    },
+    {
+      "path": "docs/aulas-fiap/01.Observabilidade e Monitoramento/POSTECH - Observabilidade e Monitoramento - Aula 4.pdf",
+      "sha256": "e51a04023b103ae9909fbe23cbaf316db5c9d40a91c6907625f5e64ee348e733",
+      "size": 519415
+    },
+    {
+      "path": "docs/aulas-fiap/01.Observabilidade e Monitoramento/POSTECH - Observabilidade e Monitoramento - Aula 5.pdf",
+      "sha256": "51629022e17a5a6ac4545f61aa6fd28442aec7e964e6c2bd0b54a03b1a1afb89",
+      "size": 452605
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/GUIA-ESTUDO-Monitoramento-Opensource.html",
+      "sha256": "472ca512843b8fa78a16153dc4f0dab22bbe36edbfb919f75adc5e98cc8193f1",
+      "size": 75878
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 1.pdf",
+      "sha256": "9e612c486411e7f7781fe2af4498d43678883ae74485e4326299c6c090539a20",
+      "size": 547213
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 2.pdf",
+      "sha256": "57ca990e9d095af7f3afd66a55e0cf176f319d56ce4568611086cb2f8a2260a1",
+      "size": 528106
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 3.pdf",
+      "sha256": "eb9bd916d6e23edf18924aebfc19f2d65f4a2383b408d4692671001402a70d7d",
+      "size": 493934
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 4.pdf",
+      "sha256": "d8b3b017a0e344885731a33c5c601fc63b37129cd446d9bbabe9e768b64959cf",
+      "size": 804712
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 5.pdf",
+      "sha256": "a3d3044c7da34ccd696f8cccce412b532a624a5acfcf042268c145782c5bde96",
+      "size": 682431
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 6.pdf",
+      "sha256": "34e54bda56aa20488109297791201e49b0b3e7da47718dcf158722c21c23341f",
+      "size": 516374
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 7.pdf",
+      "sha256": "d28f08e4c51028e8e093c9259d1b73d395277ff48b314a224dfe5c8e3c673717",
+      "size": 686822
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 8.pdf",
+      "sha256": "c5867832adac04b16f7e8984b6c1f5e798cfce63078b04b8c7b57ffa06b3ef18",
+      "size": 874233
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/GUIA-ESTUDO-APM.html",
+      "sha256": "e64c6ac85477694d90f155b8d7c466c2dc5d9941dfa48f403a548bbeef45067f",
+      "size": 401292
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 1.pdf",
+      "sha256": "8002f151c0a24b0c719eca74b5a2f0a92090b90240d81b10dc34f1ac0ea5383f",
+      "size": 846990
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 10.pdf",
+      "sha256": "b35c6ed58f81f34e7393052ea1b4fcebd9f3c615e46c6b58c37866c1dd66930b",
+      "size": 624716
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 2.pdf",
+      "sha256": "d894b24cc2d5dd6d51b692aa8c1ef3a6dc3b2c7d376b1f4625d41b24fcc958ce",
+      "size": 658211
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 3.pdf",
+      "sha256": "7cb155af91e55c4dcfd19f459a872b8b8d47e75f2550f55f08bc20921424c053",
+      "size": 839780
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 4.pdf",
+      "sha256": "1c4b2633509cbd28f0f328c6f5b187ca0ef40fc3b01282ac0d112c126826f0cf",
+      "size": 775698
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 5.pdf",
+      "sha256": "e9be4f7d7e27f8f4814401f158a63b26cbbc517702f96c460daf45ab28a0dd5b",
+      "size": 915257
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 6.pdf",
+      "sha256": "3413e82a3c0c5eb72cd6b83e083da1c2c9400305cebb305a2a7058a96ae07e8c",
+      "size": 838645
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 7.pdf",
+      "sha256": "a54de582683d9fd398a10f66b63c54b3a7fc22754d2b25cf1b6e9856b3b9d57e",
+      "size": 587819
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 8.pdf",
+      "sha256": "5340a544f0e390dbd8e8955102bf8400fcb876619f7cdcd907b2c0e721a5d15f",
+      "size": 503267
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 9.pdf",
+      "sha256": "5530f56603b80297f624fc7ca1b9b01be1a75869f8a1e41291686a448c9c2926",
+      "size": 546788
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/GUIA-ESTUDO-Automacao-de-incidentes.html",
+      "sha256": "f6b7053bdf86bb3a011a76ee0606428f82f419f32a5fbe376217b72949a9c7b6",
+      "size": 92415
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 1.pdf",
+      "sha256": "59291f8585d39a2d98a0cbd23c1c1061842139e8499c2902f3fc1a3749055aed",
+      "size": 765692
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 2.pdf",
+      "sha256": "d974e9b4cf8de48c283313c3d76d238ec69bb3e37c9d407b19feb711429350cc",
+      "size": 592616
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 3.pdf",
+      "sha256": "db5f8f2be29d4539e5e41e44f32c9cefecc4d78a7400249c68ce1357fd3aa812",
+      "size": 487278
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 4.pdf",
+      "sha256": "ed9e65e9d6d2d02215fb1e2385f774facadc5b3b0f139093d3aa178b79a6a54f",
+      "size": 495062
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 5.pdf",
+      "sha256": "5ebf8d789f6c7def06aab7af64e973a72a841b6568c7f5341f7e12097519fc56",
+      "size": 474543
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 6.pdf",
+      "sha256": "82237dbbc94b998e492554c9f6e3136ae18fd729e8e59a3887cc28c8524b5bdd",
+      "size": 493125
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 7.pdf",
+      "sha256": "9ac83c5c66cd3184b6dcecfa2b934f36230b88de10b7b697ea1825cb8f3a311e",
+      "size": 771756
+    },
+    {
+      "path": "docs/requisitos/README.md",
+      "sha256": "1347edcfd4ef53380ca50f28e173c2ca993a35b66a09472027c74977c6f1e5cb",
+      "size": 30602
+    },
+    {
+      "path": "docs/requisitos/REQUISITOS.html",
+      "sha256": "8600036ad46a10fa596c206ce7a5ca24fac8554308fa82f1264b1893b9d79988",
+      "size": 51684
+    },
+    {
+      "path": "POSTECH - Tech Challenge - Fase 4.pdf",
+      "sha256": "1304e5b8872c09a02edae29a71694ad9f642f21790d26c172f75420695d4fcf6",
+      "size": 302763
+    }
+  ]
+}

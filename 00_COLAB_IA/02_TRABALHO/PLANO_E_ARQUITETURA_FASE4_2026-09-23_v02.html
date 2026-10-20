@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plano e arquitetura — Fase 4</title>
+<style>
+:root{--bg:#eef2f8;--surface:#fff;--surface-2:#e7eef7;--panel:#f5f8fc;--ink:#132339;--ink-soft:#4c5f79;--ink-faint:#7787a0;--line:#d3ddea;--line-strong:#9fb0c6;--accent:#2f6ae0;--accent-ink:#1c4aa8;--accent-wash:#e7eefb;--brass:#b26a10;--brass-wash:#f6ecdd;--ok:#2c8159;--sans:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;--mono:"Cascadia Code",Consolas,"SFMono-Regular",ui-monospace,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#0c1725;--surface:#152539;--surface-2:#101f31;--panel:#132234;--ink:#e6edf6;--ink-soft:#a4b6cc;--ink-faint:#7488a2;--line:#26394f;--line-strong:#4a6078;--accent:#6c9cf1;--accent-ink:#9cbdf8;--accent-wash:#16273f;--brass:#e0a552;--brass-wash:#241c11;--ok:#59bf8c}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--sans)}
+.wrap{max-width:1120px;margin:0 auto;padding:32px 16px 72px;overflow-wrap:anywhere}
+a{color:var(--accent-ink)}
+h1{font-size:2rem;line-height:1.2;margin:.1em 0 .4em}
+h2{font-size:1.45rem;line-height:1.3;margin:2.6em 0 .7em;padding-top:.8em;border-top:1px solid var(--line)}
+h3{font-size:1.1rem;line-height:1.35;margin:1.7em 0 .5em}
+p{margin:0 0 1em}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin:0}
+.meta{font-size:.9rem;color:var(--ink-soft)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 22px;margin:18px 0}
+.card > :last-child{margin-bottom:0}
+.lead{font-size:1.08rem}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0;padding:0;list-style:none}
+.chips li{background:var(--accent-wash);color:var(--accent-ink);border-radius:999px;padding:3px 12px;font-size:.86rem}
+.toc ol{columns:2;column-gap:32px;margin:0;padding-left:20px}
+.toc li{break-inside:avoid;margin-bottom:6px}
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;min-width:620px;background:var(--surface);font-size:.94rem}
+th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+th{background:var(--surface-2)}
+code{font-family:var(--mono);font-size:.88em;background:var(--surface-2);padding:1px 5px;border-radius:4px}
+pre{font-family:var(--mono);font-size:.86rem;white-space:pre;overflow:auto;padding:16px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2);line-height:1.55}
+pre code{background:none;padding:0}
+.warn{border-left:4px solid var(--brass);background:var(--brass-wash);padding:14px 18px;border-radius:0 10px 10px 0;margin:18px 0}
+.warn > :last-child{margin-bottom:0}
+.tag{display:inline-block;font-size:.78rem;padding:1px 8px;border-radius:999px;background:var(--surface-2);color:var(--ink-soft);white-space:nowrap}
+.tag.local{background:var(--accent-wash);color:var(--accent-ink)}
+.tag.aws{background:var(--brass-wash);color:var(--brass)}
+.legend{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;font-size:.88rem;color:var(--ink-soft);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
+.sw{display:inline-block;width:22px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:6px;border:1px solid var(--line-strong);background:var(--surface)}
+.sw.new{background:var(--accent-wash);border:1.5px solid var(--accent)}
+.sw.chg{border:1.5px dashed var(--accent)}
+.sw.note{background:var(--brass-wash);border-color:var(--brass)}
+.sw.acc{height:0;border:0;border-top:2px solid var(--accent);border-radius:0;vertical-align:4px}
+figure.fig{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;margin:22px 0}
+.fig .scroll{overflow-x:auto}
+.fig svg{display:block;width:100%;height:auto;min-width:780px}
+figcaption{font-size:.9rem;color:var(--ink-soft);margin-top:10px;line-height:1.55}
+svg.dg{color:var(--ink);font-family:var(--sans)}
+.dg text{fill:currentColor;font-size:13px}
+.dg .b{font-weight:600}
+.dg .s{fill:var(--ink-soft);font-size:11.5px}
+.dg .lbl{fill:var(--ink-soft);font-size:11.5px}
+.dg .lbl.acc{fill:var(--accent-ink)}
+.dg .zl{fill:var(--ink-soft);font-size:12px;font-weight:600;letter-spacing:.03em}
+.dg .zone{fill:var(--panel);stroke:var(--line-strong);stroke-width:1;stroke-dasharray:5 4}
+.dg .band{fill:var(--surface-2)}
+.dg .box{fill:var(--surface);stroke:var(--line-strong);stroke-width:1}
+.dg .new{fill:var(--accent-wash);stroke:var(--accent);stroke-width:1.3}
+.dg .chg{fill:var(--surface);stroke:var(--accent);stroke-width:1.3;stroke-dasharray:5 3}
+.dg .note{fill:var(--brass-wash);stroke:var(--brass);stroke-width:1}
+.dg .frame{fill:none;stroke:var(--line-strong);stroke-width:1;stroke-dasharray:3 3}
+.dg .ln{stroke:var(--ink-soft);stroke-width:1.3;fill:none}
+.dg .ln.acc{stroke:var(--accent);stroke-width:1.8}
+.dg .ln.dash{stroke-dasharray:5 4}
+.dg .life{stroke:var(--line-strong);stroke-width:1;stroke-dasharray:3 4;fill:none}
+.dg .mk path{fill:var(--ink-soft)}
+.dg .mk.acc path{fill:var(--accent)}
+.steps{counter-reset:etapa;list-style:none;padding:0;margin:0}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin:14px 0}
+.step h3{margin:0 0 .4em}
+.step dl{display:grid;grid-template-columns:150px 1fr;gap:6px 14px;margin:.6em 0 0}
+.step dt{color:var(--ink-soft);font-size:.9rem}
+.step dd{margin:0}
+.step ul{margin:.2em 0;padding-left:18px}
+@media (max-width:640px){.toc ol{columns:1}.step dl{grid-template-columns:1fr}.step dt{margin-top:6px}h1{font-size:1.6rem}}
+@media print{body{background:#fff}.toc{display:none}.fig .scroll{overflow:visible}.fig svg{min-width:0}figure,.step{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+<p class="eyebrow">Tech Challenge · Fase 4 · ToggleMaster</p>
+<h1>Plano de ação e arquitetura — do push na <code>dev</code> até o painel</h1>
+<p class="meta">Versão 2 · 2026-09-23 · Claude (Opus 5.5) · Documento de planejamento: nada foi implantado, comitado ou criado na AWS.</p>
+<ul class="chips">
+<li>Código migra para o tech-challenge-04</li>
+<li>APM: New Relic</li>
+<li>Incidentes: PagerDuty</li>
+<li>ChatOps: Slack</li>
+<li>Self-Healing: GitHub Actions</li>
+<li>Implementação solo</li>
+<li>Entrega: 2026-11-17</li>
+</ul>
+</header>
+
+<nav class="card toc" aria-label="Sumário">
+<ol>
+<li><a href="#resumo">Resumo</a></li>
+<li><a href="#decisoes">Decisões e de onde vieram</a></li>
+<li><a href="#alto-nivel">Arquitetura de alto nível</a></li>
+<li><a href="#entrega">Baixo nível 1 — do commit ao pod</a></li>
+<li><a href="#plataforma">Baixo nível 2 — quem cria o quê</a></li>
+<li><a href="#requisicao">Baixo nível 3 — uma requisição e seu trace</a></li>
+<li><a href="#telemetria">Baixo nível 4 — o caminho da telemetria</a></li>
+<li><a href="#resposta">Baixo nível 5 — do alerta à correção</a></li>
+<li><a href="#exibicao">O que aparece em cada tela</a></li>
+<li><a href="#mudancas">O que muda em cada arquivo</a></li>
+<li><a href="#plano">Plano de ação em etapas</a></li>
+<li><a href="#calendario">Calendário sugerido</a></li>
+<li><a href="#custos">Custo</a></li>
+<li><a href="#riscos">Riscos e pontos a conferir</a></li>
+<li><a href="#duvidas">Perguntas em aberto</a></li>
+<li><a href="#fontes">Fontes</a></li>
+</ol>
+</nav>
+
+<section id="resumo">
+<h2>Resumo</h2>
+<div class="card">
+<p class="lead"><strong>Em linguagem simples:</strong> a Fase 3 já entrega código no cluster sozinha — você faz merge na <code>main</code>, o GitHub Actions testa, escaneia e publica a imagem, e o ArgoCD aplica. A Fase 4 não mexe nesse caminho. Ela acrescenta três coisas em volta dele: <strong>olhos</strong> (cada serviço passa a relatar o que faz), <strong>memória</strong> (esses relatos ficam guardados e viram gráficos) e <strong>reflexo</strong> (quando algo quebra, alguém é avisado e uma correção automática é tentada).</p>
+<p><strong>Tecnicamente:</strong> os cinco serviços ganham instrumentação OpenTelemetry e enviam traces por OTLP a um OTel Collector em dois modos — um <em>agent</em> por nó que lê os logs dos contêineres e um <em>gateway</em> central. O gateway transforma spans em métricas de taxa e erro (conector <code>spanmetrics</code>) e roteia: métricas para o Prometheus, logs para o Loki, traces para o New Relic. O Grafana exibe e avalia a regra de alerta; ao disparar, abre incidente no PagerDuty, notifica o Slack e chama um workflow do GitHub Actions que reinicia o Deployment afetado. Toda a stack nova entra no cluster como Helm charts declarados no repositório GitOps.</p>
+<p>O plano tem oito etapas, sequenciais porque você implementa sozinho. As três primeiras rodam no seu computador, sem cluster ligado: o Compose de integração da Fase 3 já emula SQS e DynamoDB com o moto, então o trace completo — fila incluída — pode ser construído localmente. O EKS só sobe a partir da quarta semana.</p>
+</div>
+</section>
+
+<section id="decisoes">
+<h2>Decisões e de onde vieram</h2>
+<p>Cada linha diz quem decidiu e em que se apoia. "Você" são as respostas de 2026-09-23; "Enunciado" cita a página do PDF; "Recomendação" é escolha técnica minha, que você pode trocar.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>Decisão</th><th>Escolha</th><th>Quem</th><th>Por quê</th></tr></thead>
+<tbody>
+<tr><td>Onde mora o código</td><td>Trazer a Fase 3 para o <code>tech-challenge-04</code>, com histórico</td><td>Você</td><td>A Fase 3 fica congelada como foi entregue. O pipeline da Fase 3 comita direto na <code>main</code>, então continuar lá alteraria a entrega anterior.</td></tr>
+<tr><td>APM</td><td>New Relic</td><td>Você</td><td>Plano gratuito perpétuo com 100 GB/mês e APM com distributed tracing. No Datadog, APM fica fora do plano gratuito (verificado em 2026-09-21).</td></tr>
+<tr><td>Incidentes</td><td>PagerDuty</td><td>Imposta</td><td>A Atlassian encerrou a venda do OpsGenie em 2025-06-04 (achado F-008). O plano Free do PagerDuty permite até 5 usuários.</td></tr>
+<tr><td>ChatOps</td><td>Slack</td><td>Você</td><td>Único canal citado tanto na p. 5 quanto na p. 6 do enunciado — encerra a dúvida Q-02.</td></tr>
+<tr><td>Self-Healing</td><td>GitHub Actions por <code>repository_dispatch</code></td><td>Você</td><td>É um dos três caminhos da p. 5, e o GitHub OIDC já existe na conta desde a Fase 3.</td></tr>
+<tr><td>Coletor</td><td>OTel Collector padrão (imagem contrib)</td><td>Recomendação</td><td>O enunciado nomeia o Collector no código entregue e no vídeo (p. 5). O Alloy é opcional e reabriria a dúvida Q-10.</td></tr>
+<tr><td>Instrumentação</td><td>Bibliotecas OpenTelemetry</td><td>Recomendação</td><td>Preferência declarada na p. 4 (REQ-BON-02); evita a dúvida Q-08 sobre agente proprietário.</td></tr>
+<tr><td>Métricas de infraestrutura</td><td>Scrape próprio do Prometheus (kube-prometheus-stack)</td><td>Recomendação</td><td>A p. 4 pede o Collector para a telemetria <em>dos microsserviços</em>; CPU e memória do cluster vêm dos exporters que o chart já traz.</td></tr>
+<tr><td>Ritmo</td><td>Sequencial, entrega em 2026-11-17</td><td>Você</td><td>55 dias a partir de hoje. O PDF não informa a data (Q-05); ela veio de você.</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="alto-nivel">
+<h2>Arquitetura de alto nível</h2>
+<p>Cinco camadas, lidas de cima para baixo como uma história: o código chega ao cluster, roda, relata o que faz, os relatos viram painéis e, quando algo quebra, o sistema reage. A mesma convenção de cores vale para todos os diagramas deste documento:</p>
+<div class="legend" role="note" aria-label="Legenda dos diagramas">
+<span><span class="sw new"></span>novo na Fase 4</span>
+<span><span class="sw chg"></span>já existe, alterado na Fase 4</span>
+<span><span class="sw"></span>já existe, sem mudança</span>
+<span><span class="sw note"></span>regra, nota ou salvaguarda</span>
+<span><span class="sw acc"></span>caminho criado pela Fase 4</span>
+</div>
+
+<figure class="fig">
+<div class="scroll">
+<svg class="dg" viewBox="0 0 1000 665" role="img" aria-label="Visão em cinco camadas. Entrega: você faz push, o GitHub Actions verifica e publica a imagem no ECR e comita a nova tag. Execução: o ArgoCD lê o repositório a cada 30 segundos e sincroniza os cinco microsserviços, que usam RDS, Redis, SQS e DynamoDB. Telemetria: os serviços enviam OTLP e logs ao OTel Collector, que roteia métricas ao Prometheus, logs ao Loki e traces ao New Relic. Visualização: Grafana consulta Prometheus e Loki; o painel do New Relic mostra Service Map e traces. Resposta: o Grafana aciona PagerDuty, Slack e um workflow do GitHub Actions que reinicia o Deployment no cluster.">
+<defs>
+<marker id="m1" class="mk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker>
+<marker id="m1a" class="mk acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker>
+</defs>
+
+<rect class="zone" x="20" y="20" width="960" height="110" rx="10"/>
+<text class="zl" x="36" y="79">Entrega</text>
+<rect class="zone" x="20" y="150" width="960" height="110" rx="10"/>
+<text class="zl" x="36" y="209">Execução</text>
+<rect class="zone" x="20" y="280" width="960" height="110" rx="10"/>
+<text class="zl" x="36" y="339">Telemetria</text>
+<rect class="zone" x="20" y="410" width="960" height="110" rx="10"/>
+<text class="zl" x="36" y="469">Visualização</text>
+<rect class="zone" x="20" y="540" width="960" height="110" rx="10"/>
+<text class="zl" x="36" y="599">Resposta</text>
+
+<rect class="box" x="170" y="50" width="105" height="55" rx="6"/>
+<text class="b" x="222" y="74" text-anchor="middle">Você</text>
+<text class="s" x="222" y="92" text-anchor="middle">git push</text>
+<rect class="chg" x="325" y="50" width="170" height="55" rx="6"/>
+<text class="b" x="410" y="74" text-anchor="middle">GitHub</text>
+<text class="s" x="410" y="92" text-anchor="middle">tech-challenge-04</text>
+<rect class="box" x="545" y="50" width="150" height="55" rx="6"/>
+<text class="b" x="620" y="74" text-anchor="middle">GitHub Actions</text>
+<text class="s" x="620" y="92" text-anchor="middle">CI + DevSecOps</text>
+<rect class="box" x="745" y="50" width="130" height="55" rx="6"/>
+<text class="b" x="810" y="74" text-anchor="middle">Amazon ECR</text>
+<text class="s" x="810" y="92" text-anchor="middle">5 repositórios</text>
+
+<line class="ln" x1="275" y1="77" x2="323" y2="77" marker-end="url(#m1)"/>
+<text class="lbl" x="300" y="70" text-anchor="middle">push</text>
+<line class="ln" x1="495" y1="77" x2="543" y2="77" marker-end="url(#m1)"/>
+<text class="lbl" x="520" y="70" text-anchor="middle">dispara</text>
+<line class="ln" x1="695" y1="77" x2="743" y2="77" marker-end="url(#m1)"/>
+<text class="lbl" x="720" y="70" text-anchor="middle">imagem</text>
+<path class="ln" d="M620 105V120H470V107" marker-end="url(#m1)"/>
+<text class="lbl" x="545" y="142" text-anchor="middle">commit da nova tag (só na main)</text>
+
+<rect class="chg" x="320" y="180" width="180" height="55" rx="6"/>
+<text class="b" x="410" y="204" text-anchor="middle">ArgoCD</text>
+<text class="s" x="410" y="222" text-anchor="middle">ns argocd</text>
+<rect class="chg" x="540" y="180" width="220" height="55" rx="6"/>
+<text class="b" x="650" y="204" text-anchor="middle">5 microsserviços</text>
+<text class="s" x="650" y="222" text-anchor="middle">ns togglemaster</text>
+<rect class="box" x="800" y="180" width="160" height="55" rx="6"/>
+<text class="b" x="880" y="199" text-anchor="middle">AWS gerenciado</text>
+<text class="s" x="880" y="215" text-anchor="middle">RDS ×2 · Redis</text>
+<text class="s" x="880" y="229" text-anchor="middle">SQS · DynamoDB</text>
+
+<line class="ln" x1="380" y1="180" x2="380" y2="108" marker-end="url(#m1)"/>
+<text class="lbl" x="372" y="143" text-anchor="end">lê gitops/ a cada 30 s</text>
+<line class="ln" x1="500" y1="207" x2="538" y2="207" marker-end="url(#m1)"/>
+<text class="lbl" x="520" y="200" text-anchor="middle">sync</text>
+<line class="ln" x1="810" y1="105" x2="731" y2="178" marker-end="url(#m1)"/>
+<text class="lbl" x="818" y="143">pull da imagem</text>
+<line class="ln" x1="762" y1="207" x2="798" y2="207" marker-start="url(#m1)" marker-end="url(#m1)"/>
+<text class="lbl" x="780" y="200" text-anchor="middle">dados</text>
+
+<rect class="new" x="170" y="310" width="130" height="55" rx="6"/>
+<text class="b" x="235" y="334" text-anchor="middle">Loki</text>
+<text class="s" x="235" y="352" text-anchor="middle">logs</text>
+<rect class="new" x="330" y="310" width="130" height="55" rx="6"/>
+<text class="b" x="395" y="334" text-anchor="middle">Prometheus</text>
+<text class="s" x="395" y="352" text-anchor="middle">métricas</text>
+<rect class="new" x="540" y="310" width="220" height="55" rx="6"/>
+<text class="b" x="650" y="334" text-anchor="middle">OTel Collector</text>
+<text class="s" x="650" y="352" text-anchor="middle">agent + gateway</text>
+<rect class="new" x="800" y="310" width="160" height="55" rx="6"/>
+<text class="b" x="880" y="334" text-anchor="middle">New Relic</text>
+<text class="s" x="880" y="352" text-anchor="middle">APM · SaaS</text>
+
+<line class="ln acc" x1="650" y1="235" x2="650" y2="306" marker-end="url(#m1a)"/>
+<text class="lbl acc" x="658" y="272">OTLP + logs</text>
+<line class="ln acc" x1="540" y1="337" x2="464" y2="337" marker-end="url(#m1a)"/>
+<text class="lbl acc" x="501" y="354" text-anchor="middle">métricas</text>
+<path class="ln acc" d="M540 322H520V296H235V306" marker-end="url(#m1a)"/>
+<text class="lbl acc" x="380" y="291" text-anchor="middle">logs</text>
+<line class="ln acc" x1="760" y1="337" x2="796" y2="337" marker-end="url(#m1a)"/>
+<text class="lbl acc" x="779" y="330" text-anchor="middle">OTLP</text>
+
+<rect class="new" x="170" y="440" width="290" height="55" rx="6"/>
+<text class="b" x="315" y="464" text-anchor="middle">Grafana</text>
+<text class="s" x="315" y="482" text-anchor="middle">dashboard + regra de alerta</text>
+<rect class="new" x="800" y="440" width="160" height="55" rx="6"/>
+<text class="b" x="880" y="464" text-anchor="middle">Painel New Relic</text>
+<text class="s" x="880" y="482" text-anchor="middle">Service Map · traces</text>
+
+<line class="ln" x1="235" y1="365" x2="235" y2="437" marker-end="url(#m1)"/>
+<text class="lbl" x="243" y="405">LogQL</text>
+<line class="ln" x1="395" y1="365" x2="395" y2="437" marker-end="url(#m1)"/>
+<text class="lbl" x="403" y="405">PromQL</text>
+<line class="ln" x1="880" y1="365" x2="880" y2="437" marker-end="url(#m1)"/>
+<text class="lbl" x="888" y="405">consulta</text>
+
+<rect class="new" x="170" y="570" width="160" height="55" rx="6"/>
+<text class="b" x="250" y="594" text-anchor="middle">PagerDuty</text>
+<text class="s" x="250" y="612" text-anchor="middle">abre o incidente</text>
+<rect class="new" x="370" y="570" width="160" height="55" rx="6"/>
+<text class="b" x="450" y="594" text-anchor="middle">Slack</text>
+<text class="s" x="450" y="612" text-anchor="middle">notificação</text>
+<rect class="new" x="570" y="570" width="190" height="55" rx="6"/>
+<text class="b" x="665" y="594" text-anchor="middle">GitHub Actions</text>
+<text class="s" x="665" y="612" text-anchor="middle">workflow self-healing</text>
+
+<line class="ln acc" x1="250" y1="495" x2="250" y2="566" marker-end="url(#m1a)"/>
+<text class="lbl acc" x="258" y="535">Events API v2</text>
+<line class="ln acc" x1="420" y1="495" x2="420" y2="566" marker-end="url(#m1a)"/>
+<text class="lbl acc" x="428" y="535">webhook</text>
+<path class="ln acc" d="M460 470H665V566" marker-end="url(#m1a)"/>
+<text class="lbl acc" x="562" y="462" text-anchor="middle">repository_dispatch</text>
+<path class="ln acc" d="M760 597H990V250H700V239" marker-end="url(#m1a)"/>
+<text class="lbl acc" x="860" y="272">rollout restart</text>
+</svg>
+</div>
+<figcaption>Visão completa. As setas azuis são os caminhos que a Fase 4 cria; as cinzas já funcionam desde a Fase 3. A seta que sobe pela direita fecha o ciclo: a ação corretiva age sobre o mesmo Deployment que gerou o sinal.</figcaption>
+</figure>
+
+<h3>Como ler, camada por camada</h3>
+<div class="card">
+<p><strong>Entrega.</strong> Você faz push. O GitHub Actions compila, testa e escaneia. Só na <code>main</code> ele constrói a imagem, envia ao ECR e comita a nova tag no próprio repositório. Nada disso muda na Fase 4.</p>
+<p><strong>Execução.</strong> O ArgoCD não recebe aviso: ele <em>consulta</em> o repositório a cada 30 segundos (<code>timeout.reconciliation = 30s</code> em <code>terraform/k8s/argocd.tf</code>) e aplica o que mudou. Os nós puxam a imagem do ECR. O que muda: os serviços passam a carregar instrumentação, e o ArgoCD passa a gerenciar também a stack de observabilidade.</p>
+<p><strong>Telemetria.</strong> É o coração da Fase 4. Todo sinal passa pelo OTel Collector, que decide o destino: métricas para o Prometheus, logs para o Loki, traces para o New Relic. É esse roteamento que o vídeo precisa explicar (REQ-OBR-26d) e o relatório precisa descrever (REQ-OBR-39).</p>
+<p><strong>Visualização.</strong> O Grafana consulta o Prometheus (linguagem PromQL) e o Loki (LogQL). O New Relic tem painel próprio, onde ficam o Service Map e o trace distribuído.</p>
+<p><strong>Resposta.</strong> A regra de alerta vive no Grafana. Ao disparar, três destinos recebem a notificação ao mesmo tempo: o PagerDuty abre o incidente, o Slack recebe a mensagem e o GitHub Actions executa a correção.</p>
+</div>
+</section>
+
+<section id="entrega">
+<h2>Baixo nível 1 — do commit ao pod</h2>
+<p>Este é o caminho que já existe, lido direto de <code>.github/workflows/_ci-go.yml</code>, <code>_ci-python.yml</code> e <code>terraform/k8s/argocd.tf</code> da Fase 3. Ele tem quatro momentos, e só o último põe algo no cluster.</p>
+
+<figure class="fig">
+<div class="scroll">
+<svg class="dg" viewBox="0 0 1000 800" role="img" aria-label="Diagrama de sequência do commit ao pod. Push na dev: o GitHub dispara o workflow do serviço, que roda build, lint, SAST e SCA e devolve o status; os jobs de imagem e GitOps são pulados. Pull request para main: os mesmos checks rodam, e você faz o merge. Push na main: os checks rodam de novo; com os quatro verdes, o job de imagem constrói, escaneia com Trivy, assume a role por OIDC, envia a imagem ao ECR e comita a nova tag com skip ci. GitOps: o ArgoCD consulta o repositório a cada 30 segundos, encontra o commit novo em gitops/overlays/prod, sincroniza o Deployment, o kubelet puxa a imagem e o rolling update deixa o pod novo pronto.">
+<defs>
+<marker id="m2" class="mk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker>
+</defs>
+
+<rect class="box" x="20" y="20" width="120" height="44" rx="6"/>
+<text class="b" x="80" y="38" text-anchor="middle">Você</text>
+<text class="s" x="80" y="55" text-anchor="middle">seu computador</text>
+<rect class="box" x="160" y="20" width="120" height="44" rx="6"/>
+<text class="b" x="220" y="38" text-anchor="middle">GitHub</text>
+<text class="s" x="220" y="55" text-anchor="middle">repositório</text>
+<rect class="box" x="300" y="20" width="120" height="44" rx="6"/>
+<text class="b" x="360" y="38" text-anchor="middle">Actions</text>
+<text class="s" x="360" y="55" text-anchor="middle">verificação</text>
+<rect class="box" x="440" y="20" width="120" height="44" rx="6"/>
+<text class="b" x="500" y="38" text-anchor="middle">Actions</text>
+<text class="s" x="500" y="55" text-anchor="middle">publicação</text>
+<rect class="box" x="580" y="20" width="120" height="44" rx="6"/>
+<text class="b" x="640" y="38" text-anchor="middle">Amazon ECR</text>
+<text class="s" x="640" y="55" text-anchor="middle">registro</text>
+<rect class="box" x="720" y="20" width="120" height="44" rx="6"/>
+<text class="b" x="780" y="38" text-anchor="middle">ArgoCD</text>
+<text class="s" x="780" y="55" text-anchor="middle">ns argocd</text>
+<rect class="box" x="860" y="20" width="120" height="44" rx="6"/>
+<text class="b" x="920" y="38" text-anchor="middle">EKS</text>
+<text class="s" x="920" y="55" text-anchor="middle">kubelet e API</text>
+
+<path class="life" d="M80 64V80M80 100V246M80 266V372M80 392V596M80 616V785"/>
+<path class="life" d="M220 64V80M220 100V246M220 266V372M220 392V596M220 616V785"/>
+<path class="life" d="M360 64V80M360 100V246M360 266V372M360 392V596M360 616V785"/>
+<path class="life" d="M500 64V80M500 100V246M500 266V372M500 392V596M500 616V785"/>
+<path class="life" d="M640 64V80M640 100V246M640 266V372M640 392V596M640 616V785"/>
+<path class="life" d="M780 64V80M780 100V246M780 266V372M780 392V596M780 616V785"/>
+<path class="life" d="M920 64V80M920 100V246M920 266V372M920 392V596M920 616V785"/>
+
+<rect class="band" x="20" y="80" width="960" height="20" rx="4"/>
+<text class="zl" x="28" y="94">1 · Push na dev — só verificação</text>
+<line class="ln" x1="82" y1="122" x2="217" y2="122" marker-end="url(#m2)"/>
+<text class="lbl" x="150" y="116" text-anchor="middle">git push origin dev</text>
+<line class="ln" x1="222" y1="154" x2="357" y2="154" marker-end="url(#m2)"/>
+<text class="lbl" x="290" y="148" text-anchor="middle">dispara o workflow</text>
+<rect class="note" x="275" y="168" width="170" height="24" rx="4"/>
+<text class="s" x="360" y="184" text-anchor="middle">build · lint · SAST · SCA</text>
+<line class="ln" x1="358" y1="222" x2="223" y2="222" marker-end="url(#m2)"/>
+<text class="lbl" x="290" y="216" text-anchor="middle">status ✓ ou ✗</text>
+<rect class="note" x="425" y="208" width="150" height="24" rx="4"/>
+<text class="s" x="500" y="224" text-anchor="middle">pulado: if só na main</text>
+
+<rect class="band" x="20" y="246" width="960" height="20" rx="4"/>
+<text class="zl" x="28" y="260">2 · Pull request dev → main</text>
+<line class="ln" x1="82" y1="290" x2="217" y2="290" marker-end="url(#m2)"/>
+<text class="lbl" x="150" y="284" text-anchor="middle">abre PR para main</text>
+<line class="ln" x1="222" y1="322" x2="357" y2="322" marker-end="url(#m2)"/>
+<text class="lbl" x="290" y="316" text-anchor="middle">checks do PR</text>
+<line class="ln" x1="82" y1="354" x2="217" y2="354" marker-end="url(#m2)"/>
+<text class="lbl" x="150" y="348" text-anchor="middle">merge na main</text>
+
+<rect class="band" x="20" y="372" width="960" height="20" rx="4"/>
+<text class="zl" x="28" y="386">3 · Push na main — publicação da imagem</text>
+<line class="ln" x1="222" y1="416" x2="357" y2="416" marker-end="url(#m2)"/>
+<text class="lbl" x="290" y="410" text-anchor="middle">dispara de novo</text>
+<line class="ln" x1="362" y1="448" x2="497" y2="448" marker-end="url(#m2)"/>
+<text class="lbl" x="430" y="442" text-anchor="middle">4 jobs verdes</text>
+<rect class="note" x="415" y="462" width="170" height="24" rx="4"/>
+<text class="s" x="500" y="478" text-anchor="middle">build + Trivy na imagem</text>
+<rect class="note" x="415" y="494" width="170" height="24" rx="4"/>
+<text class="s" x="500" y="510" text-anchor="middle">assume a role via OIDC</text>
+<line class="ln" x1="502" y1="546" x2="637" y2="546" marker-end="url(#m2)"/>
+<text class="lbl" x="570" y="540" text-anchor="middle">push :v1.0.0-&lt;sha7&gt;</text>
+<line class="ln" x1="498" y1="578" x2="223" y2="578" marker-end="url(#m2)"/>
+<text class="lbl" x="360" y="572" text-anchor="middle">commit da tag [skip ci]</text>
+
+<rect class="band" x="20" y="596" width="960" height="20" rx="4"/>
+<text class="zl" x="28" y="610">4 · GitOps — o ArgoCD aplica</text>
+<line class="ln" x1="778" y1="640" x2="223" y2="640" marker-end="url(#m2)"/>
+<text class="lbl" x="500" y="634" text-anchor="middle">consulta a cada 30 s</text>
+<line class="ln dash" x1="222" y1="672" x2="777" y2="672" marker-end="url(#m2)"/>
+<text class="lbl" x="500" y="666" text-anchor="middle">commit novo em gitops/overlays/prod</text>
+<line class="ln" x1="782" y1="704" x2="917" y2="704" marker-end="url(#m2)"/>
+<text class="lbl" x="850" y="698" text-anchor="middle">sync da nova tag</text>
+<line class="ln" x1="918" y1="736" x2="643" y2="736" marker-end="url(#m2)"/>
+<text class="lbl" x="780" y="730" text-anchor="middle">kubelet puxa a imagem</text>
+<rect class="note" x="845" y="750" width="150" height="24" rx="4"/>
+<text class="s" x="920" y="766" text-anchor="middle">rolling update → Ready</text>
+</svg>
+</div>
+<figcaption>Sequência completa de uma mudança de código. Na <code>dev</code> nada é publicado: os jobs <code>image</code> e <code>gitops</code> têm <code>if: github.event_name == 'push' &amp;&amp; github.ref == 'refs/heads/main'</code>. O commit da tag não dispara um novo ciclo por dois motivos: a mensagem leva <code>[skip ci]</code> e <code>gitops/**</code> não está no filtro <code>paths</code> de nenhum workflow de serviço.</figcaption>
+</figure>
+
+<h3>Os jobs, um por um</h3>
+<div class="tablewrap"><table>
+<thead><tr><th>Job</th><th>Quando roda</th><th>O que faz (Go / Python)</th><th>Barra o pipeline quando</th></tr></thead>
+<tbody>
+<tr><td><code>build</code></td><td>push em <code>dev</code> ou <code>main</code>, PR para as duas</td><td><code>go build</code> + <code>go test</code> / <code>pip install</code> + <code>compileall</code> + <code>pytest</code> se houver teste</td><td>não compila ou teste falha</td></tr>
+<tr><td><code>lint</code></td><td>idem</td><td>golangci-lint v2.13.2 / flake8 (erros graves) + pylint</td><td>achado do linter</td></tr>
+<tr><td><code>sast</code></td><td>idem</td><td>gosec <code>-severity high</code> / bandit <code>-ll</code></td><td>vulnerabilidade no código</td></tr>
+<tr><td><code>sca</code></td><td>idem</td><td>Trivy no sistema de arquivos, <code>severity: CRITICAL</code></td><td>dependência com CVE crítica</td></tr>
+<tr><td><code>image</code></td><td>só push na <code>main</code>, com os 4 anteriores verdes</td><td><code>docker build</code>, Trivy na imagem, OIDC na role <code>togglemaster-github-actions</code>, push de <code>v1.0.0-&lt;sha7&gt;</code> e <code>latest</code></td><td>imagem com CVE crítica</td></tr>
+<tr><td><code>gitops</code></td><td>só push na <code>main</code>, depois do <code>image</code></td><td><code>kustomize edit set image</code> em <code>gitops/overlays/prod</code>, commit com <code>[skip ci]</code>, push na <code>main</code></td><td>5 pushes rejeitados seguidos</td></tr>
+<tr><td>Compose Integration</td><td>todo PR e push na <code>main</code></td><td>sobe os 5 serviços no Compose com o moto emulando SQS e DynamoDB e testa o fluxo</td><td>fluxo ponta a ponta quebra</td></tr>
+<tr><td>Terraform Check</td><td>PR e push na <code>main</code> que tocam <code>terraform/**</code></td><td><code>terraform fmt -check</code> e <code>validate</code> nas três camadas</td><td>formato ou sintaxe inválidos</td></tr>
+</tbody></table></div>
+
+<div class="warn">
+<p><strong>Consequência para quem trabalha sozinho:</strong> existe um único ambiente (<code>overlays/prod</code>) e ele segue a <code>main</code>. Para ver qualquer mudança no cluster, é preciso merge. Por isso o plano desenvolve instrumentação e configuração <em>localmente</em> e só leva ao cluster o que já funciona — cada ida à <code>main</code> vira um deploy de verdade.</p>
+</div>
+
+<h3>O que a Fase 4 acrescenta a este caminho</h3>
+<ul>
+<li><strong>Nada no CI.</strong> Os seis jobs continuam iguais. Muda só o conteúdo das imagens, que passam a ter instrumentação.</li>
+<li><strong>Stack de observabilidade pelo mesmo trilho.</strong> Os Helm charts entram como arquivos em <code>gitops/observability/</code>; o ArgoCD os aplica exatamente como aplica os serviços. Como <code>gitops/**</code> está fora dos filtros, mudar um chart não dispara CI — e não precisa.</li>
+<li><strong>Um workflow novo, fora do CI:</strong> <code>self-healing.yml</code>, disparado só por <code>repository_dispatch</code>. Ele não participa do caminho acima.</li>
+</ul>
+</section>
+
+<section id="plataforma">
+<h2>Baixo nível 2 — quem cria o quê</h2>
+<p>Duas ferramentas constroem o ambiente, cada uma com seu jeito. O <strong>Terraform</strong> age quando você manda (<code>terraform apply</code>) e cria o que é caro ou sensível: rede, cluster, bancos, identidades e segredos. O <strong>ArgoCD</strong> age sozinho e sem parar: tudo o que está em <code>gitops/</code> ele mantém igual ao Git. A Fase 4 acrescenta peças nos dois lados.</p>
+
+<figure class="fig">
+<div class="scroll">
+<svg class="dg" viewBox="0 0 1000 570" role="img" aria-label="À esquerda, as três camadas do Terraform, cada uma lendo as saídas da anterior por remote_state: base com VPC, ECR, SQS, DynamoDB, OIDC e a nova role do self-healing; cluster com EKS, RDS, ElastiCache, IRSA, nós passando de 2 para 3 e a nova access entry; k8s com ArgoCD, Application togglemaster, Secrets e, de novo, o namespace observability, os Secrets do New Relic, PagerDuty, Slack e GitHub e a Application observability. O terraform apply cria o cluster à direita. No topo, o repositório com gitops/overlays/prod e o novo gitops/observability. No cluster, o ArgoCD lê o repositório a cada 30 segundos, aplica os serviços por Kustomize no namespace togglemaster e a stack de observabilidade por Helm no novo namespace observability.">
+<defs>
+<marker id="m3" class="mk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker>
+<marker id="m3a" class="mk acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker>
+</defs>
+
+<rect class="zone" x="20" y="20" width="310" height="530" rx="10"/>
+<text class="zl" x="36" y="42">Terraform · 3 camadas · estado no S3</text>
+
+<rect class="chg" x="40" y="58" width="270" height="128" rx="6"/>
+<text class="b" x="56" y="80">terraform/ — base</text>
+<text class="s" x="56" y="100">VPC, subnets, NAT Gateway</text>
+<text class="s" x="56" y="118">ECR ×5 · SQS + DLQ · DynamoDB</text>
+<text class="s" x="56" y="136">OIDC do GitHub · role do CI</text>
+<text class="lbl acc" x="56" y="160">+ role do self-healing (OIDC)</text>
+
+<line class="ln" x1="180" y1="186" x2="180" y2="204" marker-end="url(#m3)"/>
+<text class="lbl" x="190" y="199">remote_state</text>
+
+<rect class="chg" x="40" y="206" width="270" height="146" rx="6"/>
+<text class="b" x="56" y="228">terraform/cluster</text>
+<text class="s" x="56" y="248">EKS 1.34 · nós c7i-flex.large</text>
+<text class="s" x="56" y="266">RDS ×2 · ElastiCache · roles IRSA</text>
+<text class="s" x="56" y="284">addons: EBS CSI, metrics-server</text>
+<text class="lbl acc" x="56" y="308">nós: 2 → 3</text>
+<text class="lbl acc" x="56" y="326">+ access entry do self-healing</text>
+
+<line class="ln" x1="180" y1="352" x2="180" y2="370" marker-end="url(#m3)"/>
+<text class="lbl" x="190" y="365">remote_state</text>
+
+<rect class="chg" x="40" y="372" width="270" height="164" rx="6"/>
+<text class="b" x="56" y="394">terraform/k8s</text>
+<text class="s" x="56" y="414">ns argocd · ArgoCD (Helm 7.7.11)</text>
+<text class="s" x="56" y="432">Application togglemaster</text>
+<text class="s" x="56" y="450">Secrets dos 5 serviços</text>
+<text class="lbl acc" x="56" y="474">+ ns observability</text>
+<text class="lbl acc" x="56" y="492">+ Secrets: New Relic, PagerDuty,</text>
+<text class="lbl acc" x="56" y="508">   Slack e token do GitHub</text>
+<text class="lbl acc" x="56" y="526">+ Application observability</text>
+
+<rect class="chg" x="380" y="20" width="280" height="128" rx="6"/>
+<text class="b" x="396" y="42">Repositório tech-challenge-04</text>
+<text class="s" x="396" y="62">gitops/overlays/prod → serviços</text>
+<text class="lbl acc" x="396" y="82">gitops/observability/ (novo)</text>
+<text class="lbl acc" x="396" y="100">   Applications Helm + values</text>
+<text class="lbl acc" x="396" y="118">   dashboards e regras de alerta</text>
+<text class="s" x="396" y="138">services/ · terraform/ · .github/</text>
+
+<rect class="zone" x="370" y="180" width="610" height="370" rx="10"/>
+<text class="zl" x="386" y="202">Cluster EKS</text>
+
+<line class="ln" x1="330" y1="300" x2="367" y2="300" marker-end="url(#m3)"/>
+<text class="lbl" x="349" y="292" text-anchor="middle">apply</text>
+
+<rect class="zone" x="390" y="216" width="220" height="160" rx="8"/>
+<text class="zl" x="402" y="236">ns argocd</text>
+<rect class="chg" x="406" y="246" width="178" height="118" rx="6"/>
+<text class="b" x="418" y="266">ArgoCD</text>
+<text class="s" x="418" y="286">App togglemaster</text>
+<text class="lbl acc" x="418" y="306">App observability (novo)</text>
+<text class="lbl acc" x="418" y="324">   kube-prometheus-stack</text>
+<text class="lbl acc" x="418" y="342">   loki · otel agent e gateway</text>
+
+<line class="ln" x1="500" y1="246" x2="500" y2="151" marker-end="url(#m3)"/>
+<text class="lbl" x="508" y="170">lê a cada 30 s</text>
+
+<rect class="note" x="390" y="400" width="190" height="64" rx="6"/>
+<text class="s" x="402" y="420">Secrets: criados pelo</text>
+<text class="s" x="402" y="438">Terraform, lidos por</text>
+<text class="s" x="402" y="456">secretKeyRef, fora do Git</text>
+
+<rect class="zone" x="640" y="216" width="320" height="150" rx="8"/>
+<text class="zl" x="652" y="236">ns togglemaster</text>
+<rect class="chg" x="656" y="246" width="288" height="106" rx="6"/>
+<text class="b" x="668" y="266">auth · flag · targeting</text>
+<text class="s" x="668" y="284">evaluation (HPA 1–2) · analytics (HPA 1–2)</text>
+<text class="s" x="668" y="302">postgres-targeting (StatefulSet)</text>
+<text class="lbl acc" x="668" y="326">+ variáveis OTEL_* e instrumentação</text>
+
+<rect class="zone" x="640" y="384" width="320" height="152" rx="8"/>
+<text class="zl" x="652" y="404">ns observability (novo)</text>
+<rect class="new" x="656" y="414" width="288" height="112" rx="6"/>
+<text class="b" x="668" y="434">OTel Collector: agent + gateway</text>
+<text class="s" x="668" y="452">Prometheus · Grafana (sem Alertmanager)</text>
+<text class="s" x="668" y="470">node-exporter · kube-state-metrics</text>
+<text class="s" x="668" y="488">Loki (SingleBinary)</text>
+<text class="s" x="668" y="506">dashboards e alertas via ConfigMap</text>
+
+<line class="ln" x1="586" y1="280" x2="653" y2="280" marker-end="url(#m3)"/>
+<text class="lbl" x="620" y="273" text-anchor="middle">Kustomize</text>
+<path class="ln acc" d="M584 340H620V470H653" marker-end="url(#m3a)"/>
+<text class="lbl acc" x="616" y="420" text-anchor="end">Helm</text>
+</svg>
+</div>
+<figcaption>O Terraform (esquerda) roda sob seu comando, em camadas que leem as saídas umas das outras por <code>terraform_remote_state</code>. O ArgoCD (direita) reconcilia sozinho. Em azul, o que a Fase 4 acrescenta; a borda tracejada marca o que já existe e ganha alteração.</figcaption>
+</figure>
+
+<h3>Como a stack entra pelo GitOps</h3>
+<p>O enunciado pede os Helm charts "no seu repositório GitOps" (p. 3, REQ-OBR-06). O desenho recomendado é o padrão <em>app of apps</em>:</p>
+<ol>
+<li>O Terraform cria uma única Application nova, <code>observability</code>, apontando para <code>gitops/observability/</code>.</li>
+<li>Dentro dessa pasta ficam quatro manifestos de Application, um por chart: <code>kube-prometheus-stack</code>, <code>loki</code>, <code>otel-agent</code> e <code>otel-gateway</code>. Cada um diz qual chart, qual versão e quais <em>values</em> usar.</li>
+<li>Dashboards e regras de alerta ficam na mesma pasta, como ConfigMaps que o sidecar do Grafana carrega. O chart procura o rótulo <code>grafana_dashboard: "1"</code>, conferido no <code>values.yaml</code>.</li>
+</ol>
+<p>Vantagem: trocar a versão de um chart ou um parâmetro é um commit, e o ArgoCD aplica sozinho — o mesmo fluxo que o vídeo precisa mostrar (REQ-OBR-25). O Terraform não precisa ser rodado de novo.</p>
+
+<div class="tablewrap"><table>
+<thead><tr><th>Peça</th><th>Quem cria</th><th>Onde fica declarada</th><th>Novo?</th></tr></thead>
+<tbody>
+<tr><td>Role do self-healing (confia só no workflow do repositório)</td><td>Terraform base</td><td><code>terraform/modules/…</code></td><td>Sim</td></tr>
+<tr><td>Terceiro nó</td><td>Terraform cluster</td><td><code>node_group_desired_size = 3</code></td><td>Alteração</td></tr>
+<tr><td>Access entry com <code>AmazonEKSEditPolicy</code> restrita ao namespace <code>togglemaster</code></td><td>Terraform cluster</td><td><code>aws_eks_access_entry</code> + <code>aws_eks_access_policy_association</code></td><td>Sim</td></tr>
+<tr><td>Namespace <code>observability</code> e 4 Secrets novos</td><td>Terraform k8s</td><td><code>terraform/k8s/secrets.tf</code>, valores por <code>TF_VAR_*</code></td><td>Sim</td></tr>
+<tr><td>Application <code>observability</code></td><td>Terraform k8s</td><td>ao lado da <code>togglemaster</code> em <code>argocd.tf</code></td><td>Sim</td></tr>
+<tr><td>Charts, values, dashboards e regras de alerta</td><td>ArgoCD</td><td><code>gitops/observability/</code></td><td>Sim</td></tr>
+<tr><td>Variáveis <code>OTEL_*</code> dos serviços</td><td>ArgoCD</td><td><code>gitops/base/*/configmap.yaml</code></td><td>Alteração</td></tr>
+</tbody></table></div>
+
+<div class="warn">
+<p><strong>A conferir na E3 — HPA contra <code>selfHeal</code>.</strong> Os Deployments do <code>evaluation</code> e do <code>analytics</code> declaram <code>replicas: 1</code> no Git e têm HPA de 1 a 2. A Application usa <code>selfHeal: true</code> e não tem <code>ignoreDifferences</code>. Quando o HPA escalar para 2, o ArgoCD pode ver diferença com o Git e voltar para 1. A documentação do ArgoCD mostra exatamente o caso de ignorar <code>/spec/replicas</code> em <code>ignoreDifferences</code>. Não achei nos registros da Fase 3 evidência de que isso aconteceu; vale testar antes de gravar, porque o enunciado conta a história de um HPA escalando.</p>
+</div>
+</section>
+
+<section id="requisicao">
+<h2>Baixo nível 3 — uma requisição e seu trace</h2>
+<p>O vídeo precisa mostrar o "caminho" de uma requisição ao <code>evaluation-service</code> (REQ-OBR-14) e o mapa dos cinco serviços (REQ-OBR-15). O trace só costura esse caminho se cada salto carregar o identificador do trace — o cabeçalho <code>traceparent</code>, padrão W3C. Abaixo, o percurso real de um <code>GET /evaluate</code> com o cache vazio, lido de <code>evaluator.go</code>, <code>sqs.go</code> e dos <code>app.py</code>.</p>
+
+<figure class="fig">
+<div class="scroll">
+<svg class="dg" viewBox="0 0 1000 680" role="img" aria-label="Sequência de um GET /evaluate com cache vazio. O cliente chama o evaluation, que consulta o Redis e recebe miss. Em paralelo, o evaluation chama o flag, que valida a chave no auth, e o targeting, que também valida no auth; essas quatro chamadas levam o traceparent. Cada serviço consulta seu banco. O evaluation grava o cache por 30 segundos e responde 200. Depois, numa goroutine, envia a mensagem à SQS com o traceparent nos atributos. O analytics faz long polling de 20 segundos, recebe a mensagem com o traceparent, extrai o contexto, grava no DynamoDB e apaga a mensagem.">
+<defs>
+<marker id="m4" class="mk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker>
+<marker id="m4a" class="mk acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker>
+</defs>
+
+<rect class="box" x="10" y="20" width="100" height="44" rx="6"/>
+<text class="b" x="60" y="38" text-anchor="middle">Cliente</text>
+<text class="s" x="60" y="55" text-anchor="middle">port-forward</text>
+<rect class="chg" x="120" y="20" width="100" height="44" rx="6"/>
+<text class="b" x="170" y="38" text-anchor="middle">evaluation</text>
+<text class="s" x="170" y="55" text-anchor="middle">Go · 8004</text>
+<rect class="box" x="230" y="20" width="100" height="44" rx="6"/>
+<text class="b" x="280" y="38" text-anchor="middle">Redis</text>
+<text class="s" x="280" y="55" text-anchor="middle">ElastiCache</text>
+<rect class="chg" x="340" y="20" width="100" height="44" rx="6"/>
+<text class="b" x="390" y="38" text-anchor="middle">flag</text>
+<text class="s" x="390" y="55" text-anchor="middle">Python · 8002</text>
+<rect class="chg" x="450" y="20" width="100" height="44" rx="6"/>
+<text class="b" x="500" y="38" text-anchor="middle">targeting</text>
+<text class="s" x="500" y="55" text-anchor="middle">Python · 8003</text>
+<rect class="chg" x="560" y="20" width="100" height="44" rx="6"/>
+<text class="b" x="610" y="38" text-anchor="middle">auth</text>
+<text class="s" x="610" y="55" text-anchor="middle">Go · 8001</text>
+<rect class="box" x="670" y="20" width="100" height="44" rx="6"/>
+<text class="b" x="720" y="38" text-anchor="middle">SQS</text>
+<text class="s" x="720" y="55" text-anchor="middle">fila</text>
+<rect class="chg" x="780" y="20" width="100" height="44" rx="6"/>
+<text class="b" x="830" y="38" text-anchor="middle">analytics</text>
+<text class="s" x="830" y="55" text-anchor="middle">Python · 8005</text>
+<rect class="box" x="890" y="20" width="100" height="44" rx="6"/>
+<text class="b" x="940" y="38" text-anchor="middle">DynamoDB</text>
+<text class="s" x="940" y="55" text-anchor="middle">tabela</text>
+
+<path class="life" d="M60 64V80M60 100V436M60 456V665"/>
+<path class="life" d="M170 64V80M170 100V436M170 456V665"/>
+<path class="life" d="M280 64V80M280 100V436M280 456V665"/>
+<path class="life" d="M390 64V80M390 100V436M390 456V665"/>
+<path class="life" d="M500 64V80M500 100V436M500 456V665"/>
+<path class="life" d="M610 64V80M610 100V436M610 456V665"/>
+<path class="life" d="M720 64V80M720 100V436M720 456V665"/>
+<path class="life" d="M830 64V80M830 100V436M830 456V665"/>
+<path class="life" d="M940 64V80M940 100V436M940 456V665"/>
+
+<rect class="band" x="10" y="80" width="980" height="20" rx="4"/>
+<text class="zl" x="18" y="94">Caminho síncrono — até a resposta</text>
+
+<line class="ln" x1="62" y1="124" x2="167" y2="124" marker-end="url(#m4)"/>
+<text class="lbl" x="115" y="118" text-anchor="middle">GET /evaluate</text>
+<line class="ln" x1="172" y1="156" x2="277" y2="156" marker-end="url(#m4)"/>
+<text class="lbl" x="225" y="150" text-anchor="middle">GET cache</text>
+<line class="ln dash" x1="278" y1="188" x2="173" y2="188" marker-end="url(#m4)"/>
+<text class="lbl" x="225" y="182" text-anchor="middle">miss</text>
+
+<rect class="frame" x="150" y="202" width="500" height="138" rx="4"/>
+<text class="lbl" x="642" y="216" text-anchor="end">em paralelo</text>
+<line class="ln acc" x1="172" y1="226" x2="386" y2="226" marker-end="url(#m4a)"/>
+<text class="lbl acc" x="280" y="220" text-anchor="middle">GET /flags/&lt;nome&gt;</text>
+<line class="ln acc" x1="392" y1="258" x2="606" y2="258" marker-end="url(#m4a)"/>
+<text class="lbl acc" x="500" y="252" text-anchor="middle">GET /validate</text>
+<line class="ln acc" x1="172" y1="290" x2="496" y2="290" marker-end="url(#m4a)"/>
+<text class="lbl acc" x="335" y="284" text-anchor="middle">GET /rules/&lt;nome&gt;</text>
+<line class="ln acc" x1="502" y1="322" x2="606" y2="322" marker-end="url(#m4a)"/>
+<text class="lbl acc" x="555" y="316" text-anchor="middle">GET /validate</text>
+
+<rect class="note" x="340" y="346" width="100" height="22" rx="4"/>
+<text class="s" x="390" y="361" text-anchor="middle">RDS flags_db</text>
+<rect class="note" x="450" y="346" width="100" height="22" rx="4"/>
+<text class="s" x="500" y="361" text-anchor="middle">Postgres (pod)</text>
+<rect class="note" x="560" y="346" width="100" height="22" rx="4"/>
+<text class="s" x="610" y="361" text-anchor="middle">RDS auth_db</text>
+
+<line class="ln" x1="172" y1="394" x2="277" y2="394" marker-end="url(#m4)"/>
+<text class="lbl" x="225" y="388" text-anchor="middle">SET (30 s)</text>
+<line class="ln dash" x1="168" y1="420" x2="63" y2="420" marker-end="url(#m4)"/>
+<text class="lbl" x="115" y="414" text-anchor="middle">200 {result}</text>
+
+<rect class="band" x="10" y="436" width="980" height="20" rx="4"/>
+<text class="zl" x="18" y="450">Caminho assíncrono — pela fila</text>
+
+<line class="ln acc" x1="172" y1="482" x2="716" y2="482" marker-end="url(#m4a)"/>
+<text class="lbl acc" x="445" y="476" text-anchor="middle">SendMessage + traceparent (goroutine)</text>
+<line class="ln" x1="828" y1="514" x2="723" y2="514" marker-end="url(#m4)"/>
+<text class="lbl" x="775" y="508" text-anchor="middle">long poll 20 s</text>
+<line class="ln acc dash" x1="722" y1="546" x2="826" y2="546" marker-end="url(#m4a)"/>
+<text class="lbl acc" x="775" y="540" text-anchor="middle">msg + traceparent</text>
+<rect class="note" x="765" y="560" width="130" height="24" rx="4"/>
+<text class="s" x="830" y="576" text-anchor="middle">extrai o contexto</text>
+<line class="ln" x1="832" y1="612" x2="937" y2="612" marker-end="url(#m4)"/>
+<text class="lbl" x="885" y="606" text-anchor="middle">PutItem</text>
+<line class="ln" x1="828" y1="644" x2="723" y2="644" marker-end="url(#m4)"/>
+<text class="lbl" x="775" y="638" text-anchor="middle">DeleteMessage</text>
+</svg>
+</div>
+<figcaption>Setas azuis carregam o <code>traceparent</code>. As quatro chamadas HTTP propagam automaticamente depois de instrumentadas. As duas da fila, não: a SQS não tem cabeçalho HTTP, então o contexto viaja como atributo da mensagem, e esse código precisa ser escrito. Sem ele, o <code>analytics</code> aparece desconectado no Service Map.</figcaption>
+</figure>
+
+<h3>Três fatos do código que moldam a instrumentação</h3>
+<div class="card">
+<p><strong>1. O <code>evaluation</code> usa um contexto global.</strong> Em <code>main.go</code> existe <code>var ctx = context.Background()</code>, e é ele que vai para o Redis. As funções <code>getDecision</code>, <code>fetchFlag</code> e <code>fetchRule</code> não recebem contexto, e as requisições saem por <code>http.NewRequest</code>. Sem mudar isso, os spans do Redis e das chamadas HTTP nascem órfãos, fora do trace da requisição. A correção é passar <code>r.Context()</code> de ponta a ponta e trocar por <code>http.NewRequestWithContext</code>.</p>
+<p><strong>2. O envio à fila roda numa goroutine que sobrevive à resposta.</strong> <code>go a.sendEvaluationEvent(...)</code> dispara depois do <code>200</code>. Passar o contexto da requisição direto seria cancelá-lo no meio do envio. Precisa ser <code>context.WithoutCancel(ctx)</code>, que existe desde o Go 1.21 — o serviço usa 1.25.</p>
+<p><strong>3. Só erro no <code>flag</code> vira 5xx no <code>evaluation</code>.</strong> Em <code>fetchFromServices</code>, erro do <code>flag</code> é devolvido e o handler responde <code>502</code>. Já erro do <code>targeting</code> é registrado no log e trocado pela regra padrão, com resposta <code>200</code>. Isso decide onde a falha proposital do vídeo pode ser provocada — ver <a href="#resposta">Baixo nível 5</a>.</p>
+</div>
+
+<h3>Onde cada span nasce</h3>
+<div class="tablewrap"><table>
+<thead><tr><th>Serviço</th><th>Span</th><th>Biblioteca</th><th>Mudança necessária</th></tr></thead>
+<tbody>
+<tr><td rowspan="4"><code>evaluation</code></td><td>servidor <code>GET /evaluate</code></td><td><code>otelhttp.NewHandler</code></td><td>envolver o <code>ServeMux</code> em <code>main.go</code></td></tr>
+<tr><td>cliente Redis <code>GET</code>/<code>SET</code></td><td><code>redisotel</code> do go-redis v8</td><td>registrar o hook no cliente; usar o contexto da requisição (fato 1)</td></tr>
+<tr><td>cliente HTTP para <code>flag</code> e <code>targeting</code></td><td><code>otelhttp.NewTransport</code></td><td>trocar o <code>Transport</code> do <code>http.Client</code>; <code>NewRequestWithContext</code></td></tr>
+<tr><td>produtor SQS</td><td>manual</td><td>o contrib do OpenTelemetry instrumenta só o <code>aws-sdk-go-v2</code>, e o serviço usa a v1 (1.51.10). Criar o span e injetar o <code>traceparent</code> em <code>MessageAttributes</code> (fato 2)</td></tr>
+<tr><td rowspan="2"><code>auth</code></td><td>servidor <code>/validate</code></td><td><code>otelhttp.NewHandler</code></td><td>envolver o <code>ServeMux</code></td></tr>
+<tr><td>cliente SQL</td><td><code>otelsql</code> (XSAM) sobre <code>database/sql</code></td><td><code>otelsql.Open("pgx", …)</code> em <code>connectDB</code>; o driver é o <code>pgx/v4/stdlib</code></td></tr>
+<tr><td rowspan="3"><code>flag</code> e <code>targeting</code></td><td>servidor Flask</td><td><code>opentelemetry-instrument</code> (instrumentação automática)</td><td>mudar o <code>CMD</code> do Dockerfile; nenhuma linha em <code>app.py</code></td></tr>
+<tr><td>cliente <code>requests</code> para o <code>auth</code></td><td>instrumentação <code>requests</code></td><td>nenhuma — o cabeçalho é injetado sozinho</td></tr>
+<tr><td>cliente PostgreSQL</td><td>instrumentação <code>psycopg2</code></td><td>nenhuma — ela reconhece o pacote <code>psycopg2-binary</code> (conferido no código-fonte da instrumentação)</td></tr>
+<tr><td rowspan="2"><code>analytics</code></td><td>consumidor SQS</td><td>manual</td><td><code>receive_message</code> hoje não pede <code>MessageAttributeNames</code>; acrescentar, extrair o contexto e abrir o span em volta de <code>process_message</code></td></tr>
+<tr><td>clientes SQS e DynamoDB</td><td>instrumentação <code>botocore</code></td><td>nenhuma</td></tr>
+</tbody></table></div>
+
+<div class="warn">
+<p><strong>A conferir na E1 — gunicorn e processos filhos.</strong> Os três serviços Python rodam em gunicorn. A documentação do OpenTelemetry Python avisa que o <code>BatchSpanProcessor</code> não sobrevive bem ao <code>fork</code>: o filho herda um lock preso e trava. A solução documentada é reinicializar o provider no hook <code>post_fork</code>. O gunicorn aqui roda sem <code>--preload</code> e com o número padrão de workers; testar no Compose se a instrumentação automática exporta sem esse hook antes de escrevê-lo.</p>
+</div>
+</section>
+
+<section id="telemetria">
+<h2>Baixo nível 4 — o caminho da telemetria</h2>
+<p>O OTel Collector roda em dois modos, instalados como duas releases do mesmo chart (<code>opentelemetry-collector</code>, que exige escolher <code>mode</code> e a imagem). O <strong>agent</strong> é um DaemonSet: um pod por nó, que lê do disco os logs de todos os contêineres daquele nó. O <strong>gateway</strong> é um Deployment central: recebe os traces dos serviços e os logs dos agents, processa e decide o destino.</p>
+
+<figure class="fig">
+<div class="scroll">
+<svg class="dg" viewBox="0 0 1000 480" role="img" aria-label="Os pods do togglemaster enviam traces por OTLP/HTTP na porta 4318 direto ao pipeline de traces do gateway, e escrevem logs em stdout, que vão para /var/log/pods no disco do nó. O agent, um por nó, lê esses arquivos com o receiver filelog e envia por OTLP ao pipeline de logs do gateway. No gateway, o pipeline de traces exporta ao New Relic por OTLP com header api-key e alimenta o conector spanmetrics, que gera o pipeline de métricas; este envia ao Prometheus por remote write. O pipeline de logs envia ao Loki por OTLP/HTTP no caminho /otlp. O Prometheus também faz scrape dos exporters de infraestrutura. O Grafana consulta o Prometheus com PromQL e o Loki com LogQL.">
+<defs>
+<marker id="m5" class="mk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker>
+<marker id="m5a" class="mk acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker>
+</defs>
+
+<rect class="chg" x="20" y="186" width="170" height="50" rx="6"/>
+<text class="b" x="105" y="206" text-anchor="middle">Pods togglemaster</text>
+<text class="s" x="105" y="224" text-anchor="middle">SDK OpenTelemetry</text>
+<line class="ln dash" x1="105" y1="236" x2="105" y2="271" marker-end="url(#m5)"/>
+<text class="lbl" x="113" y="258">stdout</text>
+<rect class="box" x="20" y="274" width="170" height="50" rx="6"/>
+<text class="b" x="105" y="294" text-anchor="middle">Disco do nó</text>
+<text class="s" x="105" y="312" text-anchor="middle">/var/log/pods</text>
+
+<rect class="new" x="240" y="274" width="160" height="50" rx="6"/>
+<text class="b" x="320" y="294" text-anchor="middle">Agent</text>
+<text class="s" x="320" y="312" text-anchor="middle">DaemonSet · 1 por nó</text>
+<line class="ln acc" x1="190" y1="299" x2="236" y2="299" marker-end="url(#m5a)"/>
+<text class="lbl acc" x="214" y="292" text-anchor="middle">filelog</text>
+
+<rect class="zone" x="450" y="70" width="250" height="276" rx="10"/>
+<text class="zl" x="462" y="88">Gateway · Deployment</text>
+<rect class="new" x="465" y="98" width="220" height="50" rx="6"/>
+<text class="b" x="575" y="118" text-anchor="middle">pipeline metrics</text>
+<text class="s" x="575" y="136" text-anchor="middle">memory_limiter · batch</text>
+<rect class="new" x="465" y="186" width="220" height="50" rx="6"/>
+<text class="b" x="575" y="206" text-anchor="middle">pipeline traces</text>
+<text class="s" x="575" y="224" text-anchor="middle">k8sattributes · batch</text>
+<rect class="new" x="465" y="274" width="220" height="50" rx="6"/>
+<text class="b" x="575" y="294" text-anchor="middle">pipeline logs</text>
+<text class="s" x="575" y="312" text-anchor="middle">memory_limiter · batch</text>
+<line class="ln acc" x1="575" y1="186" x2="575" y2="152" marker-end="url(#m5a)"/>
+<text class="lbl acc" x="583" y="173">conector spanmetrics</text>
+
+<line class="ln acc" x1="190" y1="211" x2="461" y2="211" marker-end="url(#m5a)"/>
+<text class="lbl acc" x="326" y="204" text-anchor="middle">OTLP/HTTP :4318</text>
+<line class="ln acc" x1="400" y1="299" x2="461" y2="299" marker-end="url(#m5a)"/>
+<text class="lbl acc" x="431" y="292" text-anchor="middle">OTLP</text>
+
+<rect class="new" x="790" y="10" width="190" height="56" rx="6"/>
+<text class="b" x="885" y="30" text-anchor="middle">Infraestrutura</text>
+<text class="s" x="885" y="45" text-anchor="middle">node-exporter · kubelet</text>
+<text class="s" x="885" y="59" text-anchor="middle">kube-state-metrics</text>
+<rect class="new" x="790" y="96" width="190" height="54" rx="6"/>
+<text class="b" x="885" y="118" text-anchor="middle">Prometheus</text>
+<text class="s" x="885" y="136" text-anchor="middle">remote write · scrape</text>
+<line class="ln" x1="885" y1="96" x2="885" y2="69" marker-end="url(#m5)"/>
+<text class="lbl" x="893" y="86">scrape</text>
+<rect class="new" x="790" y="184" width="190" height="54" rx="6"/>
+<text class="b" x="885" y="206" text-anchor="middle">New Relic</text>
+<text class="s" x="885" y="224" text-anchor="middle">OTLP · header api-key</text>
+<rect class="new" x="790" y="272" width="190" height="54" rx="6"/>
+<text class="b" x="885" y="294" text-anchor="middle">Loki</text>
+<text class="s" x="885" y="312" text-anchor="middle">OTLP em /otlp</text>
+
+<line class="ln acc" x1="685" y1="123" x2="786" y2="123" marker-end="url(#m5a)"/>
+<text class="lbl acc" x="737" y="116" text-anchor="middle">remote write</text>
+<line class="ln acc" x1="685" y1="211" x2="786" y2="211" marker-end="url(#m5a)"/>
+<text class="lbl acc" x="737" y="204" text-anchor="middle">OTLP</text>
+<line class="ln acc" x1="685" y1="299" x2="786" y2="299" marker-end="url(#m5a)"/>
+<text class="lbl acc" x="737" y="292" text-anchor="middle">OTLP/HTTP</text>
+
+<rect class="new" x="450" y="400" width="250" height="56" rx="6"/>
+<text class="b" x="575" y="424" text-anchor="middle">Grafana</text>
+<text class="s" x="575" y="442" text-anchor="middle">dashboard · Explore · alerta</text>
+<path class="ln" d="M885 326V428H704" marker-end="url(#m5)"/>
+<text class="lbl" x="800" y="421" text-anchor="middle">LogQL</text>
+<path class="ln" d="M980 123H992V445H704" marker-end="url(#m5)"/>
+<text class="lbl" x="800" y="461" text-anchor="middle">PromQL</text>
+</svg>
+</div>
+<figcaption>Dois caminhos para dois tipos de dado. Os traces saem do SDK direto para o gateway. Os logs saem do jeito que já saem hoje — texto em <code>stdout</code> — e o agent os recolhe do disco do nó, o que cobre "todos os logs dos contêineres do cluster" (REQ-OBR-08) sem mudar o <code>logging</code> dos serviços. As métricas de CPU e memória do cluster não passam pelo Collector: o Prometheus as busca direto nos exporters.</figcaption>
+</figure>
+
+<h3>Os componentes de cada pipeline</h3>
+<div class="tablewrap"><table>
+<thead><tr><th>Onde</th><th>Pipeline</th><th>Receivers</th><th>Processors</th><th>Exporters</th></tr></thead>
+<tbody>
+<tr><td>Agent</td><td>logs</td><td><code>filelog</code> em <code>/var/log/pods</code> (preset <code>logsCollection</code> do chart)</td><td><code>memory_limiter</code>, <code>k8sattributes</code> (preset <code>kubernetesAttributes</code>), <code>transform</code> que copia o <code>trace_id</code> da linha para o registro, <code>batch</code></td><td><code>otlp</code> → gateway <code>:4317</code></td></tr>
+<tr><td rowspan="3">Gateway</td><td>traces</td><td><code>otlp</code> (<code>:4317</code> gRPC e <code>:4318</code> HTTP)</td><td><code>memory_limiter</code>, <code>k8sattributes</code>, <code>batch</code></td><td><code>otlp/newrelic</code> e o conector <code>spanmetrics</code></td></tr>
+<tr><td>metrics</td><td>conector <code>spanmetrics</code></td><td><code>memory_limiter</code>, <code>batch</code></td><td><code>prometheusremotewrite</code> → <code>/api/v1/write</code></td></tr>
+<tr><td>logs</td><td><code>otlp</code> (vindo do agent)</td><td><code>memory_limiter</code>, <code>batch</code></td><td><code>otlphttp/loki</code> → <code>http://&lt;loki&gt;/otlp</code>; opcional: <code>otlp/newrelic</code> só para o namespace <code>togglemaster</code></td></tr>
+</tbody></table></div>
+
+<h3>Por que cada escolha</h3>
+<div class="card">
+<p><strong>O conector <code>spanmetrics</code> faz três requisitos com um sinal só.</strong> Ele conta os spans por serviço e por <code>status.code</code> e mede a duração — as métricas de taxa, erro e latência. Daí saem o painel de taxa de requisições (REQ-OBR-10b) e a expressão da regra de alerta (REQ-OBR-16), sem uma linha de métrica escrita nos serviços. O README do conector dá os nomes <code>traces.span.metrics.calls</code> e <code>traces.span.metrics.duration</code>, com as dimensões <code>service.name</code>, <code>span.name</code>, <code>span.kind</code> e <code>status.code</code>. O nome exato depois da conversão para o Prometheus fica para conferir na E3 — o próprio README mostra um exemplo com <code>calls_total</code>. O conector está marcado como <em>alpha</em>.</p>
+<p><strong>O Prometheus não aceita escrita por padrão.</strong> No chart <code>kube-prometheus-stack</code> (versão 91.5.0 na data da consulta), <code>prometheus.prometheusSpec.enableRemoteWriteReceiver</code> vem <code>false</code>. Precisa ser ligado, senão o exporter do gateway recebe erro. Existe também <code>enableOTLPReceiver</code>, igualmente desligado — alternativa válida, mas o <code>remote write</code> é o caminho que o README do <code>spanmetrics</code> documenta.</p>
+<p><strong>O Loki recebe OTLP nativo.</strong> A documentação do Loki manda usar o exporter <code>otlphttp</code> com <code>endpoint: http://&lt;loki-addr&gt;/otlp</code> e exige <code>allow_structured_metadata: true</code>, que já é o padrão a partir do Loki 3.0.</p>
+<p><strong>O New Relic recebe só traces</strong> (e, opcionalmente, os logs do <code>togglemaster</code>). Ele calcula sozinho as métricas de APM a partir dos spans; mandar também as do <code>spanmetrics</code> duplicaria dados e gastaria a cota de 100 GB/mês. Endpoint US: <code>otlp.nr-data.net</code>, portas 4317 e 4318, header <code>api-key</code> com a license key — conferidos na documentação oficial.</p>
+<p><strong>O Alertmanager pode ser desligado.</strong> Ele vem ligado por padrão no chart, mas a regra de alerta vai morar no Grafana. Desligar com <code>alertmanager.enabled: false</code> economiza memória num cluster apertado.</p>
+</div>
+</section>
+
+<section id="resposta">
+<h2>Baixo nível 5 — do alerta à correção</h2>
+<p>Esta é a sequência que o vídeo precisa mostrar em ordem: falha proposital (REQ-OBR-28), alerta em Firing (REQ-OBR-29), incidente e notificação (REQ-OBR-30) e o self-healing executando (REQ-OBR-31). O cenário abaixo usa uma falha no <code>flag</code>, pelo motivo do <a href="#requisicao">fato 3</a>: é o único serviço de apoio cujo erro vira 5xx no <code>evaluation</code>.</p>
+
+<figure class="fig">
+<div class="scroll">
+<svg class="dg" viewBox="0 0 1000 930" role="img" aria-label="Sequência do alerta à correção. Falha e detecção: você provoca a falha no flag; o evaluation chama o flag, recebe 500 e responde 502; os spans de erro chegam ao Prometheus via Collector; o Grafana avalia a regra, passa de Pending a Firing depois do tempo configurado. Notificação: o Grafana envia trigger ao PagerDuty, que abre o incidente, mensagem ao Slack e repository_dispatch ao GitHub Actions. Ação corretiva: o workflow assume a role por OIDC, confere allowlist e cooldown, pede rollout restart à API do EKS, que cria um pod novo do flag sem a falha; o workflow confere o status e publica o resultado no Slack. Recuperação: o Grafana avalia a regra como normal, marca Resolved, resolve o incidente no PagerDuty, avisa o Slack e manda resolved ao GitHub, que o workflow ignora.">
+<defs>
+<marker id="m6" class="mk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker>
+<marker id="m6a" class="mk acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker>
+</defs>
+
+<rect class="box" x="10" y="20" width="100" height="44" rx="6"/>
+<text class="b" x="60" y="38" text-anchor="middle">Você</text>
+<text class="s" x="60" y="55" text-anchor="middle">terminal</text>
+<rect class="chg" x="120" y="20" width="100" height="44" rx="6"/>
+<text class="b" x="170" y="38" text-anchor="middle">flag</text>
+<text class="s" x="170" y="55" text-anchor="middle">Python · 8002</text>
+<rect class="chg" x="230" y="20" width="100" height="44" rx="6"/>
+<text class="b" x="280" y="38" text-anchor="middle">evaluation</text>
+<text class="s" x="280" y="55" text-anchor="middle">Go · 8004</text>
+<rect class="new" x="340" y="20" width="100" height="44" rx="6"/>
+<text class="b" x="390" y="38" text-anchor="middle">Prometheus</text>
+<text class="s" x="390" y="55" text-anchor="middle">spanmetrics</text>
+<rect class="new" x="450" y="20" width="100" height="44" rx="6"/>
+<text class="b" x="500" y="38" text-anchor="middle">Grafana</text>
+<text class="s" x="500" y="55" text-anchor="middle">regra de alerta</text>
+<rect class="new" x="560" y="20" width="100" height="44" rx="6"/>
+<text class="b" x="610" y="38" text-anchor="middle">PagerDuty</text>
+<text class="s" x="610" y="55" text-anchor="middle">Events API v2</text>
+<rect class="new" x="670" y="20" width="100" height="44" rx="6"/>
+<text class="b" x="720" y="38" text-anchor="middle">Slack</text>
+<text class="s" x="720" y="55" text-anchor="middle">webhook</text>
+<rect class="new" x="780" y="20" width="100" height="44" rx="6"/>
+<text class="b" x="830" y="38" text-anchor="middle">Actions</text>
+<text class="s" x="830" y="55" text-anchor="middle">self-healing</text>
+<rect class="box" x="890" y="20" width="100" height="44" rx="6"/>
+<text class="b" x="940" y="38" text-anchor="middle">EKS API</text>
+<text class="s" x="940" y="55" text-anchor="middle">Deployment</text>
+
+<path class="life" d="M60 64V80M60 100V338M60 358V500M60 520V726M60 746V915"/>
+<path class="life" d="M170 64V80M170 100V338M170 358V500M170 520V726M170 746V915"/>
+<path class="life" d="M280 64V80M280 100V338M280 358V500M280 520V726M280 746V915"/>
+<path class="life" d="M390 64V80M390 100V338M390 358V500M390 520V726M390 746V915"/>
+<path class="life" d="M500 64V80M500 100V338M500 358V500M500 520V726M500 746V915"/>
+<path class="life" d="M610 64V80M610 100V338M610 358V500M610 520V726M610 746V915"/>
+<path class="life" d="M720 64V80M720 100V338M720 358V500M720 520V726M720 746V915"/>
+<path class="life" d="M830 64V80M830 100V338M830 358V500M830 520V726M830 746V915"/>
+<path class="life" d="M940 64V80M940 100V338M940 358V500M940 520V726M940 746V915"/>
+
+<rect class="band" x="10" y="80" width="980" height="20" rx="4"/>
+<text class="zl" x="18" y="94">1 · Falha e detecção</text>
+<line class="ln" x1="62" y1="124" x2="167" y2="124" marker-end="url(#m6)"/>
+<text class="lbl" x="115" y="118" text-anchor="middle">provoca a falha</text>
+<line class="ln" x1="278" y1="156" x2="173" y2="156" marker-end="url(#m6)"/>
+<text class="lbl" x="225" y="150" text-anchor="middle">GET /flags/&lt;nome&gt;</text>
+<line class="ln dash" x1="172" y1="188" x2="277" y2="188" marker-end="url(#m6)"/>
+<text class="lbl" x="225" y="182" text-anchor="middle">500</text>
+<rect class="note" x="205" y="202" width="150" height="24" rx="4"/>
+<text class="s" x="280" y="218" text-anchor="middle">responde 502</text>
+<line class="ln" x1="282" y1="252" x2="387" y2="252" marker-end="url(#m6)"/>
+<text class="lbl" x="335" y="246" text-anchor="middle">via Collector</text>
+<line class="ln" x1="498" y1="284" x2="393" y2="284" marker-end="url(#m6)"/>
+<text class="lbl" x="445" y="278" text-anchor="middle">avalia a regra</text>
+<rect class="note" x="415" y="298" width="170" height="24" rx="4"/>
+<text class="s" x="500" y="314" text-anchor="middle">Pending → Firing (for)</text>
+
+<rect class="band" x="10" y="338" width="980" height="20" rx="4"/>
+<text class="zl" x="18" y="352">2 · Notificação — três destinos da mesma política</text>
+<line class="ln acc" x1="502" y1="382" x2="606" y2="382" marker-end="url(#m6a)"/>
+<text class="lbl acc" x="555" y="376" text-anchor="middle">trigger</text>
+<rect class="note" x="550" y="396" width="120" height="24" rx="4"/>
+<text class="s" x="610" y="412" text-anchor="middle">incidente aberto</text>
+<line class="ln acc" x1="502" y1="446" x2="716" y2="446" marker-end="url(#m6a)"/>
+<text class="lbl acc" x="610" y="440" text-anchor="middle">mensagem do alerta</text>
+<line class="ln acc" x1="502" y1="478" x2="826" y2="478" marker-end="url(#m6a)"/>
+<text class="lbl acc" x="665" y="472" text-anchor="middle">repository_dispatch</text>
+
+<rect class="band" x="10" y="500" width="980" height="20" rx="4"/>
+<text class="zl" x="18" y="514">3 · Ação corretiva</text>
+<rect class="note" x="755" y="534" width="150" height="24" rx="4"/>
+<text class="s" x="830" y="550" text-anchor="middle">assume role (OIDC)</text>
+<rect class="note" x="755" y="566" width="150" height="24" rx="4"/>
+<text class="s" x="830" y="582" text-anchor="middle">allowlist · cooldown</text>
+<line class="ln acc" x1="832" y1="614" x2="936" y2="614" marker-end="url(#m6a)"/>
+<text class="lbl acc" x="885" y="608" text-anchor="middle">rollout restart</text>
+<line class="ln acc" x1="938" y1="646" x2="174" y2="646" marker-end="url(#m6a)"/>
+<text class="lbl acc" x="555" y="640" text-anchor="middle">pod novo, sem a falha</text>
+<line class="ln dash" x1="938" y1="678" x2="833" y2="678" marker-end="url(#m6)"/>
+<text class="lbl" x="885" y="672" text-anchor="middle">status ✓</text>
+<line class="ln" x1="828" y1="710" x2="723" y2="710" marker-end="url(#m6)"/>
+<text class="lbl" x="775" y="704" text-anchor="middle">resultado</text>
+
+<rect class="band" x="10" y="726" width="980" height="20" rx="4"/>
+<text class="zl" x="18" y="740">4 · Recuperação</text>
+<line class="ln" x1="498" y1="770" x2="393" y2="770" marker-end="url(#m6)"/>
+<text class="lbl" x="445" y="764" text-anchor="middle">avalia: normal</text>
+<rect class="note" x="440" y="784" width="120" height="24" rx="4"/>
+<text class="s" x="500" y="800" text-anchor="middle">Resolved</text>
+<line class="ln" x1="502" y1="834" x2="607" y2="834" marker-end="url(#m6)"/>
+<text class="lbl" x="555" y="828" text-anchor="middle">resolve</text>
+<line class="ln" x1="502" y1="866" x2="717" y2="866" marker-end="url(#m6)"/>
+<text class="lbl" x="610" y="860" text-anchor="middle">resolvido</text>
+<line class="ln dash" x1="502" y1="898" x2="827" y2="898" marker-end="url(#m6)"/>
+<text class="lbl" x="665" y="892" text-anchor="middle">resolved → ignorado</text>
+</svg>
+</div>
+<figcaption>Os três envios da etapa 2 saem da mesma política de notificação e acontecem praticamente juntos; o desenho os empilha só para caber. As notas em âmbar do workflow são as salvaguardas: sem elas, uma automação que reinicia coisas vira um problema novo.</figcaption>
+</figure>
+
+<h3>O que o workflow de self-healing faz, passo a passo</h3>
+<ol>
+<li><strong>Dispara</strong> por <code>repository_dispatch</code> com <code>event_type: self-heal</code>. A chamada é <code>POST /repos/{owner}/{repo}/dispatches</code>; o <code>client_payload</code> aceita no máximo 10 propriedades de primeiro nível e 64 KB (documentação do GitHub). O Grafana chega lá com o contact point de webhook, que permite <em>header</em> <code>Authorization</code> e corpo personalizado por template.</li>
+<li><strong>Ignora o que não é disparo.</strong> O webhook do Grafana manda <code>status: firing</code> e também <code>status: resolved</code> quando o alerta volta ao normal. Sem esse filtro, o fim do incidente dispararia um segundo reinício.</li>
+<li><strong>Confere a allowlist.</strong> O serviço vem do rótulo do alerta; se não estiver na lista de Deployments autorizados, o job termina com erro e nada acontece.</li>
+<li><strong>Confere o cooldown.</strong> Lê uma anotação no Deployment com a hora da última tentativa; se foi recente, não age. Isso impede um laço de reinícios (SUG-04).</li>
+<li><strong>Assume a role por OIDC</strong>, uma role própria do self-healing, separada da role do CI, que hoje só tem permissão de ECR.</li>
+<li><strong>Executa</strong> <code>kubectl rollout restart deployment/&lt;serviço&gt; -n togglemaster</code> e espera com <code>kubectl rollout status --timeout</code>.</li>
+<li><strong>Relata.</strong> Publica o resultado no Slack. Se o rollout não estabilizou, não tenta de novo: o incidente continua aberto no PagerDuty para uma pessoa.</li>
+</ol>
+
+<h3>Por que o reinício não é desfeito pelo ArgoCD</h3>
+<p>O <code>rollout restart</code> só grava uma anotação de data no <em>template</em> do pod, campo que o Git não declara; o Kubernetes então troca os pods. Já uma ação como mudar o número de réplicas ou uma variável de ambiente seria revertida pelo <code>selfHeal</code> no ciclo seguinte do ArgoCD, porque diverge do que está no Git. Por isso a ação corretiva é o reinício — e por isso a falha provocada precisa ser do tipo que um reinício cura.</p>
+
+<div class="warn">
+<p><strong>Dois fatos do código que afetam a gravação:</strong></p>
+<ul>
+<li>O <code>evaluation</code> guarda flag e regra no Redis por <strong>30 segundos</strong> (<code>CACHE_TTL</code>). Logo depois da falha, as consultas que acertam o cache continuam respondendo 200. O gerador de carga precisa variar as flags, ou a gravação precisa esperar esse tempo.</li>
+<li>Uma falha que o reinício não cura — banco do <code>flag</code> parado, por exemplo, que é um dos exemplos da p. 6 — mostra a <em>tentativa</em> (a p. 5 pede "tente mitigar"), mas não a recuperação. É válido, mas o vídeo fica mais forte com uma falha que o reinício de fato resolve. A escolha está nas <a href="#duvidas">perguntas em aberto</a>.</li>
+</ul>
+</div>
+</section>
+
+<section id="exibicao">
+<h2>O que aparece em cada tela</h2>
+<p>O fim da linha: onde cada dado coletado vira algo visível, e qual requisito aquela tela comprova no vídeo ou no relatório. Não há Ingress no cluster (decisão D-012 da Fase 3), então as interfaces internas abrem por <code>kubectl port-forward</code>.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>Tela</th><th>O que aparece</th><th>De onde vem o dado</th><th>Comprova</th></tr></thead>
+<tbody>
+<tr><td>ArgoCD</td><td>Applications <code>togglemaster</code> e <code>observability</code> em <em>Synced</em> e <em>Healthy</em></td><td>API do cluster</td><td>REQ-OBR-05, 06, 25</td></tr>
+<tr><td>Grafana · dashboard</td><td>(a) CPU e memória por nó e por pod · (b) requisições por segundo de cada serviço · (c) logs ao vivo</td><td>(a) exporters via Prometheus · (b) <code>spanmetrics</code> via Prometheus · (c) Loki</td><td>REQ-OBR-09, 10, 26a-b, 35</td></tr>
+<tr><td>Grafana · Explore</td><td>busca de logs por serviço, com o <code>trace_id</code> na linha</td><td>Loki</td><td>REQ-OBR-08, 26c</td></tr>
+<tr><td>Grafana · Alerting</td><td>a regra passando de Normal a Pending e a Firing</td><td><code>spanmetrics</code> via Prometheus</td><td>REQ-OBR-16, 29</td></tr>
+<tr><td>New Relic · Service Map</td><td>os 5 serviços e suas dependências (Redis, SQS, bancos)</td><td>traces via OTLP</td><td>REQ-OBR-15, 27a</td></tr>
+<tr><td>New Relic · Distributed tracing</td><td>o trace de um <code>GET /evaluate</code>, span por span, como no <a href="#requisicao">Baixo nível 3</a></td><td>traces via OTLP</td><td>REQ-OBR-14, 27b-c, 36</td></tr>
+<tr><td>PagerDuty</td><td>incidente de <em>Triggered</em> a <em>Resolved</em></td><td>Events API v2</td><td>REQ-OBR-17, 30a</td></tr>
+<tr><td>Slack</td><td>mensagem do alerta com serviço, valor medido e links; depois o resultado do self-healing</td><td>webhooks do Grafana e do workflow</td><td>REQ-OBR-18, 30b, 37</td></tr>
+<tr><td>GitHub · Actions</td><td>execução do <code>self-healing</code>: filtro, allowlist, restart, status</td><td>log do workflow</td><td>REQ-OBR-31, 38</td></tr>
+<tr><td>Terminal</td><td><code>kubectl get pods -n togglemaster -w</code>: pod antigo encerrando, novo subindo</td><td>API do cluster</td><td>REQ-OBR-31 (exemplo da p. 6)</td></tr>
+</tbody></table></div>
+
+<h3>As consultas por trás do dashboard e do alerta</h3>
+<p>O formato abaixo mostra o mecanismo. O nome real da métrica do <code>spanmetrics</code> no Prometheus fica marcado como <code>&lt;calls&gt;</code> até ser conferido na E3, e o rótulo de status precisa ser conferido junto.</p>
+<pre><code># (b) Requisições por segundo, por serviço — só spans de servidor
+sum by (service_name) (
+  rate(&lt;calls&gt;{span_kind="SPAN_KIND_SERVER"}[5m])
+)
+
+# Regra de alerta — fração de erros por serviço, disparando acima de 5%
+sum by (service_name) (rate(&lt;calls&gt;{span_kind="SPAN_KIND_SERVER", status_code="STATUS_CODE_ERROR"}[5m]))
+  /
+sum by (service_name) (rate(&lt;calls&gt;{span_kind="SPAN_KIND_SERVER"}[5m]))
+  &gt; 0.05</code></pre>
+<p>O limite de 5% vem do exemplo da p. 5 do enunciado. O que torna o alerta "inteligente" não está definido no PDF (Q-14). A Aula 2 de Automação de Incidentes lista as causas de fadiga — limiar fora de contexto, tempestade de alertas, <em>flapping</em>, redundância — e as respostas estudadas: contextualizar o limiar, agrupar e inibir, deduplicar (Aula 2, p. 6 e 14–16; deduplicação na Aula 4, p. 7–9). A proposta aplica cada uma: proporção por serviço em vez de contagem absoluta, duração mínima (<code>for</code>) contra o <em>flapping</em>, agrupamento por serviço na política de notificação e <code>dedup_key</code> no PagerDuty. Janela e duração são decisão sua na E4.</p>
+</section>
+
+<section id="mudancas">
+<h2>O que muda em cada arquivo</h2>
+<p>Inventário do repositório depois da migração. Caminhos relativos à raiz do <code>tech-challenge-04</code>.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>Caminho</th><th>Mudança</th><th>Etapa</th></tr></thead>
+<tbody>
+<tr><td><code>terraform/variables.tf</code></td><td><code>github_repository</code> → <code>fiap-devops-arqcloud-2026/tech-challenge-04</code> (é o <code>sub</code> que a role do CI aceita)</td><td>E0</td></tr>
+<tr><td><code>terraform/k8s/variables.tf</code></td><td><code>gitops_repo_url</code> → URL do repositório 04</td><td>E0</td></tr>
+<tr><td><code>terraform/k8s/argocd.tf</code></td><td>Secret <code>repo-tech-challenge-03</code> renomeado; nova Application <code>observability</code></td><td>E0 · E3</td></tr>
+<tr><td><code>terraform/terraform.tfvars</code> (local)</td><td><code>default_tags.phase</code> de <code>"3"</code> para <code>"4"</code></td><td>E0</td></tr>
+<tr><td><code>services/auth-service/*.go</code></td><td>inicialização do SDK, <code>otelhttp</code>, <code>otelsql</code></td><td>E1</td></tr>
+<tr><td><code>services/evaluation-service/*.go</code></td><td>SDK, <code>otelhttp</code> no servidor e no cliente, <code>redisotel</code>, contexto de ponta a ponta, span produtor com <code>traceparent</code> na SQS</td><td>E1</td></tr>
+<tr><td><code>services/{flag,targeting,analytics}-service/Dockerfile</code></td><td><code>CMD</code> passa a chamar <code>opentelemetry-instrument gunicorn …</code></td><td>E1</td></tr>
+<tr><td><code>services/{flag,targeting,analytics}-service/requirements.txt</code></td><td>pacotes do OpenTelemetry, com versão fixada</td><td>E1</td></tr>
+<tr><td><code>services/analytics-service/app.py</code></td><td><code>MessageAttributeNames</code> no <code>receive_message</code>; span consumidor com o contexto extraído</td><td>E1</td></tr>
+<tr><td><code>docker-compose.otel.yaml</code> (novo)</td><td>Collector local para desenvolver sem cluster</td><td>E1</td></tr>
+<tr><td><code>gitops/base/*/configmap.yaml</code></td><td><code>OTEL_SERVICE_NAME</code>, <code>OTEL_EXPORTER_OTLP_ENDPOINT</code>, <code>OTEL_RESOURCE_ATTRIBUTES</code></td><td>E3</td></tr>
+<tr><td><code>gitops/observability/</code> (novo)</td><td>4 Applications Helm, values, dashboard e regras de alerta como ConfigMap</td><td>E3 · E4</td></tr>
+<tr><td><code>terraform/cluster</code> (tfvars)</td><td><code>node_group_desired_size = 3</code>; access entry do self-healing</td><td>E2 · E5</td></tr>
+<tr><td><code>terraform/k8s/secrets.tf</code></td><td>namespace <code>observability</code> e 4 Secrets novos, valores por <code>TF_VAR_*</code></td><td>E2</td></tr>
+<tr><td><code>terraform/modules/…</code></td><td>role do self-healing com confiança OIDC restrita ao repositório</td><td>E5</td></tr>
+<tr><td><code>.github/workflows/self-healing.yml</code> (novo)</td><td>workflow disparado por <code>repository_dispatch</code></td><td>E5</td></tr>
+<tr><td><code>scripts/self-healing/</code> (novo)</td><td>o script da ação corretiva, com allowlist e cooldown</td><td>E5</td></tr>
+<tr><td><code>gitops/SECRETS-CONTRATO.md</code></td><td>acrescentar os 4 Secrets novos ao contrato</td><td>E2</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="plano">
+<h2>Plano de ação em etapas</h2>
+<p>Oito etapas em sequência, porque você implementa sozinho. A regra que organiza a ordem: <strong>tudo o que dá para provar sem cluster é provado antes de ligar o cluster.</strong> Cada hora de EKS gasta crédito da conta; cada hora no Compose não gasta nada. As marcas <span class="tag local">local</span> e <span class="tag aws">AWS</span> dizem onde a etapa roda.</p>
+
+<div class="step">
+<h3>E0 — Fundação <span class="tag local">local</span> <span class="tag aws">AWS só leitura</span></h3>
+<dl>
+<dt>Objetivo</dt><dd>Código no repositório certo, contas criadas, estado da AWS conhecido.</dd>
+<dt>Tarefas</dt><dd><ul>
+<li>Inventário somente leitura: clusters EKS, repositórios ECR, conteúdo do bucket de estado e <code>terraform state list</code> nas três camadas. Nada de <code>apply</code>.</li>
+<li>Trazer a Fase 3 para o 04 com histórico e trocar os pontos acoplados ao nome do repositório (ver <a href="#mudancas">inventário</a>).</li>
+<li>Criar as contas: New Relic (license key), PagerDuty (serviço com integração Events API v2), Slack (workspace, canal, webhook de entrada) e o token do GitHub.</li>
+<li>Conferir o crédito AWS restante e o fim do suporte padrão do EKS 1.34 na região.</li>
+</ul></dd>
+<dt>Pronto quando</dt><dd>O CI roda verde na <code>dev</code> do 04, as chaves estão guardadas fora do Git e você sabe o que existe na conta.</dd>
+<dt>Requisitos</dt><dd>prepara REQ-OBR-01 a 05, 12, 17 e 18</dd>
+</dl>
+</div>
+
+<div class="step">
+<h3>E1 — Instrumentação <span class="tag local">local</span></h3>
+<dl>
+<dt>Objetivo</dt><dd>Um trace com os cinco serviços, fila incluída, visível no New Relic — sem cluster.</dd>
+<dt>Tarefas</dt><dd><ul>
+<li>Go primeiro (<code>auth</code>, <code>evaluation</code>): é onde está o trabalho manual — contexto de ponta a ponta e span da SQS.</li>
+<li>Python depois (<code>flag</code>, <code>targeting</code>, <code>analytics</code>): instrumentação automática, mais o consumidor da fila.</li>
+<li>Um Collector local no Compose, exportando para o console e para o New Relic. O Compose de integração já emula SQS e DynamoDB com o moto.</li>
+</ul></dd>
+<dt>Pronto quando</dt><dd>Um <code>GET /evaluate</code> no Compose aparece no New Relic como um único trace passando pelos cinco serviços, e o Service Map mostra os cinco conectados.</dd>
+<dt>Requisitos</dt><dd>REQ-OBR-13, 14, 15, 21 · REQ-BON-02</dd>
+</dl>
+</div>
+
+<div class="step">
+<h3>E2 — Plataforma no cluster <span class="tag aws">AWS</span></h3>
+<dl>
+<dt>Objetivo</dt><dd>A base da Fase 3 rodando de novo, agora a partir do repositório 04, com capacidade para a stack nova.</dd>
+<dt>Tarefas</dt><dd><ul>
+<li>Terraform: terceiro nó, namespace <code>observability</code>, Secrets novos.</li>
+<li><code>apply</code> nas três camadas; merge <code>dev</code> → <code>main</code> para publicar as imagens instrumentadas.</li>
+</ul></dd>
+<dt>Pronto quando</dt><dd>Os cinco pods estão Running com as imagens novas e o ArgoCD mostra <em>Synced</em>.</dd>
+<dt>Requisitos</dt><dd>REQ-OBR-01 a 05</dd>
+</dl>
+</div>
+
+<div class="step">
+<h3>E3 — Stack de observabilidade por GitOps <span class="tag aws">AWS</span></h3>
+<dl>
+<dt>Objetivo</dt><dd>Prometheus, Loki, Grafana e as duas releases do Collector instaladas pelo ArgoCD a partir de <code>gitops/observability/</code>.</dd>
+<dt>Tarefas</dt><dd><ul>
+<li>As 4 Applications Helm e a Application <code>observability</code>; <code>enableRemoteWriteReceiver: true</code>; Alertmanager desligado.</li>
+<li>Variáveis <code>OTEL_*</code> nos ConfigMaps apontando para o gateway.</li>
+<li>Conferir: nome real da métrica do <code>spanmetrics</code>; HPA contra <code>selfHeal</code>; se a sincronização das CRDs do chart falhar, testar a opção <code>ServerSideApply=true</code> na Application.</li>
+</ul></dd>
+<dt>Pronto quando</dt><dd>O Prometheus tem as métricas do <code>spanmetrics</code>, o Loki tem logs de todos os namespaces e o New Relic recebe traces vindos do cluster.</dd>
+<dt>Requisitos</dt><dd>REQ-OBR-06, 07, 08, 09, 11, 20</dd>
+</dl>
+</div>
+
+<div class="step">
+<h3>E4 — Dashboard e alerta <span class="tag aws">AWS</span></h3>
+<dl>
+<dt>Objetivo</dt><dd>O dashboard com os três painéis e a regra de alerta chegando aos três destinos.</dd>
+<dt>Tarefas</dt><dd><ul>
+<li>Dashboard e regra como ConfigMaps versionados; contact points de PagerDuty, Slack e webhook; política de notificação agrupando por serviço.</li>
+<li>Decidir janela e duração (<code>for</code>) da regra.</li>
+</ul></dd>
+<dt>Pronto quando</dt><dd>Um erro provocado leva a regra a Firing, o PagerDuty abre incidente, o Slack recebe a mensagem e o GitHub recebe o <code>repository_dispatch</code>.</dd>
+<dt>Requisitos</dt><dd>REQ-OBR-10, 16, 17, 18</dd>
+</dl>
+</div>
+
+<div class="step">
+<h3>E5 — Self-Healing <span class="tag aws">AWS</span></h3>
+<dl>
+<dt>Objetivo</dt><dd>O ciclo completo sem intervenção humana.</dd>
+<dt>Tarefas</dt><dd><ul>
+<li>Role própria com confiança OIDC restrita ao repositório; access entry com <code>AmazonEKSEditPolicy</code> limitada ao namespace <code>togglemaster</code>.</li>
+<li>Workflow e script com filtro de <code>status</code>, allowlist e cooldown.</li>
+<li>O mecanismo da falha proposital (ver <a href="#duvidas">perguntas em aberto</a>).</li>
+</ul></dd>
+<dt>Pronto quando</dt><dd>O ciclo roda três vezes seguidas sem intervenção, e um segundo disparo dentro do cooldown é recusado.</dd>
+<dt>Requisitos</dt><dd>REQ-OBR-19, 22</dd>
+</dl>
+</div>
+
+<div class="step">
+<h3>E6 — Ensaio e matriz de evidências <span class="tag aws">AWS</span></h3>
+<dl>
+<dt>Objetivo</dt><dd>Provar que tudo funciona junto, em ordem, dentro de 25 minutos.</dd>
+<dt>Tarefas</dt><dd><ul>
+<li>Matriz de evidências (SUG-01): para cada REQ-OBR, a tela, o print e o minuto do vídeo que o comprova.</li>
+<li>Ensaio cronometrado seguindo a ordem da p. 5–6: infraestrutura, Grafana, APM, incidente.</li>
+</ul></dd>
+<dt>Pronto quando</dt><dd>O ensaio fecha abaixo de 25 minutos e nenhuma linha da matriz fica vazia.</dd>
+<dt>Requisitos</dt><dd>REQ-OBR-23</dd>
+</dl>
+</div>
+
+<div class="step">
+<h3>E7 — Gravação, relatório e entrega <span class="tag aws">AWS</span> <span class="tag local">local</span></h3>
+<dl>
+<dt>Objetivo</dt><dd>Vídeo, relatório PDF e submissão.</dd>
+<dt>Tarefas</dt><dd><ul>
+<li>Gravar; capturar os quatro prints obrigatórios; escrever o relatório (nomes, RMs, usernames, links, arquitetura OTel, justificativas das escolhas).</li>
+<li>Destruir as camadas caras assim que a gravação for aprovada.</li>
+</ul></dd>
+<dt>Pronto quando</dt><dd>Entrega submetida antes de 2026-11-17.</dd>
+<dt>Requisitos</dt><dd>REQ-OBR-24 a 42</dd>
+</dl>
+</div>
+
+<p>Os 42 obrigatórios estão cobertos: E0 e E2 cobrem 01–05; E1, 13–15 e 21; E3, 06–09, 11 e 20; E4, 10 e 16–18; E5, 19 e 22; E6, 23; E7, 24–42 — este último grupo inclui o que só existe na gravação e no relatório.</p>
+</section>
+
+<section id="calendario">
+<h2>Calendário sugerido</h2>
+<p>Proposta para 55 dias, trabalhando sozinho. As três primeiras semanas não ligam o cluster. A meta de submissão é <strong>2026-11-12</strong>, cinco dias antes do prazo, para absorver uma regravação.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>Semana</th><th>Datas</th><th>Etapa</th><th>Cluster</th><th>Marco de fim de semana</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>2026-09-23 a 09-27</td><td>E0</td><td>desligado</td><td>repositório 04 com CI verde; contas criadas</td></tr>
+<tr><td>2</td><td>09-28 a 10-04</td><td>E1 — Go</td><td>desligado</td><td><code>evaluation</code> e <code>auth</code> no New Relic, fila instrumentada</td></tr>
+<tr><td>3</td><td>10-05 a 10-11</td><td>E1 — Python</td><td>desligado</td><td>trace com os 5 serviços no Service Map</td></tr>
+<tr><td>4</td><td>10-12 a 10-18</td><td>E2 + E3</td><td>sessões</td><td>stack no cluster recebendo os três sinais</td></tr>
+<tr><td>5</td><td>10-19 a 10-25</td><td>E4 + início da E5</td><td>sessões</td><td>alerta chegando a PagerDuty, Slack e GitHub</td></tr>
+<tr><td>6</td><td>10-26 a 11-01</td><td>E5</td><td>sessões</td><td>ciclo de self-healing três vezes seguidas</td></tr>
+<tr><td>7</td><td>11-02 a 11-08</td><td>E6 + gravação</td><td>sessões</td><td>vídeo gravado</td></tr>
+<tr><td>8</td><td>11-09 a 11-17</td><td>E7</td><td>só se regravar</td><td>submissão até 11-12; folga até 11-17</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="custos">
+<h2>Custo</h2>
+<p>Base: a estimativa oficial da Fase 3 (AWS Pricing Calculator, us-east-2, consultada em 2026-09-11), arquivada em <code>tech-challenge-03/docs/00_COLAB_IA/_ARQUIVO_MORTO/ESTIMATIVA_CUSTOS_AWS.md</code>.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>Item</th><th>Valor</th><th>Conta</th></tr></thead>
+<tbody>
+<tr><td>Tudo ligado, 2 nós</td><td>≈ US$ 0,385/h</td><td>US$ 281,03 por mês ÷ 730 h</td></tr>
+<tr><td>Terceiro nó <code>c7i-flex.large</code></td><td>≈ US$ 0,087/h</td><td>US$ 126,99 dos 2 nós ÷ 2 ÷ 730 h</td></tr>
+<tr><td>Tudo ligado, 3 nós</td><td>≈ US$ 0,47/h</td><td>soma das duas linhas</td></tr>
+<tr><td>New Relic, PagerDuty, Slack</td><td>US$ 0</td><td>planos gratuitos</td></tr>
+</tbody></table></div>
+<p>A estimativa não inclui S3, ECR, SQS, DynamoDB, transferência de dados nem os volumes novos que Prometheus e Loki vão pedir. Preços podem ter mudado depois de 2026-09-11. Exemplo de conta, não previsão: 10 sessões de 4 horas somam 40 h, cerca de US$ 19.</p>
+<div class="warn">
+<p><strong>O recurso escasso é o crédito, não o dinheiro.</strong> A descrição de <code>kubernetes_version</code> em <code>terraform/cluster/variables.tf</code> registra que, em 2026-09-09, o crédito da conta cobria cerca de 190 horas a US$ 0,385/h. Com 3 nós, a mesma quantia rende menos horas, e as gravações da Fase 3 já consumiram parte. Quanto sobrou é a pergunta 1 abaixo.</p>
+<p>O mesmo registro mostra que o EKS 1.34 está em suporte padrão até <strong>2026-12-01</strong> (consulta de 2026-09-09) — depois da entrega de 2026-11-17, mas perto. Fora do suporte padrão, o plano de controle sobe de US$ 0,10/h para US$ 0,60/h. Reconfirmar na E0 com o comando do guia de reprodução da Fase 3.</p>
+</div>
+</section>
+
+<section id="riscos">
+<h2>Riscos e pontos a conferir</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>Risco</th><th>Efeito</th><th>Mitigação</th><th>Etapa</th></tr></thead>
+<tbody>
+<tr><td>Crédito AWS insuficiente</td><td>cluster não sobe na hora da gravação</td><td>medir o crédito na E0; ligar o cluster só a partir da semana 4; destruir as camadas caras entre sessões</td><td>E0</td></tr>
+<tr><td>Cluster sem capacidade</td><td>pods em <em>Pending</em></td><td>terceiro nó; Alertmanager desligado; <code>requests</code> revisados. O node group já permite até 4 nós (<code>node_group_max_size</code>); conferir a cota de vCPU On-Demand, que o guia da Fase 3 pede que seja 8 ou mais</td><td>E2 · E3</td></tr>
+<tr><td>HPA contra <code>selfHeal</code></td><td>ArgoCD desfaz o escalonamento</td><td><code>ignoreDifferences</code> em <code>/spec/replicas</code></td><td>E3</td></tr>
+<tr><td>gunicorn e <code>fork</code></td><td>serviços Python sem traces ou travados</td><td>testar no Compose; hook <code>post_fork</code> se necessário</td><td>E1</td></tr>
+<tr><td>Nome da métrica do <code>spanmetrics</code></td><td>painel e alerta sem dados</td><td>ler o nome no Prometheus antes de escrever as consultas</td><td>E3</td></tr>
+<tr><td>Webhook manda também <code>resolved</code></td><td>segundo reinício no fim do incidente</td><td>o workflow ignora <code>status: resolved</code></td><td>E5</td></tr>
+<tr><td>Token do GitHub no Grafana</td><td>quem vê o Secret escreve no repositório</td><td>escopo mínimo, Secret criado pelo Terraform, revogar depois da entrega</td><td>E4 · E5</td></tr>
+<tr><td>Cota de 100 GB do New Relic</td><td>ingestão bloqueada até o mês virar</td><td>só traces e logs do <code>togglemaster</code> vão para o New Relic</td><td>E3</td></tr>
+<tr><td>Cache de 30 s</td><td>a falha demora a aparecer na gravação</td><td>gerador de carga variando as flags</td><td>E5 · E6</td></tr>
+<tr><td>Estado do Terraform compartilhado entre 03 e 04</td><td>dois repositórios mexendo nos mesmos recursos</td><td>decidir no inventário; nunca mais aplicar a partir do 03</td><td>E0</td></tr>
+<tr><td>Grupo × implementação solo</td><td>dedução se a entrega em grupo for exigida (REQ-OBR-41)</td><td>confirmar a composição antes do relatório</td><td>E7</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="duvidas">
+<h2>Perguntas em aberto</h2>
+<p>Coisas que o código e o enunciado não respondem. Nenhuma bloqueia a E0 ou a E1.</p>
+<div class="card">
+<ol>
+<li><strong>Quanto crédito AWS resta?</strong> Aparece em Billing → Credits. Define quantas horas de cluster o plano pode gastar.</li>
+<li><strong>Estado do Terraform depois da migração:</strong> o 04 assume o mesmo bucket e as mesmas chaves, ou começa em chaves novas? Depende do inventário da E0 — se a base da Fase 3 ainda existe, chaves novas colidiriam nos nomes dos repositórios ECR.</li>
+<li><strong>Qual falha provocar no vídeo?</strong> (a) Um endpoint administrativo no <code>flag</code> que liga um estado de erro só na memória: o reinício cura de verdade. (b) Parar o banco do <code>flag</code>, exemplo da p. 6: mostra a tentativa, mas o reinício não resolve. (c) Outra ideia sua.</li>
+<li><strong>Qual serviço o self-healing reinicia?</strong> Uma falha no <code>flag</code> gera erro no <code>flag</code> (500) e no <code>evaluation</code> (502), e a regra por serviço dispara para os dois. A allowlist define se o workflow reinicia só a origem ou ambos.</li>
+<li><strong>O grupo continua?</strong> Você implementa sozinho, mas o relatório pede nomes, RMs e usernames (REQ-OBR-33) e o PDF diz "em princípio" em grupo (Q-03).</li>
+<li><strong>Grafana, Prometheus e Loki também no Compose?</strong> Mais trabalho na semana 3, menos horas de cluster nas semanas 4 e 5 para desenhar o dashboard.</li>
+<li><strong>Registrar o prazo no README de requisitos?</strong> A dúvida Q-05 diz que o PDF não informa data; posso anotar que você informou 2026-11-17, deixando claro que a fonte é você, não o enunciado.</li>
+</ol>
+</div>
+</section>
+
+<section id="fontes">
+<h2>Fontes</h2>
+<h3>Código e registros (lidos em 2026-09-23)</h3>
+<ul>
+<li><code>tech-challenge-03/.github/workflows/</code>: <code>_ci-go.yml</code>, <code>_ci-python.yml</code>, <code>evaluation-service.yml</code>, <code>terraform-check.yml</code>, <code>compose-integration.yml</code></li>
+<li><code>tech-challenge-03/terraform/</code>: <code>variables.tf</code>, <code>backend.tf</code>, <code>cluster/variables.tf</code>, <code>k8s/argocd.tf</code>, <code>k8s/variables.tf</code>, <code>k8s/secrets.tf</code>, <code>modules/iam-ci/main.tf</code>, <code>modules/eks/main.tf</code></li>
+<li><code>tech-challenge-03/gitops/</code>: <code>base/kustomization.yaml</code>, <code>base/evaluation-service/*.yaml</code>, <code>overlays/prod/kustomization.yaml</code>, <code>SECRETS-CONTRATO.md</code></li>
+<li><code>tech-challenge-03/services/</code>: os cinco <code>Dockerfile</code>, <code>requirements.txt</code> e <code>go.mod</code>; <code>evaluation-service/main.go</code>, <code>handlers.go</code>, <code>evaluator.go</code>, <code>sqs.go</code>; <code>auth-service/main.go</code>; os três <code>app.py</code></li>
+<li><code>tech-challenge-03/docker-compose.yaml</code> e <code>docker-compose.integration.yaml</code></li>
+<li><code>tech-challenge-03/docs/</code>: <code>ARQUITETURA.md</code>, <code>GUIA_DE_REPRODUCAO.md</code>, <code>00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md</code>, <code>00_COLAB_IA/_ARQUIVO_MORTO/ESTIMATIVA_CUSTOS_AWS.md</code></li>
+<li><code>tech-challenge-04/docs/requisitos/README.md</code> e o guia de Automação de incidentes (Aulas 2 e 4)</li>
+</ul>
+<h3>Documentação externa</h3>
+<ul>
+<li>New Relic — <a href="https://newrelic.com/pricing">preços</a> e <a href="https://docs.newrelic.com/docs/opentelemetry/best-practices/opentelemetry-otlp/">endpoint OTLP</a> (2026-09-21); <a href="https://docs.newrelic.com/docs/opentelemetry/get-started/apm-monitoring/opentelemetry-apm-ui/">telas de APM para OpenTelemetry</a> (2026-09-23)</li>
+<li>Datadog — <a href="https://www.datadoghq.com/pricing/">preços</a> e <a href="https://telemtra.io/blog/datadog-pricing-explained-2026/">comparativo do plano gratuito</a> (2026-09-21)</li>
+<li>PagerDuty — <a href="https://www.pagerduty.com/pricing/">preços</a> (2026-09-21)</li>
+<li>Grafana Loki — <a href="https://grafana.com/docs/loki/latest/send-data/otel/">ingestão OTLP</a> (2026-09-23)</li>
+<li>Grafana — <a href="https://grafana.com/docs/grafana/latest/alerting/configure-notifications/manage-contact-points/integrations/webhook-notifier/">contact point de webhook</a> (2026-09-23)</li>
+<li>OpenTelemetry — <a href="https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/connector/spanmetricsconnector">conector spanmetrics</a>, <a href="https://opentelemetry-python.readthedocs.io/en/latest/examples/fork-process-model/README.html">Python com fork</a>, <a href="https://github.com/open-telemetry/opentelemetry-go-contrib/tree/main/instrumentation/github.com/aws">instrumentações AWS para Go</a>, <a href="https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/instrumentation/opentelemetry-instrumentation-psycopg2">instrumentação psycopg2</a> e o chart <a href="https://github.com/open-telemetry/opentelemetry-helm-charts/tree/main/charts/opentelemetry-collector">opentelemetry-collector</a> 0.173.1 (2026-09-23)</li>
+<li>Prometheus Community — <a href="https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack">kube-prometheus-stack</a> 91.5.0, <code>values.yaml</code> (2026-09-23)</li>
+<li>Argo CD — <a href="https://argo-cd.readthedocs.io/en/stable/user-guide/diffing/">customização de diff</a> (2026-09-23)</li>
+<li>GitHub — <a href="https://docs.github.com/en/rest/repos/repos#create-a-repository-dispatch-event">repository dispatch</a> (2026-09-23)</li>
+<li>AWS — <a href="https://docs.aws.amazon.com/eks/latest/userguide/access-policies.html">access policies do EKS</a> (2026-09-23)</li>
+<li>Go — <a href="https://github.com/XSAM/otelsql">otelsql</a> e <a href="https://github.com/go-redis/redis/tree/v8/extra/redisotel">redisotel para go-redis v8</a> (2026-09-23)</li>
+<li>Atlassian — fim da venda do OpsGenie, achado F-008 (2026-09-20)</li>
+</ul>
+</section>
+
+<p class="meta">Arquivo de trabalho em <code>00_COLAB_IA/02_TRABALHO/</code>. Substitui o plano v01 de 2026-09-21 (Markdown), movido para <code>_ARQUIVO_MORTO</code>. Montado a partir de <code>plano-fase4/partes/</code>.</p>
+</div>
+</body>
+</html>

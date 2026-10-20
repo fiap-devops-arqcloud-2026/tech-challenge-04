@@ -1,0 +1,12 @@
+# Copiar para terraform.tfvars local somente apos confirmar a nova conta.
+# Sentinelas intencionais: estes valores NAO permitem uma implantacao.
+aws_region              = "us-east-2"
+expected_aws_account_id = "CONTA_AWS_PENDENTE"
+state_bucket            = "NOVO_BUCKET_ESTADO_FASE4"
+state_region            = "us-east-2"
+base_state_key          = "phase4/prod/base.tfstate"
+cluster_state_key = "phase4/prod/cluster.tfstate"
+gitops_repo_url    = "https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04.git"
+# main permanece destino de publicacao FUTURA; trabalho atual somente em dev.
+gitops_repo_branch = "main"
+# github_token via TF_VAR_github_token somente se o repositorio for privado.

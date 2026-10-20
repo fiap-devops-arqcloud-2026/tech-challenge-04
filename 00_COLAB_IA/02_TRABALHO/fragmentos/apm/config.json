@@ -1,0 +1,30 @@
+{
+  "pasta": "03.APM",
+  "titulo": "APM — Application Performance Monitoring",
+  "subtitulo": "Dez aulas para instrumentar, rastrear, alertar e decidir entre Datadog e New Relic.",
+  "nivel": "Intermediário a avançado",
+  "agente": "Claude (Opus 5)",
+  "data": "2026-09-21",
+  "revisao": "Leitura integral das 335 páginas, com código conferido nas páginas renderizadas",
+  "fragmentos": [
+    "00-visao-geral.html",
+    "01-glossario.html",
+    "02-aula-01.html",
+    "03-aula-02.html",
+    "04-aula-03.html",
+    "05-aula-04.html",
+    "06-aula-05.html",
+    "07-aula-06.html",
+    "08-aula-07.html",
+    "09-aula-08.html",
+    "10-aula-09.html",
+    "11-aula-10.html",
+    "12-comparativo.html",
+    "13-aplicacao.html",
+    "14-boas-praticas.html",
+    "15-outros-modulos.html",
+    "16-limites.html",
+    "17-revisao.html"
+  ],
+  "conexoes": "conexoes.json"
+}

@@ -1,0 +1,6 @@
+# Fase 4, base: copiar para backend.hcl (arquivo local ignorado).
+# Trocar apenas quando a nova conta/bucket/regiao forem confirmados.
+# NAO apontar para o bucket ou para as chaves de estado da Fase 3.
+bucket = "NOVO_BUCKET_ESTADO_FASE4"
+region = "us-east-2"
+key    = "phase4/prod/base.tfstate"

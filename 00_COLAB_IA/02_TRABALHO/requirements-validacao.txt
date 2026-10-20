@@ -1,0 +1,2 @@
+# Dependência do validador YAML local; não é dependência dos microsserviços.
+PyYAML==6.0.3

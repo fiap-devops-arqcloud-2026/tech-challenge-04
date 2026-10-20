@@ -1,0 +1,192 @@
+<section id="aula-09"><h2>Aula 9 — New Relic - NRQL, Dashboard e Alertas</h2><div class="section-rule"></div>
+<article class="lesson">
+<div class="lesson-head"><span class="num">09</span><div><h3>New Relic - NRQL, Dashboard e Alertas</h3><span class="badge ok">Essencial no projeto</span></div></div>
+<p><a class="badge obrigatorio" href="../../requisitos/REQUISITOS.html#req-obr-12">OBRIGATÓRIO · REQ-OBR-12</a><a class="badge obrigatorio" href="../../requisitos/REQUISITOS.html#req-obr-16">OBRIGATÓRIO · REQ-OBR-16</a><a class="badge obrigatorio" href="../../requisitos/REQUISITOS.html#req-obr-17">OBRIGATÓRIO · REQ-OBR-17</a><a class="badge obrigatorio" href="../../requisitos/REQUISITOS.html#req-obr-18">OBRIGATÓRIO · REQ-OBR-18</a><a class="badge obrigatorio" href="../../requisitos/REQUISITOS.html#req-obr-29">OBRIGATÓRIO · REQ-OBR-29</a><a class="badge obrigatorio" href="../../requisitos/REQUISITOS.html#req-obr-40">OBRIGATÓRIO · REQ-OBR-40</a><a class="badge sugestao" href="../../requisitos/REQUISITOS.html#sug-02">SUGESTÃO · SUG-02</a><a class="badge sugestao" href="../../requisitos/REQUISITOS.html#sug-03">SUGESTÃO · SUG-03</a></p>
+<dl class="facets">
+<div><dt>Em miúdos</dt><dd>Depois de enviar telemetria para a New Relic, é preciso saber perguntar. Esta aula ensina a linguagem de consulta da plataforma, como transformar consultas em painéis e como transformar consultas em alertas que abrem incidentes e avisam as pessoas certas.</dd></div>
+<div><dt>Siglas e termos</dt><dd>NRDB, NRQL, MELT, multi-tenant, schemaless, query worker, router, Apdex, FACET, TIMESERIES, widget, template variable, NerdGraph, Issue, Incident, policy, condition, threshold, workflow, destination, channel.</dd></div>
+<div><dt>Para que serve</dt><dd>Consultar métricas, eventos, logs e traces guardados no NRDB; montar dashboards reutilizáveis; definir condições de alerta e rotear notificações para e-mail, Slack, PagerDuty, Jira, ServiceNow ou webhook.</dd></div>
+<div><dt>Caso de uso</dt><dd class="use">A aula percorre consultas de throughput, latência, taxa de erro e experiência do usuário; um dashboard filtrado por uma variável <code>appName</code>; e uma condição do tipo “taxa de erro maior que 5% por pelo menos 10 minutos”. Esses números são exemplos da aula.</dd></div>
+<div><dt>Na Fase 4</dt><dd class="proj">Se o grupo escolher a New Relic em REQ-OBR-12, é nesta aula que estão o alerta inteligente de REQ-OBR-16, a abertura automática de incidente de REQ-OBR-17 (destino PagerDuty) e a notificação de ChatOps de REQ-OBR-18 (destino Slack). O alerta em <em>Firing</em> exigido por REQ-OBR-29 corresponde ao incidente aberto na aba Issues &amp; Activity. A justificativa entre Datadog e New Relic pedida por REQ-OBR-40 pode usar as capacidades descritas aqui. O dashboard obrigatório continua sendo o do Grafana (REQ-OBR-09 e REQ-OBR-10); dashboards da New Relic são complemento, não substituição.</dd></div>
+</dl>
+<p class="source">Fonte: <a href="POSTECH%20-%20APM%20-%20Aula%209.pdf#page=3">APM — Aula 9, p. 3–21</a>.</p>
+
+<h4>O percurso anunciado pela aula</h4>
+<p>A abertura encadeia quatro blocos — o banco de dados da New Relic, a linguagem de consulta, os dashboards e os alertas — com a promessa de transformar dados de observabilidade em insights acionáveis. A seção “Hands On” detalha as atividades previstas: consultas de throughput, latência, taxa de erro e experiência do usuário; funções como <code>apdex</code>, <code>percentile</code>, <code>histogram</code> e <code>filter</code>; criação, organização, variáveis de template, compartilhamento e exportação de dashboards; e criação de condições, políticas e análise de Issues. Os tópicos abaixo seguem essa mesma ordem.</p>
+<p class="source">Fonte: <a href="POSTECH%20-%20APM%20-%20Aula%209.pdf#page=3">APM — Aula 9, p. 3–4</a>.</p>
+
+<h4>NRDB — arquitetura e escalabilidade</h4>
+<p><strong>Em miúdos:</strong> o NRDB é o depósito onde toda a telemetria da New Relic é guardada. Ele foi construído para receber muito dado e devolver resposta rápida, e é dividido em unidades isoladas para que um problema não derrube tudo.</p>
+<p><strong>Tecnicamente:</strong> a aula descreve o New Relic Database como banco multi-tenant, totalmente gerenciado, com arquitetura distribuída e baseada em nuvem, inspirada em sistemas como o Dremel do Google. Usa arquitetura celular (<em>cell-based architecture</em>): os sistemas escalam replicando-se em unidades isoladas chamadas “células”, o que dá escalabilidade horizontal e isolamento de falhas. O propósito é duplo — monitoramento operacional e análise de dados — e a velocidade vem do processamento paralelo massivo, em que uma única consulta é distribuída entre centenas ou milhares de <em>query workers</em>. O modelo multi-tenant aloca recursos computacionais sob demanda, ao contrário de sistemas single-tenant com recursos fixos.</p>
+<p class="source">Fonte: <a href="POSTECH%20-%20APM%20-%20Aula%209.pdf#page=5">APM — Aula 9, p. 5–6</a>.</p>
+<aside class="warning"><strong>Números de capacidade são alegações da aula</strong> A aula atribui ao NRDB bilhões de pontos de dados por minuto, mais de 180.000 contas simultâneas, dezenas de bilhões de eventos analisados por segundo e tempo de resposta mediano de 45 milissegundos por consulta, citando o white paper técnico da New Relic. São números de divulgação do fornecedor, não medições feitas no ambiente do Tech Challenge e não metas do projeto.</aside>
+
+<h4>NRDB — modelo de dados e ingestão</h4>
+<p><strong>Em miúdos:</strong> não existe tabela a declarar antes. Cada dado chega como um evento com pares de chave e valor; se amanhã a aplicação passar a enviar um atributo novo, ele já fica consultável.</p>
+<p><strong>Tecnicamente:</strong> o modelo é <em>schemaless</em>, em contraste com bancos relacionais que exigem definição rígida de tabelas, colunas e tipos antes da ingestão. Métricas, eventos, logs e traces (MELT) são armazenados como eventos: objetos de dados flexíveis e auto-descritivos, compostos por atributos. Isso dispensa preparação e transformação prévia e permite enviar dados customizados a qualquer momento. Os agentes instalados nas aplicações e na infraestrutura coletam a telemetria e a enviam aos endpoints de ingestão; os dados ficam disponíveis para consulta em tempo quase real. Como os quatro tipos convivem em um único repositório, a aula descreve a navegação de um trace de transação lento para os logs daquela mesma transação ou para as métricas do host, em vez de manter silos separados.</p>
+<p class="source">Fonte: <a href="POSTECH%20-%20APM%20-%20Aula%209.pdf#page=6">APM — Aula 9, p. 6–7</a>.</p>
+
+<h4>NRDB — ciclo de vida de uma consulta</h4>
+<p><strong>Em miúdos:</strong> a consulta não é executada por uma máquina só. Ela é partida em pedaços, cada pedaço varre um trecho dos dados e um coordenador junta tudo de volta.</p>
+<p><strong>Tecnicamente:</strong> a consulta parte do query builder, de um dashboard ou de uma chamada de API e chega ao <em>router</em>, que a analisa e a divide em componentes executáveis em paralelo. Os componentes são distribuídos a centenas ou milhares de <em>query workers</em>; cada worker escaneia uma porção dos dados e devolve resultados parciais. O router agrega os parciais, finaliza o processamento e devolve o resultado. A capacidade de <em>scale-out</em> permite adicionar workers conforme a demanda cresce. Além disso, o NRDB mantém cache de consultas: resultados de consultas recentes ficam armazenados, o que é útil justamente para dashboards e alertas, que reexecutam as mesmas consultas em intervalos regulares.</p>
+<p class="source">Fonte: <a href="POSTECH%20-%20APM%20-%20Aula%209.pdf#page=7">APM — Aula 9, p. 7–8</a>.</p>
+
+<h4>NRQL — exploração de dados e query builder</h4>
+<p><strong>Em miúdos:</strong> a NRQL parece SQL. Começa-se escolhendo o tipo de dado (<code>FROM</code>), depois o que se quer ver (<code>SELECT</code>), e daí em diante refina-se com filtro, agrupamento e recorte de tempo.</p>
+<p><strong>Tecnicamente:</strong> a New Relic Query Language tem sintaxe semelhante à do SQL e é a ferramenta principal para extrair insights de métricas, eventos, logs e traces, tanto para dashboards quanto para alertas e análises ad-hoc. O query builder é a interface interativa de construção de consultas, com autocompletar, sugestão de atributos e validação de sintaxe em tempo real. A exploração costuma começar pela cláusula <code>FROM</code>, que especifica o tipo de dado (por exemplo <code>Transaction</code>, <code>PageView</code>, <code>Log</code>); em seguida <code>SELECT</code> define atributos ou funções de agregação, e a consulta é refinada com as cláusulas opcionais.</p>
+<p class="source">Fonte: <a href="POSTECH%20-%20APM%20-%20Aula%209.pdf#page=8">APM — Aula 9, p. 8–9</a>.</p>
+<figure class="code-example"><figcaption>Código Fonte 1 — APM, Aula 9, p. 9 · transcrição literal conferida na página renderizada; os exemplos aparecem no corpo do texto e foram dispostos um por linha; tokens preservados</figcaption><pre><code>SELECT count(*) FROM Transaction
+
+SELECT count(*) FROM Transaction WHERE appName = 'My-App' FACET http.method
+
+SELECT average(duration) FROM Transaction SINCE 1 hour ago TIMESERIES</code></pre><p>Segundo a aula (p. 9): a primeira consulta retorna o número total de transações registradas no período de tempo selecionado. A segunda retorna o número de transações da aplicação <code>'My-App'</code>, agrupadas por método HTTP (GET, POST, etc.). A terceira mostra a média da duração das transações, minuto a minuto, na última hora.</p></figure>
+<p class="source">Fonte: <a href="POSTECH%20-%20APM%20-%20Aula%209.pdf#page=9">APM — Aula 9, p. 9</a>.</p>
+
+<h4>NRQL — cláusulas obrigatórias e opcionais</h4>
+<p><strong>Em miúdos:</strong> só duas cláusulas são obrigatórias; o resto existe para filtrar, agrupar, recortar o tempo, limitar e ordenar.</p>
+<p><strong>Tecnicamente:</strong> a estrutura fundamental consiste em <code>SELECT</code> e <code>FROM</code>. <code>SELECT</code> especifica atributos individuais, um conjunto de atributos com o curinga <code>*</code>, ou o resultado de funções de agregação como <code>average()</code>, <code>count()</code> e <code>max()</code>. <code>FROM</code> determina o tipo de evento consultado no NRDB. A Figura 1 da aula resume as principais cláusulas opcionais.</p>
+<div class="tablewrap"><table><thead><tr><th scope="col">Cláusula</th><th scope="col">Descrição, conforme a Figura 1 da aula</th></tr></thead><tbody>
+<tr><td><code>WHERE</code></td><td>Filtra os resultados com base em uma ou mais condições, utilizando operadores lógicos (<code>AND</code>, <code>OR</code>, <code>NOT</code>) e de comparação (<code>=</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>LIKE</code>).</td></tr>
+<tr><td><code>FACET</code></td><td>Agrupa os resultados por um ou mais atributos, permitindo a análise segmentada dos dados. É análoga à cláusula <code>GROUP BY</code> do SQL.</td></tr>
+<tr><td><code>TIMESERIES</code></td><td>Apresenta os dados agregados como uma série temporal, ideal para a criação de gráficos de linha que mostram a evolução de uma métrica ao longo do tempo.</td></tr>
+<tr><td><code>SINCE</code>, <code>UNTIL</code></td><td>Definem o período de tempo da consulta. Podem utilizar valores relativos (ex: <code>SINCE 1 hour ago</code>) ou timestamps absolutos.</td></tr>
+<tr><td><code>LIMIT</code></td><td>Especifica o número máximo de resultados a serem retornados pela consulta. O valor padrão é 100, e o máximo é 2000.</td></tr>
+<tr><td><code>OFFSET</code></td><td>Pula um número especificado de resultados antes de começar a retornar os dados, útil para paginação.</td></tr>
+<tr><td><code>ORDER BY</code></td><td>Ordena os resultados com base em um atributo ou função de agregação, em ordem ascendente (<code>ASC</code>) ou descendente (<code>DESC</code>).</td></tr>
+</tbody></table></div>
+<p class="source">Fonte: <a href="POSTECH%20-%20APM%20-%20Aula%209.pdf#page=10">APM — Aula 9, p. 10, Figura 1 — “Clausulas NRQL”, atribuída pela aula a elaboração do autor (2026)</a>.</p>
+<aside class="note"><strong>APM-A09-Q01 · [INCERTO] no original</strong>Na p. 10 o parágrafo “Além das cláusulas obrigatórias, a NRQL oferece um conjunto de cláusulas opcionais… A tabela abaixo resume as principais cláusulas opcionais e suas finalidades:” aparece duas vezes, antes e depois da Figura 1, e o segundo anuncia uma tabela que não existe adiante. A legenda também está grafada “Clausulas”, sem acento. Trata-se de falha de edição, não de conteúdo: a tabela é única e foi transcrita acima. Nada foi corrigido no texto citado.</aside>
+
+<h4>NRQL — regras de sintaxe</h4>
+<p><strong>Em miúdos:</strong> quatro regras simples evitam a maior parte das consultas que “não retornam nada”.</p>
+<div class="tablewrap"><table><thead><tr><th scope="col">Regra</th><th scope="col">O que a aula determina</th></tr></thead><tbody>
+<tr><td>Tamanho da consulta</td><td>Uma consulta NRQL não pode exceder 4 KB de tamanho.</td></tr>
+<tr><td>Case-sensitivity</td><td>Nomes de atributos e eventos são sensíveis a maiúsculas e minúsculas: <code>appName</code> é diferente de <code>appname</code>.</td></tr>
+<tr><td>Strings</td><td>Valores de string devem ser envolvidos por aspas simples (<code>'</code>).</td></tr>
+<tr><td>Nomes com espaços ou caracteres especiais</td><td>Nome de atributo, evento ou função personalizada com espaços ou caracteres especiais deve ser envolvido por crases (<code>`</code>).</td></tr>
+</tbody></table></div>
+<p class="source">Fonte: <a href="POSTECH%20-%20APM%20-%20Aula%209.pdf#page=10">APM — Aula 9, p. 10–11</a>.</p>
+
+<h4>NRQL — funções agregadoras</h4>
+<p><strong>Em miúdos:</strong> funções agregadoras resumem muitos valores em um; não agregadoras trabalham valor a valor. A aula detalha as agregadoras.</p>
+<p><strong>Tecnicamente:</strong> as funções da NRQL dividem-se em agregadoras, que realizam cálculos sobre um conjunto de valores, e não agregadoras, que operam em valores individuais. Entre as agregadoras, a aula organiza três grupos e destaca o uso de <code>percentile</code> para latência de cauda longa e de <code>apdex</code> como índice de satisfação do usuário.</p>
+<div class="tablewrap"><table><thead><tr><th scope="col">Grupo</th><th scope="col">Funções citadas</th><th scope="col">Uso indicado pela aula</th></tr></thead><tbody>
+<tr><td>Básicas</td><td><code>average()</code>, <code>count()</code>, <code>sum()</code>, <code>max()</code>, <code>min()</code>, <code>uniqueCount()</code></td><td>Base para a sumarização e o entendimento do comportamento de um sistema.</td></tr>
+<tr><td>Percentil e distribuição</td><td><code>percentile()</code>, <code>histogram()</code>, <code>apdex()</code></td><td><code>percentile(duration, 95, 99)</code> ajuda a entender a latência da cauda longa; <code>histogram(duration, width: 100, buckets: 10)</code> agrupa durações em baldes e mostra a distribuição de latência.</td></tr>
+<tr><td>Especializadas</td><td><code>apdex(attribute, t:)</code>, <code>bucketPercentile()</code></td><td><code>apdex</code> calcula o índice de satisfação a partir de um tempo de resposta (threshold <code>t</code>): 1.0 indica todos os usuários satisfeitos e valor abaixo de 0.5 indica a maioria insatisfeita. <code>bucketPercentile()</code> calcula percentis a partir de dados de histograma, útil para métricas do Prometheus.</td></tr>
+</tbody></table></div>
+<figure class="code-example"><figcaption>Código Fonte 2 — APM, Aula 9, p. 11 · transcrição literal conferida na página renderizada; as assinaturas aparecem no corpo do texto e foram dispostas uma por linha; tokens preservados</figcaption><pre><code>average(), count(), sum(), max(), min(), uniqueCount()
+
+percentile(duration, 95, 99)
+
+histogram(duration, width: 100, buckets: 10)
+
+apdex(attribute, t:)
+
+bucketPercentile()</code></pre><p>São as assinaturas exatamente como a aula as escreve na p. 11. Observe que <code>apdex(attribute, t:)</code> aparece com o parâmetro <code>t:</code> sem valor: é a forma genérica usada no texto, não uma consulta pronta.</p></figure>
+<p class="source">Fonte: <a href="POSTECH%20-%20APM%20-%20Aula%209.pdf#page=11">APM — Aula 9, p. 11</a>.</p>
+<aside class="note"><strong>APM-A09-Q02 · [INCERTO] no original</strong>A frase sobre <code>bucketPercentile()</code> e métricas do Prometheus termina com o marcador numérico “[1]” (p. 11), mas a aula não traz lista numerada de referências: as referências da p. 23 estão em formato autor-data. Não é possível identificar a obra apontada, então a afirmação fica atribuída à aula, sem fonte externa verificável.</aside>
+
+<h4>NRQL — alias e consultas avançadas</h4>
+<p><strong>Em miúdos:</strong> quando a mesma função aparece várias vezes na consulta, dê nome a cada resultado. E é possível consultar o resultado de outra consulta.</p>
+<p><strong>Tecnicamente:</strong> a aula indica a cláusula <code>AS</code> como boa prática para criar alias quando a mesma função agregadora é usada múltiplas vezes, melhorando legibilidade e clareza. O uso combinado de <code>FACET</code> e <code>TIMESERIES</code> gera gráficos multidimensionais: uma série por valor do atributo, ao longo do tempo. A agregação aninhada (<em>nested aggregation</em>) faz um segundo nível de agregação sobre o resultado do primeiro, e as subconsultas (<em>subqueries</em>) permitem usar o resultado de uma consulta como filtro em outra, correlacionando diferentes tipos de eventos ou períodos.</p>
+<figure class="code-example"><figcaption>Código Fonte 3 — APM, Aula 9, p. 12 · transcrição literal conferida na página renderizada; os exemplos aparecem no corpo do texto e foram dispostos um por linha; tokens preservados</figcaption><pre><code>SELECT average(duration) AS 'Tempo Médio', percentile(duration, 95) AS 'Percentil 95' FROM Transaction
+
+SELECT average(duration) FROM Transaction FACET appName TIMESERIES
+
+SELECT max(averageDuration) FROM (SELECT average(duration) as averageDuration FROM Transaction TIMESERIES 1 minute)</code></pre><p>Segundo a aula (p. 12): a primeira consulta nomeia dois resultados da mesma família de funções. A segunda gera um gráfico de linhas com uma série para cada aplicação, mostrando a evolução da latência média de cada uma. A terceira é o exemplo de agregação aninhada: a subconsulta calcula a duração média por minuto e a consulta externa toma o valor máximo dessas médias. O <code>as</code> em minúsculas na subconsulta é como está no original e foi preservado.</p></figure>
+<p class="source">Fonte: <a href="POSTECH%20-%20APM%20-%20Aula%209.pdf#page=12">APM — Aula 9, p. 12</a>.</p>
+<aside class="complemento"><strong>📘 Complemento — elaboração didática do Claude (Opus 5)</strong><p><strong>Antes de copiar as consultas para o ToggleMaster:</strong> todos os exemplos da aula partem do tipo de evento <code>Transaction</code>, que é o que os agentes de APM da New Relic gravam. A telemetria do projeto chega por outro caminho — o OTel Collector central de REQ-OBR-11 — e a aula não diz em que tipos de evento esses dados são gravados nem quais atributos ficam disponíveis. Confirme no query builder, com uma consulta exploratória, quais tipos de evento e atributos existem na conta antes de escrever as consultas definitivas do dashboard e do alerta.</p></aside>
+
+<h4>Dashboards — gerenciamento e personalização</h4>
+<p><strong>Em miúdos:</strong> um dashboard é um conjunto de widgets, e cada widget é o desenho do resultado de uma consulta NRQL.</p>
+<p><strong>Tecnicamente:</strong> dashboards consolidam informações de aplicações, infraestrutura e serviços de nuvem em uma única interface. São criados na seção “Dashboards” da interface web, podem ser organizados em pastas e são compostos por widgets; cada widget é a representação gráfica do resultado de uma consulta NRQL. Há gráficos de linha, área, pizza, barra, tabelas e widgets de texto em Markdown para acrescentar contexto, links e explicações. Duplicar um dashboard cria uma cópia editável sem alterar o original, escolhendo a conta de destino e as permissões (privado, visível para a conta ou editável pela conta). O modo de edição permite arrastar e redimensionar widgets e alterar nome, permissões e outras propriedades. Para automação em larga escala existe a API NerdGraph, que cria, atualiza e exclui dashboards de forma programática — útil para padronizar painéis entre times ou contas e para integrar a criação de dashboards a pipelines de CI/CD.</p>
+<p class="source">Fonte: <a href="POSTECH%20-%20APM%20-%20Aula%209.pdf#page=12">APM — Aula 9, p. 12–14</a>.</p>
+
+<h4>Dashboards — variáveis de template e filtros dinâmicos</h4>
+<p><strong>Em miúdos:</strong> em vez de um dashboard por aplicação, faça um só com um menu no topo. Quem olha troca o valor e todos os gráficos mudam juntos.</p>
+<p><strong>Tecnicamente:</strong> a variável de template é um filtro dinâmico aplicado a todos os widgets do dashboard ao mesmo tempo, sem editar as consultas NRQL subjacentes. Criar uma variável envolve definir um nome e uma consulta NRQL que popula a lista de valores possíveis; a variável pode aceitar um único valor ou múltiplos valores e pode incluir ou excluir do filtro os valores selecionados. Na consulta do widget, a variável é referenciada pela sintaxe <code>${variable_name}</code>, e a New Relic substitui a referência pelo valor selecionado antes de executar a consulta. Variáveis também podem ser encadeadas, criando filtros dependentes: por exemplo, uma variável <code>awsRegion</code> e outra <code>awsAvailabilityZone</code>, cuja lista é filtrada pela região escolhida.</p>
+<figure class="code-example"><figcaption>Código Fonte 4 — APM, Aula 9, p. 14 · transcrição literal conferida na página renderizada; os exemplos aparecem no corpo do texto e foram dispostos um por linha; tokens preservados</figcaption><pre><code>SELECT uniques(appName) FROM Transaction
+
+${variable_name}
+
+SELECT average(duration) FROM Transaction WHERE appName = '${appName}'</code></pre><p>Segundo a aula (p. 14): a primeira consulta popula o menu suspenso da variável <code>appName</code> com todos os nomes de aplicação únicos. A segunda linha é a forma genérica de referência a uma variável. A terceira mostra o tempo médio de resposta da aplicação escolhida — repare que a referência à variável fica dentro das aspas simples exigidas para strings.</p></figure>
+<p class="source">Fonte: <a href="POSTECH%20-%20APM%20-%20Aula%209.pdf#page=14">APM — Aula 9, p. 14–15</a>.</p>
+
+<h4>Dashboards — compartilhamento, importação e exportação</h4>
+<p><strong>Em miúdos:</strong> há uma forma de compartilhar para cada público: colega com conta, outra equipe, e quem não tem acesso à plataforma.</p>
+<div class="tablewrap"><table><thead><tr><th scope="col">Forma</th><th scope="col">Público</th><th scope="col">O que a aula observa</th></tr></thead><tbody>
+<tr><td>Permalink</td><td>Interno, usuários da mesma conta</td><td>URL permanente que leva ao dashboard com o período de tempo e as variáveis de template selecionadas no momento da cópia.</td></tr>
+<tr><td>Exportação e importação em JSON</td><td>Outra equipe ou outra conta</td><td>O arquivo contém a definição completa do dashboard: widgets, consultas NRQL e configurações. Na importação, cola-se o conteúdo em “Import dashboard” e definem-se conta e permissões. Serve para padronizar painéis e migrar entre contas.</td></tr>
+<tr><td>Exportação em PDF</td><td>Stakeholders externos sem acesso à plataforma</td><td>Gera um documento com uma imagem de cada widget; a interatividade é perdida e variáveis de template e visualizações personalizadas não são suportadas no arquivo gerado.</td></tr>
+<tr><td>PNG ou link público de um gráfico</td><td>Variável</td><td>Gráficos individuais podem ser exportados como imagens PNG ou compartilhados por um link público.</td></tr>
+<tr><td>Link público do dashboard</td><td>Qualquer pessoa com o link</td><td>Permite visualizar uma versão de leitura. A aula recomenda cautela, pois expõe os dados do dashboard publicamente na internet.</td></tr>
+</tbody></table></div>
+<p class="source">Fonte: <a href="POSTECH%20-%20APM%20-%20Aula%209.pdf#page=15">APM — Aula 9, p. 15–16</a>.</p>
+
+<h4>Alertas — a página Overview</h4>
+<p><strong>Em miúdos:</strong> antes de olhar alerta por alerta, a página Overview mostra o retrato geral: quantos incidentes, com que gravidade, quanto tempo levam para fechar e quem mais os produz.</p>
+<p><strong>Tecnicamente:</strong> a aula apresenta o Overview como painel de controle de alto nível da atividade de alertas, com quatro componentes principais.</p>
+<div class="tablewrap"><table><thead><tr><th scope="col">Componente</th><th scope="col">O que apresenta</th><th scope="col">Para que serve, segundo a aula</th></tr></thead><tbody>
+<tr><td>Incidentes abertos por prioridade</td><td>Contagem de incidentes abertos ao longo do tempo, geralmente separados por severidade (por exemplo, Critical e Warning).</td><td>Entender a frequência e a gravidade dos problemas que estão ocorrendo.</td></tr>
+<tr><td>Duração de incidentes fechados</td><td>Histograma da distribuição do tempo que levou para resolver os incidentes.</td><td>Avaliar a eficiência da equipe de resposta a incidentes (MTTR, Mean Time to Resolution).</td></tr>
+<tr><td>Políticas e condições que mais geram incidentes</td><td>Rankings das políticas e condições acionadas com mais frequência.</td><td>Identificar áreas cronicamente instáveis ou thresholds de alerta mal configurados.</td></tr>
+<tr><td>Fontes de incidentes</td><td>Gráfico das entidades (aplicações, hosts, etc.) que geram o maior número de incidentes.</td><td>Localizar a origem do maior volume de alertas.</td></tr>
+</tbody></table></div>
+<p class="source">Fonte: <a href="POSTECH%20-%20APM%20-%20Aula%209.pdf#page=16">APM — Aula 9, p. 16–17</a>.</p>
+
+<h4>Alertas — Issues &amp; Activity: incidente não é o mesmo que problema</h4>
+<p><strong>Em miúdos:</strong> cada violação de limite vira um incidente. Quando vários incidentes têm a mesma origem, a plataforma os junta em um único problema, para a equipe não receber dez avisos da mesma falha.</p>
+<div class="tablewrap"><table><thead><tr><th scope="col">Conceito</th><th scope="col">Definição da aula</th><th scope="col">Exemplo da aula</th></tr></thead><tbody>
+<tr><td>Incident</td><td>Um único evento de violação de um threshold de alerta. Abre quando a condição é violada e fecha quando a métrica volta ao normal; a lista é o registro cronológico das violações.</td><td>A taxa de erro de uma aplicação excede 5% por 10 minutos e um incidente é aberto.</td></tr>
+<tr><td>Issue</td><td>Agrupamento de incidentes relacionados por algoritmos de correlação; representa o problema subjacente que causa múltiplos sintomas, reduzindo o ruído de alertas e apontando para a causa raiz. A página permite filtrar por tags, prioridade e status (Aberto, Reconhecido, Fechado) e abrir os detalhes.</td><td>A falha de um banco de dados gera incidentes de alta latência em várias aplicações dependentes; todos são agrupados em um único Issue, “Falha no Banco de Dados X”.</td></tr>
+</tbody></table></div>
+<p class="source">Fonte: <a href="POSTECH%20-%20APM%20-%20Aula%209.pdf#page=17">APM — Aula 9, p. 17–18</a>.</p>
+
+<h4>Alertas — notificações e workflows</h4>
+<p><strong>Em miúdos:</strong> o workflow é a regra que decide quem é avisado, por onde e com que texto quando um problema aparece, muda ou é encerrado.</p>
+<p><strong>Tecnicamente:</strong> um Workflow é uma regra de automação disparada quando um Issue é criado, atualizado ou fechado, com três componentes.</p>
+<ol class="flow">
+<li><div><strong>Filtro (Filter)</strong><span>Define a condição que dispara o workflow. É escrito em uma sintaxe de consulta capaz de avaliar qualquer atributo do Issue: prioridade, nome da política de alerta, tags da entidade impactada, entre outros.</span></div></li>
+<li><div><strong>Destinos (Destinations)</strong><span>Canal para onde a notificação será enviada. A aula cita como destinos nativos e-mail, Slack, PagerDuty, Jira, ServiceNow e webhooks genéricos. Cada destino precisa ser configurado previamente, por exemplo com a URL do webhook do Slack ou a chave da API do PagerDuty.</span></div></li>
+<li><div><strong>Canais (Channels)</strong><span>Definem o conteúdo e o formato da mensagem, com variáveis preenchidas a partir do Issue — nome do problema, lista de incidentes, prioridade e link direto para a página do Issue.</span></div></li>
+</ol>
+<figure class="code-example"><figcaption>Código Fonte 5 — APM, Aula 9, p. 18 · transcrição literal conferida na página renderizada; o filtro aparece no corpo do texto; tokens preservados</figcaption><pre><code>(priority = 'CRITICAL') AND (labels.team = 'backend')</code></pre><p>Exemplo de filtro da aula (p. 18): faria o workflow ser acionado apenas para issues críticos que afetam a equipe de backend. Os valores <code>'CRITICAL'</code> e <code>'backend'</code> são do exemplo.</p></figure>
+<p><strong>Ainda segundo a aula:</strong> um único Issue pode acionar múltiplos workflows e um único workflow pode notificar múltiplos destinos. Para um Issue crítico, o exemplo da p. 19 combina três ações: enviar mensagem para um canal de Slack da equipe de plantão; abrir um incidente de alta prioridade no PagerDuty para acionar o engenheiro de plantão; e criar um ticket no Jira para rastrear a resolução. Os workflows também reagem a outras mudanças de estado — Issue reconhecido (<em>acknowledged</em>), mudança de prioridade ou fechamento — o que permite, por exemplo, avisar o canal do Slack quando o problema é encerrado.</p>
+<p class="source">Fonte: <a href="POSTECH%20-%20APM%20-%20Aula%209.pdf#page=18">APM — Aula 9, p. 18–19</a>.</p>
+<aside class="complemento"><strong>📘 Complemento — elaboração didática do Claude (Opus 5)</strong><p><strong>Leitura para a Fase 4:</strong> o exemplo da p. 19 cobre, em um único workflow, dois requisitos do enunciado ao mesmo tempo — REQ-OBR-17 (abertura automática de incidente) e REQ-OBR-18 (notificação de ChatOps). Dois pontos que a aula não trata: o enunciado aceita OpsGenie como alternativa ao PagerDuty, e a aula lista apenas PagerDuty entre os destinos nativos — se o grupo optar por OpsGenie, verifique o caminho de integração antes de fechar a arquitetura. Além disso, o Self-Healing de REQ-OBR-19 não é assunto desta aula; o gancho mais próximo aqui é o destino do tipo webhook genérico, que poderia acionar uma automação própria. A aula não descreve essa montagem.</p></aside>
+
+<h4>Alertas — políticas, condições e thresholds</h4>
+<p><strong>Em miúdos:</strong> a condição é a regra avaliada continuamente; o threshold é o número que, ultrapassado, abre o incidente. A política é a pasta que agrupa condições do mesmo serviço e define como os incidentes viram Issues.</p>
+<p><strong>Tecnicamente:</strong> uma condição de alerta é a regra que a New Relic avalia continuamente para determinar se o comportamento do sistema está dentro do esperado; quando violada, abre um incidente. Condições são agrupadas em políticas de alerta, contêineres de condições relacionadas ao mesmo serviço, aplicação ou equipe — o exemplo da aula é uma política “API de Pagamentos” com condições de taxa de erro, latência e throughput. A política também define a preferência de incidentes, isto é, como os incidentes são agrupados em Issues (por política, por condição, etc.), o que impacta diretamente a forma como as notificações são agregadas.</p>
+<div class="tablewrap"><table><thead><tr><th scope="col">Tipo de threshold</th><th scope="col">Como é definido</th><th scope="col">Quando a aula o indica</th><th scope="col">Exemplo da aula</th></tr></thead><tbody>
+<tr><td>Estático (Static)</td><td>Valor fixo definido manualmente pelo usuário; a condição é violada quando a métrica ultrapassa, ou cai abaixo, desse valor por um determinado período de tempo.</td><td>Métricas com limite de desempenho bem definido e conhecido, como SLAs (Service Level Agreements) ou SLOs (Service Level Objectives).</td><td>“Alertar quando a taxa de erro da aplicação for maior que 5% por pelo menos 10 minutos”.</td></tr>
+<tr><td>Anomalia (Anomaly)</td><td>Algoritmos de Machine Learning preveem o comportamento esperado da métrica a partir do histórico; em vez de um valor fixo, configura-se a sensibilidade, que determina o quanto a métrica pode desviar do previsto.</td><td>Métricas com padrões sazonais, por exemplo tráfego maior de dia e menor à noite, ou desvios sutis difíceis de capturar com threshold estático.</td><td>“Alertar quando a latência da aplicação estiver ‘x’ desvios padrão acima do previsto para este horário do dia”.</td></tr>
+</tbody></table></div>
+<p><strong>Dois ajustes que a aula destaca:</strong> é possível definir múltiplos níveis na mesma condição — Warning (aviso) e Critical (crítico) — permitindo resposta escalonada, com Warning notificando a equipe via Slack e Critical acionando um incidente no PagerDuty. E a duração da violação é parâmetro crucial para evitar falsos-positivos por picos momentâneos: a condição só é violada se o threshold for ultrapassado de forma sustentada pelo período configurado.</p>
+<p class="source">Fonte: <a href="POSTECH%20-%20APM%20-%20Aula%209.pdf#page=19">APM — Aula 9, p. 19–21</a>.</p>
+
+<h4>Boas práticas e erros comuns, segundo a própria aula</h4>
+<div class="tablewrap"><table><thead><tr><th scope="col">Prática recomendada pela aula</th><th scope="col">Erro que ela evita</th><th scope="col">Página</th></tr></thead><tbody>
+<tr><td>Usar <code>AS</code> para nomear cada resultado quando a mesma função agregadora aparece mais de uma vez.</td><td>Consulta ilegível, com colunas de significado ambíguo.</td><td>p. 12</td></tr>
+<tr><td>Respeitar maiúsculas e minúsculas em nomes de atributos e eventos e usar aspas simples em strings.</td><td>Consulta sintaticamente válida que não retorna nada, por escrever <code>appname</code> no lugar de <code>appName</code>.</td><td>p. 11</td></tr>
+<tr><td>Manter a consulta dentro do limite de 4 KB.</td><td>Consulta recusada por tamanho.</td><td>p. 10</td></tr>
+<tr><td>Criar um dashboard genérico com variável de template em vez de um dashboard por aplicação ou região.</td><td>Proliferação de painéis quase idênticos e difíceis de manter.</td><td>p. 14</td></tr>
+<tr><td>Usar a API NerdGraph para padronizar dashboards entre times e integrá-los ao CI/CD.</td><td>Divergência entre painéis criados manualmente por cada equipe.</td><td>p. 13</td></tr>
+<tr><td>Lembrar que o PDF exportado perde interatividade e não suporta variáveis de template nem visualizações personalizadas.</td><td>Entregar ao stakeholder um arquivo que não mostra o que se pretendia.</td><td>p. 16</td></tr>
+<tr><td>Usar o link público do dashboard com cautela.</td><td>Expor dados de operação publicamente na internet.</td><td>p. 16</td></tr>
+<tr><td>Configurar a duração da violação e usar níveis Warning e Critical.</td><td>Alertas falsos-positivos por picos momentâneos e resposta sem escalonamento.</td><td>p. 20</td></tr>
+<tr><td>Definir a preferência de incidentes da política e acompanhar Issues, não só incidentes isolados.</td><td>Fadiga de alertas: dez avisos para uma única causa raiz.</td><td>p. 17, p. 19–20</td></tr>
+<tr><td>Usar os rankings do Overview para revisar políticas e condições que mais disparam.</td><td>Conviver com thresholds mal configurados por tempo indefinido.</td><td>p. 17</td></tr>
+</tbody></table></div>
+<p class="source">Fonte: <a href="POSTECH%20-%20APM%20-%20Aula%209.pdf#page=10">APM — Aula 9, p. 10–20</a>.</p>
+
+<h4>Fechamento e referências da aula</h4>
+<p>A seção “O que você viu nesta aula?” resume o percurso: arquitetura e funcionamento do NRDB, modelo de dados orientado a eventos e ciclo de vida das consultas; domínio da NRQL, da sintaxe básica à agregação aninhada, com <code>WHERE</code>, <code>FACET</code>, <code>TIMESERIES</code>, percentis, Apdex e histogramas; dashboards personalizados com filtros dinâmicos e variáveis de template; e o sistema de alertas, com gestão de incidentes, correlação automática de problemas e análise histórica de atividades. As palavras-chave declaradas são NRQL, Dashboards e Alertas. As cinco referências, todas da documentação da New Relic com acesso em 28 jan. 2026, cobrem alertas e issues, gerenciamento de dashboards, sintaxe e funções da NRQL, variáveis de template e o white paper do NRDB.</p>
+<p class="source">Fonte: <a href="POSTECH%20-%20APM%20-%20Aula%209.pdf#page=22">APM — Aula 9, p. 22–24</a>.</p>
+<aside class="note"><strong>APM-A09-Q03 · [INCERTO] no original</strong>A seção “Hands On” (p. 4) anuncia atividades práticas — consultas de experiência do usuário, uso da função <code>filter</code>, criação e organização de dashboards, configuração de alertas e análise de Issues. O corpo da aula (p. 5–21) é expositivo: não há passo a passo, telas de interface nem exercício resolvido, e a função <code>filter</code> não volta a ser mencionada. O guia não reconstrói as partes ausentes; quem precisar do procedimento de tela deve recorrer à documentação citada na p. 23.</aside>
+
+<aside class="complemento"><strong>📘 Complemento — elaboração didática do Claude (Opus 5)</strong><p><strong>Encadeamento com o que o enunciado pede:</strong> a sequência útil para o ToggleMaster é ler os dados no query builder, congelar a consulta que descreve a falha proposital de REQ-OBR-28, transformar essa mesma consulta em condição de alerta (REQ-OBR-16) com duração de violação compatível com SUG-02, e ligar o workflow aos destinos que atendem REQ-OBR-17 e REQ-OBR-18. A tela de Issues é o que se mostra no vídeo como alerta disparado (REQ-OBR-29) e como incidente aberto (REQ-OBR-30). Note que a padronização de nomes de serviço sugerida em SUG-03 é o que faz <code>FACET</code> e variáveis de template renderem: sem nomes consistentes entre os cinco microsserviços, cada gráfico agrupa de um jeito.</p></aside>
+
+<p><strong>Para memorizar:</strong> tudo é evento no NRDB e tudo se pergunta em NRQL — o mesmo texto de consulta vira widget de dashboard ou condição de alerta. <code>SELECT</code> e <code>FROM</code> são obrigatórios; <code>WHERE</code> filtra, <code>FACET</code> agrupa, <code>TIMESERIES</code> desenha o tempo. Incidente é violação; Issue é problema. O threshold estático vale para limite conhecido, o de anomalia para comportamento sazonal, e a duração da violação é o que separa alerta de ruído.</p>
+</article></section>

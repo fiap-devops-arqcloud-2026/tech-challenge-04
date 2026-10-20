@@ -1,0 +1,20 @@
+{
+  "files_before": 933,
+  "unchanged": 927,
+  "modified_expected": [
+    "00_COLAB_IA/02_TRABALHO/extrair-fontes-2026-09-16_v01.py",
+    "00_COLAB_IA/02_TRABALHO/mapear-modulos-readme-2026-09-20_v01.py",
+    "00_COLAB_IA/02_TRABALHO/validar-guias-2026-09-16_v01.py",
+    "00_COLAB_IA/LEIA-PRIMEIRO.md",
+    "00_COLAB_IA/LOG_DE_TRABALHO.md",
+    "00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md"
+  ],
+  "missing": [],
+  "protected_phase4_files": 39,
+  "phase3_source": "61008794090f582c098e2edc42041339c556f14c",
+  "phase4_main_unchanged": "003a7075a8908011ece83d317d5c700ac2525b58",
+  "source_checkout_clean": true,
+  "readme_local_links": "OK",
+  "source_services": "identical",
+  "ancestry": "both histories reachable"
+}

@@ -1,0 +1,621 @@
+# ============================================================
+# WORKFLOW REUTILIZAVEL - CI e DevSecOps para servicos em Go
+# ============================================================
+# Este arquivo NAO roda sozinho. Ele e chamado por auth-service.yml e
+# evaluation-service.yml, que passam o nome do servico como parametro
+# (F-008: auth e evaluation sao os dois servicos Go do projeto).
+#
+# Por que reutilizavel: os dois tem pipeline identico. Duplicar o
+# arquivo significaria corrigir qualquer ajuste em dois lugares - e
+# esquecer um deles.
+#
+# Cobre do checklist: O-11 a O-21, O-24 e O-26.
+#
+# ORDEM DOS JOBS
+#   build, lint, sast e sca rodam EM PARALELO (sao independentes).
+#   image so comeca se os quatro passarem (O-16: vulnerabilidade
+#   CRITICA faz o pipeline falhar e NAO PROSSEGUIR).
+#   gitops so roda depois do image, e apenas em push na main.
+# ============================================================
+
+# Nome exibido na aba Actions. O sufixo avisa que nao roda sozinho.
+name: CI Go (reutilizavel)
+
+# Bloco "on": define o que dispara este workflow.
+on:
+  # workflow_call e o gatilho que torna o arquivo chamavel por outro
+  # workflow. Nao existe gatilho de push nem de PR aqui de proposito:
+  # quem decide quando rodar sao os 5 arquivos chamadores.
+  workflow_call:
+
+    # Parametros que o chamador e obrigado a informar.
+    inputs:
+
+      # Unico parametro do workflow. O mesmo valor resolve tres coisas:
+      # a pasta em services/, o repositorio no ECR e o nome logico da
+      # imagem no bloco images: do kustomization.yaml.
+      service:
+        # Texto de ajuda, aparece na interface do GitHub.
+        description: "Nome do servico, ex: auth-service"
+        # true = o chamador nao pode omitir. Sem isso o workflow
+        # rodaria com string vazia e falharia de forma confusa.
+        required: true
+        # Tipo do parametro. string e o unico que faz sentido aqui.
+        type: string
+
+# ------------------------------------------------------------
+# VARIAVEIS COMPARTILHADAS POR TODOS OS JOBS
+# ------------------------------------------------------------
+# Declaradas no nivel do workflow: ficam visiveis em todo job e em
+# todo passo, inclusive dentro dos blocos run: como variavel de shell.
+# ------------------------------------------------------------
+env:
+  # Variables do repositorio tech-challenge-04, preenchidas quando a
+  # nova conta estiver pronta. Ohio permanece apenas como regiao padrao.
+  AWS_REGION: ${{ vars.AWS_REGION || 'us-east-2' }}
+
+  # Formato: <account>.dkr.ecr.<regiao>.amazonaws.com. Sem fallback
+  # para a conta da Fase 3: publicar exige configurar o destino novo.
+  ECR_REGISTRY: ${{ vars.ECR_REGISTRY }}
+
+  # Role OIDC autorizada para este repositorio. Nao usa chave estatica.
+  AWS_ROLE_ARN: ${{ vars.AWS_ROLE_ARN }}
+
+  # Versao fixa do kustomize standalone usada no job gitops.
+  # Fixa, e nao "latest", para que uma release nova nao mude o
+  # comportamento do pipeline sem ninguem pedir.
+  KUSTOMIZE_VERSION: "5.4.3"
+
+# Lista de jobs. Sem "needs" entre eles, rodam todos em paralelo.
+jobs:
+
+  # ==========================================================
+  # JOB 1 - BUILD e TESTES UNITARIOS (O-12)
+  # ==========================================================
+  build:
+    # Nome legivel exibido no grafo de execucao do GitHub.
+    name: Build e testes
+    # Maquina virtual descartavel fornecida pelo GitHub. Nasce limpa a
+    # cada execucao, o que garante build reproduzivel.
+    runs-on: ubuntu-latest
+
+    # Sequencia de passos deste job, executados em ordem.
+    steps:
+      # Passo 1: baixa o codigo do repositorio para dentro do runner.
+      # Sem ele o runner esta vazio e nada mais funciona.
+      - name: Checkout do codigo
+        # Action oficial do GitHub. @v4 fixa a linha principal.
+        uses: actions/checkout@v4
+
+      # Passo 2: instala o compilador Go.
+      - name: Instalar Go
+        # Instala o compilador Go nesta maquina.
+        uses: actions/setup-go@v5
+        # "with" passa parametros para a action.
+        with:
+          # Le a versao do proprio go.mod do servico em vez de fixar
+          # aqui. Assim o CI nunca compila numa versao diferente da que
+          # o projeto declara.
+          go-version-file: services/${{ inputs.service }}/go.mod
+          # Arquivo usado como chave do cache de modulos. Mudou o
+          # go.sum, o cache e refeito; nao mudou, reaproveita e o job
+          # fica bem mais rapido.
+          cache-dependency-path: services/${{ inputs.service }}/go.sum
+
+      # Passo 3: compila. Se nao compilar, nada adiante importa.
+      - name: Compilar
+        # Cada servico e um modulo Go proprio, entao os comandos rodam
+        # dentro da pasta dele, nao na raiz do monorepo.
+        working-directory: services/${{ inputs.service }}
+        # ./... = todos os pacotes recursivamente. -v lista o que
+        # compilou, util para ler o log quando algo falha.
+        run: go build -v ./...
+
+      # Passo 4: testes. O enunciado pede testes "se houver" (R-04) -
+      # em pacote sem arquivo _test.go o comando passa sem falhar.
+      - name: Testes unitarios
+        # Roda dentro da pasta do servico, nao na raiz do monorepo.
+        working-directory: services/${{ inputs.service }}
+        # -count=1 desliga o cache de resultados do Go e forca execucao
+        # real. Sem isso, o Go pode devolver "ok (cached)" e mascarar
+        # um teste que so passava numa versao antiga do codigo.
+        run: go test -count=1 -v ./...
+
+  # ==========================================================
+  # JOB 2 - LINTER / ANALISE ESTATICA (O-13)
+  # ==========================================================
+  lint:
+    # Nome legivel deste job, exibido no grafo de execucao.
+    name: Linter (golangci-lint)
+    # Runner Ubuntu descartavel, um por job. Nasce limpo a cada execucao.
+    runs-on: ubuntu-latest
+
+    # Passos deste job, executados de cima para baixo.
+    steps:
+      # Baixa o codigo. Cada job roda numa maquina propria e isolada,
+      # por isso o checkout se repete em todos.
+      - name: Checkout do codigo
+        # Baixa o codigo. Repetido em todo job porque cada um roda numa maquina isolada.
+        uses: actions/checkout@v4
+
+      # O linter precisa do Go instalado para analisar tipos.
+      - name: Instalar Go
+        # Instala o compilador Go nesta maquina.
+        uses: actions/setup-go@v5
+        # Parametros passados para a action declarada acima.
+        with:
+          # Versao do Go lida do go.mod do proprio servico.
+          go-version-file: services/${{ inputs.service }}/go.mod
+          # Sem esta linha o setup-go procura go.sum na RAIZ do monorepo,
+          # nao encontra e emite "Restore cache failed". Nao quebra o job,
+          # mas desliga o cache e deixa a execucao mais lenta.
+          cache-dependency-path: services/${{ inputs.service }}/go.sum
+
+      # golangci-lint agrega dezenas de linters numa passada so.
+      # E a ferramenta citada nominalmente pelo enunciado para Go.
+      - name: Rodar golangci-lint
+        # Action oficial do golangci-lint, com versao fixada.
+        #
+        # A v9 da action e necessaria para rodar a linha 2.x da
+        # ferramenta; a v6 antiga so trabalha com a linha 1.x.
+        uses: golangci/golangci-lint-action@v9
+        # Parametros passados para a action declarada acima.
+        with:
+          # Versao fixa da ferramenta. Deixar em aberto faz o pipeline
+          # comecar a falhar sozinho quando sai release com regra nova.
+          #
+          # v2.13.2, e nao v1.61: a v1.61 foi compilada com Go 1.23 e
+          # RECUSA analisar um modulo que declara uma versao maior, com o
+          # erro "the Go language version used to build golangci-lint is
+          # lower than the targeted Go version". Nossos go.mod passaram a
+          # declarar 1.25.0 depois do upgrade de x/crypto que corrigiu o
+          # CVE-2026-56854 - ou seja, foi efeito em cadeia daquela
+          # correcao de seguranca.
+          version: v2.13.2
+          # Pasta do modulo Go a analisar.
+          working-directory: services/${{ inputs.service }}
+          #
+          # Sem "args" de proposito. O --timeout foi removido da linha de
+          # comando na v2 e passou a viver em configuracao. Como os dois
+          # modulos sao pequenos e o job levava ~20s, o padrao de 1 minuto
+          # sobra - nao vale acrescentar um arquivo de config so por isso.
+
+  # ==========================================================
+  # JOB 3 - SAST: vulnerabilidade no CODIGO FONTE (O-15)
+  # ==========================================================
+  # Diferenca entre SAST e SCA, que confunde:
+  #   SAST (este job) olha o codigo que NOS escrevemos.
+  #   SCA  (job seguinte) olha as bibliotecas de TERCEIROS.
+  # ==========================================================
+  sast:
+    # Nome legivel deste job, exibido no grafo de execucao.
+    name: SAST (gosec)
+    # Runner Ubuntu descartavel, um por job. Nasce limpo a cada execucao.
+    runs-on: ubuntu-latest
+
+    # Passos deste job, executados de cima para baixo.
+    steps:
+      # Baixa o codigo do repositorio para dentro deste runner.
+      - name: Checkout do codigo
+        # Baixa o codigo. Repetido em todo job porque cada um roda numa maquina isolada.
+        uses: actions/checkout@v4
+
+      # O passo seguinte precisa do toolchain do Go disponivel.
+      - name: Instalar Go
+        # Instala o compilador Go nesta maquina.
+        uses: actions/setup-go@v5
+        # Parametros passados para a action declarada acima.
+        with:
+          # ATENCAO: aqui a versao e FIXA, e nao lida do go.mod como nos
+          # outros jobs. Motivo: o passo seguinte compila o gosec a partir
+          # do fonte, e o gosec atual exige um toolchain recente.
+          #
+          # Precisa ser >= a diretiva `go` dos servicos, hoje 1.25.0 - ela
+          # subiu sozinha quando golang.org/x/crypto foi para v0.55.0 para
+          # corrigir o CVE-2026-56854. Com uma versao menor, o gosec falha
+          # antes de analisar, com "go.mod requires go >= 1.25.0".
+          go-version: "1.25"
+
+      # gosec e o SAST para Go citado pelo enunciado. Procura padroes
+      # perigosos no nosso codigo: SQL montado por concatenacao,
+      # credencial fixa, crypto fraco, erro ignorado em operacao
+      # sensivel. Versao fixada para o resultado nao mudar sozinho.
+      - name: Instalar gosec
+        # Compila e instala o gosec na versao fixada.
+        #
+        # v2.29.0, e nao v2.21.4: a versao antiga NAO COMPILA com o
+        # toolchain atual e derrubava o job com o erro
+        # "invalid array length -delta * delta". Confirmado em 2026-09-08
+        # pela API do GitHub que v2.29.0 e a release mais recente.
+        run: go install github.com/securego/gosec/v2/cmd/gosec@v2.29.0
+
+      # Executa a varredura de SAST sobre o codigo do servico.
+      - name: Rodar gosec
+        # Roda dentro da pasta do servico, nao na raiz do monorepo.
+        working-directory: services/${{ inputs.service }}
+        # -severity high: falha so em achado de severidade ALTA.
+        #   Achados baixos e medios aparecem no log sem quebrar o job.
+        # -confidence medium: descarta suspeitas fracas, que geram
+        #   ruido e ensinam o time a ignorar o relatorio.
+        # ./... : varre todos os pacotes do modulo.
+        run: gosec -severity high -confidence medium ./...
+
+  # ==========================================================
+  # JOB 4 - SCA: vulnerabilidade nas DEPENDENCIAS (O-14)
+  # ==========================================================
+  sca:
+    # Nome legivel deste job, exibido no grafo de execucao.
+    name: SCA (Trivy fs)
+    # Runner Ubuntu descartavel, um por job. Nasce limpo a cada execucao.
+    runs-on: ubuntu-latest
+
+    # Passos deste job, executados de cima para baixo.
+    steps:
+      # Baixa o codigo do repositorio para dentro deste runner.
+      - name: Checkout do codigo
+        # Baixa o codigo. Repetido em todo job porque cada um roda numa maquina isolada.
+        uses: actions/checkout@v4
+
+      # Trivy em modo "fs" le o go.sum e cruza cada dependencia com a
+      # base publica de CVEs. E ESTE o job da demonstracao do video
+      # (O-28): fixar uma versao vulneravel de biblioteca deixa ele
+      # vermelho e trava o pipeline.
+      - name: Rodar Trivy no sistema de arquivos
+        # Action oficial do Trivy, presa por SHA de commit e nao por tag.
+        # Por que SHA: uma tag pode ser movida para outro commit pelo dono
+        # do repositorio; um SHA nao. E a forma mais segura de fixar action
+        # de terceiro, e impede que codigo novo entre no nosso pipeline sem
+        # revisao. O comentario ao lado diz a que versao o SHA corresponde -
+        # confirmado em 2026-09-08 pela API do GitHub, e e o mesmo pin que a
+        # branch main ja usa com o CI verde.
+        #
+        # A versao anterior aqui era "@0.28.0", que NAO EXISTE - por isso os
+        # 5 jobs de SCA morriam em "Unable to resolve action".
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        # Parametros passados para a action declarada acima.
+        with:
+          # fs = varre arquivos de dependencia no disco.
+          scan-type: fs
+          # Pasta a varrer: so o servico deste pipeline.
+          scan-ref: services/${{ inputs.service }}
+          # REGRA DE BLOQUEIO (O-16): apenas CRITICAL derruba o job.
+          # HIGH e abaixo aparecem no relatorio sem travar a entrega.
+          severity: CRITICAL
+          # exit-code 1 = achou algo critico, job falha. SEM esta linha
+          # o Trivy apenas imprime a lista e devolve sucesso - o
+          # pipeline pareceria seguro sendo apenas silencioso.
+          exit-code: "1"
+          # ------------------------------------------------------
+          # ignore-unfixed FICA EM false (F-042, corrigido 2026-09-09)
+          # ------------------------------------------------------
+          # Com `true`, o Trivy esconde as vulnerabilidades CRITICAS que
+          # ainda nao tem versao corrigida publicada. E um habito comum
+          # na industria - "nao adianta quebrar o build sem ter para
+          # onde ir" - mas o enunciado da Fase 3 nao abre essa excecao:
+          # ele pede que vulnerabilidade CRITICA faca o pipeline falhar
+          # e nao prosseguir (O-16). `false` e a leitura literal.
+          #
+          # E o risco de "travar sem ter correcao" continua tratado, so
+          # que de forma VISIVEL: quando aparecer um CRITICAL sem patch,
+          # a saida e registrar aquele CVE em `.trivyignore` na raiz,
+          # com data e justificativa escrita. A excecao vira uma linha
+          # revisavel em PR, em vez de uma flag que apaga em silencio a
+          # classe inteira de achados.
+          ignore-unfixed: false
+          # Lista de excecoes nominais. Sem esta linha o Trivy ainda
+          # procuraria um .trivyignore na pasta atual, mas declarar o
+          # caminho deixa a dependencia explicita para quem le o
+          # workflow - e evita depender de qual pasta o runner usa.
+          trivyignores: .trivyignore
+          # Saida em tabela, legivel no log da execucao.
+          format: table
+
+  # ==========================================================
+  # JOB 5 - IMAGEM: build, scan, login e push (O-17 a O-20)
+  # ==========================================================
+  image:
+    # Nome legivel deste job, exibido no grafo de execucao.
+    name: Imagem Docker e push no ECR
+    # Runner Ubuntu descartavel, um por job. Nasce limpo a cada execucao.
+    runs-on: ubuntu-latest
+
+    # PORTAO DE SEGURANCA (O-16). "needs" faz este job esperar os
+    # quatro anteriores. Se qualquer um falhar, este nem e agendado -
+    # aparece como "skipped" no grafo. E a leitura literal do
+    # enunciado: "o pipeline deve falhar e nao prosseguir".
+    needs: [build, lint, sast, sca]
+
+    # Publica somente a partir da main. Em Pull Request os quatro jobs
+    # de verificacao rodam (O-11), mas nada e publicado: PR vindo de
+    # fork nao recebe token OIDC, e tag de PR poluiria o registro.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    # Permissoes do GITHUB_TOKEN neste job. Declarar aqui SUBSTITUI o
+    # conjunto herdado do chamador, o que deixa o job com o minimo.
+    permissions:
+      # Emite o token OIDC trocado por credencial temporaria na AWS.
+      # E o que substitui a chave estatica da Fase 2 (S-01).
+      id-token: write
+      # Leitura do repositorio, necessaria para o checkout.
+      contents: read
+
+    # Valores publicados para outros jobs consumirem via needs.
+    outputs:
+      # A tag calculada abaixo. O job gitops precisa dela para saber
+      # qual versao escrever no kustomization.yaml.
+      image_tag: ${{ steps.tag.outputs.image_tag }}
+
+    # Passos deste job, executados de cima para baixo.
+    steps:
+      # Esta trava so roda em publicacao (push main). A validacao de
+      # codigo em dev/PR independe de conta AWS e destas variables.
+      - name: Validar destino AWS da Fase 4
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "${ECR_REGISTRY}" || -z "${AWS_ROLE_ARN}" ]]; then
+            echo "::error::Configure ECR_REGISTRY e AWS_ROLE_ARN nas repository variables do tech-challenge-04 antes de publicar. A nova conta AWS ainda nao foi configurada."
+            exit 1
+          fi
+          if [[ ! "${ECR_REGISTRY}" =~ ^([0-9]{12})\.dkr\.ecr\.([a-z0-9-]+)\.amazonaws\.com$ ]]; then
+            echo "::error::ECR_REGISTRY deve ser <account>.dkr.ecr.<regiao>.amazonaws.com."
+            exit 1
+          fi
+          ecr_account="${BASH_REMATCH[1]}"
+          ecr_region="${BASH_REMATCH[2]}"
+          if [[ "${ecr_region}" != "${AWS_REGION}" || "${AWS_ROLE_ARN}" != "arn:aws:iam::${ecr_account}:role/"* ]]; then
+            echo "::error::ECR_REGISTRY, AWS_REGION e AWS_ROLE_ARN devem apontar para a mesma conta/regiao da Fase 4."
+            exit 1
+          fi
+
+      # Baixa o codigo do repositorio para dentro deste runner.
+      - name: Checkout do codigo
+        # Baixa o codigo. Repetido em todo job porque cada um roda numa maquina isolada.
+        uses: actions/checkout@v4
+
+      # Monta a tag no padrao exigido pelo enunciado: v1.0.0-<commit>
+      # (exemplo literal do PDF: v1.0.0-a1b2c3d).
+      - name: Calcular a tag da imagem
+        # "id" permite referenciar a saida deste passo mais adiante.
+        id: tag
+        # Bloco de shell. O pipe indica varias linhas de comando.
+        run: |
+          # GITHUB_SHA e o hash completo (40 chars) do commit atual.
+          # cut pega os 7 primeiros, que e o formato curto do Git.
+          SHORT_SHA=$(echo "${GITHUB_SHA}" | cut -c1-7)
+          # Escrever em $GITHUB_OUTPUT e como um passo devolve valor
+          # para os proximos passos e para o bloco outputs do job.
+          echo "image_tag=v1.0.0-${SHORT_SHA}" >> "$GITHUB_OUTPUT"
+          # Ecoa no log para facilitar a conferencia na gravacao.
+          echo "Tag desta execucao: v1.0.0-${SHORT_SHA}"
+
+      # Constroi a imagem e deixa apenas na maquina do runner, com uma
+      # tag temporaria. O scan roda ANTES de qualquer envio ao ECR:
+      # imagem reprovada nao pode existir no registro nem um instante.
+      - name: Build da imagem Docker (O-17)
+        # Roda dentro da pasta do servico, nao na raiz do monorepo.
+        working-directory: services/${{ inputs.service }}
+        # O ponto final indica que o Dockerfile esta na pasta atual.
+        run: docker build -t "${{ inputs.service }}:scan" .
+
+      # Segunda camada de seguranca. O job sca olhou as dependencias
+      # do codigo; aqui o alvo e a imagem inteira, incluindo os pacotes
+      # do sistema operacional que vem da imagem base.
+      - name: Scan da imagem com Trivy (O-18)
+        # Action oficial do Trivy, presa por SHA de commit e nao por tag.
+        # Por que SHA: uma tag pode ser movida para outro commit pelo dono
+        # do repositorio; um SHA nao. E a forma mais segura de fixar action
+        # de terceiro, e impede que codigo novo entre no nosso pipeline sem
+        # revisao. O comentario ao lado diz a que versao o SHA corresponde -
+        # confirmado em 2026-09-08 pela API do GitHub, e e o mesmo pin que a
+        # branch main ja usa com o CI verde.
+        #
+        # A versao anterior aqui era "@0.28.0", que NAO EXISTE - por isso os
+        # 5 jobs de SCA morriam em "Unable to resolve action".
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        # Parametros passados para a action declarada acima.
+        with:
+          # image = varre uma imagem Docker, nao arquivos soltos.
+          scan-type: image
+          # A imagem local criada no passo anterior.
+          image-ref: ${{ inputs.service }}:scan
+          # Mesma regra de bloqueio do SCA.
+          severity: CRITICAL
+          # Achou algo na severidade acima: falha o job.
+          exit-code: "1"
+          # Mesma decisao do job de SCA acima (F-042): nao esconder
+          # CRITICAL sem correcao. Excecao pontual, se precisar, entra
+          # em `.trivyignore` com justificativa.
+          ignore-unfixed: false
+          # Lista de excecoes nominais. Sem esta linha o Trivy ainda
+          # procuraria um .trivyignore na pasta atual, mas declarar o
+          # caminho deixa a dependencia explicita para quem le o
+          # workflow - e evita depender de qual pasta o runner usa.
+          trivyignores: .trivyignore
+          # Saida em tabela, legivel no log da execucao.
+          format: table
+
+      # Troca o token OIDC do GitHub por credencial temporaria da AWS.
+      # Nao ha secret de chave configurado no repositorio: a confianca
+      # vem da policy da role, que so aceita token deste repositorio.
+      - name: Autenticar na AWS via OIDC (S-01)
+        # Action oficial da AWS que faz a troca do token OIDC.
+        uses: aws-actions/configure-aws-credentials@v4
+        # Parametros passados para a action declarada acima.
+        with:
+          # Role definida no env do topo, criada pelo modulo iam-ci.
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          # Regiao onde a credencial sera usada.
+          aws-region: ${{ env.AWS_REGION }}
+          # Nome da sessao: aparece no CloudTrail e permite auditar
+          # qual servico fez qual chamada (S-07).
+          role-session-name: gh-actions-${{ inputs.service }}
+
+      # Faz o docker login no ECR usando a credencial temporaria acima.
+      # A action busca o token do ECR e configura o Docker sozinha.
+      - name: Login no Amazon ECR (O-19)
+        # Action oficial da AWS que configura o Docker para o ECR.
+        uses: aws-actions/amazon-ecr-login@v2
+
+      # Renomeia a imagem ja aprovada e envia ao registro.
+      - name: Push para o ECR (O-20)
+        # Traz a tag calculada para dentro do shell deste passo.
+        env:
+          # Tag calculada no passo "Calcular a tag da imagem".
+          IMAGE_TAG: ${{ steps.tag.outputs.image_tag }}
+        # Bloco de shell. O pipe indica varias linhas de comando.
+        run: |
+          # Tag imutavel com o hash do commit: e a que o GitOps
+          # referencia e a que prova a rastreabilidade exigida.
+          docker tag "${{ inputs.service }}:scan" "${ECR_REGISTRY}/${{ inputs.service }}:${IMAGE_TAG}"
+          # Tag "latest": conveniencia para inspecao manual. Nao e
+          # usada pelo deploy, justamente por nao ser rastreavel.
+          docker tag "${{ inputs.service }}:scan" "${ECR_REGISTRY}/${{ inputs.service }}:latest"
+          # Envia as duas. As camadas ja enviadas sao reaproveitadas.
+          docker push "${ECR_REGISTRY}/${{ inputs.service }}:${IMAGE_TAG}"
+          docker push "${ECR_REGISTRY}/${{ inputs.service }}:latest"
+
+  # ==========================================================
+  # JOB 6 - GITOPS: atualizar a tag no repositorio (O-24)
+  # ==========================================================
+  # Este job fecha o ciclo. O CI NAO faz kubectl apply (O-26): ele so
+  # escreve a nova tag no Git e para. Quem aplica no cluster e o
+  # ArgoCD, que observa a pasta gitops/ e sincroniza sozinho (O-25).
+  # ==========================================================
+  gitops:
+    name: Atualizar tag no GitOps
+    # Runner Ubuntu descartavel, um por job. Nasce limpo a cada execucao.
+    runs-on: ubuntu-latest
+
+    # So faz sentido depois que a imagem existe no ECR. Referenciar
+    # "image" aqui tambem e o que libera o acesso ao output dele.
+    needs: [image]
+    # Mesma trava do job anterior: so na main, so em push.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    # Permissoes do GITHUB_TOKEN neste job. Declarar aqui substitui o conjunto herdado.
+    permissions:
+      # ESCRITA no repositorio: este job comita a alteracao da tag.
+      # E a unica permissao de escrita em todo o pipeline.
+      contents: write
+
+    # SEM bloco `concurrency` aqui, e a ausencia e deliberada.
+    #
+    # A primeira versao usava um grupo compartilhado pelos 5 servicos,
+    # esperando que eles entrassem em FILA. Nao e o que o GitHub faz: por
+    # grupo ele mantem no maximo UM rodando e UM pendente, e CANCELA o
+    # pendente anterior sempre que chega mais um. Com 5 servicos em
+    # paralelo isso derruba execucoes por CANCELAMENTO, nao por erro -
+    # observado na main em 2026-09-09, com o analytics-service cancelado.
+    #
+    # A disputa pelo mesmo arquivo e resolvida no proprio passo de envio,
+    # mais abaixo, por um laco que RECALCULA a alteracao sobre o estado
+    # mais recente do remoto a cada tentativa.
+
+    # Passos deste job, executados de cima para baixo.
+    steps:
+      # Baixa o codigo do repositorio para dentro deste runner.
+      - name: Checkout do codigo
+        # Baixa o codigo. Repetido em todo job porque cada um roda numa maquina isolada.
+        uses: actions/checkout@v4
+        # Parametros passados para a action declarada acima.
+        with:
+          # 0 = historico completo. O padrao (1) traz so o ultimo
+          # commit, e sem historico o "git pull --rebase" do fim falha.
+          fetch-depth: 0
+
+      # O kubectl embutido no runner renderiza Kustomize mas NAO tem o
+      # subcomando "edit" (F-027). Por isso o binario standalone.
+      - name: Instalar kustomize (P-036)
+        # Bloco de shell. O pipe indica varias linhas de comando.
+        run: |
+          # Baixa o tar.gz da release fixada no env do topo.
+          # O %2F no meio da URL e a barra do nome da tag, codificada.
+          curl -sSLo kustomize.tar.gz \
+            "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv${KUSTOMIZE_VERSION}/kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz"
+          # Extrai o binario no diretorio atual.
+          tar -xzf kustomize.tar.gz
+          # Move para uma pasta do PATH, para poder chamar pelo nome.
+          sudo mv kustomize /usr/local/bin/
+          # Confirma no log qual versao ficou instalada.
+          kustomize version
+
+      # ----------------------------------------------------------
+      # ATUALIZAR A TAG E ENVIAR (O-24)
+      # ----------------------------------------------------------
+      # POR QUE UM LACO QUE REFAZ TUDO A CADA TENTATIVA
+      #
+      # Os 5 pipelines rodam em paralelo e escrevem no MESMO arquivo. A
+      # primeira versao deste passo calculava a alteracao uma vez e
+      # tentava `git pull --rebase` em caso de rejeicao. Isso falhou na
+      # main em 2026-09-09: o rebase conflita (mesma linha, arquivos
+      # diferentes na origem), o repositorio fica no meio do rebase, e
+      # TODA tentativa seguinte morre em "unmerged files" sem nem tentar.
+      #
+      # Aqui a logica e outra: a cada tentativa o runner joga fora o que
+      # tinha, busca o estado atual do remoto e REAPLICA apenas a nossa
+      # linha. Nao existe conflito possivel, porque nunca se tenta
+      # mesclar dois estados - so se reescreve um campo sobre a versao
+      # mais recente. E idempotente e nao depende de ordem.
+      - name: Atualizar a tag e enviar
+        env:
+          # Tag publicada pelo job image, recebida via needs.
+          IMAGE_TAG: ${{ needs.image.outputs.image_tag }}
+        run: |
+          # Identidade do autor. A conta de bot do proprio GitHub Actions
+          # deixa claro no historico que a alteracao foi automatica.
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # 5 tentativas. Com 5 servicos concorrendo, a pior fila
+          # possivel tem 5 posicoes.
+          for tentativa in 1 2 3 4 5; do
+            echo "--- tentativa ${tentativa} ---"
+
+            # 1. Pega o estado mais recente da main e descarta qualquer
+            #    coisa local. E o reset que elimina a chance de conflito.
+            git fetch origin main
+            git reset --hard origin/main
+
+            # 2. Reaplica SO a nossa linha, sobre esse estado novo.
+            (
+              cd gitops/overlays/prod
+              kustomize edit set image                 "${{ inputs.service }}=${ECR_REGISTRY}/${{ inputs.service }}:${IMAGE_TAG}"
+            )
+
+            # 3. Se nada mudou, outro pipeline ja gravou esta mesma tag
+            #    (ou e reexecucao do mesmo commit). Nao ha o que fazer.
+            if git diff --quiet; then
+              echo "A tag ja esta correta no repositorio. Nada a enviar."
+              exit 0
+            fi
+
+            # Mostra o diff no log. E ESTA saida que aparece no video
+            # como evidencia do O-30: uma unica linha alterada.
+            echo "--- diff gerado ---"
+            git --no-pager diff
+
+            # 4. Comita. O [skip ci] impede que este commit dispare os
+            #    pipelines de novo - cinto e suspensorio, ja que os
+            #    workflows tambem filtram por services/**.
+            git add gitops/overlays/prod/kustomization.yaml
+            git commit -m "chore(gitops): ${{ inputs.service }} para ${IMAGE_TAG} [skip ci]"
+
+            # 5. Tenta enviar. Se outro servico chegou primeiro, o push
+            #    e rejeitado e a proxima volta recomeca do estado novo.
+            if git push origin HEAD:main; then
+              echo "Commit enviado com sucesso."
+              exit 0
+            fi
+
+            # Espera crescente: 3s, 6s, 9s... evita que os 5 servicos
+            # tentem de novo exatamente no mesmo instante.
+            espera=$((tentativa * 3))
+            echo "Push rejeitado (outro servico chegou antes). Nova tentativa em ${espera}s."
+            sleep "${espera}"
+          done
+
+          # Esgotadas as tentativas, falha explicitamente. Melhor o
+          # pipeline vermelho do que a tag em silencio desatualizada.
+          echo "Nao foi possivel enviar o commit apos 5 tentativas."
+          exit 1

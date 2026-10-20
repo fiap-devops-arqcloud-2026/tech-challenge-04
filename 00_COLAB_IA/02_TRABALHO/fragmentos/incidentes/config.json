@@ -1,0 +1,28 @@
+{
+  "pasta": "04.Automação de incidentes",
+  "titulo": "Automação de incidentes",
+  "subtitulo": "Do sinal acionável ao Self-Healing: contexto, comunicação, execução e aprendizado.",
+  "nivel": "Introdutório a avançado, com exemplos Python comentados",
+  "agente": "Codex",
+  "data": "2026-09-17",
+  "revisao": "Leitura integral e conferência visual dos exemplos",
+  "fragmentos": [
+    "00-visao-geral.html",
+    "01-glossario.html",
+    "02-aula-01.html",
+    "03-aula-02.html",
+    "04-aula-03.html",
+    "05-aula-04.html",
+    "06-aula-05.html",
+    "07-aula-06.html",
+    "08-aula-07.html",
+    "09-ciclo.html",
+    "10-comparativo.html",
+    "11-aplicacao.html",
+    "12-boas-praticas.html",
+    "13-outros-modulos.html",
+    "14-limites.html",
+    "15-revisao.html"
+  ],
+  "conexoes": "conexoes.json"
+}

@@ -1,0 +1,101 @@
+
+<section id="telemetria">
+<h2>Baixo nível 4 — o caminho da telemetria</h2>
+<p>O OTel Collector roda em dois modos, instalados como duas releases do mesmo chart (<code>opentelemetry-collector</code>, que exige escolher <code>mode</code> e a imagem). O <strong>agent</strong> é um DaemonSet: um pod por nó, que lê do disco os logs de todos os contêineres daquele nó. O <strong>gateway</strong> é um Deployment central: recebe os traces dos serviços e os logs dos agents, processa e decide o destino.</p>
+
+<figure class="fig">
+<div class="scroll">
+<svg class="dg" viewBox="0 0 1000 480" role="img" aria-label="Os pods do togglemaster enviam traces por OTLP/HTTP na porta 4318 direto ao pipeline de traces do gateway, e escrevem logs em stdout, que vão para /var/log/pods no disco do nó. O agent, um por nó, lê esses arquivos com o receiver filelog e envia por OTLP ao pipeline de logs do gateway. No gateway, o pipeline de traces exporta ao New Relic por OTLP com header api-key e alimenta o conector spanmetrics, que gera o pipeline de métricas; este envia ao Prometheus por remote write. O pipeline de logs envia ao Loki por OTLP/HTTP no caminho /otlp. O Prometheus também faz scrape dos exporters de infraestrutura. O Grafana consulta o Prometheus com PromQL e o Loki com LogQL.">
+<defs>
+<marker id="m5" class="mk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker>
+<marker id="m5a" class="mk acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker>
+</defs>
+
+<rect class="chg" x="20" y="186" width="170" height="50" rx="6"/>
+<text class="b" x="105" y="206" text-anchor="middle">Pods togglemaster</text>
+<text class="s" x="105" y="224" text-anchor="middle">SDK OpenTelemetry</text>
+<line class="ln dash" x1="105" y1="236" x2="105" y2="271" marker-end="url(#m5)"/>
+<text class="lbl" x="113" y="258">stdout</text>
+<rect class="box" x="20" y="274" width="170" height="50" rx="6"/>
+<text class="b" x="105" y="294" text-anchor="middle">Disco do nó</text>
+<text class="s" x="105" y="312" text-anchor="middle">/var/log/pods</text>
+
+<rect class="new" x="240" y="274" width="160" height="50" rx="6"/>
+<text class="b" x="320" y="294" text-anchor="middle">Agent</text>
+<text class="s" x="320" y="312" text-anchor="middle">DaemonSet · 1 por nó</text>
+<line class="ln acc" x1="190" y1="299" x2="236" y2="299" marker-end="url(#m5a)"/>
+<text class="lbl acc" x="214" y="292" text-anchor="middle">filelog</text>
+
+<rect class="zone" x="450" y="70" width="250" height="276" rx="10"/>
+<text class="zl" x="462" y="88">Gateway · Deployment</text>
+<rect class="new" x="465" y="98" width="220" height="50" rx="6"/>
+<text class="b" x="575" y="118" text-anchor="middle">pipeline metrics</text>
+<text class="s" x="575" y="136" text-anchor="middle">memory_limiter · batch</text>
+<rect class="new" x="465" y="186" width="220" height="50" rx="6"/>
+<text class="b" x="575" y="206" text-anchor="middle">pipeline traces</text>
+<text class="s" x="575" y="224" text-anchor="middle">k8sattributes · batch</text>
+<rect class="new" x="465" y="274" width="220" height="50" rx="6"/>
+<text class="b" x="575" y="294" text-anchor="middle">pipeline logs</text>
+<text class="s" x="575" y="312" text-anchor="middle">memory_limiter · batch</text>
+<line class="ln acc" x1="575" y1="186" x2="575" y2="152" marker-end="url(#m5a)"/>
+<text class="lbl acc" x="583" y="173">conector spanmetrics</text>
+
+<line class="ln acc" x1="190" y1="211" x2="461" y2="211" marker-end="url(#m5a)"/>
+<text class="lbl acc" x="326" y="204" text-anchor="middle">OTLP/HTTP :4318</text>
+<line class="ln acc" x1="400" y1="299" x2="461" y2="299" marker-end="url(#m5a)"/>
+<text class="lbl acc" x="431" y="292" text-anchor="middle">OTLP</text>
+
+<rect class="new" x="790" y="10" width="190" height="56" rx="6"/>
+<text class="b" x="885" y="30" text-anchor="middle">Infraestrutura</text>
+<text class="s" x="885" y="45" text-anchor="middle">node-exporter · kubelet</text>
+<text class="s" x="885" y="59" text-anchor="middle">kube-state-metrics</text>
+<rect class="new" x="790" y="96" width="190" height="54" rx="6"/>
+<text class="b" x="885" y="118" text-anchor="middle">Prometheus</text>
+<text class="s" x="885" y="136" text-anchor="middle">remote write · scrape</text>
+<line class="ln" x1="885" y1="96" x2="885" y2="69" marker-end="url(#m5)"/>
+<text class="lbl" x="893" y="86">scrape</text>
+<rect class="new" x="790" y="184" width="190" height="54" rx="6"/>
+<text class="b" x="885" y="206" text-anchor="middle">New Relic</text>
+<text class="s" x="885" y="224" text-anchor="middle">OTLP · header api-key</text>
+<rect class="new" x="790" y="272" width="190" height="54" rx="6"/>
+<text class="b" x="885" y="294" text-anchor="middle">Loki</text>
+<text class="s" x="885" y="312" text-anchor="middle">OTLP em /otlp</text>
+
+<line class="ln acc" x1="685" y1="123" x2="786" y2="123" marker-end="url(#m5a)"/>
+<text class="lbl acc" x="737" y="116" text-anchor="middle">remote write</text>
+<line class="ln acc" x1="685" y1="211" x2="786" y2="211" marker-end="url(#m5a)"/>
+<text class="lbl acc" x="737" y="204" text-anchor="middle">OTLP</text>
+<line class="ln acc" x1="685" y1="299" x2="786" y2="299" marker-end="url(#m5a)"/>
+<text class="lbl acc" x="737" y="292" text-anchor="middle">OTLP/HTTP</text>
+
+<rect class="new" x="450" y="400" width="250" height="56" rx="6"/>
+<text class="b" x="575" y="424" text-anchor="middle">Grafana</text>
+<text class="s" x="575" y="442" text-anchor="middle">dashboard · Explore · alerta</text>
+<path class="ln" d="M885 326V428H704" marker-end="url(#m5)"/>
+<text class="lbl" x="800" y="421" text-anchor="middle">LogQL</text>
+<path class="ln" d="M980 123H992V445H704" marker-end="url(#m5)"/>
+<text class="lbl" x="800" y="461" text-anchor="middle">PromQL</text>
+</svg>
+</div>
+<figcaption>Dois caminhos para dois tipos de dado. Os traces saem do SDK direto para o gateway. Os logs saem do jeito que já saem hoje — texto em <code>stdout</code> — e o agent os recolhe do disco do nó, o que cobre "todos os logs dos contêineres do cluster" (REQ-OBR-08) sem mudar o <code>logging</code> dos serviços. As métricas de CPU e memória do cluster não passam pelo Collector: o Prometheus as busca direto nos exporters.</figcaption>
+</figure>
+
+<h3>Os componentes de cada pipeline</h3>
+<div class="tablewrap"><table>
+<thead><tr><th>Onde</th><th>Pipeline</th><th>Receivers</th><th>Processors</th><th>Exporters</th></tr></thead>
+<tbody>
+<tr><td>Agent</td><td>logs</td><td><code>filelog</code> em <code>/var/log/pods</code> (preset <code>logsCollection</code> do chart)</td><td><code>memory_limiter</code>, <code>k8sattributes</code> (preset <code>kubernetesAttributes</code>), <code>transform</code> que copia o <code>trace_id</code> da linha para o registro, <code>batch</code></td><td><code>otlp</code> → gateway <code>:4317</code></td></tr>
+<tr><td rowspan="3">Gateway</td><td>traces</td><td><code>otlp</code> (<code>:4317</code> gRPC e <code>:4318</code> HTTP)</td><td><code>memory_limiter</code>, <code>k8sattributes</code>, <code>batch</code></td><td><code>otlp/newrelic</code> e o conector <code>spanmetrics</code></td></tr>
+<tr><td>metrics</td><td>conector <code>spanmetrics</code></td><td><code>memory_limiter</code>, <code>batch</code></td><td><code>prometheusremotewrite</code> → <code>/api/v1/write</code></td></tr>
+<tr><td>logs</td><td><code>otlp</code> (vindo do agent)</td><td><code>memory_limiter</code>, <code>batch</code></td><td><code>otlphttp/loki</code> → <code>http://&lt;loki&gt;/otlp</code>; opcional: <code>otlp/newrelic</code> só para o namespace <code>togglemaster</code></td></tr>
+</tbody></table></div>
+
+<h3>Por que cada escolha</h3>
+<div class="card">
+<p><strong>O conector <code>spanmetrics</code> faz três requisitos com um sinal só.</strong> Ele conta os spans por serviço e por <code>status.code</code> e mede a duração — as métricas de taxa, erro e latência. Daí saem o painel de taxa de requisições (REQ-OBR-10b) e a expressão da regra de alerta (REQ-OBR-16), sem uma linha de métrica escrita nos serviços. O README do conector dá os nomes <code>traces.span.metrics.calls</code> e <code>traces.span.metrics.duration</code>, com as dimensões <code>service.name</code>, <code>span.name</code>, <code>span.kind</code> e <code>status.code</code>. O nome exato depois da conversão para o Prometheus fica para conferir na E3 — o próprio README mostra um exemplo com <code>calls_total</code>. O conector está marcado como <em>alpha</em>.</p>
+<p><strong>O Prometheus não aceita escrita por padrão.</strong> No chart <code>kube-prometheus-stack</code> (versão 91.5.0 na data da consulta), <code>prometheus.prometheusSpec.enableRemoteWriteReceiver</code> vem <code>false</code>. Precisa ser ligado, senão o exporter do gateway recebe erro. Existe também <code>enableOTLPReceiver</code>, igualmente desligado — alternativa válida, mas o <code>remote write</code> é o caminho que o README do <code>spanmetrics</code> documenta.</p>
+<p><strong>O Loki recebe OTLP nativo.</strong> A documentação do Loki manda usar o exporter <code>otlphttp</code> com <code>endpoint: http://&lt;loki-addr&gt;/otlp</code> e exige <code>allow_structured_metadata: true</code>, que já é o padrão a partir do Loki 3.0.</p>
+<p><strong>O New Relic recebe só traces</strong> (e, opcionalmente, os logs do <code>togglemaster</code>). Ele calcula sozinho as métricas de APM a partir dos spans; mandar também as do <code>spanmetrics</code> duplicaria dados e gastaria a cota de 100 GB/mês. Endpoint US: <code>otlp.nr-data.net</code>, portas 4317 e 4318, header <code>api-key</code> com a license key — conferidos na documentação oficial.</p>
+<p><strong>O Alertmanager pode ser desligado.</strong> Ele vem ligado por padrão no chart, mas a regra de alerta vai morar no Grafana. Desligar com <code>alertmanager.enabled: false</code> economiza memória num cluster apertado.</p>
+</div>
+</section>
