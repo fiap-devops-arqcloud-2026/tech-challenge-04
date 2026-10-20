@@ -1,6 +1,6 @@
 # Resultado e validação da importação Fase 3 → Fase 4
 
-TL;DR: base 6100879 importada com histórico por `import-fase3`, com os materiais atuais do 04 preservados. README, CI/CD, Terraform e ArgoCD preparados para o repositório 04 e a conta AWS pendente. Integração local à dev será registrada no fechamento; sem push, PR, main ou implantação.
+TL;DR: base 6100879 importada com histórico por `import-fase3`, com os materiais atuais do 04 preservados. README, CI/CD, Terraform e ArgoCD preparados para o repositório 04 e a conta AWS pendente. Integração local à dev concluída (merge cb81b00); main intacta. Sem push, PR ou implantação.
 
 Última atualização: 2026-10-20, Codex.
 
@@ -55,3 +55,9 @@ A revisão somente leitura de CI, README, Terraform/GitOps e preservação encon
 2. Com Docker Linux engine disponível, executar `scripts/test-compose.sh` com projeto local isolado. Remover somente os volumes descartáveis criados por esse ensaio após verificar resultados.
 3. Começar E1 (instrumentação/Collector local/New Relic), mantendo trabalho na dev.
 4. PR/main, push e implantação somente quando solicitados. A importação não implementa observabilidade nem comprova recursos de nuvem ativos.
+
+## Integração concluída
+
+Em 2026-10-20, a adaptação `31f92e4` foi integrada pelo merge `cb81b00` à dev. A branch `import-fase3` foi preservada. Main do 04 permanece em `003a7075a8908011ece83d317d5c700ac2525b58`; a fonte 03 permanece em `6100879`, com checkout limpo. O histórico de ambos os projetos é alcançável a partir da dev. Nenhum PR, push ou operação de nuvem.
+
+LOG, PENDENCIAS, DECISOES e DOSSIE atualizados; handoff revisado por outro agente. O snapshot anterior à autorização está rotulado como histórico para evitar repetir a importação. Memória global atualizada a pedido do usuário em `C:/Users/Gabriel/.codex/memories/extensions/ad_hoc/notes/2026-10-20T18-29-00-tech-challenge-04-importacao.md`, sem credenciais ou dados da conta.

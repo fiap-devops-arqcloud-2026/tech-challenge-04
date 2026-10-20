@@ -109,3 +109,17 @@ Proposta: checkpoint revisado do 04, branch de importação e merge da base 6100
 Alternativas: cópia perde ancestralidade; fork exige reincorporar o histórico/documentos do 04; subtree em subpasta muda caminhos operacionais sem necessidade. Plano em 02_TRABALHO/PLANO_IMPORTACAO_FASE3_2026-10-20_v01.md.
 
 Status: recomendação, não executada. Usuário perguntou a melhor opção; não houve autorização nova para commit/push.
+
+## D-014 — Importação autorizada e integrada na dev (concluída, 2026-10-20)
+
+Contexto: usuário autorizou explicitamente importar o código, manter os materiais04, criar a branch exata import-fase3 e fazer merge local para dev, ajustar README/CI/ArgoCD e atualizar memória/contexto. PR/main foram expressamente adiados; a contaAWS nova ainda será informada.
+
+Decisão executada: checkpoint4c76a2d; merge491cd2b com segundo pai6100879 (histórico03); adaptação31f92e4; mergecb81b00 emdev. Branchimport preservada; main04=003a707 e Fase3=6100879 intactas. Sem push/PR/deploy. As permissões anteriores limitadas aos estudos foram ampliadas somente para a execução autorizada; não pedir novamente a autorização já dada.
+
+Por quê: preserva o histórico de ambos repositórios e os caminhos operacionais. Documentos e fontes04 intactos; documentos operacionais antigos mantidos como históricos com aviso. Estado/backend da conta antiga não foi transferido.
+
+Configuração: AWS por repositoryvars; expected_aws_account_id obrigatório; chaves S3 phase4/prod; Argo/OIDC repo04, main como destino futuro. Sentinelas tornam explícito o runtime pendente. Não implementar observabilidade durante a importação.
+
+Alternativas: cópia simples e fork/subtree descartados pela D-013. D-013 deixou de ser mera proposta com a autorização desta sessão; esta ADR registra o resultado.
+
+Validação: verificações locais e revisão independente aprovadas; único P2 (validador incluindo guias03) corrigido por seleção baseada no inventário04. Teste integrado Docker não executado por indisponibilidade da engine; P-005. Nenhuma execução do CIremoto foi alegada.

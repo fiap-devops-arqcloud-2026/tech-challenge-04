@@ -1,8 +1,34 @@
 # Log de trabalho
 
-TL;DR: AWS mantida por escolha do usuário em 2026-10-20. Recomendação: importar a Fase3 com histórico para branch do 04. E0 pendente; nova conta/crédito não confirmados; nenhuma importação executada.
+TL;DR: importação com histórico concluída na dev (merge cb81b00), README/CI/ArgoCD adaptados e materiais do 04 preservados. Main/push/PR/nuvem intactos. Conta AWS e integração Docker permanecem pendentes.
 
 Última atualização: 2026-10-20, Codex.
+
+## 2026-10-20 18:30 (America/Sao_Paulo, UTC-03:00) — Codex — Handoff e memória conferidos
+
+Feito: memória global atualizada por pedido explícito do usuário em `C:/Users/Gabriel/.codex/memories/extensions/ad_hoc/notes/2026-10-20T18-29-00-tech-challenge-04-importacao.md`, sem credenciais ou dados da conta. LOG, PENDENCIAS, DECISOES e DOSSIE registram a importação concluída e os limites da validação. Revisão independente de continuidade apontou uma ambiguidade no snapshot anterior à autorização; a seção 14 do DOSSIE agora está rotulada como histórica e superada pela seção 15.
+
+Decisões/Por quê: D-014 mantém a dev como ramo de trabalho; `import-fase3` preservada e já integrada. Não houve push, PR, mudança na main ou operação AWS. Nenhum trabalho de observabilidade foi declarado como implementado.
+
+Verificação final: os 39 arquivos preexistentes de docs/enunciado da Fase 4 continuam idênticos por SHA-256; os 933 arquivos do manifesto inicial continuam presentes. As duas bases e `import-fase3` são ancestrais da dev. Main do 04 continua em `003a707`, Fase 3 continua limpa em `6100879`. Validações de código/configuração descritas no relatório permanecem aprovadas; integração Docker não executada por indisponibilidade da engine. O teste de handoff foi satisfeito: LOG + PENDENCIAS identificam o estado atual e os próximos passos sem repetir a importação.
+
+Arquivos/de-para: atualizados `LEIA-PRIMEIRO.md`, `PENDENCIAS_E_PROXIMOS_PASSOS.md`, `LOG_DE_TRABALHO.md`, `DECISOES.md`, `DOSSIE_CONTEXTO.md` e `02_TRABALHO/RESULTADO_IMPORTACAO_FASE3_2026-10-20_v01.md`. Versões anteriores do contexto preservadas em `_ARQUIVO_MORTO/2026-10-20_fechamento-importacao`. Evidência Git em `02_TRABALHO/integracao-dev-2026-10-20_v01.json`.
+
+Estado p/ o próximo agente: P-004 concluída; continuar na dev. P-003 aguarda a conta e configuração de backend/cotas/orçamento; P-005 aguarda Docker para executar `bash scripts/test-compose.sh`; E1 vem depois. Não usar estado ou identidades da conta antiga; não repetir importação nem publicar sem pedido. O próximo commit local somente documenta este fechamento, sem alterar código.
+
+## 2026-10-20 18:20 (America/Sao_Paulo, UTC-03:00) — Codex — Importação concluída e merge na dev
+
+Feito: importação com histórico da base6100879 viaimport-fase3, preservando materiais04. Checkpoint4c76a2d, mergehistórico491cd2b, adaptação31f92e4 e merge localcb81b00 na dev. Main04 segue003a707; branchimport preservada; source03 limpo. README/CI/CD/Argo/OIDC repo04, estados próprios, guards da conta e sentinelas pendingAWS preparados.
+
+Decisões/Por quê: D-014 executa autorização desta sessão. DadosAWS ainda pendentes; nenhum recurso, CIremoto, push ou PR. Prodsegue main como destino futuro; trabalho atualna dev. Guias/insumos preservados; acervo03 separado pelo inventário.
+
+Verificação: todos933arquivos preexistentes mantidos;39docs/enunciado04 intactos porhash. BuildsGo e ASTPython aprovados; Go não tem testesunitários. Terraform3initsembackend/3validate/fmt, 23objetosGitOps,9YAML e10casosguardAWS, Bash, Composeconfig e5guias/README/links aprovados. Revisão independente achou P2 no globdosguias, corrigido e revalidado. Composeintegrado NÃO executado: DockerLinuxengine indisponível, start50stimeout; P-005. actionlint ausente, usado parserYAML/regraslocais. Arquivosarquivados preservam aformatação original; diff--check do código vigente aprovado (snapshot.gitignore herdado temblanklineEOF).
+
+Arquivos/de-para: relatórioRESULTADO_IMPORTACAO_FASE3_2026-10-20_v01.md, manifesto/verificação/integracaoJSON, README,CLAUDE,.github,Terraform,GitOps e3ferramentasdeguias. Originais substituídos em_ARQUIVO_MORTO/FASE3_BASE_6100879 e2026-10-20_ferramentas-guias. Contexto/LOG/PENDENCIAS/DECISOES antes deste fechamento movidos para2026-10-20_fechamento-importacao; histórico do LOG atual mantido. Renderizações/extrações~230MB preservadas localmenteignoradas.
+
+Memória: usuário pediu atualização explícita; nota durável será gravada em C:/Users/Gabriel/.codex/memories/extensions/ad_hoc/notes com branch/escopo/pendências, sem credenciais ou dados da conta.
+
+Estado p/ o próximo agente: trabalhar somente na dev; importaçãoP-004 concluída. Aguardar conta paraP-003/E0restante; iniciarDocker/repetirensaioP-005 e partirE1. Não repetirimportação, não alterar03/main, não publicarsem pedido. Contexto vigente00_COLAB_IA na raiz; docs/00_COLAB_IA é histórico03.
 
 ## 2026-10-20 16:20 (America/Sao_Paulo, UTC-03:00) — Codex — Início da importação autorizada
 

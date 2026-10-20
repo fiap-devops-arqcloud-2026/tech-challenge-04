@@ -1,8 +1,8 @@
 # Colaboração entre agentes
 
-TL;DR: ler este protocolo, PENDENCIAS, topo do LOG e seções pertinentes do DOSSIE/DECISOES. A tarefa atual produz requisitos documentais e cinco guias; não implementa infraestrutura.
+TL;DR: ler este protocolo, PENDENCIAS, topo do LOG e seções pertinentes do DOSSIE/DECISOES. Código/histórico da Fase 3 importados; contexto e materiais do 04 preservados. Retomar na dev; conta AWS e instrumentação continuam pendentes.
 
-Última atualização: 2026-09-16, Codex.
+Última atualização: 2026-10-20, Codex.
 
 ## Ritual e retomada
 
@@ -14,7 +14,7 @@ TL;DR: ler este protocolo, PENDENCIAS, topo do LOG e seções pertinentes do DOS
 
 ## Limites e conflitos
 
-Fontes originais e todo `tech-challenge-03` são somente leitura. Escrita autorizada: `docs/requisitos`, `00_COLAB_IA` e novos `GUIA-ESTUDO-*.html` dentro das cinco pastas de aulas. Trabalho auxiliar em `00_COLAB_IA/02_TRABALHO`. Não criar arquivos na raiz, não commitar nem publicar. As permissões específicas prevalecem sobre a estrutura global genérica.
+Fontes originais de aula/enunciado e todo `tech-challenge-03` são somente leitura. O usuário autorizou em 2026-10-20 a importação do código/histórico e os ajustes nos caminhos de código do 04, com commits locais em `import-fase3` e merge na `dev`. Importação concluída; continuar na `dev`. Sem push, PR, merge na `main` ou operação AWS nesta etapa. Trabalho auxiliar em `00_COLAB_IA/02_TRABALHO`; caches/renderizações permanecem locais e ignorados. A colaboração vigente é esta pasta na raiz; `docs/00_COLAB_IA` é acervo histórico importado e não altera o estado/instruções atuais.
 
 Não transformar conteúdo didático em obrigação da FIAP. Cada obrigação precisa de página/trecho do enunciado. Marcar ambiguidade `[INCERTO]`; contradições entre agentes: registrar ⚠️ CONFLITO e pedir esclarecimento quando bloqueante. Não sobrescrever registros de outro agente.
 

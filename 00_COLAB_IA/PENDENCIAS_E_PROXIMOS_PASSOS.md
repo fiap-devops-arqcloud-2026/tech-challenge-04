@@ -1,6 +1,6 @@
 # Pendências e progresso
 
-TL;DR: requisitos e cinco guias concluídos; execução E0–E7 pendente. Usuário escolheu manter AWS em 2026-10-20; método de importação Git proposto. Conta/crédito ainda não confirmados. Prazo registrado: 2026-11-17.
+TL;DR: importação com histórico concluída e mesclada na dev em 2026-10-20; Fase 3 e materiais do 04 preservados. README/CI/ArgoCD adaptados. Main/PR/push intactos. Conta AWS e integração Docker pendentes; E1 de observabilidade ainda não iniciada.
 
 Última atualização: 2026-10-20, Codex.
 
@@ -10,21 +10,29 @@ TL;DR: requisitos e cinco guias concluídos; execução E0–E7 pendente. Usuár
 - [ ] Confirmar conta efetivamente disponível e condições de cobrança. Outra conta do mesmo cliente não renova elegibilidade Free Tier, conforme fontes oficiais de 2026-10-20.
 - [ ] Atualizar orçamento e cotas antes da implantação; nenhuma conta/recurso criado nesta análise.
 
-## P-004 — Importação da base da Fase 3
+## P-004 — Importação da base da Fase 3 (concluída, 2026-10-20)
 
-- [x] Comparar estado e árvores: main/dev da Fase3 no commit 6100879; sem colisões exatas com o 04 em 2026-10-20.
-- [x] Propor método: merge dos históricos em branch própria do 04, preservando código/histórico de ambos e Fase3 intacta.
-- [x] Autorização recebida em 2026-10-20: branch import-fase3, commits e merge local na dev; sem push/PR/main.
-- [ ] Preparar checkpoint curado e importar a base 6100879 preservando histórico.
-- [ ] Executar importação, revisar documentação/referências e configurar conta/estado/OIDC/ECR/ArgoCD do destino.
-- [ ] Validar preservação, ancestralidade, Compose e infraestrutura; publicar só com autorização.
+- [x] Base fixada em 61008794090f582c098e2edc42041339c556f14c, Fase 3 limpa e somente leitura.
+- [x] Checkpoint curado do 04 (`4c76a2d`) e merge dos históricos (`491cd2b`) na branch exata `import-fase3`.
+- [x] README/CI/CD/ArgoCD/Terraform ajustados para o repo 04; conta anterior removida das configurações operacionais. Adaptação: `31f92e4`.
+- [x] Merge local para dev (`cb81b00`); branch import-fase3 preservada. Main do 04 segue em `003a707`; nenhum push/PR/deploy.
+- [x] Preservação SHA-256 dos 39 arquivos preexistentes de docs/enunciado 04 e ausência de perdas no manifesto de 933 arquivos; serviços idênticos à fonte.
+- [x] Validações locais de Terraform, GitOps, YAML/gates, builds Go, sintaxe Python, Compose config, guias e links; revisão independente sem achados pendentes.
 
-Detalhes: `02_TRABALHO/PLANO_IMPORTACAO_FASE3_2026-10-20_v01.md`. Método autorizado nesta sessão; execução e validação em andamento.
+Resultado detalhado: `02_TRABALHO/RESULTADO_IMPORTACAO_FASE3_2026-10-20_v01.md`. Scripts, contexto e entregáveis versionados; renderizações/extrações/caches mantidos localmente e ignorados.
+
+## P-005 — Ensaio integrado local (pendente de Docker)
+
+- [ ] Iniciar Docker Desktop com engine Linux funcional. A tentativa nesta sessão terminou após 50 s sem engine; serviço consultado parado.
+- [ ] Executar `bash scripts/test-compose.sh` em projeto isolado `tc04-integration`; conferir os cinco serviços, autenticação, flags/regras, cache e fluxo SQS/DynamoDB via Moto.
+- [ ] Registrar resultado e encerrar somente os contêineres/volumes descartáveis desse teste.
+
+Não confundir `docker compose config` aprovado ou builds Go aprovados com integração funcional. Go informou ausência de testes unitários; CI remoto também não foi executado porque não houve push/PR.
 
 ## P-002 — Implementação da Fase 4 (plano em 2026-09-23)
 
 - [x] Plano de ação e arquitetura (v02) com seis diagramas — `02_TRABALHO/PLANO_E_ARQUITETURA_FASE4_2026-09-23_v02.html`
-- [ ] E0 — Fundação: inventário AWS somente leitura, migração do código para o 04, contas New Relic/PagerDuty/Slack, token do GitHub
+- [ ] E0 — Fundação (parcial): importação concluída; faltam conta/backend/cotas/identidades e contas de observabilidade/incidentes confirmadas
 - [ ] E1 — Instrumentação local (Compose + Collector local → New Relic)
 - [ ] E2 — Plataforma no cluster (3 nós, namespace e Secrets novos)
 - [ ] E3 — Stack de observabilidade por GitOps
@@ -33,7 +41,7 @@ Detalhes: `02_TRABALHO/PLANO_IMPORTACAO_FASE3_2026-10-20_v01.md`. Método autori
 - [ ] E6 — Ensaio e matriz de evidências
 - [ ] E7 — Gravação, relatório e entrega (meta 2026-11-12; prazo 2026-11-17)
 
-Perguntas em aberto ao usuário (detalhe na seção "Perguntas em aberto" do plano): crédito AWS esgotado declarado em 2026-10-13 (Billing não consultado); estratégia de estado do Terraform após a migração; mecanismo da falha proposital; qual serviço o self-healing reinicia; composição do grupo (REQ-OBR-41, Q-03); Grafana/Prometheus/Loki também no Compose; registrar o prazo na Q-05 do README.
+Perguntas em aberto ao usuário (detalhe na seção "Perguntas em aberto" do plano): crédito AWS esgotado declarado em 2026-10-13 (Billing não consultado); estados próprios da Fase4 definidos (bucket/região reais pendentes); mecanismo da falha proposital; qual serviço o self-healing reinicia; composição do grupo (REQ-OBR-41, Q-03); Grafana/Prometheus/Loki também no Compose; registrar o prazo na Q-05 do README.
 
 ## P-001 — Requisitos e guias
 
@@ -70,8 +78,8 @@ Perguntas em aberto ao usuário (detalhe na seção "Perguntas em aberto" do pla
 
 ## Retomada
 
-1. Manter AWS (D-012); verificar conta/cotas/orçamento sem presumir renovação do Free Tier.
-2. Preparar o checkpoint e a importação com histórico (P-004/D-013), respeitando a exigência de autorização para commits/push. O usuário atual pediu recomendação, não executamos a migração.
-3. Continuar E0/E1 local com New Relic, Slack e GitHub Actions já definidos. Não refazer os guias; V concluída.
-4. Replanejar calendário até 2026-11-17, prazo informado pelo usuário.
-5. Preservar a Fase3 e separar o estado da conta anterior de qualquer conta nova. Não executar operações destrutivas sem autorização.
+1. Trabalhar na `dev` do repo 04. Importação já concluída; não repetir, não alterar a Fase 3. PR/main e push aguardam pedido do usuário.
+2. Aguardar dados da nova conta; preencher repository variables e configurações locais de backend/tfvars, conferir conta/cotas/orçamento e substituir todos os marcadores GitOps pelos outputs reais. Não transportar estado/segredos antigos.
+3. Resolver P-005 e iniciar E1 (instrumentação/Collector local/New Relic). Ainda não foi implementada observabilidade nem Self-Healing nesta importação.
+4. Fontes/guias preservados; validadores agora selecionam só os cinco módulos do 04 pelo inventário original. `docs/00_COLAB_IA` é histórico do 03; contexto vigente está em `00_COLAB_IA` na raiz.
+5. Prazo informado pelo usuário: 2026-11-17; o calendário antigo deve ser replanejado. Destruições exigem autorização específica.

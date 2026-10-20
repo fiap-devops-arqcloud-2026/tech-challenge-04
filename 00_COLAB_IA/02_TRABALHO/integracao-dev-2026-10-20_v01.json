@@ -1,0 +1,11 @@
+{
+  "checkpoint": "4c76a2d",
+  "import_merge": "491cd2b",
+  "adaptation": "31f92e4e29b6c5bc00fd07f7e317f8cd98014d53",
+  "dev_merge": "cb81b00d17ece342673138e62797877b786292c2",
+  "branch": "dev",
+  "main_unchanged": "003a7075a8908011ece83d317d5c700ac2525b58",
+  "push": false,
+  "pull_request": false,
+  "new_files_and_changes_staged_explicitly": 87
+}
