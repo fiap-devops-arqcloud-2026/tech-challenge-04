@@ -311,6 +311,27 @@ resource "kubernetes_manifest" "app_togglemaster" {
         namespace = var.app_namespace
       }
 
+      # QUEM MANDA NAS REPLICAS (Fase 4)
+      # ------------------------------------------------------
+      # Os Deployments do evaluation e do analytics declaram replicas: 1
+      # e tem HPA. Quando o HPA sobe para 2, o selfHeal ve "2 no cluster,
+      # 1 no Git", desfaz, o HPA sobe de novo - os dois brigam e a
+      # demonstracao de escala fica oscilando.
+      #
+      # Aqui o ArgoCD passa a ignorar /spec/replicas SO desses dois
+      # Deployments. O resto do objeto continua vigiado pelo selfHeal.
+      # Os outros servicos nao tem HPA, entao continuam com a contagem
+      # do Git.
+      ignoreDifferences = [
+        for nome in ["evaluation-service", "analytics-service"] : {
+          group        = "apps"
+          kind         = "Deployment"
+          name         = nome
+          namespace    = var.app_namespace
+          jsonPointers = ["/spec/replicas"]
+        }
+      ]
+
       # COMO SINCRONIZAR (O-25)
       syncPolicy = {
         automated = {
@@ -330,6 +351,11 @@ resource "kubernetes_manifest" "app_togglemaster" {
           # redundante - o namespace ja nasce em secrets.tf - mas
           # protege caso alguem o apague.
           "CreateNamespace=true",
+
+          # Faz o sync tambem respeitar o ignoreDifferences abaixo. Sem
+          # isto, o ArgoCD so deixa de MOSTRAR a diferenca, mas qualquer
+          # sync disparado por outra mudanca reaplicaria replicas: 1.
+          "RespectIgnoreDifferences=true",
         ]
 
         retry = {
