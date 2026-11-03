@@ -23,9 +23,14 @@ Segurança: o usuário colou no chat o e-mail e a senha da conta do PagerDuty pa
 - o login feito pelo usuário no painel do navegador;
 - para o Codex, uma chave de API somente leitura, criada pelo usuário.
 
-Falta conferir:
-- se o cartão apareceu no `#incidentes-tech-challenge` (14:40) e mudou para Resolved (14:43);
-- o push, que depende do app no celular (o usuário ainda não instalou).
+Conferido em seguida no Slack. O MCP do Slack foi autenticado pelo usuário e eu só li o canal:
+- O cartão do PagerDuty apareceu no `#incidentes-tech-challenge` às 14:40:35, 8 s depois do trigger, com urgência High e serviço ToggleMaster Fase 4.
+- A resposta no fio às 14:43:41 diz "Status changed to Resolved". **O 4.4 está cumprido**, faltando só os prints.
+- Achado 1: a integração do serviço se chama "PRTG Notification For PagerDuty Events API v2". No 2.5 foi escolhido o modelo do PRTG em vez do genérico "Events API V2". Funciona, mas o rótulo confunde no vídeo. Recomendado: adicionar a integração genérica e o usuário trocar a chave no `.env`.
+- Achado 2: o canal não tem a mensagem de teste do webhook (3.4); só aparece a entrada do app `grafana-alertas-tc4`. O webhook nunca foi confirmado. O teste daqui foi pedido ao usuário e **aguarda autorização**, porque envia mensagem.
+- Push: depende do app no celular. Opcional.
+
+Commit 9be5653 publicado; a busca pelo alias de e-mail no repositório não encontrou nada.
 
 ## 2026-11-03 14:30 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — Respostas do usuário, início do B2 e 4.4 sem notificação
 

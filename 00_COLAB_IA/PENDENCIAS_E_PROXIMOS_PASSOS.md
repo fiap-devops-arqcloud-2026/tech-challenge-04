@@ -27,10 +27,12 @@ Atualização 2026-11-03 11:31:
 
 Atualização 2026-11-03 14:30:
 - New Relic conferido pelo usuário ("NR ok"). As 4 recomendações do B2 foram aceitas (D-019).
-- 4.4: teste disparado daqui às 14:40, com autorização. Trigger e resolve deram `HTTP 202`, e o e-mail do incidente chegou (confirmado pelo usuário). Falta confirmar:
-  - se o cartão apareceu no Slack e mudou para Resolved;
-  - o push, que depende do app no celular.
-  Não usar a senha que o usuário colou no chat; recomendar a troca (LOG 14:50).
+- 4.4 **cumprido** em 2026-11-03: trigger e resolve com `HTTP 202`, e-mail confirmado pelo usuário, cartão no Slack às 14:40:35 e Resolved às 14:43:41. Pendências:
+  - [ ] prints do cartão e do incidente, sem chave visível (usuário);
+  - [ ] trocar a integração "PRTG Notification…" pela genérica "Events API V2" e atualizar o `.env` (usuário);
+  - [ ] testar o webhook do Slack, que nunca postou; aguarda autorização para o teste daqui;
+  - [ ] push no celular (opcional);
+  - [ ] trocar a senha do PagerDuty, que foi colada no chat. Não usar a senha (LOG 14:50).
 - B2 feito, com commits na dev:
   - 5bd0588: `OTEL_*` nos manifestos;
   - 528154d: ignoreDifferences do HPA;
