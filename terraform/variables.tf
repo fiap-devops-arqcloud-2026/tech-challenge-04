@@ -173,9 +173,53 @@ variable "github_repository" {
     Qualquer outro repositorio recebe AccessDenied, mesmo dentro da mesma organizacao.
   EOT
   type        = string
+  nullable    = false
 
   # Destino da importacao autorizada em 2026-10-20.
   default = "fiap-devops-arqcloud-2026/tech-challenge-04"
+
+  validation {
+    condition     = can(regex("^[A-Za-z0-9-]+/[A-Za-z0-9_.-]+$", var.github_repository))
+    error_message = "github_repository deve ser owner/repo, sem curingas nem contexto OIDC."
+  }
+}
+
+# IDs confirmados por GET autenticado do GitHub em 2026-10-28 (F-023).
+# Nao sao credenciais. Ao reutilizar a base em outro repo, conferir ambos.
+variable "github_repository_owner_id" {
+  description = "ID numerico imutavel do proprietario do repositorio GitHub."
+  type        = string
+  nullable    = false
+  default     = "287716251"
+
+  validation {
+    condition     = can(regex("^[1-9][0-9]*$", var.github_repository_owner_id))
+    error_message = "github_repository_owner_id deve ser um ID numerico positivo do GitHub."
+  }
+}
+
+variable "github_repository_id" {
+  description = "ID numerico imutavel do repositorio GitHub."
+  type        = string
+  nullable    = false
+  default     = "1373159817"
+
+  validation {
+    condition     = can(regex("^[1-9][0-9]*$", var.github_repository_id))
+    error_message = "github_repository_id deve ser um ID numerico positivo do GitHub."
+  }
+}
+
+variable "github_deploy_branch" {
+  description = "Branch exata autorizada a publicar no ECR; deve acompanhar o gate do CI."
+  type        = string
+  nullable    = false
+  default     = "main"
+
+  validation {
+    condition     = can(regex("^[A-Za-z0-9][A-Za-z0-9._/-]*$", var.github_deploy_branch))
+    error_message = "github_deploy_branch deve ser um nome de branch explicito, sem curingas, dois-pontos ou espacos."
+  }
 }
 
 # ------------------------------------------------------------

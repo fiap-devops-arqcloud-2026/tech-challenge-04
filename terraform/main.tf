@@ -131,8 +131,11 @@ module "iam_ci" {
   # Prefixo do nome da role e da policy.
   project_name = local.name
 
-  # Unico repositorio autorizado a assumir a role.
-  github_repository = var.github_repository
+  # Identidade imutavel do repositorio e branch autorizada a publicar.
+  github_repository          = var.github_repository
+  github_repository_owner_id = var.github_repository_owner_id
+  github_repository_id       = var.github_repository_id
+  github_deploy_branch       = var.github_deploy_branch
 
   # AQUI ESTA A LIGACAO ENTRE MODULOS: a saida do modulo de ECR vira a
   # entrada do modulo de IAM. E isso que permite restringir a permissao

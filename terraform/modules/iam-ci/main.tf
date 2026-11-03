@@ -74,6 +74,11 @@ locals {
   # ARN do provedor, venha do recurso criado aqui ou da consulta acima.
   # O indice [0] e obrigatorio porque os dois blocos usam count.
   github_oidc_provider_arn = var.create_oidc_provider ? aws_iam_openid_connect_provider.github[0].arn : data.aws_iam_openid_connect_provider.github[0].arn
+
+  # O GitHub inclui IDs imutaveis no subject deste repositorio. Nomes
+  # sozinhos nao identificam sua origem e nao correspondem ao token real.
+  github_repository_parts = split("/", var.github_repository)
+  github_oidc_subject     = "repo:${local.github_repository_parts[0]}@${var.github_repository_owner_id}/${local.github_repository_parts[1]}@${var.github_repository_id}:ref:refs/heads/${var.github_deploy_branch}"
 }
 
 # Antes desta mudanca o recurso nao tinha count, entao um estado ja
@@ -132,16 +137,14 @@ data "aws_iam_policy_document" "trust" {
     # Sem ela, QUALQUER repositorio do GitHub no mundo poderia assumir esta
     # role. E o erro mais comum e mais grave em configuracao de OIDC.
     condition {
-      # StringLike aceita o curinga "*" no final.
-      test = "StringLike"
+      # Comparacao exata: apenas o repo/IDs/branch configurados.
+      test = "StringEquals"
 
-      # O campo "sub" traz repo:<owner>/<repo>:<contexto>, onde contexto e
-      # algo como "ref:refs/heads/main" ou "pull_request".
+      # Este subject e de branch, sem GitHub environment. PRs e outros
+      # contextos nao correspondem e nao recebem permissao de publicar.
       variable = "token.actions.githubusercontent.com:sub"
 
-      # O "*" final libera qualquer branch ou pull request DESTE repositorio.
-      # Para restringir so a main, seria "repo:owner/repo:ref:refs/heads/main".
-      values = ["repo:${var.github_repository}:*"]
+      values = [local.github_oidc_subject]
     }
   }
 }

@@ -65,8 +65,11 @@ ecr_image_tag_mutability = "MUTABLE"
 # Imagens mantidas por repositorio antes de as antigas expirarem.
 ecr_images_to_keep = 10
 
-# Unico repositorio autorizado a assumir a role do CI via OIDC.
-github_repository = "fiap-devops-arqcloud-2026/tech-challenge-04"
+# Identidade OIDC confirmada em 2026-10-28; somente main publica no CI.
+github_repository          = "fiap-devops-arqcloud-2026/tech-challenge-04"
+github_repository_owner_id = "287716251"
+github_repository_id       = "1373159817"
+github_deploy_branch       = "main"
 
 # ------------------------------------------------------------
 # Provedor OIDC do GitHub
