@@ -47,6 +47,10 @@ spec:
           envFrom:
             - configMapRef:
                 name: targeting-service-config
+            # Variaveis OTEL_* comuns aos 5 servicos (Fase 4): endpoint do
+            # Collector, protocolo e amostragem (base/kustomization.yaml).
+            - configMapRef:
+                name: otel-config
 
           env:
             # Diferente de auth e flag, esta URL aponta para o Service

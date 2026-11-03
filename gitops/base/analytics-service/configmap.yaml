@@ -27,3 +27,7 @@ data:
   # Nome literal da tabela, exigido pelo enunciado (F-009). Nao muda
   # entre ambientes, entao pode ficar na base.
   AWS_DYNAMODB_TABLE: "ToggleMasterAnalytics"
+
+  # Fase 4: nome do servico nos traces, no Service Map e nos logs. O
+  # resto da configuracao OpenTelemetry vem do ConfigMap otel-config.
+  OTEL_SERVICE_NAME: "analytics-service"

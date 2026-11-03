@@ -30,3 +30,7 @@ data:
   # Regiao usada pelo SDK da AWS para falar com a SQS. Fixa no projeto
   # (F-012), por isso pode ficar na base.
   AWS_REGION: "us-east-2"
+
+  # Fase 4: nome do servico nos traces, no Service Map e nos logs. O
+  # resto da configuracao OpenTelemetry vem do ConfigMap otel-config.
+  OTEL_SERVICE_NAME: "evaluation-service"

@@ -61,6 +61,10 @@ spec:
           envFrom:
             - configMapRef:
                 name: auth-service-config
+            # Variaveis OTEL_* comuns aos 5 servicos (Fase 4): endpoint do
+            # Collector, protocolo e amostragem (base/kustomization.yaml).
+            - configMapRef:
+                name: otel-config
 
           # Variaveis sensiveis entram uma a uma, vindas do Secret.
           # O Secret nao esta versionado: ele e criado em tempo de execucao

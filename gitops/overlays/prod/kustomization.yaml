@@ -40,6 +40,15 @@ patches:
 - path: patches/irsa.yaml
 - path: patches/endpoints.yaml
 
+  # Fase 4: soma ao otel-config da base o atributo de ambiente que aparece
+  # nos traces do New Relic e nos logs do Loki. `merge` preserva as chaves
+  # da base e recalcula o hash do nome.
+configMapGenerator:
+- name: otel-config
+  behavior: merge
+  literals:
+  - OTEL_RESOURCE_ATTRIBUTES=deployment.environment.name=prod
+
 # ------------------------------------------------------------
 # IMAGENS - o ponto de integracao com o pipeline de CI
 # ------------------------------------------------------------

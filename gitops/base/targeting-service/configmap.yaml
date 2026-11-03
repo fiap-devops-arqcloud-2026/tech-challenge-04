@@ -16,3 +16,7 @@ data:
 
   # Este servico tambem e protegido e valida as chaves no auth-service.
   AUTH_SERVICE_URL: "http://auth-service:8001"
+
+  # Fase 4: nome do servico nos traces, no Service Map e nos logs. O
+  # resto da configuracao OpenTelemetry vem do ConfigMap otel-config.
+  OTEL_SERVICE_NAME: "targeting-service"

@@ -54,6 +54,10 @@ spec:
           envFrom:
             - configMapRef:
                 name: evaluation-service-config
+            # Variaveis OTEL_* comuns aos 5 servicos (Fase 4): endpoint do
+            # Collector, protocolo e amostragem (base/kustomization.yaml).
+            - configMapRef:
+                name: otel-config
 
           env:
             # Chave usada para o evaluation se autenticar nos outros

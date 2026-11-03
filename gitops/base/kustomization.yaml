@@ -69,6 +69,36 @@ resources:
   - postgres-targeting/service.yaml
   - postgres-targeting/configmap.yaml
 
+# ------------------------------------------------------------
+# OPENTELEMETRY - configuracao comum aos 5 servicos (Fase 4)
+# ------------------------------------------------------------
+# Os SDKs so ligam a exportacao quando OTEL_EXPORTER_OTLP_ENDPOINT esta
+# definido. Sem este ConfigMap, a instrumentacao provada no Compose
+# ficaria desligada no cluster.
+#
+# POR QUE GERADOR E NAO ARQUIVO: o configMapGenerator acrescenta ao nome
+# um sufixo com o hash do conteudo (otel-config-<hash>) e o Kustomize
+# reescreve as referencias nos Deployments. Mudou o endpoint, muda o
+# nome, e os pods reiniciam sozinhos com a configuracao nova. Com um
+# ConfigMap comum lido por envFrom, os pods continuariam com o valor
+# antigo ate alguem reinicia-los.
+#
+# O nome de cada servico (OTEL_SERVICE_NAME) fica no ConfigMap proprio
+# dele; o ambiente (deployment.environment.name) vem do overlay.
+# ------------------------------------------------------------
+configMapGenerator:
+  - name: otel-config
+    literals:
+      # Collector gateway no namespace observability, porta OTLP/HTTP.
+      # Nome fixado pelo fullnameOverride do chart (gitops/observability).
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-gateway.observability.svc.cluster.local:4318
+      # Mesmo protocolo do ensaio local (docker-compose.otel.yaml).
+      - OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
+      # Respeita a decisao de quem chamou; sem pai, amostra tudo. Com o
+      # volume do projeto nao ha motivo para descartar traces.
+      - OTEL_TRACES_SAMPLER=parentbased_always_on
+      - OTEL_SDK_DISABLED=false
+
 # NAO ENTRAM AQUI, de proposito:
 #   - ingress.yaml da Fase 2: nao ha Ingress nem Load Balancer (D-012).
 #     O enunciado da Fase 3 nao menciona acesso externo em nenhum ponto

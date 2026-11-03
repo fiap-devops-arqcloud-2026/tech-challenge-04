@@ -46,6 +46,10 @@ spec:
           envFrom:
             - configMapRef:
                 name: flag-service-config
+            # Variaveis OTEL_* comuns aos 5 servicos (Fase 4): endpoint do
+            # Collector, protocolo e amostragem (base/kustomization.yaml).
+            - configMapRef:
+                name: otel-config
 
           env:
             # Conexao com o RDS `flags_db`. Valor injetado pelo ESO.
