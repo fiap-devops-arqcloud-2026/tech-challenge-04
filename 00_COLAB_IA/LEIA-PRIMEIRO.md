@@ -1,6 +1,6 @@
 # Colaboração entre agentes
 
-TL;DR: Colaboração vigente nesta pasta. Retomar pelo bloco "Estado em 2026-11-03" de PENDENCIAS: contas SaaS prontas até o 4.3; B0 e B1 aguardam as decisões D1–D5. Segredos nunca em arquivo versionado nem no chat. Preservar o trabalho na dev e distinguir relato, validação local e prova externa.
+TL;DR: Colaboração vigente nesta pasta. Retomar pelo bloco "Estado em 2026-11-03" de PENDENCIAS: B0 e B1 concluídos; próximo é o B2. Segredos só no `.env` local (ignorado), nunca em arquivo versionado nem no chat. Preservar o trabalho na dev e distinguir relato, validação local e prova externa.
 
 Última atualização: 2026-11-03, Claude (Opus 5.5).
 

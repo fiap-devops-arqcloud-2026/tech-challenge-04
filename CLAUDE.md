@@ -1,6 +1,6 @@
 # Tech Challenge Fase 4 — contexto para assistentes
 
-TL;DR: trabalhar na dev e retomar pelo bloco "Estado em 2026-11-03" de PENDENCIAS. Contas SaaS prontas até o 4.3 do guia PASSO2; B0 e B1 aguardam as decisões D1–D5; trial do PagerDuty até 2026-11-11. Stack e publicação continuam pendentes.
+TL;DR: trabalhar na dev e retomar pelo bloco "Estado em 2026-11-03" de PENDENCIAS. B0 e B1 concluídos (dev publicada, New Relic local ok); próximo é o B2. Trial do PagerDuty até 2026-11-11. Push e commits na dev estão autorizados; main, apply e destroy, não.
 
 Última atualização: 2026-11-03, Claude (Opus 5.5).
 

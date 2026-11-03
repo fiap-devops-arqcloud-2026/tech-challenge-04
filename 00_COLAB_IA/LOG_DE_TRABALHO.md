@@ -1,8 +1,37 @@
 # Log de trabalho
 
-TL;DR: contas SaaS preparadas pelo usuário até o 4.3 do guia PASSO2 (2026-11-03); falta o 4.4. B0/B1 aguardam as decisões D1–D5 do topo de PENDENCIAS. Trial do PagerDuty até 2026-11-11.
+TL;DR: B0 concluído e B1 local com New Relic em 2026-11-03 (dev publicada no GitHub). Próximo: B2. Trial do PagerDuty até 2026-11-11.
 
 Última atualização: 2026-11-03, Claude (Opus 5.5).
+
+## 2026-11-03 11:31 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — B0 concluído, B1 local com New Relic e decisões D1–D5
+
+Decisões do usuário em 2026-11-03:
+- D1: autorizados os commits curados na dev e o push para origin/dev. A main fica para o B3.
+- D2: não restaurar os 34 materiais da Fase 3.
+- D3: o usuário perguntou se o log de 156 MB é de teste e se é melhor removê-lo. Resposta: é o log do `terraform test -verbose` de 2026-10-28. Ficou ignorado e resumido em `offline-test-resumo.txt`; a exclusão definitiva aguarda o ok dele.
+- D4: conta AWS no plano gratuito novo, com US$ 100 de créditos.
+- D5: autorizada a gravação das três chaves no `.env` local. Feito; o arquivo é ignorado (`.gitignore:28`).
+
+Feito:
+- B0, commits: 8 commits curados (ba7ab6d a 0ed75e9): higiene do `.gitignore`, instrumentação dos serviços, Collector local, trust OIDC, lint do CI, README/CLAUDE, remoção dos materiais da Fase 3 e diário de colaboração.
+- B0, push: `9696185..0ed75e9`, depois `0ed75e9..356ac4b`. O Git Credential Manager travava esperando login; o push usou a credencial do `gh` só no comando, sem mudar a configuração.
+- B0, varredura antes do push: 409 arquivos sem o ID da conta nova, sem segredos e sem dados de integrantes. O ID da conta antiga só aparece no verificador de segurança e nas cópias dele, e já está no histórico.
+- B0, fora do Git por `.gitignore`: o log de 156 MB, 4 evidências da etapa 8 com IDs da conta nova, o acervo integral da Fase 3 e os PNGs renderizados do enunciado.
+- B0, mensagens de commit sem trailer de coautoria de assistente, em linha com D-018. Se o usuário quiser o trailer, entra nos próximos commits.
+- CI do push 0ed75e9: 6 de 7 verdes. Os 3 serviços Python passaram com a correção do lint; auth, Terraform Check e Compose Integration também. O evaluation-service reprovou no golangci-lint (errcheck em `evaluator_test.go:241`); corrigido em f7b3ff3 (gofmt, vet e testes locais ok). O CI do push 356ac4b estava em andamento às 11:31 [conferir].
+- B1, código (commit 356ac4b):
+  - `docker-compose.newrelic.yaml`;
+  - `observability/otel-collector-newrelic.yaml`, com o exporter `otlp_http/newrelic` como segundo `--config`, mantendo a mesma sanitização;
+  - `scripts/test-observability-newrelic.sh`;
+  - nova seção no `observability/README.md`.
+- B1, ensaio local: todos os PASS (19 spans, 5 serviços) e nenhuma falha de exportação nos logs do Collector. Falta o usuário confirmar no New Relic os 5 serviços, o Service map e o trace. O laboratório `tc04-integration` ficou no ar.
+- AWS, por fontes oficiais consultadas em 2026-11-03:
+  - no plano gratuito, a conta é suspensa quando os créditos acabam ou após 6 meses, com 90 dias para fazer o upgrade;
+  - EC2 elegível para contas novas: t3.micro, t3.small, t4g.micro, t4g.small, c7i-flex.large e m7i-flex.large;
+  - a página do EKS diz que os créditos valem nos planos Free e Paid; não confirmei recurso por recurso.
+
+Estado p/ o próximo agente: B0 e B1 concluídos, faltando a conferência visual no New Relic e o ok para apagar o log de 156 MB. Próximo: B2 (ver PENDENCIAS). Para encerrar o laboratório local, usar o comando de "Encerrar somente o laboratório" do `observability/README.md`, acrescentando `-f docker-compose.newrelic.yaml`.
 
 ## 2026-11-03 10:52 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — Contas SaaS até o 4.3, segredos fora dos arquivos e handoff para o Codex
 

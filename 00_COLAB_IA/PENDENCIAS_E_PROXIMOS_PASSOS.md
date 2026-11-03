@@ -1,6 +1,6 @@
 # Pendências e progresso
 
-TL;DR: contas SaaS preparadas pelo usuário até o 4.3 do guia (2026-11-03); falta o 4.4. B0 e B1 aguardam as decisões D1–D5 abaixo. Trial do PagerDuty até 2026-11-11: gravar a cadeia de incidente até 2026-11-10. P-016 concluída; D-018 será aplicada no B6/P-017.
+TL;DR: B0 concluído e B1 local com New Relic em 2026-11-03 (dev publicada). Próximo: B2 (stack, alerta e self-healing) até 05/11; B3 em 06/11, com orçamento. Trial do PagerDuty até 2026-11-11: gravar a cadeia de incidente até 2026-11-10. D-018 será aplicada no B6/P-017.
 
 Última atualização: 2026-11-03, Claude (Opus 5.5).
 
@@ -13,12 +13,17 @@ Situação:
 - **Lint Python medido em 2026-11-01:** o CI atual reprova (5,92/5,75/5,50); com requirements + pytest, aprova (9,30/9,27/8,61). A correção está pronta para o B0.
 - **Publicação:** P-016 concluída pelo Codex. Nada foi publicado: a dev está 103 commits à frente de origin/dev, e origin/main só tem o PDF.
 
-Decisões do usuário que bloqueiam o próximo passo:
-- [ ] D1 — Git: commits curados na dev e push para origin/dev. PR e merge para a main só no B3.
-- [ ] D2 — 34 ausências antigas (materiais de aula da Fase 3): restaurar ou confirmar a remoção. As 39 remoções da pasta F3 são da P-016; o acervo está em `_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/`.
-- [ ] D3 — Ignorar no Git o log de 156 MB (F-024), sem apagá-lo.
-- [ ] D4 — Créditos, plano e limite de gasto da conta AWS (Billing → Credits). Necessário até o B3.
-- [ ] D5 — Autorizar a gravação das três chaves no `.env` local (ignorado pelo Git), ou o próprio usuário cria o arquivo antes do B1.
+Decisões do usuário (respondidas em 2026-11-03):
+- [x] D1 — Git autorizado: commits curados na dev e push para origin/dev. PR e merge para a main só no B3.
+- [x] D2 — Não restaurar os 34 materiais da Fase 3 (remoção commitada em 9b3119a).
+- [ ] D3 — Log de 156 MB ignorado e resumido em `offline-test-resumo.txt`. O usuário sugeriu removê-lo; apagar só com o ok dele, porque a exclusão é definitiva (o arquivo nunca entrou no Git).
+- [x] D4 — Plano gratuito novo da AWS com US$ 100 de créditos. Se os créditos acabarem, a conta é suspensa; criar orçamento com alertas antes do B3.
+- [x] D5 — Chaves gravadas no `.env` local (ignorado pelo Git).
+
+Atualização 2026-11-03 11:31:
+- B0 concluído: 8 commits e push da dev. CI 6 de 7 verde; a falha do evaluation-service foi corrigida em f7b3ff3.
+- B1 concluído no ambiente local (commit 356ac4b): exportação ao New Relic sem erro. Falta o usuário conferir os 5 serviços, o Service map e o trace na interface.
+- Próximo: B2. Decisões de design a levar ao usuário: falha proposital e ação do self-healing; tamanho do cluster (c7i-flex.large ou m7i-flex.large, ambos elegíveis no plano gratuito); como os segredos chegam ao cluster; e se a notificação no Slack sai do PagerDuty, do Grafana ou dos dois.
 
 Calendário recalibrado, com 2 dias de atraso em relação à P-015:
 
