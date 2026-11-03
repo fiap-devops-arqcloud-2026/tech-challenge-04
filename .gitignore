@@ -104,3 +104,21 @@ tmp/
 00_COLAB_IA/02_TRABALHO/obs-aula1-p4.png
 00_COLAB_IA/02_TRABALHO/*.log
 00_COLAB_IA/02_TRABALHO/gitops-renderizado-*.yaml
+
+# Log do terraform test -verbose de 2026-10-28 (156 MB, acima do limite de
+# 100 MB do GitHub). O resultado fica no resumo ao lado (offline-test-resumo.txt).
+00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/offline-test.jsonl
+
+# Evidencias da etapa 8 com identificadores reais da conta AWS nova: ficam so
+# na maquina local. O resultado (34/34 verificacoes) esta no LOG e no DOSSIE.
+00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/aws/PARECER_AWS_ETAPA8.md
+00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/aws/inventario-aws-sanitizado.json
+00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/correspondencia-aws-github.json
+00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/github/configuracao.json
+
+# Copia integral de docs/00_COLAB_IA (Fase 3). Os originais seguem no historico
+# (commit 3b21e65); nao versionar de novo (dados pessoais e conta da Fase 3).
+00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/
+
+# Renderizacoes das paginas do enunciado usadas na auditoria (o PDF original fica na raiz).
+00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/fontes/*.png

@@ -43,10 +43,12 @@ check() {
   #   -I  ignora binarios (evita lixo no terminal)
   #   -n  mostra o numero da linha
   #   -E  expressao regular estendida
-  # As duas exclusoes finais evitam dois falsos positivos garantidos:
-  # este proprio script (que contem os padroes) e os arquivos .example,
+  # As exclusoes evitam falsos positivos garantidos: este proprio script,
+  # suas copias arquivadas (que contem os padroes) e os arquivos .example,
   # que existem justamente para mostrar o formato de um valor.
-  if git grep -InE "$pattern" -- ':!scripts/security-check.sh' ':!*.example.*'; then
+  # Copias arquivadas deste verificador tambem contem as proprias expressoes.
+  # Excluir apenas o verificador no arquivo morto, nao os demais arquivos.
+  if git grep -InE "$pattern" -- ':!scripts/security-check.sh' ':(exclude,glob)00_COLAB_IA/_ARQUIVO_MORTO/**/security-check.sh' ':!*.example.*'; then
     echo "[ERRO] ${description}"
     failed=1
   fi
