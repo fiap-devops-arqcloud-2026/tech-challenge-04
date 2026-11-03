@@ -1,0 +1,90 @@
+# ============================================================
+# VALUES - loki 7.5.0 (Loki em modo SingleBinary)
+# ============================================================
+# Chart: https://grafana.github.io/helm-charts (pacote "loki").
+# Chaves conferidas em 2026-11-03 no values.yaml da tag helm-loki-7.5.0.
+#
+# Um unico processo Loki com disco local (gp3): o suficiente para os
+# logs de poucos dias de um ambiente de demonstracao. O modo distribuido
+# (read/write/backend) e os caches existem para volume de producao e so
+# consumiriam memoria aqui.
+#
+# Os logs chegam pelo Collector gateway em OTLP/HTTP, no caminho
+# http://loki.observability.svc.cluster.local:3100/otlp. Atributos como
+# service.name e k8s.namespace.name viram os labels service_name e
+# k8s_namespace_name, usados no dashboard e na busca do video.
+# ============================================================
+
+# Nome "loki" para o Service, o mesmo que o Grafana e o gateway usam.
+fullnameOverride: loki
+
+deploymentMode: SingleBinary
+
+loki:
+  # Sem multi-tenancy: um tenant so, sem header X-Scope-OrgID.
+  auth_enabled: false
+
+  # Fixada no mesmo valor que o chart 7.5.0 traz por padrao. Explicita
+  # para um apply futuro nao mudar de versao sem ninguem ver.
+  image:
+    tag: 3.6.11
+
+  commonConfig:
+    # Uma replica: nao ha outra copia para onde replicar.
+    replication_factor: 1
+
+  storage:
+    type: filesystem
+
+  schemaConfig:
+    configs:
+      - from: "2024-04-01"
+        store: tsdb
+        object_store: filesystem
+        schema: v13
+        index:
+          prefix: index_
+          period: 24h
+
+  limits_config:
+    # Necessario para a ingestao OTLP guardar os atributos que nao viram
+    # label (trace_id, span_id...) como metadados estruturados.
+    allow_structured_metadata: true
+
+singleBinary:
+  replicas: 1
+  persistence:
+    enabled: true
+    size: 5Gi
+    # StorageClass da camada terraform/k8s. Sem isto, o chart usaria a
+    # padrao do provisionador (gp2 na AWS).
+    storageClass: gp3
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 1Gi
+
+# Componentes do modo distribuido zerados.
+read:
+  replicas: 0
+write:
+  replicas: 0
+backend:
+  replicas: 0
+
+# Pecas opcionais desligadas: proxy de entrada, armazenamento de objetos
+# de exemplo, caches, gerador de logs sinteticos e teste do chart.
+gateway:
+  enabled: false
+minio:
+  enabled: false
+chunksCache:
+  enabled: false
+resultsCache:
+  enabled: false
+lokiCanary:
+  enabled: false
+test:
+  enabled: false

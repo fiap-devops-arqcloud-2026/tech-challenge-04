@@ -1,0 +1,45 @@
+# ============================================================
+# GRAFANA ALERTING - notification policies (quem recebe o que)
+# ============================================================
+# Esta arvore SUBSTITUI a padrao do Grafana.
+#
+#   raiz -> togglemaster-incidente (qualquer alerta: PagerDuty + Slack)
+#     |- severity=critical -> togglemaster-incidente   (continue: true)
+#     |- selfheal=true     -> togglemaster-self-healing (GitHub)
+#
+# Como as rotas filhas casam, a raiz so atende alertas sem esses labels.
+# O "continue" faz um alerta critico com selfheal=true seguir para a
+# segunda rota: ele abre o incidente E dispara o self-healing.
+#
+# TEMPOS: group_wait curto para a notificacao sair logo que o alerta
+# entra em Firing (o video mostra a cadeia em sequencia). No webhook do
+# GitHub, repeat_interval de 1h: se o restart nao resolver, um novo
+# dispatch so sai depois de uma hora, e o cooldown do script segura
+# disparos mais proximos.
+# ============================================================
+apiVersion: 1
+
+policies:
+  - orgId: 1
+    receiver: togglemaster-incidente
+    group_by: ['grafana_folder', 'alertname', 'service']
+    group_wait: 10s
+    group_interval: 1m
+    repeat_interval: 4h
+    routes:
+      - receiver: togglemaster-incidente
+        object_matchers:
+          - ['severity', '=', 'critical']
+        continue: true
+      # Exige tambem o nome da regra: se o Prometheus cair, o Grafana cria
+      # um alerta DatasourceError com os MESMOS labels da regra (inclusive
+      # selfheal=true). Sem este filtro, uma falha de consulta reiniciaria
+      # o flag-service sem motivo. O DatasourceError continua indo ao
+      # PagerDuty e ao Slack pela rota de cima (achado no teste de
+      # 2026-11-03 com o Grafana 13.3.0 sem rede).
+      - receiver: togglemaster-self-healing
+        object_matchers:
+          - ['selfheal', '=', 'true']
+          - ['alertname', '=', 'FlagService5xxAlto']
+        group_wait: 0s
+        repeat_interval: 1h

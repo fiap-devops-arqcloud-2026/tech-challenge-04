@@ -153,3 +153,73 @@ variable "storage_class_name" {
   type        = string
   default     = "gp3"
 }
+
+# ------------------------------------------------------------
+# Observabilidade (Fase 4) - segredos das integracoes SaaS
+# ------------------------------------------------------------
+# Os quatro valores abaixo viram Secrets do Kubernetes no namespace
+# observability (observability.tf). Nenhum tem default: o apply nao
+# deve acontecer sem eles. Informar por TF_VAR_<nome>, a partir do .env
+# local (ignorado pelo Git); nunca escrever em arquivo versionado.
+# ------------------------------------------------------------
+
+variable "new_relic_license_key" {
+  description = "License key de ingestao do New Relic (tipo Ingest - License, 40 caracteres). Usada pelo Collector gateway no header api-key do exporter otlp_http."
+  type        = string
+  sensitive   = true
+
+  validation {
+    condition     = length(var.new_relic_license_key) == 40
+    error_message = "A license key de ingestao do New Relic tem 40 caracteres."
+  }
+}
+
+variable "pagerduty_integration_key" {
+  description = "Integration Key (32 caracteres) da integracao Events API V2 do servico ToggleMaster Fase 4 no PagerDuty. Usada pelo contact point PagerDuty do Grafana."
+  type        = string
+  sensitive   = true
+
+  validation {
+    condition     = can(regex("^[0-9a-zA-Z]{32}$", var.pagerduty_integration_key))
+    error_message = "A Integration Key do PagerDuty tem 32 caracteres alfanumericos."
+  }
+
+  # O Grafana troca $PAGERDUTY_INTEGRATION_KEY pelo valor e, se ele parecer
+  # um numero (so digitos, ou digitos com um "e"), guarda como numero e o
+  # provisionamento falha. Testado em 2026-11-03 no Grafana 13.3.0. Nesse
+  # caso raro, recriar a integracao Events API V2 gera uma chave nova.
+  validation {
+    condition     = !can(tonumber(var.pagerduty_integration_key))
+    error_message = "Esta Integration Key seria lida como numero pelo Grafana. Recrie a integracao Events API V2 no PagerDuty para obter outra chave."
+  }
+}
+
+variable "slack_webhook_url" {
+  description = "URL do Incoming Webhook do canal de incidentes no Slack. A URL e o proprio segredo. Usada pelo contact point Slack do Grafana."
+  type        = string
+  sensitive   = true
+
+  validation {
+    condition     = startswith(var.slack_webhook_url, "https://hooks.slack.com/services/")
+    error_message = "A URL do webhook do Slack comeca com https://hooks.slack.com/services/."
+  }
+}
+
+variable "github_dispatch_token" {
+  description = "Fine-grained token do GitHub, restrito ao repositorio tech-challenge-04, que o Grafana usa para chamar a API repository_dispatch e disparar o workflow self-healing.yml. Diferente do github_token de leitura do ArgoCD."
+  type        = string
+  sensitive   = true
+
+  validation {
+    # Fine-grained (github_pat_) e o recomendado; o classico (ghp_, escopo
+    # repo) tambem funciona na API repository_dispatch.
+    condition     = startswith(var.github_dispatch_token, "github_pat_") || startswith(var.github_dispatch_token, "ghp_")
+    error_message = "Informe por TF_VAR_github_dispatch_token um token do GitHub (fine-grained github_pat_ ou classico ghp_)."
+  }
+}
+
+variable "observability_namespace" {
+  description = "Namespace da stack de observabilidade (Prometheus, Grafana, Loki e Collectors). Precisa ser o mesmo dos manifestos de gitops/observability e do endpoint OTEL dos servicos."
+  type        = string
+  default     = "observability"
+}

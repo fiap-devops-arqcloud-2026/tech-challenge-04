@@ -37,6 +37,11 @@ default_tags = {
 # Deixe false ate comecar a Etapa 2 (EKS, RDS, ElastiCache). Nesse
 # momento troque para true, ou os nos do cluster nao conseguirao baixar
 # imagem nenhuma do ECR e os pods ficarao presos em ImagePullBackOff.
+#
+# Fase 4: com o cluster no ar, o NAT tambem e a UNICA saida da stack de
+# observabilidade para a internet: o Collector envia traces ao New
+# Relic, e o Grafana chama PagerDuty, Slack e a API do GitHub (dispatch
+# do self-healing). Sem NAT, os alertas disparam e ninguem e avisado.
 # ------------------------------------------------------------
 enable_nat_gateway = false
 

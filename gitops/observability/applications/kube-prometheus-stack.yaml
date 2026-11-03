@@ -1,0 +1,54 @@
+# ============================================================
+# APPLICATION - kube-prometheus-stack
+# ============================================================
+# Prometheus, Grafana, kube-state-metrics, node-exporter e o operator.
+# ServerSideApply: os CRDs do Prometheus Operator passam do limite de
+# tamanho da anotacao usada pelo apply comum (recomendacao do chart).
+#
+# Duas fontes (multi-source, Argo CD 2.6+): o chart oficial na versao
+# fixada e o values versionado neste repositorio ($values).
+# ============================================================
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+
+metadata:
+  name: kube-prometheus-stack
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+  # Apagar a Application apaga tambem os objetos do chart (ordem segura
+  # no destroy: nada fica orfao no namespace).
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+
+spec:
+  project: default
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: observability
+
+  sources:
+    - repoURL: https://prometheus-community.github.io/helm-charts
+      chart: kube-prometheus-stack
+      targetRevision: 92.17.1
+      helm:
+        releaseName: kps
+        valueFiles:
+          - $values/gitops/observability/values/kube-prometheus-stack.yaml
+    - repoURL: https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04.git
+      targetRevision: main
+      ref: values
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - ServerSideApply=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 10s
+        factor: 2
+        maxDuration: 3m

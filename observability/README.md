@@ -97,3 +97,64 @@ O script valida as duas configurações com o binário do Collector, sobe o labo
 Esta prova vale para o ambiente local. O cluster, as métricas, os logs, os alertas e os incidentes continuam nas etapas seguintes.
 
 Fontes primárias consultadas em 2026-10-22: [Collector configuration](https://opentelemetry.io/docs/collector/configuration/), [Transform Processor](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/v0.163.0/processor/transformprocessor), [File Exporter](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/v0.163.0/exporter/fileexporter), [release 0.163.2](https://github.com/open-telemetry/opentelemetry-collector-releases/releases/tag/v0.163.2), [Compose environment variables](https://docs.docker.com/compose/how-tos/environment-variables/envvars/).
+
+## No cluster (EKS)
+
+No cluster, a mesma instrumentação ganha a stack completa: métricas, logs, alertas e incidente. Tudo é implantado pelo ArgoCD a partir de `gitops/observability/`, e os segredos vêm do Terraform (`terraform/k8s/observability.tf`).
+
+Situação em 2026-11-03: a configuração está pronta e validada localmente (ver "Validações locais" abaixo), mas ainda não foi implantada. Ela entra no ar junto com o cluster.
+
+```text
+5 serviços ──OTLP/HTTP──► otel-gateway (Collector central)
+                              ├─ traces ──────────► New Relic (Service Map, trace distribuído)
+                              ├─ span_metrics ────► Prometheus (requisições, erros, latência)
+                              └─ logs ────────────► Loki
+otel-agent (DaemonSet) ── logs dos pods ──► otel-gateway
+kubelet/cAdvisor ─────────────────────────► Prometheus (CPU e memória dos pods)
+Grafana: dashboard + regra de alerta ──► PagerDuty (incidente) + Slack (detalhes)
+                                     └─► GitHub (repository_dispatch) ─► self-healing.yml ─► rollout restart
+```
+
+| Peça | Chart (versão fixada) | Arquivo de values |
+|---|---|---|
+| Prometheus + Grafana 13.3.0 | `kube-prometheus-stack` 92.17.1 | `gitops/observability/values/kube-prometheus-stack.yaml` |
+| Loki (SingleBinary) | `loki` 7.5.0 | `gitops/observability/values/loki.yaml` |
+| Collector gateway | `opentelemetry-collector` 0.178.2 (Collector 0.163.2) | `gitops/observability/values/otel-gateway.yaml` |
+| Collector agente | `opentelemetry-collector` 0.178.2 (Collector 0.163.2) | `gitops/observability/values/otel-agent.yaml` |
+
+O dashboard **ToggleMaster - Visao geral** e os alertas ficam versionados em `gitops/observability/grafana/` e chegam ao Grafana como ConfigMaps lidos pelos sidecars do chart.
+
+Acesso durante a gravação, sem Ingress (`localhost:3000`):
+
+```bash
+kubectl -n observability port-forward svc/grafana 3000:80
+```
+
+Usuário `admin`; a senha é gerada pelo Terraform e fica no Secret `grafana-admin`:
+
+```bash
+kubectl -n observability get secret grafana-admin -o jsonpath='{.data.admin-password}' | base64 -d
+```
+
+### Alerta, incidente e self-healing
+
+- **Regra `FlagService5xxAlto`:** proporção de respostas 5xx do flag-service acima de 10% por 1 minuto. A conta usa spans SERVER com `STATUS_CODE_ERROR`, que é como uma resposta 5xx aparece nos traces. Sem tráfego, o estado fica OK.
+- **Contact points:** `togglemaster-incidente` (PagerDuty e Slack) e `togglemaster-self-healing` (API do GitHub). Os segredos entram como variáveis de ambiente (`$PAGERDUTY_INTEGRATION_KEY`, `$SLACK_WEBHOOK_URL`, `$GITHUB_DISPATCH_TOKEN`). O Git guarda só os nomes.
+- **Self-healing:** o workflow `.github/workflows/self-healing.yml` assume uma role AWS por OIDC, cuja única permissão é descrever o cluster, e roda `scripts/self-healing/restart.sh`. O script tem lista de serviços permitidos, intervalo mínimo de 10 minutos entre reinícios e confere o rollout. No cluster, o RBAC só permite reiniciar os 5 Deployments.
+- **Fim do incidente:** quando a proporção volta abaixo do limite, o Grafana envia o resolve ao PagerDuty e o incidente fecha sozinho.
+
+### Runbook flag-service 5xx
+
+1. Confirmar no dashboard (painel **Taxa de erro (5xx) por servico**) e nos logs do Loki (`{k8s_namespace_name="togglemaster"}`) quando a falha começou.
+2. Acompanhar o self-healing na aba **Actions** do repositório: o job registra o motivo, o resultado (`restarted`, `cooldown`, `refused` ou `ignored`) e os pods depois do reinício.
+3. Ver a troca de pods: `kubectl -n togglemaster get pods -l app=flag-service -w`.
+4. Se o alerta continuar depois do reinício, a causa não é um estado em memória. Investigar pelo trace no New Relic e pelos logs antes de reiniciar de novo, porque o intervalo mínimo impede reinícios seguidos.
+
+### Validações locais (2026-11-03)
+
+- `helm template` dos 4 charts com o helm do ArgoCD v2.13.2 (imagem oficial do Argo), nas versões e values acima: renderização sem erro.
+- `otelcol-contrib validate` (0.163.2) nas configurações finais do gateway e do agente, extraídas do `helm template`.
+- Grafana 13.3.0 sem rede, com os arquivos de `gitops/observability/grafana/`. Ele carregou os 2 contact points com as 3 integrações, a política, a regra, os templates, o dashboard e as datasources. Pela API de teste de templates, o corpo enviado ao GitHub sai como `{"event_type":"self-healing","client_payload":{...}}`.
+- O mesmo teste mostrou que o Grafana transforma em número um segredo que pareça número, e não sobe. Por isso o Terraform recusa uma Integration Key do PagerDuty nesse formato.
+
+Fontes primárias consultadas em 2026-11-03: values e Chart.yaml de [kube-prometheus-stack 92.17.1](https://github.com/prometheus-community/helm-charts/tree/kube-prometheus-stack-92.17.1/charts/kube-prometheus-stack), [loki 7.5.0](https://github.com/grafana/loki/tree/helm-loki-7.5.0/production/helm/loki) e [opentelemetry-collector 0.178.2](https://github.com/open-telemetry/opentelemetry-helm-charts/tree/opentelemetry-collector-0.178.2/charts/opentelemetry-collector); [provisionamento de alerting do Grafana](https://grafana.com/docs/grafana/latest/alerting/set-up/provision-alerting-resources/file-provisioning/); [receptor OTLP do Prometheus](https://prometheus.io/docs/guides/opentelemetry/); [repository_dispatch](https://docs.github.com/en/rest/repos/repos#create-a-repository-dispatch-event).
