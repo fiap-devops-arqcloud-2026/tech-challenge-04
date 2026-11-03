@@ -28,7 +28,7 @@ variable "kubernetes_version" {
 variable "node_instance_type" {
   description = <<-EOT
     Tipo EC2 dos nos. Esta conta RECUSA t3.medium por estar no plano
-    gratuito novo (F-023); o valor usado e c7i-flex.large (D-016).
+    gratuito novo (F-023); na Fase 4 o valor usado e m7i-flex.large.
   EOT
   type        = string
 }

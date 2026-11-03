@@ -56,7 +56,8 @@ module "eks" {
   # disponivel em us-east-2.
   kubernetes_version = var.kubernetes_version
 
-  # c7i-flex.large por bloqueio da conta a t3.medium (F-023, D-016).
+  # So tipos elegiveis no plano gratuito: a conta recusa t3.medium
+  # (F-023). Fase 3: c7i-flex.large; Fase 4: m7i-flex.large.
   node_instance_type = var.node_instance_type
 
   # Dimensionamento do node group. O desejado e 2 para o HPA do

@@ -11,7 +11,7 @@
 #   2. O default de instancia la e `t3.medium`, que ESTA CONTA RECUSA:
 #      "The specified instance type is not eligible for Free Tier"
 #      (F-023). Aqui o tipo vem de var.node_instance_type, que ja tem
-#      c7i-flex.large como padrao (D-016).
+#      um tipo elegivel como padrao (m7i-flex.large na Fase 4).
 #
 # Foram acrescentados tres itens que faltavam la e que ja custaram tempo
 # na Fase 2 ou custariam no video:
@@ -191,7 +191,7 @@ resource "aws_eks_node_group" "this" {
   # Mesmas subnets privadas do cluster.
   subnet_ids = var.subnet_ids
 
-  # Tipo da instancia. c7i-flex.large por bloqueio da conta (F-023).
+  # Tipo da instancia: so tipos elegiveis no plano gratuito (F-023).
   instance_types = [var.node_instance_type]
 
   # ON_DEMAND e nao SPOT: instancia spot pode ser retomada pela AWS a

@@ -78,12 +78,16 @@ variable "kubernetes_version" {
 
 variable "node_instance_type" {
   description = <<-EOT
-    Tipo x86 herdado da Fase 3. As restricoes daquela conta nao provam
-    as cotas/beneficios da nova; revalidar capacidade e custo antes de
-    implantar. A stack de observabilidade da Fase 4 ainda exige sizing.
+    m7i-flex.large (2 vCPU, 8 GiB) desde a Fase 4, decidido em 2026-11-03.
+    A stack de observabilidade (Prometheus, Loki, Grafana e Collector)
+    soma alguns GiB aos 5 servicos e ao ArgoCD; 2 nos de 8 GiB dao mais
+    memoria que 3 c7i-flex.large de 4 GiB e ocupam menos vCPU da cota da
+    conta (4 contra 6). Os dois tipos estao na lista de elegiveis do plano
+    gratuito da AWS (consultada em 2026-11-03). Custo e cota de vCPU
+    continuam a conferir antes do apply.
   EOT
   type        = string
-  default     = "c7i-flex.large"
+  default     = "m7i-flex.large"
 }
 
 variable "node_group_min_size" {
