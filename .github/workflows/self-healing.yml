@@ -65,6 +65,8 @@ jobs:
       # Payload do Grafana (repository_dispatch) ou escolha manual.
       SERVICE: ${{ github.event.client_payload.service || inputs.service }}
       ALERT_NAME: ${{ github.event.client_payload.alertname || 'disparo manual' }}
+      # O script so reinicia com "firing"; disparo manual conta como firing.
+      ALERT_STATUS: ${{ github.event.client_payload.status || 'firing' }}
       NAMESPACE: togglemaster
       # 10 minutos: mais que o tempo de o alerta voltar a Normal depois do
       # restart, para um Firing atrasado nao reiniciar o pod recem-criado.
@@ -81,6 +83,15 @@ jobs:
             echo "- Alerta: $ALERT_NAME"
             echo "- Evento: $GITHUB_EVENT_NAME"
           } >> "$GITHUB_STEP_SUMMARY"
+
+      # O ubuntu-latest traz um kubectl novo demais para o EKS 1.34 (a
+      # politica do Kubernetes aceita so 1 versao minor de diferenca).
+      # Versao estavel da 1.34 consultada em 2026-11-03 em
+      # https://dl.k8s.io/release/stable-1.34.txt.
+      - name: Instalar o kubectl compativel com o EKS 1.34
+        uses: azure/setup-kubectl@bda439f5f36b99b262ebdcd3613869bddb064c8e # v5.2.0
+        with:
+          version: v1.34.13
 
       - name: Assumir a role do self-healing (OIDC)
         uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6.3.0

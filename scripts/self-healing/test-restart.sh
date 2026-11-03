@@ -51,6 +51,8 @@ run "primeiro restart acontece" 0 restarted sim SERVICE=flag-service
 run "restart recente respeita o cooldown" 0 cooldown nao SERVICE=flag-service "FAKE_RESTARTED_AT=$(iso_ago 60)" COOLDOWN_SECONDS=600
 run "restart antigo libera novo restart" 0 restarted sim SERVICE=flag-service "FAKE_RESTARTED_AT=$(iso_ago 3600)" COOLDOWN_SECONDS=600
 run "rollout que nao termina falha" 1 failed sim SERVICE=evaluation-service FAKE_STATUS_EXIT=1
+run "alerta resolvido nao reinicia" 0 ignored nao SERVICE=flag-service ALERT_STATUS=resolved
+run "status desconhecido nao reinicia" 0 ignored nao SERVICE=flag-service "ALERT_STATUS=qualquer coisa"
 
 # A allowlist nao pode repetir o valor recusado no log (texto arbitrario).
 : > "$work/log"

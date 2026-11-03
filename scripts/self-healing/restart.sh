@@ -31,6 +31,8 @@ set -euo pipefail
 ALLOWLIST=(auth-service flag-service targeting-service evaluation-service analytics-service)
 
 service="${SERVICE:-}"
+# Status do alerta no payload do Grafana; disparo manual conta como firing.
+alert_status="${ALERT_STATUS:-firing}"
 namespace="${NAMESPACE:-togglemaster}"
 cooldown="${COOLDOWN_SECONDS:-600}"
 rollout_timeout="${ROLLOUT_TIMEOUT:-180s}"
@@ -49,6 +51,20 @@ set_output() {
     echo "result=$1" >> "$GITHUB_OUTPUT"
   fi
 }
+
+# --- 0. so age sobre alerta em Firing -----------------------------------
+# O contact point do GitHub nao envia a resolucao (disableResolveMessage),
+# mas a conferencia aqui impede que uma mudanca futura naquele arquivo
+# transforme "voltou ao normal" em um restart.
+if [[ "$alert_status" != "firing" ]]; then
+  if [[ "$alert_status" == "resolved" ]]; then
+    report "Self-healing ignorado: o alerta ja foi resolvido."
+  else
+    report "Self-healing ignorado: status do alerta desconhecido."
+  fi
+  set_output ignored
+  exit 0
+fi
 
 # --- 1. allowlist ------------------------------------------------------
 allowed=false

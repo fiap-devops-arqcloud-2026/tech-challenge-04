@@ -28,8 +28,10 @@ metadata:
   name: self-healing
 
 rules:
-  # Leitura para acompanhar o reinicio. list/watch nao combinam com
-  # resourceNames (a listagem nao tem nome), por isso ficam separados.
+  # Leitura para acompanhar o reinicio e mostrar os pods no log do
+  # workflow. Fica no namespace inteiro, e nao por nome: list/watch so
+  # respeitam resourceNames quando o cliente filtra por metadata.name, e
+  # o `kubectl get pods -l app=...` do workflow lista por label.
   - apiGroups: ["apps"]
     resources: ["deployments", "replicasets"]
     verbs: ["get", "list", "watch"]
