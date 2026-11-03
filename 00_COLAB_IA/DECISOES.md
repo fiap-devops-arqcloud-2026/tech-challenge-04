@@ -1,8 +1,8 @@
 # Decisões
 
-TL;DR: D-001–D-016 preservadas; D-017 registra a mescla e D-018 a regra pública aprovada em 2026-11-01. Herança F3 abaixo é histórica e não concede novas permissões.
+TL;DR: D-001–D-016 preservadas; D-017 registra a mescla e D-018 a regra pública aprovada em 2026-11-01. D-019 (2026-11-03) fixa o desenho do B2: falha em memória, 2 × m7i-flex.large, Secrets pelo Terraform e Slack pelos dois caminhos. Herança F3 abaixo é histórica e não concede novas permissões.
 
-Última atualização: 2026-11-01, Codex (continuação do Claude).
+Última atualização: 2026-11-03, Claude (Opus 5.5).
 
 ## D-001 — Caminhos e organização (aceita, 2026-09-16)
 
@@ -165,6 +165,22 @@ Contexto: a regra pública da Fase 3 divergia do README atual. Após explicaçã
 Decisão: na revisão dos documentos públicos, retirar referências ao Codex/Claude e aos IDs internos de decisões/achados/pendências. Manter autoria, cronologia e referências completas em 00_COLAB_IA. Não apagar histórico nem retirar créditos/licenças de terceiros. CLAUDE.md continua como ponteiro interno conforme as instruções globais atuais.
 
 Alternativas: manter anotações de agentes no README (não escolhida). Motivo: documentos para o avaliador explicam o projeto; o diário explica o trabalho entre agentes. Status: política decidida; aplicação aos documentos públicos fica no B6/P-017. Esta mescla não reescreveu README público nem relatórios antigos.
+
+## D-019 — Desenho do B2: falha, cluster, segredos e Slack (aceita pelo usuário, 2026-11-03)
+
+Contexto: quatro escolhas para o B2, apresentadas pelo Claude com recomendação em 2026-11-03. Resposta do usuário: "ok para as 4 recomendações".
+
+Decisão:
+1. **Falha proposital:** estado de erro só em memória no flag-service (`POST /admin/fault`), com `/health` saudável. O alerta abre o incidente no PagerDuty e avisa no Slack. O self-healing, um GitHub Actions disparado por `repository_dispatch`, faz `kubectl rollout restart`, e o processo novo nasce sem a falha.
+2. **Cluster:** 2 × m7i-flex.large (8 GiB cada), tipo elegível no plano gratuito. Custo e cota de vCPU ficam para conferir no B3.
+3. **Segredos no cluster:** o Terraform cria os Secrets do Kubernetes a partir de variáveis sensíveis locais, como na Fase 3 (F3-D-018). Nada é versionado.
+4. **Slack pelos dois caminhos:** o cartão do PagerDuty, pelo app conectado ao canal, e a mensagem detalhada do Grafana, pelo Incoming Webhook.
+
+Alternativas descartadas: 3 × c7i-flex.large; Secrets criados à mão; um só caminho até o Slack.
+
+Motivos: memória suficiente para a stack, reprodutibilidade e redundância caso o cartão do PagerDuty falhe. O 4.4 não notificou em 2026-11-03 (ver LOG).
+
+Status: itens 1 e 2 no código em 2026-11-03; o hook da falha aguarda o TODO(human). Itens 3 e 4 ficam no restante do B2. Esta decisão não autoriza apply, envio de eventos reais nem merge na main.
 
 ## Decisões herdadas da Fase 3 — registro histórico revisado em 2026-11-01
 

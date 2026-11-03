@@ -1,6 +1,6 @@
 # Dossiê de contexto
 
-TL;DR: contas SaaS prontas até o 4.3 do guia (seção 21, 2026-11-03). P-016 consolida a herança da Fase 3 na seção 20. Importação e OTel locais concluídos; AWS/GitHub inventariados em 2026-10-28, bucket por relato em 2026-10-30. Stack, APM externo e publicação continuam pendentes.
+TL;DR: contas SaaS prontas até o 4.3 do guia; o 4.4 falhou e está em diagnóstico. B2 iniciado (seção 21, 2026-11-03). P-016 consolida a herança da Fase 3 na seção 20. Importação e OTel locais concluídos; AWS/GitHub inventariados em 2026-10-28, bucket por relato em 2026-10-30. Stack, APM externo e publicação continuam pendentes.
 
 Última atualização: 2026-11-03, Claude (Opus 5.5).
 
@@ -470,4 +470,12 @@ O trial do PagerDuty vai de 2026-10-28 a 2026-11-11 (visto na conta pelo usuári
 
 Os segredos e o Account ID foram informados no chat do Claude. A pedido do usuário, não estão em nenhum arquivo nem no Git. No B1/B4, vão para o `.env` local (ignorado) só com autorização ou pelas mãos do usuário. Recomendado rotacioná-los após a entrega.
 
-O lint Python foi medido em 2026-11-01: o CI atual dá 5,92/5,75/5,50 e, com as dependências, 9,30/9,27/8,61. A próxima ação e as decisões D1–D5 estão no topo de PENDENCIAS. Nenhuma ação AWS, commit ou push em 2026-11-03.
+O lint Python foi medido em 2026-11-01: o CI atual dá 5,92/5,75/5,50 e, com as dependências, 9,30/9,27/8,61. A próxima ação e as decisões D1–D5 estão no topo de PENDENCIAS.
+
+Atualização 14:30 do mesmo dia (substitui a frase "nenhuma ação" da versão anterior desta seção):
+- B0 e B1 concluídos e publicados na dev; o New Relic foi conferido pelo usuário.
+- O 4.4 não notificou em nenhum canal; o diagnóstico está em PENDENCIAS.
+- D-019 fixa o desenho do B2.
+- Commits do B2: `OTEL_*` nos manifestos, ignoreDifferences do HPA, `imports.tf` e 2 × m7i-flex.large.
+- A falha proposital do flag-service está sem commit, aguardando o TODO(human) do usuário.
+- Nenhuma ação na AWS.

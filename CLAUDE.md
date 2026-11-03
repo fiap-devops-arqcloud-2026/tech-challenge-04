@@ -1,6 +1,6 @@
 # Tech Challenge Fase 4 — contexto para assistentes
 
-TL;DR: trabalhar na dev e retomar pelo bloco "Estado em 2026-11-03" de PENDENCIAS. B0 e B1 concluídos (dev publicada, New Relic local ok); próximo é o B2. Trial do PagerDuty até 2026-11-11. Push e commits na dev estão autorizados; main, apply e destroy, não.
+TL;DR: trabalhar na dev e retomar pelo bloco "Estado em 2026-11-03" de PENDENCIAS. B0 e B1 concluídos (New Relic conferido); B2 em andamento (D-019). O 4.4 está em diagnóstico. O TODO(human) no flag-service é do usuário. Trial do PagerDuty até 2026-11-11. Push e commits na dev estão autorizados; main, apply e destroy, não.
 
 Última atualização: 2026-11-03, Claude (Opus 5.5).
 

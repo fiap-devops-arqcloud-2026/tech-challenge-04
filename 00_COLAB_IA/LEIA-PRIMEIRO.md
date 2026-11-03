@@ -1,6 +1,6 @@
 # Colaboração entre agentes
 
-TL;DR: Colaboração vigente nesta pasta. Retomar pelo bloco "Estado em 2026-11-03" de PENDENCIAS: B0 e B1 concluídos; próximo é o B2. Segredos só no `.env` local (ignorado), nunca em arquivo versionado nem no chat. Preservar o trabalho na dev e distinguir relato, validação local e prova externa.
+TL;DR: Colaboração vigente nesta pasta. Retomar pelo bloco "Estado em 2026-11-03" de PENDENCIAS: B0 e B1 concluídos; B2 em andamento. O 4.4 está em diagnóstico, e há um TODO(human) do usuário no flag-service: não completar por ele. Segredos só no `.env` local (ignorado), nunca em arquivo versionado nem no chat. Preservar o trabalho na dev e distinguir relato, validação local e prova externa.
 
 Última atualização: 2026-11-03, Claude (Opus 5.5).
 

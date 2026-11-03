@@ -1,8 +1,56 @@
 # Log de trabalho
 
-TL;DR: B0 concluído e B1 local com New Relic em 2026-11-03 (dev publicada no GitHub). Próximo: B2. Trial do PagerDuty até 2026-11-11.
+TL;DR: B0 e B1 concluídos em 2026-11-03; New Relic conferido pelo usuário. B2 em andamento (4 commits na dev). O 4.4 (PagerDuty → Slack) não notificou nada e está em diagnóstico. A falha proposital do flag-service aguarda um TODO(human) do usuário. Trial do PagerDuty até 2026-11-11.
 
 Última atualização: 2026-11-03, Claude (Opus 5.5).
+
+## 2026-11-03 14:30 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — Respostas do usuário, início do B2 e 4.4 sem notificação
+
+Relato e decisões do usuário em 2026-11-03:
+- "NR ok": 5 serviços, Service map e trace conferidos no New Relic.
+- 4.4: "não chegou notificação nenhuma em nenhum canal". Ainda não se sabe se o Comando 2 devolveu HTTP 202, nem se o incidente aparece em Incidents.
+- D3, "pode apagar": o log de 156 MB foi para a Lixeira do Windows, não apagado em definitivo. Antes, conferi a Lixeira (capacidade de cerca de 50 GB por volume, NukeOnDelete=0). Esvaziá-la fica com o usuário. Os caches de cerca de 1,9 GB não foram tocados.
+- "ok para as 4 recomendações": registradas em D-019.
+
+Feito:
+- `.env`: formato das chaves conferido, sem exibir valores.
+  - License key: 40 caracteres, terminando em NRAL.
+  - Integration Key do PagerDuty: 32 caracteres hexadecimais.
+  - Webhook do Slack: prefixo `hooks.slack.com/services/` e 3 segmentos.
+  - Nenhuma tem aspas, espaços ou CRLF.
+- CI de 356ac4b e cd481fc: tudo verde.
+- B2, 4 commits na dev:
+  - 5bd0588: `configMapGenerator` otel-config com hash, `OTEL_SERVICE_NAME` em cada ConfigMap e atributo de ambiente no overlay. O `kubectl kustomize` renderiza 24 objetos.
+  - 528154d: a Application ignora `/spec/replicas` do evaluation e do analytics, com `RespectIgnoreDifferences=true`.
+  - e1ca283: `terraform/imports.tf` (5 ECR, role, policy e anexo), ligado por `import_manual_resources`.
+    - O ARN é montado a partir do ID da conta.
+    - O exemplo de tfvars usa OIDC `false`.
+    - A policy tem `ignore_changes = [description]`.
+    - O import com `for_each` foi testado com Terraform 1.16 num diretório temporário, com o provider random.
+  - ec9ee60: nós 2 × m7i-flex.large.
+- Falha proposital no flag-service, **sem commit**:
+  - `GET` e `POST /admin/fault`, com autenticação;
+  - estado só em memória;
+  - testes em `services/flag-service/tests/test_fault.py`.
+
+  O hook `inject_fault` tem um TODO(human) para o usuário escrever, pelo estilo de aprendizado. Na imagem do serviço (Python 3.12), 13 testes passam; falham só os 3 subtestes que dependem do hook, como esperado.
+
+Verificações: security-check sem achados; `terraform fmt -check -recursive`; `validate` nas 3 camadas; render do overlay prod. Limitação: nenhum plan real, que exige AWS. O import e a ausência de replace só se confirmam no plan do B3.
+
+Estado p/ o próximo agente:
+- Não completar o TODO(human) sem o usuário.
+- 4.4: diagnosticar com o usuário.
+  - O Comando 2 deu 202?
+  - O incidente aparece em Incidents?
+  - Chegou push ou e-mail no 2.8?
+  - A conexão do canal aparece em Extensions > Slack?
+  - Disparar evento de teste daqui só com autorização explícita.
+- B2 restante:
+  - self-healing: role OIDC na base, access entry no cluster, RBAC e workflow com allowlist e cooldown;
+  - stack de observabilidade no GitOps (pesquisar versões dos charts);
+  - namespace e Secrets de observabilidade na camada k8s;
+  - dashboard, alerta e contact points;
+  - ensaio local da stack no Compose, opcional.
 
 ## 2026-11-03 11:31 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — B0 concluído, B1 local com New Relic e decisões D1–D5
 

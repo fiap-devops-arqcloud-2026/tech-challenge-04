@@ -1,6 +1,6 @@
 # Pendências e progresso
 
-TL;DR: B0 concluído e B1 local com New Relic em 2026-11-03 (dev publicada). Próximo: B2 (stack, alerta e self-healing) até 05/11; B3 em 06/11, com orçamento. Trial do PagerDuty até 2026-11-11: gravar a cadeia de incidente até 2026-11-10. D-018 será aplicada no B6/P-017.
+TL;DR: B0 e B1 concluídos e New Relic conferido em 2026-11-03. B2 em andamento: OTel nos manifestos, HPA × ArgoCD, imports e nós já commitados; falta o restante até 05/11. O 4.4 (PagerDuty → Slack) não notificou e está em diagnóstico. B3 em 06/11, com orçamento. Trial do PagerDuty até 2026-11-11: gravar a cadeia de incidente até 2026-11-10. D-018 será aplicada no B6/P-017.
 
 Última atualização: 2026-11-03, Claude (Opus 5.5).
 
@@ -16,7 +16,7 @@ Situação:
 Decisões do usuário (respondidas em 2026-11-03):
 - [x] D1 — Git autorizado: commits curados na dev e push para origin/dev. PR e merge para a main só no B3.
 - [x] D2 — Não restaurar os 34 materiais da Fase 3 (remoção commitada em 9b3119a).
-- [ ] D3 — Log de 156 MB ignorado e resumido em `offline-test-resumo.txt`. O usuário sugeriu removê-lo; apagar só com o ok dele, porque a exclusão é definitiva (o arquivo nunca entrou no Git).
+- [x] D3 — Log de 156 MB resumido em `offline-test-resumo.txt`. Com o "pode apagar" do usuário (2026-11-03), foi para a Lixeira do Windows, recuperável; esvaziar a Lixeira fica com ele. Os caches de cerca de 1,9 GB continuam.
 - [x] D4 — Plano gratuito novo da AWS com US$ 100 de créditos. Se os créditos acabarem, a conta é suspensa; criar orçamento com alertas antes do B3.
 - [x] D5 — Chaves gravadas no `.env` local (ignorado pelo Git).
 
@@ -24,6 +24,33 @@ Atualização 2026-11-03 11:31:
 - B0 concluído: 8 commits e push da dev. CI 6 de 7 verde; a falha do evaluation-service foi corrigida em f7b3ff3.
 - B1 concluído no ambiente local (commit 356ac4b): exportação ao New Relic sem erro. Falta o usuário conferir os 5 serviços, o Service map e o trace na interface.
 - Próximo: B2. Decisões de design a levar ao usuário: falha proposital e ação do self-healing; tamanho do cluster (c7i-flex.large ou m7i-flex.large, ambos elegíveis no plano gratuito); como os segredos chegam ao cluster; e se a notificação no Slack sai do PagerDuty, do Grafana ou dos dois.
+
+Atualização 2026-11-03 14:30:
+- New Relic conferido pelo usuário ("NR ok"). As 4 recomendações do B2 foram aceitas (D-019).
+- 4.4 sem notificação em nenhum canal. Diagnóstico pendente com o usuário:
+  - O Comando 2 deu HTTP 202?
+  - O incidente aparece em Incidents?
+  - O push e o e-mail do 2.8 chegaram?
+  - A conexão do canal aparece em Extensions > Slack (pendente? preset)?
+  - Formato da chave no `.env` conferido: 32 caracteres hexadecimais.
+  - Disparar o teste daqui só com autorização explícita.
+- B2 feito, com commits na dev:
+  - 5bd0588: `OTEL_*` nos manifestos;
+  - 528154d: ignoreDifferences do HPA;
+  - e1ca283: `imports.tf`, OIDC false no exemplo e descrição da policy ignorada;
+  - ec9ee60: 2 × m7i-flex.large.
+- B2 em espera: falha proposital no flag-service, sem commit, com TODO(human) no hook `inject_fault` e testes prontos. Não completar sem o usuário.
+- [ ] B2 restante:
+  - self-healing: role OIDC na base, access entry no EKS, RBAC no namespace e `self-healing.yml` com allowlist, cooldown e `repository_dispatch`;
+  - namespace `observability` e Secrets (New Relic, PagerDuty, Slack, token do dispatch, admin do Grafana) na camada k8s;
+  - `gitops/observability/`: kube-prometheus-stack, Loki, Collector agent e gateway, com versões fixadas por pesquisa;
+  - dashboard, regra de alerta e contact points;
+  - Application de observabilidade;
+  - ensaio local opcional da stack no Compose.
+- Para o usuário:
+  - criar o orçamento no AWS Budgets antes do B3;
+  - criar o token fine-grained do GitHub para o `repository_dispatch` (escopo mínimo; guia a preparar);
+  - esvaziar a Lixeira quando quiser.
 
 Calendário recalibrado, com 2 dias de atraso em relação à P-015:
 
