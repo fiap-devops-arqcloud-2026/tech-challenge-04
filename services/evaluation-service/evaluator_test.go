@@ -238,7 +238,9 @@ func TestRedisUsesCanceledRequestContext(t *testing.T) {
 	exporter := testTracing(t)
 	cache := miniredis.RunT(t)
 	// Se GET nao recebesse o contexto cancelado, esse cache hit seria devolvido.
-	cache.Set("flag_info:PRIVATE_FLAG", `{"Flag":{"is_enabled":true}}`)
+	if err := cache.Set("flag_info:PRIVATE_FLAG", `{"Flag":{"is_enabled":true}}`); err != nil {
+		t.Fatalf("seed Redis: %v", err)
+	}
 	client := redis.NewClient(&redis.Options{Addr: cache.Addr(), MaxRetries: -1})
 	defer func() { _ = client.Close() }()
 	app := &App{RedisClient: client, HttpClient: &http.Client{Timeout: time.Second}, FlagServiceURL: "http://127.0.0.1:1", TargetingServiceURL: "http://127.0.0.1:1"}
