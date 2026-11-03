@@ -1,0 +1,104 @@
+# ============================================================
+# SELF-HEALING - reinicia o servico com problema (Fase 4)
+# ============================================================
+# Disparado pelo contact point de webhook do Grafana quando o alerta de
+# erros 5xx entra em Firing: o Grafana chama
+# POST /repos/<dono>/<repo>/dispatches com event_type "self-healing" e o
+# nome do servico no client_payload. Tambem roda a mao pela aba Actions
+# (workflow_dispatch), util no ensaio e no video.
+#
+# ATENCAO: o GitHub so dispara repository_dispatch para workflows que
+# estao na branch padrao (main). Este arquivo precisa estar na main antes
+# do ensaio da cadeia de incidente.
+#
+# SEGURANCA, em camadas:
+#   - o nome do servico vem do payload; entra no script por variavel de
+#     ambiente (env), nunca interpolado no `run:`, o que impede injecao
+#     de comando. O restart.sh ainda o compara com uma allowlist;
+#   - a role AWS so pode descrever o cluster, e o RBAC so deixa
+#     reiniciar os 5 Deployments (gitops/base/self-healing-rbac.yaml);
+#   - `concurrency` impede dois self-healing ao mesmo tempo, e o cooldown
+#     do script impede reinicios em laco.
+#
+# Variables do repositorio usadas (nao sao segredos):
+#   AWS_REGION, AWS_SELF_HEALING_ROLE_ARN (output self_healing_role_arn
+#   da camada terraform/) e EKS_CLUSTER_NAME (output cluster_name da
+#   camada terraform/cluster).
+# ============================================================
+
+name: self-healing
+
+on:
+  repository_dispatch:
+    types: [self-healing]
+  workflow_dispatch:
+    inputs:
+      service:
+        description: "Deployment a reiniciar"
+        type: choice
+        required: true
+        default: flag-service
+        options:
+          - flag-service
+          - auth-service
+          - targeting-service
+          - evaluation-service
+          - analytics-service
+
+# Menor privilegio: ler o repositorio e pedir o token OIDC da AWS.
+permissions:
+  contents: read
+  id-token: write
+
+# Um self-healing por vez. Um segundo disparo espera o primeiro terminar
+# (e ai o cooldown do script decide se ainda faz sentido reiniciar).
+concurrency:
+  group: self-healing
+  cancel-in-progress: false
+
+jobs:
+  restart:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    env:
+      # Payload do Grafana (repository_dispatch) ou escolha manual.
+      SERVICE: ${{ github.event.client_payload.service || inputs.service }}
+      ALERT_NAME: ${{ github.event.client_payload.alertname || 'disparo manual' }}
+      NAMESPACE: togglemaster
+      # 10 minutos: mais que o tempo de o alerta voltar a Normal depois do
+      # restart, para um Firing atrasado nao reiniciar o pod recem-criado.
+      COOLDOWN_SECONDS: "600"
+
+    steps:
+      - name: Baixar o repositorio
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Registrar o motivo do disparo
+        run: |
+          {
+            echo "## Self-healing"
+            echo "- Alerta: $ALERT_NAME"
+            echo "- Evento: $GITHUB_EVENT_NAME"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Assumir a role do self-healing (OIDC)
+        uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6.3.0
+        with:
+          role-to-assume: ${{ vars.AWS_SELF_HEALING_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Apontar o kubectl para o EKS
+        env:
+          CLUSTER: ${{ vars.EKS_CLUSTER_NAME }}
+        run: aws eks update-kubeconfig --name "$CLUSTER" --region "$AWS_REGION"
+
+      - name: Reiniciar com allowlist e cooldown
+        id: restart
+        run: bash scripts/self-healing/restart.sh
+
+      - name: Pods do servico depois do self-healing
+        # Nao roda quando o servico foi recusado: o valor pode ser texto
+        # arbitrario e nao ha o que mostrar.
+        if: always() && steps.restart.outputs.result != 'refused'
+        run: kubectl get pods -n "$NAMESPACE" -l "app=$SERVICE" -o wide
