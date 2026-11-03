@@ -78,8 +78,22 @@ docker compose --env-file .env.example -p tc04-integration \
 
 O último comando remove os contêineres/rede/volumes descartáveis desse projeto. O arquivo de traces no bind mount permanece na pasta de QA. Não usar `docker system prune` ou comandos globais para limpar este ensaio. A retenção/remoção das evidências locais pode ser decidida separadamente.
 
-## Próxima validação externa
+## Exportar para o New Relic
 
-O usuário informou em 2026-10-22 que ainda não tem conta New Relic e escolheu validar localmente primeiro. Quando a conta estiver disponível, configurar a chave localmente, ajustar exporter TLS/header conforme a documentação da região da conta e provar ingestão/APM/Service Map. Não enviar a chave no chat nem versioná-la. A prova local não conclui esse aceite externo nem os requisitos de cluster/alertas/incidentes.
+O mesmo ensaio pode enviar os traces ao New Relic (conta US). Dois arquivos fazem isso sem mudar a configuração local:
+
+- `observability/otel-collector-newrelic.yaml`: acrescenta o exporter `otlp_http/newrelic` (`https://otlp.nr-data.net`, header `api-key`). Entra como segundo `--config`, então os traces passam pelos mesmos processadores de sanitização antes de sair.
+- `docker-compose.newrelic.yaml`: monta esse arquivo no Collector e lê `NEW_RELIC_LICENSE_KEY`. Sem a variável, o Compose para com erro.
+
+A chave é do tipo **Ingest - License** e fica só no `.env` local, que o Git ignora. Nunca no chat, em prints nem em arquivo versionado.
+
+```bash
+# No Windows (Git Bash), indicar o Python: PYTHON="py -3"
+PYTHON="py -3" bash scripts/test-observability-newrelic.sh
+```
+
+O script valida as duas configurações com o binário do Collector, sobe o laboratório, executa as mesmas provas do ensaio local e procura falhas de exportação nos logs do Collector. Depois, no New Relic: **APM & Services > Services - OpenTelemetry** (os cinco serviços), **Service map** e **Distributed tracing**. Para encerrar, usar o comando da seção anterior acrescentando `-f docker-compose.newrelic.yaml`.
+
+Esta prova vale para o ambiente local. O cluster, as métricas, os logs, os alertas e os incidentes continuam nas etapas seguintes.
 
 Fontes primárias consultadas em 2026-10-22: [Collector configuration](https://opentelemetry.io/docs/collector/configuration/), [Transform Processor](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/v0.163.0/processor/transformprocessor), [File Exporter](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/v0.163.0/exporter/fileexporter), [release 0.163.2](https://github.com/open-telemetry/opentelemetry-collector-releases/releases/tag/v0.163.2), [Compose environment variables](https://docs.docker.com/compose/how-tos/environment-variables/envvars/).
