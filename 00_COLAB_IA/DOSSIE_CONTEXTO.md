@@ -1,8 +1,8 @@
 # Dossiê de contexto
 
-TL;DR: contas SaaS prontas até o 4.3 do guia; o 4.4 falhou e está em diagnóstico. B2 iniciado (seção 21, 2026-11-03). P-016 consolida a herança da Fase 3 na seção 20. Importação e OTel locais concluídos; AWS/GitHub inventariados em 2026-10-28, bucket por relato em 2026-10-30. Stack, APM externo e publicação continuam pendentes.
+TL;DR: B0/B1 concluídos, New Relic conferido pelo usuário; B2 parcial (D-019). O LOG Claude confirma PagerDuty → Slack até Resolved em 2026-11-03; seção 22 atualiza o diagnóstico histórico da seção 21. OAuth do assistente é separado da Events API V2 de alertas. Troca PRTG, prints e webhook direto ainda pendentes. Dev já publicada pelo Claude; implantação AWS não realizada nesta retomada.
 
-Última atualização: 2026-11-03, Claude (Opus 5.5).
+Última atualização: 2026-11-03, Codex.
 
 Atualização 2026-10-28 14:47: usuário informou conclusão do guia IAM/OIDC até passo7. Provedor, policy, role, Variables e consultas IAM são concluídos por relato; nenhuma prova de CI remoto/cluster decorre disso. Prosseguir com inventário, correção F-023 na dev, backend próprio, adoção de recursos manuais e plan revisado. Não recriar role nem reutilizar state antigo. PR/main/apply permanecem fora do pedido de orientação. Registros seguintes sobre ausência da role refletem momentos anteriores.
 
@@ -479,3 +479,13 @@ Atualização 14:30 do mesmo dia (substitui a frase "nenhuma ação" da versão 
 - Commits do B2: `OTEL_*` nos manifestos, ignoreDifferences do HPA, `imports.tf` e 2 × m7i-flex.large.
 - A falha proposital do flag-service está sem commit, aguardando o TODO(human) do usuário.
 - Nenhuma ação na AWS.
+
+## 22. Retomada OAuth e Events API — 2026-11-03, Codex
+
+Fonte de verdade temporal: atualização posterior da entrada Claude 14:50 no LOG, commit 366bdaa e checkpoint vigente de PENDENCIAS. O 4.4 foi cumprido: trigger/resolve aceitos, e-mail confirmado e cartão Slack observado até Resolved. As frases anteriores de diagnóstico refletem o estado antes dessa conferência. O Codex leu esses registros, sem repetir a consulta externa.
+
+B0/B1 concluídos e New Relic conferido pelo usuário. B2 permanece parcial conforme D-019. Preservados app.py e tests/test_fault.py do flag-service, com TODO(human) reservado ao usuário. D1 autoriza commits curados/push dev; D5 autoriza segredos locais já salvos. PR/main e apply/destroy continuam separados e dependem de aprovação específica no B3.
+
+Pedido atual: explicar ID/segredo OAuth e adição de Events API V2 no serviço existente. [Guia](02_TRABALHO/PAGERDUTY_OAUTH_EVENTS_API_2026-11-03_v01.md) diferencia credenciais e registra fontes oficiais consultadas em 2026-11-03. OAuth é para o aplicativo/assistente; PAGERDUTY_INTEGRATION_KEY é para eventos. [INCERTO] cliente solicitante, callback, tipo e escopos: pergunta assíncrona enviada ao usuário, sem solicitar valores.
+
+Próximos passos: usuário adicionar integração genérica no serviço ToggleMaster Fase 4, atualizar a chave local, validar novo incidente até Resolved e guardar prints. Manter PRTG até validar. Webhook direto do Slack é caminho distinto e continua sem teste confirmado, aguardando autorização registrada pelo Claude. Em seguida retomar restante técnico de B2. Nenhum segredo lido, incidente/mensagem enviado, configuração SaaS, commit/push ou operação AWS nesta orientação.

@@ -1,8 +1,32 @@
 # Log de trabalho
 
-TL;DR: B0 e B1 concluídos em 2026-11-03; New Relic conferido pelo usuário. B2 em andamento (4 commits na dev). O 4.4 (PagerDuty → Slack) não notificou nada e está em diagnóstico. A falha proposital do flag-service aguarda um TODO(human) do usuário. Trial do PagerDuty até 2026-11-11.
+TL;DR: B0/B1 concluídos; B2 parcial. O registro Claude das 14:50 confirma o 4.4: incidente, e-mail e cartão no Slack até Resolved. Retomada Codex: orientar OAuth e troca da integração PRTG pela Events API V2. Preservar o TODO(human) do flag-service. Webhook direto do Slack ainda sem teste confirmado.
 
-Última atualização: 2026-11-03, Claude (Opus 5.5).
+Última atualização: 2026-11-03, Codex.
+
+## 2026-11-03 15:24 (America/Sao_Paulo, UTC-03:00) — Codex — Orientação OAuth/Events V2 entregue e handoff alinhado
+
+Feito: guia PAGERDUTY_OAUTH_EVENTS_API_2026-11-03_v01.md com fontes oficiais, diferenças entre credenciais, caminho App Registration e passos para adicionar Events API V2 ao serviço existente. Atualizados os resumos e acrescentado checkpoint vigente: B0/B1 concluídos, B2 parcial, 4.4 concluído conforme LOG Claude. Nenhuma configuração remota alterada e nenhum teste externo executado.
+
+Decisões/Por quê: manter D-019. Recomendar nova integração genérica e atualização local de PAGERDUTY_INTEGRATION_KEY, preservando PRTG até validação. É recomendação de clareza, não exigência ou penalidade atribuída à FIAP. D1/D5 de 2026-11-03 prevalecem sobre antigas restrições de push dev/segredos locais; não ampliam autorização para main/apply/destroy nem para o teste ainda pendente do webhook Slack.
+
+Arquivos: CLAUDE.md; 00_COLAB_IA/LEIA-PRIMEIRO.md, PENDENCIAS_E_PROXIMOS_PASSOS.md, LOG_DE_TRABALHO.md e DOSSIE_CONTEXTO.md (§22); guia em 02_TRABALHO. De-para dos cinco arquivos anteriores: mesmos caminhos relativos sob 00_COLAB_IA/_ARQUIVO_MORTO/2026-11-03_pagerduty-oauth_v01/. DECISOES sem alteração, pois não houve nova decisão arquitetural. Memória global não alterada.
+
+Verificação: hashes SHA-256 dos dois arquivos do flag-service idênticos ao início; todas as entradas anteriores do LOG idênticas após normalização CRLF/LF; linhas históricas de PENDENCIAS/LEIA/DOSSIE preservadas; 3 links locais do guia válidos, UTF-8 sem caractere de substituição e git diff --check aprovado. A tentativa de usar python encontrou apenas o alias da Microsoft Store; verificação reexecutada com sucesso em PowerShell nativo. Não foram necessários testes de aplicação para documentação.
+
+Estado p/ o próximo agente: orientação concluída, execução SaaS pendente. [INCERTO] aplicativo que pede OAuth, callback e escopos: aguardar resposta à pergunta enviada, sem pedir segredos. Usuário pode adicionar Events API V2 independentemente disso. Depois validar nova chave/prints; webhook direto Slack depende de autorização separada. Retomar B2 técnico sem preencher TODO(human). Handoff: LOG + checkpoint de PENDENCIAS identificam resultados comprovados, limites e próxima ação; não repetir B0/B1 ou reabrir diagnóstico do 4.4 antigo. Sem commit/push nesta sessão.
+
+## 2026-11-03 15:21 (America/Sao_Paulo, UTC-03:00) — Codex — Retomada do PagerDuty e conferência do estado Claude
+
+Feito: leitura do protocolo, backlog, LOG, DOSSIE, D-019 e estado Git. Branch dev, HEAD 366bdaa. Alterações preexistentes: services/flag-service/app.py e teste não rastreado services/flag-service/tests/test_fault.py. Pesquisa da documentação oficial do PagerDuty sobre OAuth, MCP e Events API V2. Pergunta assíncrona enviada para identificar em qual aplicativo aparecem os campos OAuth, sem solicitar credenciais.
+
+Decisões/Por quê: manter D-019; nenhuma nova decisão de arquitetura. O sucesso do 4.4 é uma atualização posterior no próprio LOG Claude, não um conflito pendente. Corrigir resumos ativos sem apagar relatos históricos. B0/B1 não devem ser repetidos.
+
+Arquivos: versões anteriores de CLAUDE.md e de LEIA-PRIMEIRO, PENDENCIAS, LOG e DOSSIE movidas para 00_COLAB_IA/_ARQUIVO_MORTO/2026-11-03_pagerduty-oauth_v01/, com a mesma estrutura relativa; arquivos ativos recriados para atualização. LOG atualizado incrementalmente.
+
+Descobertas: OAuth de aplicativo/MCP e Integration Key da Events API são credenciais diferentes. Sem ferramentas conectadas do PagerDuty ou Slack nesta sessão. Nenhuma consulta autenticada nova, evento, mensagem, alteração SaaS, leitura de valores do .env, commit ou push nesta retomada.
+
+Estado p/ o próximo agente: preparar guia OAuth/Events V2, alinhar resumos e verificar preservação do código. [INCERTO] aplicativo solicitante/redirect URI do OAuth; confirmação pedida ao usuário. Próxima implementação geral permanece B2, respeitando o TODO(human).
 
 ## 2026-11-03 14:50 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — Teste do PagerDuty disparado daqui: incidente e e-mail funcionam
 

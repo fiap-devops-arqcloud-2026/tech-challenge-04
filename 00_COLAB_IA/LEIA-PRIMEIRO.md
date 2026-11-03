@@ -1,8 +1,12 @@
 # Colaboração entre agentes
 
-TL;DR: Colaboração vigente nesta pasta. Retomar pelo bloco "Estado em 2026-11-03" de PENDENCIAS: B0 e B1 concluídos; B2 em andamento. O 4.4 está em diagnóstico, e há um TODO(human) do usuário no flag-service: não completar por ele. Segredos só no `.env` local (ignorado), nunca em arquivo versionado nem no chat. Preservar o trabalho na dev e distinguir relato, validação local e prova externa.
+TL;DR: Colaboração vigente nesta pasta. Retomar pelo "Checkpoint vigente" de PENDENCIAS: B0/B1 concluídos; B2 parcial. O LOG Claude confirma o 4.4 até Resolved no Slack. Orientação OAuth/Events API V2 salva; troca da integração ainda pendente. TODO(human) do flag-service reservado ao usuário. Segredos só no .env local ignorado ou armazenamento seguro do conector. Distinguir registro histórico, validação local e prova externa.
 
-Última atualização: 2026-11-03, Claude (Opus 5.5).
+Última atualização: 2026-11-03, Codex.
+
+## Atualização de escopo — 2026-11-03
+
+D1–D5 registradas em PENDENCIAS superam restrições históricas abaixo: commits curados e push da dev autorizados; segredos já gravados no .env local com autorização. PR/main e apply/destroy continuam no B3, sujeitos a autorização específica. B0/B1 não devem ser repetidos. O diagnóstico antigo do 4.4 foi encerrado no LOG Claude das 14:50, após leitura do Slack. O webhook direto do Slack ainda não foi comprovado; seu teste aguarda autorização. Na orientação Codex de OAuth/Events V2 não houve ação externa. Preservar os registros anteriores como histórico.
 
 ## Ritual e retomada
 

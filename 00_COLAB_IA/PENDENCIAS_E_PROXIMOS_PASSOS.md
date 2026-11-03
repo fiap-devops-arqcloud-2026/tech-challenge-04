@@ -1,8 +1,30 @@
 # Pendências e progresso
 
-TL;DR: B0 e B1 concluídos e New Relic conferido em 2026-11-03. B2 em andamento: OTel nos manifestos, HPA × ArgoCD, imports e nós já commitados; falta o restante até 05/11. O 4.4 (PagerDuty → Slack) não notificou e está em diagnóstico. B3 em 06/11, com orçamento. Trial do PagerDuty até 2026-11-11: gravar a cadeia de incidente até 2026-11-10. D-018 será aplicada no B6/P-017.
+TL;DR: B0/B1 concluídos; B2 parcial. PagerDuty → Slack até Resolved confirmado no registro Claude de 2026-11-03 14:50; faltam prints e teste da nova integração genérica após a troca. Webhook direto do Slack continua pendente. Retomar pelo checkpoint Codex abaixo; não reaplicar B0/B1. Trial até 2026-11-11 por relato; meta de gravação 2026-11-10.
 
-Última atualização: 2026-11-03, Claude (Opus 5.5).
+Última atualização: 2026-11-03, Codex.
+
+## Checkpoint vigente — 2026-11-03 15:21, Codex
+
+Este checkpoint incorpora o resultado mais recente do LOG Claude (14:50, com conferência posterior no Slack). Os blocos anteriores, preservados abaixo, registram etapas do dia: referências a 4.4 em diagnóstico, ausência de segredos locais, B0/B1 pendentes ou falta de autorização para push foram superadas pelas atualizações D1–D5 e pelo teste concluído.
+
+- **Estado confirmado nos registros:** B0/B1 concluídos, New Relic conferido pelo usuário; 4.4 cumprido com cartão e Resolved no Slack. Não é uma nova verificação externa do Codex.
+- **Git:** dev, HEAD 366bdaa; commits curados e push dev autorizados (D1). PR/main, apply/destroy e orçamento ficam no B3, com autorização específica. Nenhuma publicação executada nesta orientação.
+- **Segredos:** D5 já autorizou gravação no .env local ignorado. Não pedir valores no chat nem usar Integration Key como client secret OAuth.
+- **B2:** continuar lista técnica no bloco Claude abaixo; preservar app.py e tests/test_fault.py do flag-service, incluindo TODO(human) reservado ao usuário.
+
+Checklist desta retomada:
+- [x] Conferir estado Claude, Git e fontes oficiais do PagerDuty.
+- [x] Salvar [orientação OAuth × Events API V2](02_TRABALHO/PAGERDUTY_OAUTH_EVENTS_API_2026-11-03_v01.md) com referências e passos de troca.
+- [x] Alinhar ponteiros de contexto com 4.4 concluído e B2 parcial.
+- [x] VERIFICAÇÃO em 2026-11-03 15:24: 3 links locais, histórico preservado, UTF-8, git diff --check e hashes dos dois arquivos do flag-service inalterados.
+
+Pendências operacionais (não confundir com entrega da orientação):
+- [ ] Usuário informar em qual aplicativo aparecem os campos OAuth; [INCERTO] redirect URI e tipo/escopos exigidos pelo cliente. Pergunta assíncrona enviada, sem pedir chaves.
+- [ ] Adicionar Events API V2 no mesmo serviço ToggleMaster Fase 4 e atualizar PAGERDUTY_INTEGRATION_KEY no .env local. Conservar PRTG até testar a nova integração.
+- [ ] Validar novo trigger → cartão Slack → resolve e guardar prints sem segredos. O teste anterior comprova a integração PRTG, não a nova chave ainda não criada.
+- [ ] Testar Incoming Webhook direto do Slack após autorização específica já pendente no LOG Claude. O sucesso do cartão PagerDuty não comprova esse caminho.
+- [ ] Demais pendências do bloco Claude: prints, troca de senha exposta, B2 técnico e orçamento antes do B3. Push no celular é opcional.
 
 ## Estado em 2026-11-03 e próxima ação (handoff Claude → Codex)
 
