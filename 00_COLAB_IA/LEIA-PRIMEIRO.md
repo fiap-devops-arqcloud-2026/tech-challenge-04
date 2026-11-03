@@ -1,6 +1,6 @@
 # Colaboração entre agentes
 
-TL;DR: Colaboração vigente nesta pasta. Retomar pelo "Checkpoint vigente" de PENDENCIAS: B0/B1 concluídos; B2 parcial. O LOG Claude confirma o 4.4 até Resolved no Slack. Orientação OAuth/Events API V2 salva; troca da integração ainda pendente. TODO(human) do flag-service reservado ao usuário. Segredos só no .env local ignorado ou armazenamento seguro do conector. Distinguir registro histórico, validação local e prova externa.
+TL;DR: Colaboração vigente nesta pasta. Retomar pelo "Checkpoint vigente" de PENDENCIAS (2026-11-03 20:52): B0/B1 concluídos, 4.4 confirmado e B2 técnico concluído e validado localmente. O TODO(human) do flag-service é do usuário: não completar por ele. Próximo: B3, com custo, orçamento e aprovação explícita. Segredos só no `.env` local ignorado; nunca em arquivo versionado nem no chat.
 
 Última atualização: 2026-11-03, Codex.
 

@@ -1,8 +1,8 @@
 # Tech Challenge Fase 4 — contexto para assistentes
 
-TL;DR: trabalhar na dev e retomar pelo "Checkpoint vigente" de PENDENCIAS. B0/B1 concluídos (New Relic conferido); B2 parcial (D-019). O LOG Claude confirma 4.4 até Resolved no Slack. Orientação OAuth/Events V2 salva, troca PRTG ainda pendente. Preservar TODO(human) no flag-service. Trial até 2026-11-11 por relato. Commits curados/push dev autorizados; main/apply/destroy dependem do B3 e autorização específica.
+TL;DR: trabalhar na dev e retomar pelo "Checkpoint vigente" de PENDENCIAS (2026-11-03 20:52). B0/B1 concluídos e 4.4 confirmado. B2 técnico concluído (stack GitOps, alerta, self-healing e Terraform, validados localmente; commits até 9ea8891), faltando o TODO(human) do flag-service, que é do usuário. Próximo: B3 (custo, AWS Budgets, tokens do GitHub e aprovação). Commits e push na dev autorizados; main, apply e destroy exigem autorização específica.
 
-Última atualização: 2026-11-03, Codex.
+Última atualização: 2026-11-03, Claude (Opus 5.5).
 
 - SaaS (2026-11-03): New Relic conferido pelo usuário; PagerDuty → Slack até Resolved confirmado no LOG Claude 14:50. Integração atual PRTG usa Events API v2; adição da genérica pendente. Webhook direto do Slack ainda sem teste confirmado. D5 autorizou segredos no .env local ignorado; não gravar em arquivo versionado, LOG ou chat. Guia: `00_COLAB_IA/02_TRABALHO/PAGERDUTY_OAUTH_EVENTS_API_2026-11-03_v01.md`.
 

@@ -1,8 +1,65 @@
 # Log de trabalho
 
-TL;DR: B0/B1 concluídos; B2 parcial. O registro Claude das 14:50 confirma o 4.4: incidente, e-mail e cartão no Slack até Resolved. Retomada Codex: orientar OAuth e troca da integração PRTG pela Events API V2. Preservar o TODO(human) do flag-service. Webhook direto do Slack ainda sem teste confirmado.
+TL;DR: B0/B1 concluídos e 4.4 confirmado. B2 técnico concluído em 2026-11-03 20:52 (stack GitOps, alerta, contact points e self-healing, validados localmente; commits até 9ea8891). Falta o TODO(human) do flag-service, que é do usuário. Próximo: B3 (custo, orçamento e aprovação). Webhook direto do Slack ainda sem teste; troca da integração PRTG pendente.
 
-Última atualização: 2026-11-03, Codex.
+Última atualização: 2026-11-03, Claude (Opus 5.5).
+
+## 2026-11-03 20:52 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — B2 técnico concluído, exceto o TODO(human)
+
+Pedido: continuar o B2 depois das respostas do usuário (D-019). Li antes as entradas do Codex de 15:21, 15:24 e 15:58 e o guia de OAuth; não refiz esse trabalho.
+
+Commits na dev (push `939444a..9ea8891`):
+- **1c2b0b9, identidade do self-healing.**
+  - Role `togglemaster-self-healing` na base: confiança OIDC da main e só `eks:DescribeCluster` no cluster.
+  - Access entry no cluster, ligando a role ao grupo `togglemaster-self-healing`.
+  - Role/RoleBinding no GitOps: leitura no namespace e `patch` só nos 5 Deployments.
+- **7d50472 e 9ea8891, workflow e script.**
+  - `self-healing.yml` roda por `repository_dispatch` (tipo `self-healing`) ou manualmente.
+  - Usa OIDC, kubectl 1.34.13 e actions fixadas por SHA.
+  - `scripts/self-healing/restart.sh` tem lista de serviços permitidos, intervalo mínimo de 600 s (lido da anotação `restartedAt`), ignora status diferente de `firing` e confere o rollout.
+- **6f829f1, stack de observabilidade.**
+  - `gitops/observability`: app of apps com 4 Applications multi-source (kube-prometheus-stack 92.17.1, loki 7.5.0 e opentelemetry-collector 0.178.2 como gateway e agente) e os values.
+  - Grafana 13.3.0: dashboard com 7 painéis; regra `FlagService5xxAlto` (5xx acima de 10% por 1 min); contact points PagerDuty, Slack e GitHub; árvore de políticas.
+  - `terraform/k8s/observability.tf`: namespace, Secrets `newrelic-license`, `grafana-admin` (senha aleatória) e `grafana-notificacoes`, e a Application mãe.
+- **Fatos com fonte:** 221 fatos de 4 frentes de pesquisa (workflow `wf_9ab01c7a-69d`), em `02_TRABALHO/b2-fatos-stack-2026-11-03_v01/`.
+
+Verificações locais:
+- `helm template` dos 4 charts com o helm 3.15.4 do ArgoCD v2.13.2;
+- `otelcol-contrib validate` das configurações renderizadas;
+- Grafana 13.3.0 **sem rede** carregou contact points, política, regra, templates, dashboard e datasources. Pela API de teste, o JSON do dispatch sai certo;
+- `test-restart.sh` (11 cenários), `actionlint` 1.7.12 e `shellcheck` 0.11.0;
+- `terraform fmt`/`validate` nas 3 camadas, `kubectl kustomize` (26 e 6 objetos) e security-check.
+
+Achados da validação, já corrigidos:
+1. O Grafana converte em número um segredo que pareça número e não sobe. Aspas no YAML não evitam isso. O Terraform passou a recusar Integration Key que o `tonumber` aceite.
+2. O alerta `DatasourceError` herda o label `selfheal=true` da regra. Agora a rota do GitHub exige também `alertname=FlagService5xxAlto`.
+3. O runner traz kubectl 1.37, fora da diferença aceita pelo EKS 1.34. O workflow instala o 1.34.13.
+4. Uma notificação de resolução poderia reiniciar o serviço. O webhook usa `disableResolveMessage`, e o script tem uma guarda de status.
+
+Checklist para o B3:
+- `enable_nat_gateway = true`: é a única saída para New Relic, PagerDuty, Slack, GitHub e para as imagens.
+- Variables do GitHub: `AWS_SELF_HEALING_ROLE_ARN` (output da base) e `EKS_CLUSTER_NAME` (`togglemaster-eks-cluster`).
+- Tokens a criar pelo usuário: de dispatch (fine-grained, Contents: write) e de leitura para o ArgoCD (repositório privado).
+- `TF_VAR_*` dos 4 segredos.
+- Ordem: base → cluster → k8s em duas etapas. O `self-healing.yml` precisa estar na main antes do ensaio.
+- Gerador de tráfego para o ensaio, porque o cache do evaluation esconde chamadas.
+- PVCs da stack no destroy.
+
+Limitações: nada aplicado na AWS e nenhum plan real. O envio real do Grafana ao PagerDuty, ao Slack e ao GitHub só será provado com o cluster no ar, ou num ensaio local com autorização para eventos reais.
+
+Estado p/ o próximo agente: B2 pronto, exceto o TODO(human) do `inject_fault()` no flag-service, cujas mudanças continuam sem commit. Não completá-lo pelo usuário. Próximo: B3, com estimativa de custo, orçamento no AWS Budgets e aprovação explícita.
+
+## 2026-11-03 15:58 (America/Sao_Paulo, UTC-03:00) — Codex — Nova consulta sobre OAuth e Events API V2
+
+Feito: reconferidos protocolo, pendências, contexto, D-019, estado Git e documentação oficial PagerDuty. Reutilizado o guia de 15:24, sem refazer entregável. Aguardamos identificar o aplicativo que solicita OAuth para definir callback/tipo/escopos; não foram solicitadas credenciais.
+
+Descobertas: dev avançou para 7d50472 (workflow self-healing), após 1c2b0b9 (identidade/permissões) e 939444a (documentação). Esses commits foram observados, não executados nem validados nesta consulta. Há alterações preexistentes em terraform/k8s/variables.tf, terraform.tfvars.example e observability.tf não rastreado, além do exercício flag-service. Preservadas integralmente; não presumir que B2 ainda está no estado de 15:24 nem que já foi validado.
+
+Decisões/Por quê: nenhuma nova decisão; manter D-019. OAuth de aplicativo é separado da chave de alertas. A troca da integração PRTG é recomendação de clareza, mantendo a antiga até validar a nova.
+
+Arquivos: entrada incremental no LOG e atualização de retomada em PENDENCIAS/DOSSIE. Verificação documental restrita aos arquivos desta consulta; nenhuma edição de código, leitura de segredos, alteração SaaS, mensagem, incidente, commit/push ou ação AWS.
+
+Estado p/ o próximo agente: responder à identificação do cliente OAuth; seguir o guia existente para Events API V2. Antes de continuar B2, ler os commits 1c2b0b9/7d50472 e as alterações Terraform já presentes para não duplicar o trabalho. Preservar TODO(human) do usuário. Handoff atualizado sem atribuir testes não realizados.
 
 ## 2026-11-03 15:24 (America/Sao_Paulo, UTC-03:00) — Codex — Orientação OAuth/Events V2 entregue e handoff alinhado
 

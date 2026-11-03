@@ -1,10 +1,37 @@
 # Pendências e progresso
 
-TL;DR: B0/B1 concluídos; B2 parcial. PagerDuty → Slack até Resolved confirmado no registro Claude de 2026-11-03 14:50; faltam prints e teste da nova integração genérica após a troca. Webhook direto do Slack continua pendente. Retomar pelo checkpoint Codex abaixo; não reaplicar B0/B1. Trial até 2026-11-11 por relato; meta de gravação 2026-11-10.
+TL;DR: B0/B1 concluídos e 4.4 confirmado. **B2 técnico concluído em 2026-11-03 20:52** (stack GitOps, alerta, contact points, self-healing e Terraform, validados localmente; commits até 9ea8891), faltando o TODO(human) do flag-service. Próximo: B3, com estimativa de custo, AWS Budgets, tokens do GitHub e aprovação explícita. Trial até 2026-11-11 por relato; meta de gravação 2026-11-10.
 
-Última atualização: 2026-11-03, Codex.
+Última atualização: 2026-11-03, Claude (Opus 5.5).
 
-## Checkpoint vigente — 2026-11-03 15:21, Codex
+## Checkpoint vigente — 2026-11-03 20:52, Claude
+
+Substitui o checkpoint de 15:21 (preservado abaixo) quanto ao B2. Detalhes e verificações no LOG de 20:52.
+
+- [x] Self-healing: role com permissão mínima, access entry, RBAC, `self-healing.yml` e `restart.sh` (commits 1c2b0b9, 7d50472 e 9ea8891).
+- [x] Stack em `gitops/observability` e Terraform k8s, com namespace, Secrets e Application (6f829f1).
+- [x] Validação local: `helm template`, `otelcol validate`, Grafana 13.3.0 sem rede, testes do script, `actionlint`/`shellcheck` e `terraform validate` nas 3 camadas.
+- [ ] TODO(human) `inject_fault()` em `services/flag-service/app.py`, **do usuário**. Testes prontos em `tests/test_fault.py`; depois rodar na imagem Python 3.12 e commitar.
+- [ ] Usuário, antes do B3:
+  - orçamento no AWS Budgets;
+  - token fine-grained de dispatch (Contents: write) e token de leitura para o ArgoCD, os dois no `.env`;
+  - trocar a integração PRTG pela Events API V2 e atualizar o `.env`;
+  - autorizar o teste do webhook do Slack;
+  - prints do 4.4;
+  - trocar a senha do PagerDuty.
+- [ ] B3:
+  - estimativa de custo com fontes;
+  - `enable_nat_gateway = true`;
+  - Variables `AWS_SELF_HEALING_ROLE_ARN` e `EKS_CLUSTER_NAME`;
+  - `TF_VAR_*` dos segredos;
+  - apply na ordem base → cluster → k8s (duas etapas);
+  - PR dev → main, só com autorização específica;
+  - ArgoCD Synced/Healthy;
+  - gerador de tráfego para o ensaio.
+
+## Checkpoint anterior — 2026-11-03 15:21, Codex
+
+**Atualização de leitura em 2026-11-03 15:58:** dev agora está em 7d50472. Commits 1c2b0b9 e 7d50472 acrescentaram identidade/permissões e workflow de self-healing; não foram validados pelo Codex nesta consulta. Terraform k8s tem alterações locais em variables.tf, terraform.tfvars.example e observability.tf não rastreado. Ler esse trabalho antes de executar novamente os itens B2 abaixo. Exercício do flag-service preservado. Nenhuma confirmação nova sobre cliente OAuth ou criação da integração genérica; pendências operacionais mantidas.
 
 Este checkpoint incorpora o resultado mais recente do LOG Claude (14:50, com conferência posterior no Slack). Os blocos anteriores, preservados abaixo, registram etapas do dia: referências a 4.4 em diagnóstico, ausência de segredos locais, B0/B1 pendentes ou falta de autorização para push foram superadas pelas atualizações D1–D5 e pelo teste concluído.
 

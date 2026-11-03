@@ -1,6 +1,6 @@
 # Dossiê de contexto
 
-TL;DR: B0/B1 concluídos, New Relic conferido pelo usuário; B2 parcial (D-019). O LOG Claude confirma PagerDuty → Slack até Resolved em 2026-11-03; seção 22 atualiza o diagnóstico histórico da seção 21. OAuth do assistente é separado da Events API V2 de alertas. Troca PRTG, prints e webhook direto ainda pendentes. Dev já publicada pelo Claude; implantação AWS não realizada nesta retomada.
+TL;DR: B0/B1 concluídos, New Relic conferido e 4.4 confirmado até Resolved no Slack. **B2 técnico concluído e validado localmente em 2026-11-03 (seção 23)**, faltando o TODO(human) do flag-service. Próximo: B3 com custo, orçamento e aprovação. OAuth do assistente é separado da Events API V2 (seção 22).
 
 Última atualização: 2026-11-03, Codex.
 
@@ -482,6 +482,8 @@ Atualização 14:30 do mesmo dia (substitui a frase "nenhuma ação" da versão 
 
 ## 22. Retomada OAuth e Events API — 2026-11-03, Codex
 
+Atualização de leitura em 2026-11-03 15:58: Git avançou para 7d50472 após 1c2b0b9, com identidade/permissões e workflow de self-healing. Alterações Terraform k8s ainda locais observadas. Esta consulta não revisou nem validou esse código; ler o estado presente antes de retomar B2. Orientação OAuth/Events V2 reutilizada, ainda sem identificação do cliente OAuth pelo usuário.
+
 Fonte de verdade temporal: atualização posterior da entrada Claude 14:50 no LOG, commit 366bdaa e checkpoint vigente de PENDENCIAS. O 4.4 foi cumprido: trigger/resolve aceitos, e-mail confirmado e cartão Slack observado até Resolved. As frases anteriores de diagnóstico refletem o estado antes dessa conferência. O Codex leu esses registros, sem repetir a consulta externa.
 
 B0/B1 concluídos e New Relic conferido pelo usuário. B2 permanece parcial conforme D-019. Preservados app.py e tests/test_fault.py do flag-service, com TODO(human) reservado ao usuário. D1 autoriza commits curados/push dev; D5 autoriza segredos locais já salvos. PR/main e apply/destroy continuam separados e dependem de aprovação específica no B3.
@@ -489,3 +491,12 @@ B0/B1 concluídos e New Relic conferido pelo usuário. B2 permanece parcial conf
 Pedido atual: explicar ID/segredo OAuth e adição de Events API V2 no serviço existente. [Guia](02_TRABALHO/PAGERDUTY_OAUTH_EVENTS_API_2026-11-03_v01.md) diferencia credenciais e registra fontes oficiais consultadas em 2026-11-03. OAuth é para o aplicativo/assistente; PAGERDUTY_INTEGRATION_KEY é para eventos. [INCERTO] cliente solicitante, callback, tipo e escopos: pergunta assíncrona enviada ao usuário, sem solicitar valores.
 
 Próximos passos: usuário adicionar integração genérica no serviço ToggleMaster Fase 4, atualizar a chave local, validar novo incidente até Resolved e guardar prints. Manter PRTG até validar. Webhook direto do Slack é caminho distinto e continua sem teste confirmado, aguardando autorização registrada pelo Claude. Em seguida retomar restante técnico de B2. Nenhum segredo lido, incidente/mensagem enviado, configuração SaaS, commit/push ou operação AWS nesta orientação.
+
+## 23. B2 técnico — 2026-11-03, Claude
+
+Desenho D-019 implementado e validado localmente, sem AWS:
+- **Telemetria:** os 5 serviços mandam OTLP ao `otel-gateway`. O gateway sanitiza os traces e os envia ao New Relic, gera métricas dos spans para o Prometheus (receptor OTLP nativo) e encaminha ao Loki os logs coletados pelo agente DaemonSet.
+- **Alerta:** a regra `FlagService5xxAlto` é a proporção de spans SERVER com erro no flag-service, acima de 10% por 1 min. Ela abre incidente no PagerDuty, manda a mensagem detalhada ao Slack e dispara o `repository_dispatch` para o `self-healing.yml`.
+- **Self-healing:** o workflow tem lista de serviços permitidos, intervalo mínimo de 600 s, kubectl 1.34.13 e uma role cuja única permissão AWS é `eks:DescribeCluster`. O RBAC só permite `patch` nos 5 Deployments.
+- **Fatos e fontes:** `02_TRABALHO/b2-fatos-stack-2026-11-03_v01/FICHA.md`. Verificações e achados no LOG de 20:52.
+- **Para o B3:** o NAT é obrigatório, porque é a única saída da stack para a internet. Faltam também as Variables do GitHub, os 2 tokens do GitHub e os `TF_VAR_*` dos segredos.
