@@ -4,7 +4,7 @@ Este é o serviço de autenticação do projeto ToggleMaster. Ele é responsáve
 
 ## 📦 Pré-requisitos (Local)
 
-* [Go](https://go.dev/doc/install) (versão 1.21 ou superior)
+* [Go](https://go.dev/doc/install) (versão 1.25.0 ou superior)
 * [PostgreSQL](https://www.postgresql.org/download/) (rodando localmente ou em um contêiner Docker)
 
 ## 🚀 Rodando Localmente
@@ -89,3 +89,26 @@ curl http://localhost:8001/validate \
 ```
 
 Saída esperada: `Chave de API inválida ou inativa`
+
+## Observabilidade local — 2026-10-27
+
+A instrumentação é opcional. Para exportar traces ao Collector local, configure:
+
+```dotenv
+OTEL_SERVICE_NAME=auth-service
+OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
+OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
+```
+
+O endpoint base recebe `/v1/traces`. Como alternativa, `OTEL_EXPORTER_OTLP_TRACES_ENDPOINT` define a URL completa e tem precedência. Sem endpoint, ou com `OTEL_SDK_DISABLED=true`, o SDK não exporta traces. O bootstrap Go usa explicitamente OTLP/HTTP; não configura exporters de métricas ou logs.
+
+O middleware cria um span por requisição, recebe `traceparent`/`tracestate` W3C e exclui `/health`. Consultas PostgreSQL usam o contexto da requisição e spans de operação, sem SQL ou parâmetros nos atributos. Os logs JSON no stdout contêm `event` estático, `service.name` e, havendo contexto válido, `trace_id`/`span_id`; não registram nomes, chaves, hashes ou detalhes de erros de banco.
+
+No encerramento por SIGTERM/interrupt, o servidor termina as requisições antes do flush do SDK. Os testes locais usam SQL simulado e receptor OTLP HTTP em memória:
+
+```bash
+go test ./...
+go vet ./...
+```
+
+Fontes em 2026-10-27: [bootstrap e middleware](telemetry.go), [SQL e logs](handlers.go), [testes](telemetry_test.go), [OTLP HTTP 1.46.0](https://pkg.go.dev/go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp@v1.46.0). A validação do trace dos cinco serviços é feita pelo ensaio integrado na raiz do projeto.

@@ -2,9 +2,13 @@ package main
 
 import (
 	"context"
-	"log"
+	"errors"
+	"log/slog"
 	"net/http"
 	"os"
+	"os/signal"
+	"sync"
+	"syscall"
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -12,112 +16,90 @@ import (
 	"github.com/aws/aws-sdk-go/service/sqs"
 	"github.com/go-redis/redis/v8"
 	"github.com/joho/godotenv"
+	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 )
 
-// Contexto global para o Redis
-var ctx = context.Background()
-
-// App struct para injeção de dependência
+// App permite injetar clientes reais ou fakes locais nos testes.
 type App struct {
 	RedisClient         *redis.Client
-	SqsSvc              *sqs.SQS
+	SqsSvc              messageSender
 	SqsQueueURL         string
 	HttpClient          *http.Client
 	FlagServiceURL      string
 	TargetingServiceURL string
+	producers           sync.WaitGroup
 }
 
 func main() {
-	_ = godotenv.Load() // Carrega .env para dev local
+	if err := run(); err != nil {
+		slog.Error("service.start.failed")
+		os.Exit(1)
+	}
+}
 
-	// --- Configuração ---
+func run() error {
+	_ = godotenv.Load()
+	shutdown, err := initTelemetry(context.Background(), "evaluation-service")
+	if err != nil {
+		return err
+	}
+	defer shutdownTelemetry(shutdown)
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8004"
 	}
-
-	redisURL := os.Getenv("REDIS_URL")
-	if redisURL == "" {
-		log.Fatal("REDIS_URL deve ser definida (ex: redis://localhost:6379)")
+	redisURL, flagSvcURL, targetingSvcURL := os.Getenv("REDIS_URL"), os.Getenv("FLAG_SERVICE_URL"), os.Getenv("TARGETING_SERVICE_URL")
+	if redisURL == "" || flagSvcURL == "" || targetingSvcURL == "" {
+		return errors.New("missing configuration")
 	}
-
-	flagSvcURL := os.Getenv("FLAG_SERVICE_URL")
-	if flagSvcURL == "" {
-		log.Fatal("FLAG_SERVICE_URL deve ser definida")
-	}
-
-	targetingSvcURL := os.Getenv("TARGETING_SERVICE_URL")
-	if targetingSvcURL == "" {
-		log.Fatal("TARGETING_SERVICE_URL deve ser definida")
-	}
-
-	// SQS é opcional no dev local, mas obrigatório em prod
-	sqsQueueURL := os.Getenv("AWS_SQS_URL")
-	awsRegion := os.Getenv("AWS_REGION")
+	sqsQueueURL, awsRegion := os.Getenv("AWS_SQS_URL"), os.Getenv("AWS_REGION")
 	if sqsQueueURL == "" {
-		log.Println("Atenção: AWS_SQS_URL não definida. Eventos não serão enviados.")
+		slog.Info("sqs.disabled")
 	}
 	if awsRegion == "" && sqsQueueURL != "" {
-		log.Fatal("AWS_REGION deve ser definida para usar SQS")
+		return errors.New("missing region")
 	}
-
-	// --- Inicializa Clientes ---
-
-	// Cliente Redis
 	opt, err := redis.ParseURL(redisURL)
 	if err != nil {
-		log.Fatalf("Não foi possível parsear a URL do Redis: %v", err)
+		return err
 	}
 	rdb := redis.NewClient(opt)
-	if _, err := rdb.Ping(ctx).Result(); err != nil {
-		log.Fatalf("Não foi possível conectar ao Redis: %v", err)
+	defer func() {
+		if err := rdb.Close(); err != nil {
+			slog.Warn("redis.close.failed")
+		}
+	}()
+	pingCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	if _, err := rdb.Ping(pingCtx).Result(); err != nil {
+		return err
 	}
-	log.Println("Conectado ao Redis com sucesso!")
-
-	// Cliente SQS (AWS SDK)
-	var sqsSvc *sqs.SQS
+	slog.Info("redis.connected")
+	var sqsSvc messageSender
 	if sqsQueueURL != "" {
 		sess, err := session.NewSession(&aws.Config{Region: aws.String(awsRegion)})
 		if err != nil {
-			log.Fatalf("Não foi possível criar sessão AWS: %v", err)
+			return err
 		}
-		// Endpoint alternativo da SQS, para teste local.
-		//
-		// Em producao a variavel nao existe e o SDK usa o endpoint real
-		// da AWS. No docker-compose de integracao ela aponta para um
-		// simulador local, e e isso que permite exercitar o fluxo dos 5
-		// servicos sem tocar na conta - ver docker-compose.integration.yaml
-		// e o workflow compose-integration.yml.
 		sqsConfig := aws.NewConfig()
+		// Apenas o laboratorio local define SQS_ENDPOINT.
 		if endpoint := os.Getenv("SQS_ENDPOINT"); endpoint != "" {
 			sqsConfig.WithEndpoint(endpoint)
 		}
 		sqsSvc = sqs.New(sess, sqsConfig)
-		log.Println("Cliente SQS inicializado com sucesso.")
+		slog.Info("sqs.initialized")
 	}
-
-	// Cliente HTTP (com timeout)
-	httpClient := &http.Client{
-		Timeout: 5 * time.Second,
-	}
-
-	// Cria a instância da App
 	app := &App{
-		RedisClient:         rdb,
-		SqsSvc:              sqsSvc,
-		SqsQueueURL:         sqsQueueURL,
-		HttpClient:          httpClient,
-		FlagServiceURL:      flagSvcURL,
-		TargetingServiceURL: targetingSvcURL,
+		RedisClient: rdb, SqsSvc: sqsSvc, SqsQueueURL: sqsQueueURL,
+		HttpClient:     &http.Client{Timeout: 5 * time.Second, Transport: otelhttp.NewTransport(http.DefaultTransport)},
+		FlagServiceURL: flagSvcURL, TargetingServiceURL: targetingSvcURL,
 	}
-
-	// --- Rotas ---
 	mux := http.NewServeMux()
 	mux.HandleFunc("/health", app.healthHandler)
 	mux.HandleFunc("/evaluate", app.evaluationHandler)
-
-	log.Printf("Serviço de Avaliação (Go) rodando na porta %s", port)
-	if err := http.ListenAndServe(":"+port, mux); err != nil {
-		log.Fatal(err)
-	}
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+	defer stop()
+	slog.Info("service.started")
+	// Nenhum produtor pode iniciar apos todos os handlers terminarem.
+	return serveHTTP(ctx, ":"+port, instrumentHandler(mux), app.producers.Wait)
 }

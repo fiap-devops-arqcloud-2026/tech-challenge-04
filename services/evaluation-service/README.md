@@ -17,7 +17,7 @@ Ele funciona da seguinte forma:
 
 ## 📦 Pré-requisitos (Local)
 
-* [Go](https://go.dev/doc/install) (versão 1.21 ou superior)
+* [Go](https://go.dev/doc/install) (versão 1.25.0 ou superior)
 * [Redis](https://redis.io/docs/getting-started/installation/) (rodando localmente ou em Docker)
 * Os serviços `auth-service`, `flag-service` e `targeting-service` devem estar rodando.
 * **Credenciais da AWS:** Para o SQS funcionar, seu terminal deve estar autenticado na AWS (ex: via `aws configure` ou variáveis de ambiente).
@@ -101,3 +101,28 @@ Saída (exemplo): `{"flag_name":"enable-new-dashboard","user_id":"user-abc","res
 
 **4. Verifique a Fila SQS:** Após fazer as chamadas acima, vá até o console da AWS, abra sua fila SQS e verifique se as mensagens (`EvaluationEvent`) estão chegando.
 
+
+## Observabilidade local — 2026-10-27
+
+A instrumentação é opcional. Para exportar traces ao Collector local, configure:
+
+```dotenv
+OTEL_SERVICE_NAME=evaluation-service
+OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
+OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
+```
+
+O endpoint base recebe `/v1/traces`. `OTEL_EXPORTER_OTLP_TRACES_ENDPOINT` aceita a URL completa e tem precedência. Sem endpoint, ou com `OTEL_SDK_DISABLED=true`, o SDK não exporta traces. O bootstrap usa explicitamente OTLP/HTTP e não configura exporters de métricas ou logs.
+
+Um único middleware instrumenta HTTP e exclui `/health`. Redis e chamadas HTTP paralelas usam o contexto da requisição. O transporte HTTP propaga `traceparent`/`tracestate` W3C; baggage não é propagado. Os spans Redis identificam somente a operação GET/SET, sem chave ou valor. O Collector local aplica a allowlist antes de gravar os spans HTTP, que a biblioteca pode produzir com URLs.
+
+A publicação SQS continua assíncrona e mantém o JSON de negócio original. `traceparent` e `tracestate` seguem em `MessageAttributes` do tipo `String`, com o contexto do span `PRODUCER`. A publicação preserva o trace após o cancelamento HTTP, usa timeout próprio de cinco segundos e termina antes do flush do SDK no encerramento normal.
+
+Os logs JSON no stdout têm `event` estático, `service.name` e `trace_id`/`span_id` quando há contexto válido. Cache HIT/MISS aparecem como `cache.hit`/`cache.miss`, sem usuário, flag, chave de cache, URL da fila ou detalhes do erro. Testes sem AWS real usam Redis em memória, HTTP local, receptor OTLP e fake SQS:
+
+```bash
+go test ./...
+go vet ./...
+```
+
+Fontes em 2026-10-27: [bootstrap e HTTP](telemetry.go), [cache e chamadas paralelas](evaluator.go), [publicação SQS](sqs.go), [testes](evaluator_test.go), [WithoutCancel](https://pkg.go.dev/context#WithoutCancel), [OTLP HTTP 1.46.0](https://pkg.go.dev/go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp@v1.46.0). O ensaio integrado da raiz verifica a relação entre o produtor SQS e o consumidor Python.

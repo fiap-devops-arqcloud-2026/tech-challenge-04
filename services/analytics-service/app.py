@@ -4,21 +4,25 @@ import threading
 import json
 import uuid
 import time
-import logging
 import boto3
 from botocore.exceptions import NoCredentialsError, ClientError
 from flask import Flask, jsonify
 from dotenv import load_dotenv
-
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-log = logging.getLogger(__name__)
+from urllib.parse import urlsplit
+from opentelemetry.trace import SpanKind
+from opentelemetry.trace.propagation.tracecontext import TraceContextTextMapPropagator
+from telemetry import configure_telemetry, instrument_flask, record_error, traced_operation
 
 load_dotenv()
+
+# O Gunicorn atual importa app somente no worker, apos o fork; nao usar --preload.
+log = configure_telemetry("analytics-service")
 
 # --- Configuração ---
 AWS_REGION = os.getenv("AWS_REGION")
 SQS_QUEUE_URL = os.getenv("AWS_SQS_URL")
 DYNAMODB_TABLE_NAME = os.getenv("AWS_DYNAMODB_TABLE")
+QUEUE_NAME = urlsplit(SQS_QUEUE_URL or "").path.rsplit("/", 1)[-1] or "events"
 
 # SQS_ENABLED é True apenas quando a URL da fila foi realmente informada.
 # Em desenvolvimento local, AWS_SQS_URL fica vazia — o worker simplesmente não sobe,
@@ -49,12 +53,12 @@ if SQS_ENABLED:
         # exercitar o fluxo completo sem tocar na conta.
         sqs_client = session.client("sqs", endpoint_url=os.getenv("SQS_ENDPOINT") or None)
         dynamodb_client = session.client("dynamodb", endpoint_url=os.getenv("DYNAMODB_ENDPOINT") or None)
-        log.info(f"Clientes Boto3 inicializados na região {AWS_REGION}.")
+        log.info("aws.clients.initialized")
     except NoCredentialsError:
         log.critical("Credenciais da AWS não encontradas. Verifique seu ambiente.")
         sys.exit(1)
     except Exception as e:
-        log.critical(f"Erro ao inicializar o Boto3: {e}")
+        log.critical("aws.clients.failed", extra={"error_type": type(e).__name__})
         sys.exit(1)
 else:
     # Aviso claro no log para quem inspecionar o container localmente
@@ -63,38 +67,74 @@ else:
 
 # --- SQS Worker ---
 
+def message_context(message):
+    """W3C apenas nos MessageAttributes; nunca extrair contexto do corpo de negocio."""
+    carrier = {}
+    attributes = message.get("MessageAttributes") or {}
+    for key in ("traceparent", "tracestate"):
+        attribute = attributes.get(key) or {}
+        value = attribute.get("StringValue") if isinstance(attribute, dict) else None
+        if isinstance(value, str):
+            carrier[key] = value
+    return TraceContextTextMapPropagator().extract(carrier)
+
+
 def process_message(message):
-    """Processa uma única mensagem SQS e insere o evento no DynamoDB."""
-    try:
-        log.info(f"Processando mensagem ID: {message['MessageId']}")
-        body = json.loads(message['Body'])
+    """Preserva o contrato: persistir evento primeiro, confirmar na fila depois."""
+    with traced_operation(
+        "sqs.process",
+        kind=SpanKind.CONSUMER,
+        context=message_context(message),
+        attributes={
+            "messaging.system": "aws_sqs",
+            "messaging.destination.name": QUEUE_NAME,
+            "messaging.operation.name": "process",
+            "messaging.operation.type": "process",
+        },
+    ) as consumer_span:
+        try:
+            log.info("analytics.message.processing")
+            body = json.loads(message['Body'])
+            event_id = str(uuid.uuid4())
+            item = {
+                'event_id': {'S': event_id},
+                'user_id':  {'S': body['user_id']},
+                'flag_name':{'S': body['flag_name']},
+                'result':   {'BOOL': body['result']},
+                'timestamp':{'S': body['timestamp']}
+            }
 
-        event_id = str(uuid.uuid4())
+            with traced_operation("dynamodb.PutItem", kind=SpanKind.CLIENT, attributes={
+                "db.system.name": "aws.dynamodb",
+                "db.operation.name": "PutItem",
+                "db.collection.name": DYNAMODB_TABLE_NAME,
+            }):
+                dynamodb_client.put_item(TableName=DYNAMODB_TABLE_NAME, Item=item)
+            log.info("analytics.event.persisted")
 
-        item = {
-            'event_id': {'S': event_id},
-            'user_id':  {'S': body['user_id']},
-            'flag_name':{'S': body['flag_name']},
-            'result':   {'BOOL': body['result']},
-            'timestamp':{'S': body['timestamp']}
-        }
+            # Mesma semantica da base: so confirmar depois de salvar com sucesso.
+            with traced_operation("sqs.DeleteMessage", kind=SpanKind.CLIENT, attributes={
+                "messaging.system": "aws_sqs",
+                "messaging.destination.name": QUEUE_NAME,
+                "messaging.operation.name": "DeleteMessage",
+                "messaging.operation.type": "settle",
+            }):
+                sqs_client.delete_message(
+                    QueueUrl=SQS_QUEUE_URL,
+                    ReceiptHandle=message['ReceiptHandle']
+                )
+            log.info("analytics.message.processed")
 
-        dynamodb_client.put_item(TableName=DYNAMODB_TABLE_NAME, Item=item)
-        log.info(f"Evento {event_id} (Flag: {body['flag_name']}) salvo no DynamoDB.")
-
-        # Só deleta da fila após salvar com sucesso no DynamoDB
-        sqs_client.delete_message(
-            QueueUrl=SQS_QUEUE_URL,
-            ReceiptHandle=message['ReceiptHandle']
-        )
-
-    except json.JSONDecodeError:
-        log.error(f"Erro ao decodificar JSON da mensagem ID: {message['MessageId']}")
-        # Não deleta: mensagem volta para a fila após o timeout de visibilidade
-    except ClientError as e:
-        log.error(f"Erro Boto3 ao processar {message['MessageId']}: {e}")
-    except Exception as e:
-        log.error(f"Erro inesperado ao processar {message['MessageId']}: {e}")
+        except json.JSONDecodeError as error:
+            record_error(consumer_span, error)
+            log.error("analytics.message.invalid_json", extra={"error_type": type(error).__name__})
+            # Nao deleta: mensagem volta apos o timeout de visibilidade.
+        except ClientError as error:
+            record_error(consumer_span, error)
+            log.error("analytics.message.aws_failed", extra={"error_type": type(error).__name__})
+        except Exception as error:
+            record_error(consumer_span, error)
+            log.error("analytics.message.failed", extra={"error_type": type(error).__name__})
 
 
 def sqs_worker_loop():
@@ -106,28 +146,31 @@ def sqs_worker_loop():
             response = sqs_client.receive_message(
                 QueueUrl=SQS_QUEUE_URL,
                 MaxNumberOfMessages=10,
-                WaitTimeSeconds=20
+                WaitTimeSeconds=20,
+                MessageAttributeNames=["traceparent", "tracestate"]
             )
 
             messages = response.get('Messages', [])
             if not messages:
                 continue
 
-            log.info(f"Recebidas {len(messages)} mensagens.")
+            log.info("analytics.batch.received")
             for message in messages:
                 process_message(message)
 
         except ClientError as e:
-            log.error(f"Erro Boto3 no loop SQS: {e}")
+            log.error("analytics.poll.aws_failed", extra={"error_type": type(e).__name__})
             time.sleep(10)
         except Exception as e:
-            log.error(f"Erro inesperado no loop SQS: {e}")
+            log.error("analytics.poll.failed", extra={"error_type": type(e).__name__})
             time.sleep(10)
 
 
 # --- Servidor Flask (apenas para health check) ---
 
 app = Flask(__name__)
+app.config["TELEMETRY_SERVICE_NAME"] = "analytics-service"
+instrument_flask(app)
 
 @app.route('/health')
 def health():

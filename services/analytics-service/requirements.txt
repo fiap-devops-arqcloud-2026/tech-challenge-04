@@ -3,3 +3,9 @@ gunicorn
 python-dotenv==0.21.0
 boto3==1.26.50
 setuptools
+
+# OpenTelemetry: familia compativel confirmada no PyPI em 2026-10-22.
+opentelemetry-api==1.45.1
+opentelemetry-sdk==1.45.1
+opentelemetry-exporter-otlp-proto-http==1.45.1
+opentelemetry-instrumentation-flask==0.66b1

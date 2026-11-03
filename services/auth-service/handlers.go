@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/json" // serializa as respostas da API em JSON
-	"log"
+	"log/slog"
 	"net/http"
 	"strings" // usado para extrair a chave do header "Authorization: Bearer ..."
 )
@@ -26,7 +26,7 @@ func (a *App) healthHandler(w http.ResponseWriter, r *http.Request) {
 	// cabecalho ja foi enviado, entao nao da para trocar o status HTTP -
 	// o que resta e registrar a falha no log para nao perder o sinal.
 	if err := json.NewEncoder(w).Encode(map[string]string{"status": "ok"}); err != nil {
-		log.Printf("falha ao escrever resposta de health: %v", err)
+		slog.WarnContext(r.Context(), "http.response.write.failed")
 	}
 }
 
@@ -46,10 +46,15 @@ func (a *App) validateKeyHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Verifica se o hash existe no banco de dados
 	var id int
-	err := a.DB.QueryRow("SELECT id FROM api_keys WHERE key_hash = $1 AND is_active = true", keyHash).Scan(&id)
+	ctx, span := dependencySpan(r.Context(), "postgresql SELECT", "postgresql", "SELECT")
+	err := a.DB.QueryRowContext(ctx, "SELECT id FROM api_keys WHERE key_hash = $1 AND is_active = true", keyHash).Scan(&id)
+	if err != nil {
+		markOperationError(span, "db.select")
+	}
+	span.End()
 	if err != nil {
 		// Se não encontrar (sql.ErrNoRows), ou qualquer outro erro, a chave é inválida
-		log.Printf("Falha na validação da chave (hash: %s...): %v", keyHash[:6], err)
+		slog.WarnContext(r.Context(), "auth.validation.failed")
 		http.Error(w, "Chave de API inválida ou inativa", http.StatusUnauthorized)
 		return
 	}
@@ -60,7 +65,7 @@ func (a *App) validateKeyHandler(w http.ResponseWriter, r *http.Request) {
 	// cabecalho ja foi enviado, entao nao da para trocar o status HTTP -
 	// o que resta e registrar a falha no log para nao perder o sinal.
 	if err := json.NewEncoder(w).Encode(map[string]string{"message": "Chave válida"}); err != nil {
-		log.Printf("falha ao escrever resposta de validacao: %v", err)
+		slog.WarnContext(r.Context(), "http.response.write.failed")
 	}
 }
 
@@ -92,18 +97,23 @@ func (a *App) createKeyHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Salva o hash no banco de dados
 	var newID int
-	err = a.DB.QueryRow(
+	ctx, span := dependencySpan(r.Context(), "postgresql INSERT", "postgresql", "INSERT")
+	err = a.DB.QueryRowContext(ctx,
 		"INSERT INTO api_keys (name, key_hash) VALUES ($1, $2) RETURNING id",
 		req.Name, newKeyHash,
 	).Scan(&newID)
+	if err != nil {
+		markOperationError(span, "db.insert")
+	}
+	span.End()
 
 	if err != nil {
-		log.Printf("Erro ao salvar a chave no banco: %v", err)
+		slog.ErrorContext(r.Context(), "auth.key.create.failed")
 		http.Error(w, "Erro ao salvar a chave", http.StatusInternalServerError)
 		return
 	}
 
-	log.Printf("Nova chave criada com sucesso (ID: %d, Name: %s)", newID, req.Name)
+	slog.InfoContext(r.Context(), "auth.key.created")
 	w.WriteHeader(http.StatusCreated)
 	// errcheck: o retorno de Encode precisa ser verificado. Aqui o
 	// cabecalho ja foi enviado, entao nao da para trocar o status HTTP -
@@ -113,7 +123,7 @@ func (a *App) createKeyHandler(w http.ResponseWriter, r *http.Request) {
 		Key:     newKey, // Retorna a chave em texto plano pela última vez
 		Message: "Guarde esta chave com segurança! Você não poderá vê-la novamente.",
 	}); err != nil {
-		log.Printf("falha ao escrever resposta de criacao de chave: %v", err)
+		slog.WarnContext(r.Context(), "http.response.write.failed")
 	}
 }
 

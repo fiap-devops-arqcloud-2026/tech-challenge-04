@@ -1,91 +1,81 @@
 package main
 
 import (
-	"database/sql" // interface padrão de banco de dados do Go
-	"log"
+	"context"
+	"database/sql"
+	"errors"
+	"log/slog"
 	"net/http"
 	"os"
+	"os/signal"
+	"syscall"
+	"time"
 
-	// O "_" importa o driver pgx apenas pelos efeitos colaterais (ele se registra
-	// no database/sql); o código usa a interface padrão, não o pacote diretamente.
 	_ "github.com/jackc/pgx/v4/stdlib"
-	"github.com/joho/godotenv" // carrega o arquivo .env no desenvolvimento local
+	"github.com/joho/godotenv"
 )
 
-// App struct (para injeção de dependência)
+// App permite injetar o banco nos handlers.
 type App struct {
 	DB        *sql.DB
 	MasterKey string
 }
 
 func main() {
-	// Carrega o .env para desenvolvimento local. Em produção, isso não fará nada.
-	_ = godotenv.Load()
-
-	// --- Configuração ---
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8001" // Porta padrão
-	}
-
-	databaseURL := os.Getenv("DATABASE_URL")
-	if databaseURL == "" {
-		log.Fatal("DATABASE_URL deve ser definida")
-	}
-
-	masterKey := os.Getenv("MASTER_KEY")
-	if masterKey == "" {
-		log.Fatal("MASTER_KEY deve ser definida")
-	}
-
-	// --- Conexão com o Banco ---
-	db, err := connectDB(databaseURL)
-	if err != nil {
-		log.Fatalf("Não foi possível conectar ao banco de dados: %v", err)
-	}
-	// errcheck: o retorno de Close precisa ser verificado. Aqui o defer
-	// roda no encerramento do processo; falhar ao fechar a conexao nao
-	// muda mais nada, mas registrar ajuda a diagnosticar encerramento
-	// sujo (ex.: transacao aberta) nos logs do pod.
-	defer func() {
-		if err := db.Close(); err != nil {
-			log.Printf("falha ao fechar a conexao com o banco: %v", err)
-		}
-	}()
-
-	app := &App{
-		DB:        db,
-		MasterKey: masterKey,
-	}
-
-	// --- Rotas da API ---
-	mux := http.NewServeMux()
-	mux.HandleFunc("/health", app.healthHandler)
-
-	// Endpoint público para validar uma chave
-	mux.HandleFunc("/validate", app.validateKeyHandler)
-
-	// Endpoints de "admin" para criar/gerenciar chaves
-	// Eles são protegidos pelo middleware de autenticação
-	mux.Handle("/admin/keys", app.masterKeyAuthMiddleware(http.HandlerFunc(app.createKeyHandler)))
-
-	log.Printf("Serviço de Autenticação (Go) rodando na porta %s", port)
-	if err := http.ListenAndServe(":"+port, mux); err != nil {
-		log.Fatal(err)
+	if err := run(); err != nil {
+		// Mensagens de startup sao estaticas: URLs/credenciais nao vao ao log.
+		slog.Error("service.start.failed")
+		os.Exit(1)
 	}
 }
 
-// connectDB inicializa e testa a conexão com o PostgreSQL
+func run() error {
+	_ = godotenv.Load()
+	shutdown, err := initTelemetry(context.Background(), "auth-service")
+	if err != nil {
+		return err
+	}
+	defer shutdownTelemetry(shutdown)
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8001"
+	}
+	databaseURL, masterKey := os.Getenv("DATABASE_URL"), os.Getenv("MASTER_KEY")
+	if databaseURL == "" || masterKey == "" {
+		return errors.New("missing configuration")
+	}
+	db, err := connectDB(databaseURL)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if err := db.Close(); err != nil {
+			slog.Warn("db.close.failed")
+		}
+	}()
+	app := &App{DB: db, MasterKey: masterKey}
+	mux := http.NewServeMux()
+	mux.HandleFunc("/health", app.healthHandler)
+	mux.HandleFunc("/validate", app.validateKeyHandler)
+	mux.Handle("/admin/keys", app.masterKeyAuthMiddleware(http.HandlerFunc(app.createKeyHandler)))
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+	defer stop()
+	slog.Info("service.started")
+	return serveHTTP(ctx, ":"+port, instrumentHandler(mux), nil)
+}
+
 func connectDB(databaseURL string) (*sql.DB, error) {
 	db, err := sql.Open("pgx", databaseURL)
 	if err != nil {
 		return nil, err
 	}
-
-	if err = db.Ping(); err != nil {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	if err = db.PingContext(ctx); err != nil {
+		_ = db.Close()
 		return nil, err
 	}
-
-	log.Println("Conectado ao PostgreSQL com sucesso!")
+	slog.Info("db.connected")
 	return db, nil
 }

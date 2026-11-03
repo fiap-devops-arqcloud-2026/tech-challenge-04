@@ -7,16 +7,16 @@ from psycopg2.pool import SimpleConnectionPool
 from flask import Flask, request, jsonify
 from dotenv import load_dotenv
 from functools import wraps
-import logging
-
-# Configura o logging
-logging.basicConfig(level=logging.INFO)
-log = logging.getLogger(__name__)
+from telemetry import configure_telemetry, instrument_flask
 
 # Carrega .env para desenvolvimento local
 load_dotenv()
 
+# SDK e pools nascem no worker Gunicorn; nao usar --preload.
+log = configure_telemetry("flag-service", postgres=True, requests_client=True)
 app = Flask(__name__)
+app.config["TELEMETRY_SERVICE_NAME"] = "flag-service"
+instrument_flask(app)
 
 # --- Configuração ---
 DATABASE_URL = os.getenv("DATABASE_URL")
@@ -29,10 +29,12 @@ if not DATABASE_URL or not AUTH_SERVICE_URL:
 # --- Pool de Conexão com o Banco ---
 # Inicializa o pool de conexões (Mín: 1, Máx: 5 conexões)
 try:
-    pool = SimpleConnectionPool(1, 5, dsn=DATABASE_URL)
+    # Definir a factory no connect permite ao OTel envolver RealDictCursor.
+    # Sobrescreve-la em conn.cursor(...) descartaria a factory instrumentada.
+    pool = SimpleConnectionPool(1, 5, dsn=DATABASE_URL, cursor_factory=RealDictCursor)
     log.info("Pool de conexões com o PostgreSQL inicializado.")
 except psycopg2.OperationalError as e:
-    log.critical(f"Erro fatal ao conectar ao PostgreSQL: {e}")
+    log.critical("database.connection.failed", extra={"error_type": type(e).__name__})
     sys.exit(1)
 
 # --- Middleware de Autenticação ---
@@ -50,14 +52,14 @@ def require_auth(f):
             response = requests.get(validate_url, headers={"Authorization": auth_header}, timeout=3)
 
             if response.status_code != 200:
-                log.warning(f"Falha na validação da chave (status: {response.status_code})")
+                log.warning("auth.validation.rejected", extra={"http_status_code": response.status_code})
                 return jsonify({"error": "Chave de API inválida"}), 401
 
         except requests.exceptions.Timeout:
             log.error("Timeout ao conectar com o auth-service")
             return jsonify({"error": "Serviço de autenticação indisponível (timeout)"}), 504 # Gateway Timeout
         except requests.exceptions.RequestException as e:
-            log.error(f"Erro ao conectar com o auth-service: {e}")
+            log.error("auth.request.failed", extra={"error_type": type(e).__name__})
             return jsonify({"error": "Serviço de autenticação indisponível"}), 503 # Service Unavailable
 
         # Se a chave for válida, continua para a rota
@@ -87,7 +89,7 @@ def create_flag():
     cur = None
     try:
         conn = pool.getconn()
-        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur = conn.cursor()
         cur.execute(
             "INSERT INTO flags (name, description, is_enabled, created_at, updated_at) "
             "VALUES (%s, %s, %s, NOW(), NOW()) RETURNING *",
@@ -95,15 +97,15 @@ def create_flag():
         )
         new_flag = cur.fetchone()
         conn.commit()
-        log.info(f"Flag '{name}' criada com sucesso.")
+        log.info("flag.created")
         return jsonify(new_flag), 201
     except psycopg2.IntegrityError:
         if conn: conn.rollback()
-        log.warning(f"Tentativa de criar flag duplicada: '{name}'")
+        log.warning("flag.duplicate")
         return jsonify({"error": f"Flag '{name}' já existe"}), 409
     except Exception as e:
         if conn: conn.rollback()
-        log.error(f"Erro ao criar flag: {e}")
+        log.error("flag.create.failed", extra={"error_type": type(e).__name__})
         return jsonify({"error": "Erro interno do servidor", "details": str(e)}), 500
     finally:
         if cur: cur.close()
@@ -117,12 +119,12 @@ def get_flags():
     cur = None
     try:
         conn = pool.getconn()
-        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur = conn.cursor()
         cur.execute("SELECT * FROM flags ORDER BY name")
         flags = cur.fetchall()
         return jsonify(flags)
     except Exception as e:
-        log.error(f"Erro ao buscar flags: {e}")
+        log.error("flag.list.failed", extra={"error_type": type(e).__name__})
         return jsonify({"error": "Erro interno do servidor", "details": str(e)}), 500
     finally:
         if cur: cur.close()
@@ -136,14 +138,14 @@ def get_flag(name):
     cur = None
     try:
         conn = pool.getconn()
-        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur = conn.cursor()
         cur.execute("SELECT * FROM flags WHERE name = %s", (name,))
         flag = cur.fetchone()
         if not flag:
             return jsonify({"error": "Flag não encontrada"}), 404
         return jsonify(flag)
     except Exception as e:
-        log.error(f"Erro ao buscar flag '{name}': {e}")
+        log.error("flag.get.failed", extra={"error_type": type(e).__name__})
         return jsonify({"error": "Erro interno do servidor", "details": str(e)}), 500
     finally:
         if cur: cur.close()
@@ -196,7 +198,7 @@ def update_flag(name):
     cur = None
     try:
         conn = pool.getconn()
-        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur = conn.cursor()
         cur.execute(query, tuple(values))
 
         if cur.rowcount == 0:
@@ -204,11 +206,11 @@ def update_flag(name):
 
         updated_flag = cur.fetchone()
         conn.commit()
-        log.info(f"Flag '{name}' atualizada com sucesso.")
+        log.info("flag.updated")
         return jsonify(updated_flag), 200
     except Exception as e:
         if conn: conn.rollback()
-        log.error(f"Erro ao atualizar flag '{name}': {e}")
+        log.error("flag.update.failed", extra={"error_type": type(e).__name__})
         return jsonify({"error": "Erro interno do servidor", "details": str(e)}), 500
     finally:
         if cur: cur.close()
@@ -229,11 +231,11 @@ def delete_flag(name):
             return jsonify({"error": "Flag não encontrada"}), 404
 
         conn.commit()
-        log.info(f"Flag '{name}' deletada com sucesso.")
+        log.info("flag.deleted")
         return "", 204 # 204 No Content
     except Exception as e:
         if conn: conn.rollback()
-        log.error(f"Erro ao deletar flag '{name}': {e}")
+        log.error("flag.delete.failed", extra={"error_type": type(e).__name__})
         return jsonify({"error": "Erro interno do servidor", "details": str(e)}), 500
     finally:
         if cur: cur.close()

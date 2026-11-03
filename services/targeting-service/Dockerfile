@@ -74,4 +74,4 @@ USER app
 
 EXPOSE 8003
 
-CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:${PORT:-8003} app:app"]
+CMD ["sh", "-c", "exec gunicorn --bind 0.0.0.0:${PORT:-8003} app:app"]

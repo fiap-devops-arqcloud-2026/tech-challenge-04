@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	"log"
+	"log/slog"
 	"net/http"
 )
 
@@ -22,7 +22,7 @@ func (a *App) healthHandler(w http.ResponseWriter, r *http.Request) {
 	// cabecalho ja foi enviado, entao nao da para trocar o status HTTP -
 	// o que resta e registrar a falha no log para nao perder o sinal.
 	if err := json.NewEncoder(w).Encode(map[string]string{"status": "ok"}); err != nil {
-		log.Printf("falha ao escrever resposta de health: %v", err)
+		slog.WarnContext(r.Context(), "http.response.write.failed")
 	}
 }
 
@@ -42,14 +42,14 @@ func (a *App) evaluationHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// 2. Obter a decisão (lógica de cache/serviço está em evaluator.go)
-	result, err := a.getDecision(userID, flagName)
+	result, err := a.getDecision(r.Context(), userID, flagName)
 	if err != nil {
 		// Se o erro for "não encontrado", retornamos 'false' (comportamento seguro)
 		if _, ok := err.(*NotFoundError); ok {
 			result = false
 		} else {
 			// Outros erros (serviços offline, etc)
-			log.Printf("Erro ao avaliar flag '%s': %v", flagName, err)
+			slog.ErrorContext(r.Context(), "evaluation.failed")
 			http.Error(w, `{"error": "Erro interno ao avaliar a flag"}`, http.StatusBadGateway)
 			return
 		}
@@ -57,7 +57,7 @@ func (a *App) evaluationHandler(w http.ResponseWriter, r *http.Request) {
 
 	// 3. Enviar evento para SQS (assincronamente)
 	// Isso não bloqueia a resposta para o cliente.
-	go a.sendEvaluationEvent(userID, flagName, result)
+	a.publishEvaluationEvent(r.Context(), userID, flagName, result)
 
 	// 4. Retornar a resposta
 	w.WriteHeader(http.StatusOK)
@@ -69,6 +69,6 @@ func (a *App) evaluationHandler(w http.ResponseWriter, r *http.Request) {
 		UserID:   userID,
 		Result:   result,
 	}); err != nil {
-		log.Printf("falha ao escrever resposta de avaliacao: %v", err)
+		slog.WarnContext(r.Context(), "http.response.write.failed")
 	}
 }
