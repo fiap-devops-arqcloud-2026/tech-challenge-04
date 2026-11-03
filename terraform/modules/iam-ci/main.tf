@@ -211,6 +211,17 @@ resource "aws_iam_policy" "ecr_push" {
   name        = "${var.project_name}-ci-ecr-push"
   description = "Permite ao CI autenticar e publicar imagens nos 5 repositorios ECR do ToggleMaster."
   policy      = data.aws_iam_policy_document.ecr_push.json
+
+  # Na conta da Fase 4 esta policy foi criada no console e e importada
+  # (imports.tf). No provider AWS, `description` de aws_iam_policy e
+  # "forces new resource": qualquer diferenca obriga o Terraform a
+  # DESTRUIR e recriar a policy, e com ela o anexo na role do CI. Como a
+  # descricao e so um rotulo e o valor real nao foi conferido, ela fica
+  # fora da comparacao. O conteudo (policy) continua vigiado e muda no
+  # lugar, por nova versao.
+  lifecycle {
+    ignore_changes = [description]
+  }
 }
 
 # Cola a policy na role. Sem este anexo, a role existe mas nao pode nada.

@@ -80,4 +80,15 @@ github_deploy_branch       = "main"
 # Descubra o seu caso com:
 #   aws iam list-open-id-connect-providers
 # Se a lista mostrar token.actions.githubusercontent.com, use false.
-create_github_oidc_provider = true
+#
+# Conta da Fase 4: o provedor foi criado no console na preparacao da
+# conta (junto com a role do CI), entao o valor aqui e false.
+create_github_oidc_provider = false
+
+# ------------------------------------------------------------
+# Recursos criados no console antes do primeiro apply
+# ------------------------------------------------------------
+# true adota no estado os 5 ECR, a role e a policy do CI (imports.tf).
+# Depois do primeiro apply pode ficar true (o import nao se repete);
+# depois de um destroy, volte para false.
+import_manual_resources = true

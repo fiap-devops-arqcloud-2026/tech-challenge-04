@@ -240,3 +240,18 @@ variable "create_github_oidc_provider" {
   # true mantem o comportamento original em contas sem OIDC do GitHub.
   default = true
 }
+
+# ------------------------------------------------------------
+# Recursos criados a mao antes do primeiro apply (Fase 4)
+# ------------------------------------------------------------
+# Liga os blocos import de imports.tf: 5 ECR, role do CI, policy de push
+# e o anexo entre as duas. Detalhes e criterio de aceite no proprio
+# imports.tf.
+# ------------------------------------------------------------
+variable "import_manual_resources" {
+  description = "true: adota no estado os ECR, a role e a policy do CI criados no console. false: o Terraform cria tudo (conta sem recursos manuais) ou o estado ja os contem."
+  type        = bool
+  # false preserva o comportamento de uma conta limpa; a conta da Fase 4
+  # usa true no tfvars local ate o primeiro apply.
+  default = false
+}
