@@ -1,0 +1,58 @@
+# Resumo de offline-test.jsonl (terraform test -json -verbose, 2026-10-28)
+# Original: 156.400.265 bytes, 54 linhas; as linhas longas trazem o plano completo em JSON (-verbose) e foram omitidas.
+# Gerado em 2026-11-03 para substituir o original no Git (F-024).
+
+2026-10-28T15:01:54.233043-03:00  info  version  Terraform 1.16.0
+2026-10-28T15:02:15.332346-03:00  info  test_abstract  Found 1 file and 8 run blocks
+2026-10-28T15:02:15.332346-03:00  info  test_file  tests\trust.tftest.hcl... in progress
+2026-10-28T15:02:15.336657-03:00  info  test_run    "create_provider_main"... in progress
+2026-10-28T15:02:17.337436-03:00  info  test_run    "create_provider_main"... in progress
+2026-10-28T15:02:19.337727-03:00  info  test_run    "create_provider_main"... in progress
+2026-10-28T15:02:21.337936-03:00  info  test_run    "create_provider_main"... in progress
+2026-10-28T15:02:23.338334-03:00  info  test_run    "create_provider_main"... in progress
+2026-10-28T15:02:25.338990-03:00  info  test_run    "create_provider_main"... in progress
+2026-10-28T15:02:27.339312-03:00  info  test_run    "create_provider_main"... in progress
+2026-10-28T15:02:29.339916-03:00  info  test_run    "create_provider_main"... in progress
+2026-10-28T15:02:31.340338-03:00  info  test_run    "create_provider_main"... in progress
+2026-10-28T15:02:33.341635-03:00  info  test_run    "create_provider_main"... in progress
+2026-10-28T15:02:35.342216-03:00  info  test_run    "create_provider_main"... in progress
+2026-10-28T15:02:37.343107-03:00  info  test_run    "create_provider_main"... in progress
+2026-10-28T15:02:39.343177-03:00  info  test_run    "create_provider_main"... in progress
+2026-10-28T15:02:41.333694-03:00  info  test_run    "create_provider_main"... pass
+2026-10-28T15:02:41.409292-03:00  info  test_plan  -verbose flag enabled, printing plan
+2026-10-28T15:02:41.548410-03:00  info  test_run    "reuse_provider_main"... in progress
+2026-10-28T15:02:43.548754-03:00  info  test_run    "reuse_provider_main"... in progress
+2026-10-28T15:02:44.731319-03:00  info  test_run    "reuse_provider_main"... pass
+2026-10-28T15:02:44.812375-03:00  info  test_plan  -verbose flag enabled, printing plan
+2026-10-28T15:02:44.949125-03:00  info  test_run    "different_repository_is_parameterized"... in progress
+2026-10-28T15:02:46.949348-03:00  info  test_run    "different_repository_is_parameterized"... in progress
+2026-10-28T15:02:48.020947-03:00  info  test_run    "different_repository_is_parameterized"... pass
+2026-10-28T15:02:48.093658-03:00  info  test_plan  -verbose flag enabled, printing plan
+2026-10-28T15:02:48.232899-03:00  info  test_run    "reject_owner_wildcard"... in progress
+2026-10-28T15:02:50.233298-03:00  info  test_run    "reject_owner_wildcard"... in progress
+2026-10-28T15:02:51.395487-03:00  info  test_run    "reject_owner_wildcard"... pass
+2026-10-28T15:02:51.463674-03:00  info  test_plan  -verbose flag enabled, printing plan
+2026-10-28T15:02:51.600220-03:00  error  diagnostic  Error: Invalid value for variable
+2026-10-28T15:02:51.600220-03:00  info  test_run    "reject_repo_id_wildcard"... in progress
+2026-10-28T15:02:53.600691-03:00  info  test_run    "reject_repo_id_wildcard"... in progress
+2026-10-28T15:02:54.735540-03:00  info  test_run    "reject_repo_id_wildcard"... pass
+2026-10-28T15:02:54.816601-03:00  info  test_plan  -verbose flag enabled, printing plan
+2026-10-28T15:02:54.955235-03:00  error  diagnostic  Error: Invalid value for variable
+2026-10-28T15:02:54.955235-03:00  info  test_run    "reject_repo_name_wildcard"... in progress
+2026-10-28T15:02:56.955654-03:00  info  test_run    "reject_repo_name_wildcard"... in progress
+2026-10-28T15:02:58.096093-03:00  info  test_run    "reject_repo_name_wildcard"... pass
+2026-10-28T15:02:58.168111-03:00  info  test_plan  -verbose flag enabled, printing plan
+2026-10-28T15:02:58.318977-03:00  error  diagnostic  Error: Invalid value for variable
+2026-10-28T15:02:58.318977-03:00  info  test_run    "reject_branch_wildcard"... in progress
+2026-10-28T15:03:00.319333-03:00  info  test_run    "reject_branch_wildcard"... in progress
+2026-10-28T15:03:01.568262-03:00  info  test_run    "reject_branch_wildcard"... pass
+2026-10-28T15:03:01.639672-03:00  info  test_plan  -verbose flag enabled, printing plan
+2026-10-28T15:03:01.765651-03:00  error  diagnostic  Error: Invalid value for variable
+2026-10-28T15:03:01.765651-03:00  info  test_run    "reject_context_injection"... in progress
+2026-10-28T15:03:03.765959-03:00  info  test_run    "reject_context_injection"... in progress
+2026-10-28T15:03:04.990733-03:00  info  test_run    "reject_context_injection"... pass
+2026-10-28T15:03:05.072573-03:00  info  test_plan  -verbose flag enabled, printing plan
+2026-10-28T15:03:05.224053-03:00  error  diagnostic  Error: Invalid value for variable
+2026-10-28T15:03:05.224558-03:00  info  test_file  tests\trust.tftest.hcl... tearing down
+2026-10-28T15:03:05.225076-03:00  info  test_file  tests\trust.tftest.hcl... pass
+2026-10-28T15:03:05.225599-03:00  info  test_summary  Success! 8 passed, 0 failed.

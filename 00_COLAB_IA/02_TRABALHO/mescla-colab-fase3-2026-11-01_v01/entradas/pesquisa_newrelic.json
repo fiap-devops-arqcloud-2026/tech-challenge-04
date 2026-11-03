@@ -1,0 +1,320 @@
+{
+ "fornecedor": "New Relic (conta Free, região US, one.newrelic.com). Pesquisa feita em 2026-11-01 na documentação oficial (docs.newrelic.com) e na página oficial de preços (newrelic.com/pricing).",
+ "passos": [
+  {
+   "n": 1,
+   "titulo": "Confirmar que a conta é da região US",
+   "onde": "Barra de endereço do navegador depois do login",
+   "o_que_fazer": "Faça login e veja o endereço. Se o painel abre em one.newrelic.com, a conta é US. Uma conta EU usa one.eu.newrelic.com e uma conta JP usa one.jp.newrelic.com. A região vale para a organização inteira e não pode ser trocada depois. Os dados também não podem ser movidos para outra região.",
+   "resultado_esperado": "O endereço é https://one.newrelic.com/... Então os endpoints corretos são os US: otlp.nr-data.net e log-api.newrelic.com.",
+   "cuidado": "Se aparecer one.eu.newrelic.com, todos os endpoints mudam: otlp.eu01.nr-data.net e log-api.eu.newrelic.com. Nesse caso, não use os comandos US deste guia.",
+   "fonte_url": "https://docs.newrelic.com/docs/accounts/accounts-billing/account-setup/choose-your-data-center/"
+  },
+  {
+   "n": 2,
+   "titulo": "Anotar o Account ID",
+   "onde": "one.newrelic.com > menu do usuário (canto inferior esquerdo, nome/avatar) > Administration > Access management > Accounts. Também aparece no seletor de contas no topo, quando há mais de uma conta.",
+   "o_que_fazer": "Abra o caminho indicado e copie o número da coluna de ID da conta. Registre esse número no DOSSIE/PENDENCIAS do projeto. Ele não é um segredo, mas também não precisa ir para código público.",
+   "resultado_esperado": "Um número inteiro, por exemplo 1234567, que identifica a conta.",
+   "cuidado": "O Account ID não autentica nada, então não substitui a license key. Use-o apenas para identificar a conta em consultas e na documentação.",
+   "fonte_url": "https://docs.newrelic.com/docs/accounts/accounts-billing/account-structure/account-id/"
+  },
+  {
+   "n": 3,
+   "titulo": "Entender os tipos de chave e escolher a certa",
+   "onde": "Documentação de API keys",
+   "o_que_fazer": "Saiba para que serve cada chave. (a) License key, rótulo INGEST - LICENSE: envia quase todos os dados (OTLP, logs, métricas, eventos, traces), exceto browser e mobile. É a chave que o OpenTelemetry Collector usa, no header api-key. (b) Browser key, rótulo INGEST - BROWSER: só para o monitoramento de navegador (browser agent). Não serve para o Collector. (c) User key, rótulo USER: ligada a um usuário, usada na NerdGraph (GraphQL) e na REST API para consultar e configurar. Não serve para enviar dados. Para B1 basta a INGEST - LICENSE.",
+   "resultado_esperado": "Fica claro que só uma INGEST - LICENSE dedicada é necessária hoje. Browser key e User key não são necessárias agora.",
+   "cuidado": "Pela documentação da Event API e da Log API, usar Browser, Mobile ou User key no envio retorna 403. Não crie User key sem necessidade, porque ela dá acesso de leitura e configuração em seu nome.",
+   "fonte_url": "https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/"
+  },
+  {
+   "n": 4,
+   "titulo": "Criar uma license key dedicada para o Collector",
+   "onde": "one.newrelic.com > menu do usuário > API keys. Link direto: https://one.newrelic.com/api-keys",
+   "o_que_fazer": "Clique em 'Create a key' no canto superior direito. Em Key type escolha 'Ingest - License'. Em Name use, por exemplo, tc04-otel-collector-local. Em Notes escreva 'Tech Challenge Fase 4 - Collector local - criada 2026-11-01'. Clique em Save. Depois, na linha da chave, clique em '...' > 'Copy key' e cole direto no gerenciador de senhas, nunca no chat ou num arquivo versionado.",
+   "resultado_esperado": "Uma nova linha do tipo INGEST - LICENSE com o nome escolhido. A chave tem 40 caracteres. A doc de guided install diz que ela termina em NRAL.",
+   "cuidado": "Depois de criada, a UI mostra só os 8 primeiros caracteres de chaves ingest e user. Copie a chave completa no momento da criação. Prefira uma chave dedicada em vez da 'original' da conta: a original não pode ser apagada pela UI, e a dedicada pode ser revogada se vazar.",
+   "fonte_url": "https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/"
+  },
+  {
+   "n": 5,
+   "titulo": "Guardar a chave localmente fora do Git",
+   "onde": "Arquivo .env na raiz do repositório tech-challenge-04, que o .gitignore já ignora (linhas .env e .env.*, com exceção de !.env.example), e/ou o gerenciador de senhas",
+   "o_que_fazer": "Guarde a chave no gerenciador de senhas. Para o Docker Compose do B1, crie o .env local com a linha NEW_RELIC_LICENSE_KEY=<valor>, editando no Bloco de Notas. Não use comando com a chave no histórico do PowerShell. No .env.example versionado, deixe só NEW_RELIC_LICENSE_KEY= vazio. Confira com git check-ignore -v .env.",
+   "resultado_esperado": "git check-ignore -v .env mostra '.gitignore:28:.env  .env'. Verificado neste repo em 2026-11-01, então o .env não entra em commits.",
+   "cuidado": "Nunca cole a chave no chat, em issues, em logs ou no collector-config.yaml. No YAML use só a referência à variável de ambiente.",
+   "fonte_url": "https://docs.newrelic.com/docs/opentelemetry/best-practices/opentelemetry-otlp/"
+  },
+  {
+   "n": 6,
+   "titulo": "Testar a license key sem instalar nada (Log API US)",
+   "onde": "Windows PowerShell 5.1 (ver comandos_teste[0])",
+   "o_que_fazer": "Rode o comando de teste. Ele pede a chave com Read-Host -AsSecureString, envia um log JSON simples para https://log-api.newrelic.com/log/v1 com o header Api-Key e mostra o status HTTP. A variável com a chave é apagada no final.",
+   "resultado_esperado": "HTTP 202. O corpo provavelmente traz um JSON com requestId (ver incertezas). Em 1 a 2 minutos o log aparece na tela Logs.",
+   "cuidado": "Se vier 403, a chave está errada ou não é do tipo INGEST - LICENSE (por exemplo uma User ou Browser key). Se vier 429, há limite de taxa: espere o tempo do header Retry-After. Timestamps com mais de 48 horas podem ser descartados.",
+   "fonte_url": "https://docs.newrelic.com/docs/logs/log-api/introduction-log-api/"
+  },
+  {
+   "n": 7,
+   "titulo": "Ver o log de teste chegando",
+   "onde": "one.newrelic.com > All capabilities > Logs (ou 'Logs' no menu lateral). Para NRQL, use o botão NRQL ao lado da barra de busca, ou Query your data.",
+   "o_que_fazer": "Na tela Logs, filtre por logtype:\"tc04-teste\" ou rode a NRQL de comandos_teste[1]. Se nada aparecer em 5 minutos, rode a NRQL de NrIntegrationError de comandos_teste[2].",
+   "resultado_esperado": "Uma linha com message 'tc04 teste da license key 2026-11-01', service tc04-setup e hostname tc04-local. Isso prova que a chave e a região estão certas.",
+   "cuidado": "Um 202 só confirma a validação inicial. Erros de processamento posteriores aparecem como eventos NrIntegrationError.",
+   "fonte_url": "https://docs.newrelic.com/docs/logs/ui-data/use-logs-ui/"
+  },
+  {
+   "n": 8,
+   "titulo": "Preparar (sem aplicar hoje) o exporter do Collector para B1",
+   "onde": "Arquivo de configuração do OpenTelemetry Collector no Docker Compose local (implementação fica para B1)",
+   "o_que_fazer": "Use o exporter otlphttp, que é o recomendado, e não o otlp/gRPC. Trecho: exporters: otlphttp/newrelic: endpoint: https://otlp.nr-data.net  headers: api-key: ${env:NEW_RELIC_LICENSE_KEY}. Ligue esse exporter no pipeline traces, junto com o processor batch. O endpoint sem porta usa a 443 por causa do https. O exporter acrescenta /v1/traces sozinho. A compressão gzip já é o padrão do Collector. No serviço do Collector no docker-compose, passe environment: NEW_RELIC_LICENSE_KEY: ${NEW_RELIC_LICENSE_KEY}, lido do .env.",
+   "resultado_esperado": "Um trecho de configuração revisado e pronto para B1, sem nenhum segredo escrito no arquivo.",
+   "cuidado": "Payload máximo de 1 MB por requisição: o batch deve gerar lotes menores. Para métricas, a New Relic recomenda temporalidade delta. Se configurar endpoint por sinal, é preciso incluir o caminho (/v1/traces), e caminho errado retorna 404.",
+   "fonte_url": "https://docs.newrelic.com/docs/opentelemetry/get-started/collector-processing/opentelemetry-collector-processing-intro/"
+  },
+  {
+   "n": 9,
+   "titulo": "Saber onde mostrar serviços, Service Map e traces no vídeo",
+   "onde": "one.newrelic.com > APM & Services (ou All entities > Services - OpenTelemetry) > escolher o serviço; e one.newrelic.com > All capabilities > Traces",
+   "o_que_fazer": "Depois do B1: (a) abra APM & Services e filtre os serviços OpenTelemetry. Cada service.name dos 5 serviços vira uma entidade. (b) Dentro de um serviço, use no menu lateral Summary, Distributed tracing, Service map, Transactions, Databases, External services, Logs e Errors inbox. (c) Para a visão global de traces, vá em All capabilities > tile Traces, clique em um ponto do gráfico de dispersão ou em um grupo de traces e abra o trace distribuído (waterfall de spans).",
+   "resultado_esperado": "No vídeo aparecem a lista de serviços OTel, o Service map ligando os serviços e um trace distribuído com spans de vários serviços.",
+   "cuidado": "Para OpenTelemetry, o mapa e os drill-downs usam dados amostrados (sampling). Com pouco tráfego o mapa pode ficar incompleto, então gere tráfego antes de gravar. O Service map cobre só as últimas 3 horas no timewarp.",
+   "fonte_url": "https://docs.newrelic.com/docs/opentelemetry/get-started/apm-monitoring/opentelemetry-apm-ui/"
+  },
+  {
+   "n": 10,
+   "titulo": "Plano de revogação/rotação se a chave vazar",
+   "onde": "one.newrelic.com/api-keys",
+   "o_que_fazer": "Na linha da chave tc04-otel-collector-local, use o menu '...' para apagar a chave, crie outra INGEST - LICENSE e atualize o .env e o gerenciador de senhas.",
+   "resultado_esperado": "A chave antiga para de aceitar dados e a nova passa no teste do passo 6.",
+   "cuidado": "A license key original da conta não pode ser apagada pela UI. Por isso use sempre a dedicada no projeto.",
+   "fonte_url": "https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/"
+  }
+ ],
+ "comandos_teste": [
+  {
+   "descricao": "Teste da INGEST - LICENSE key enviando um log pela Log API US (sem instalar nada). Usa Invoke-WebRequest em vez de Invoke-RestMethod porque no PowerShell 5.1 só ele mostra o StatusCode.",
+   "shell": "Windows PowerShell 5.1",
+   "comando": "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12\n$sec = Read-Host -AsSecureString \"Cole a New Relic INGEST - LICENSE key (nao aparece na tela)\"\n$bstr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($sec)\ntry { $nrKey = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($bstr) } finally { [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($bstr) }\n$body = @{ timestamp = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds(); message = \"tc04 teste da license key 2026-11-01\"; logtype = \"tc04-teste\"; service = \"tc04-setup\"; hostname = \"tc04-local\" } | ConvertTo-Json -Compress\ntry {\n  $r = Invoke-WebRequest -UseBasicParsing -Method Post -Uri \"https://log-api.newrelic.com/log/v1\" -Headers @{ \"Api-Key\" = $nrKey } -ContentType \"application/json\" -Body $body\n  \"HTTP $($r.StatusCode)\"; $r.Content\n} catch {\n  \"Falhou: HTTP $([int]$_.Exception.Response.StatusCode) - $($_.Exception.Message)\"\n} finally {\n  Remove-Variable nrKey, sec, bstr -ErrorAction SilentlyContinue\n}",
+   "resposta_esperada": "A saída mostra 'HTTP 202' e, provavelmente, um corpo JSON como {\"requestId\":\"...\"}. Falha com 403 indica chave errada ou de tipo errado (User/Browser). 429 indica limite de taxa.",
+   "onde_conferir": "one.newrelic.com > Logs, filtrando logtype:\"tc04-teste\", ou a NRQL de comandos_teste[1].",
+   "fonte_url": "https://docs.newrelic.com/docs/logs/log-api/introduction-log-api/"
+  },
+  {
+   "descricao": "Consulta NRQL para confirmar que o log de teste chegou",
+   "shell": "NRQL (one.newrelic.com > Logs > botão NRQL, ou Query your data)",
+   "comando": "SELECT timestamp, message, service, hostname FROM Log WHERE logtype = 'tc04-teste' SINCE 30 minutes ago",
+   "resposta_esperada": "Pelo menos 1 linha com message 'tc04 teste da license key 2026-11-01'.",
+   "onde_conferir": "Resultado da própria consulta no Query builder.",
+   "fonte_url": "https://docs.newrelic.com/docs/logs/ui-data/query-syntax-logs/"
+  },
+  {
+   "descricao": "Diagnóstico: erros assíncronos de ingestão, quando o 202 voltou mas o dado não aparece",
+   "shell": "NRQL (Query your data)",
+   "comando": "SELECT * FROM NrIntegrationError SINCE 1 hour ago",
+   "resposta_esperada": "Nenhum resultado, o caso ideal. Se houver linhas, a mensagem diz o motivo; o campo requestId casa com o requestId da resposta 202.",
+   "onde_conferir": "Query builder em one.newrelic.com.",
+   "fonte_url": "https://docs.newrelic.com/docs/data-apis/ingest-apis/metric-api/report-metrics-metric-api/"
+  },
+  {
+   "descricao": "Confirmar que o arquivo .env com a chave não será versionado",
+   "shell": "Windows PowerShell 5.1 (na pasta C:\\Users\\Gabriel\\Documents\\GitHub\\tech-challenge-04)",
+   "comando": "git check-ignore -v .env",
+   "resposta_esperada": ".gitignore:28:.env\t.env (verificado em 2026-11-01)",
+   "onde_conferir": "Saída do terminal. Se não imprimir nada, o .env NÃO está ignorado: pare e corrija o .gitignore.",
+   "fonte_url": "https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/"
+  }
+ ],
+ "segredos": [
+  {
+   "nome": "NEW_RELIC_LICENSE_KEY (INGEST - LICENSE dedicada, nome sugerido tc04-otel-collector-local)",
+   "para_que": "Autenticar o envio de traces (B1) do OpenTelemetry Collector para https://otlp.nr-data.net no header api-key, e o teste manual via Log API no header Api-Key",
+   "quem_usa": "OpenTelemetry Collector local (Docker Compose) e o teste manual em PowerShell. Se o Collector rodar em CI no futuro, entra como GitHub Actions secret com o mesmo nome; hoje isso não é necessário.",
+   "como_guardar": "Gerenciador de senhas e .env local na raiz do repo (ignorado pelo .gitignore, linha 28). No YAML do Collector, só ${env:NEW_RELIC_LICENSE_KEY}. Nunca no chat, em commit, em .env.example ou em print do vídeo. Se a chave vazar, apague-a em one.newrelic.com/api-keys e crie outra."
+  },
+  {
+   "nome": "NEW_RELIC_ACCOUNT_ID (não é segredo)",
+   "para_que": "Identificar a conta em consultas NRQL/NerdGraph e na documentação",
+   "quem_usa": "Documentação do projeto e, se necessário depois, consultas via API",
+   "como_guardar": "Pode ficar no DOSSIE/PENDENCIAS. Não autentica nada sozinho."
+  },
+  {
+   "nome": "User key (NÃO criar agora)",
+   "para_que": "Só seria necessária para NerdGraph/REST API (consulta ou configuração automatizada, por exemplo criar alertas na New Relic via API)",
+   "quem_usa": "Ninguém nesta etapa",
+   "como_guardar": "Se um dia for criada: gerenciador de senhas ou GitHub secret, com escopo do usuário. Ela dá poderes de leitura e configuração, então é mais sensível que a license key."
+  }
+ ],
+ "limites_plano": [
+  {
+   "item": "Ingestão gratuita",
+   "valor": "100 GB por mês",
+   "fonte_url": "https://newrelic.com/pricing"
+  },
+  {
+   "item": "Usuários Full Platform gratuitos",
+   "valor": "1 usuário full platform (acesso às 50+ capacidades); usuários Basic ilimitados e gratuitos",
+   "fonte_url": "https://newrelic.com/pricing"
+  },
+  {
+   "item": "Retenção padrão",
+   "valor": "No mínimo 8 dias (página de preços). Na opção Original Data: spans/traces distribuídos 8 dias; Logs 30 dias; métricas dimensionais brutas 30 dias (agregadas 395 dias); eventos APM (Transaction etc.) 8 dias; eventos custom 30 dias",
+   "fonte_url": "https://docs.newrelic.com/docs/data-apis/manage-data/manage-data-retention/"
+  },
+  {
+   "item": "O que acontece ao passar de 100 GB no Free",
+   "valor": "A ingestão para e o acesso à plataforma é perdido até o upgrade para edição paga ou até o 1º dia do mês seguinte. Aviso por e-mail e na plataforma ao atingir 85%.",
+   "fonte_url": "https://newrelic.com/pricing"
+  },
+  {
+   "item": "Preço por GB acima do grátis (só em edição paga)",
+   "valor": "US$ 0,40/GB (Original Data) e US$ 0,60/GB (Data Plus), conforme a página de preços consultada",
+   "fonte_url": "https://newrelic.com/info/pricing"
+  },
+  {
+   "item": "Payload OTLP",
+   "valor": "Máximo de 1 MB (10^6 bytes) por requisição. Payloads maiores são rejeitados.",
+   "fonte_url": "https://docs.newrelic.com/docs/opentelemetry/best-practices/opentelemetry-otlp/"
+  },
+  {
+   "item": "Atributos OTLP",
+   "valor": "Chave até 255 caracteres; valor string até 4095 (o resto é truncado); até 64 atributos de resource, 8 de scope e 128 por registro (span, datapoint, log); arrays até 64 itens",
+   "fonte_url": "https://docs.newrelic.com/docs/opentelemetry/best-practices/opentelemetry-otlp/"
+  },
+  {
+   "item": "Log API",
+   "valor": "1 MB por POST; até 255 atributos por evento; nome de atributo até 255 caracteres; valores com mais de 4094 caracteres viram blob; 300.000 requisições/min; 10 GB/min de JSON não comprimido; timestamps com mais de 48 h podem ser descartados",
+   "fonte_url": "https://docs.newrelic.com/docs/logs/log-api/introduction-log-api/"
+  }
+ ],
+ "fatos_para_b1_b4": [
+  {
+   "fato": "Endpoint OTLP US: https://otlp.nr-data.net, nas portas 443, 4317 (gRPC) e 4318 (HTTP). Com https e sem porta explícita, usa a 443. EU: https://otlp.eu01.nr-data.net.",
+   "fonte_url": "https://docs.newrelic.com/docs/opentelemetry/best-practices/opentelemetry-otlp/"
+  },
+  {
+   "fato": "A autenticação OTLP usa o header 'api-key' com a license key. Sem esse header ocorre erro de autenticação. Para SDKs a variável é OTEL_EXPORTER_OTLP_HEADERS=api-key=<LICENSE_KEY>.",
+   "fonte_url": "https://docs.newrelic.com/docs/opentelemetry/best-practices/opentelemetry-otlp/"
+  },
+  {
+   "fato": "Protocolo recomendado: OTLP/HTTP com protobuf binário (http/protobuf), porque proxies e balanceadores podem atrapalhar conexões gRPC longas. Compressão gzip (padrão no Collector) ou zstd (preferida quando suportada).",
+   "fonte_url": "https://docs.newrelic.com/docs/opentelemetry/best-practices/opentelemetry-otlp/"
+  },
+  {
+   "fato": "No Collector, a New Relic recomenda o exporter otlphttp (endpoint + headers api-key) e o processor batch. O exporter otlp/gRPC é suportado, mas não recomendado. Os dois fazem retry por padrão.",
+   "fonte_url": "https://docs.newrelic.com/docs/opentelemetry/get-started/collector-processing/opentelemetry-collector-processing-intro/"
+  },
+  {
+   "fato": "Respostas OTLP de sucesso não têm corpo. Caminho errado retorna 404. Atributos alterados ou erros posteriores geram eventos NrIntegrationError, mesmo quando a resposta foi de sucesso. A New Relic implementa OTLP v1.4.0.",
+   "fonte_url": "https://docs.newrelic.com/docs/opentelemetry/best-practices/opentelemetry-otlp/"
+  },
+  {
+   "fato": "Para métricas OTLP, a New Relic recomenda temporalidade delta (OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE=delta).",
+   "fonte_url": "https://docs.newrelic.com/docs/opentelemetry/best-practices/opentelemetry-otlp/"
+  },
+  {
+   "fato": "Os serviços OTel aparecem em APM & Services, ou em All entities > Services - OpenTelemetry. Cada serviço tem as páginas Summary, Distributed tracing, Service map, Transactions, Databases, External services, Logs, Errors inbox, e Go runtime (para serviços Go).",
+   "fonte_url": "https://docs.newrelic.com/docs/opentelemetry/get-started/apm-monitoring/opentelemetry-apm-ui/"
+  },
+  {
+   "fato": "Service map: one.newrelic.com > APM & services > (entidade) > Service map, no menu lateral. Funciona melhor com distributed tracing e tem timewarp de até 3 horas.",
+   "fonte_url": "https://docs.newrelic.com/docs/new-relic-solutions/new-relic-one/ui-data/service-maps/service-maps/"
+  },
+  {
+   "fato": "Visão global de traces: one.newrelic.com > All capabilities > Traces. No gráfico de dispersão, clicar em um ponto abre os detalhes do trace.",
+   "fonte_url": "https://docs.newrelic.com/docs/distributed-tracing/ui-data/understand-use-distributed-tracing-ui/"
+  },
+  {
+   "fato": "Para OpenTelemetry, o mapa de external services e os drill-downs usam dados amostrados. Pode ser preciso ajustar o sampling ou gerar mais tráfego antes de gravar o vídeo.",
+   "fonte_url": "https://docs.newrelic.com/docs/apm/apm-ui-pages/monitoring/external-services/external-services-intro/"
+  },
+  {
+   "fato": "No Free, passar de 100 GB/mês interrompe a ingestão e o acesso até o mês seguinte. Para B1 local com 5 serviços e pouco tráfego isso é muito improvável, mas convém não deixar gerador de carga ligado sem necessidade.",
+   "fonte_url": "https://newrelic.com/pricing"
+  }
+ ],
+ "incertezas": [
+  "A página oficial da Log API não documenta o código e o corpo de sucesso. O HTTP 202 com JSON {\"requestId\":...} está documentado para a Metric API e a Trace API (mesma família de ingest APIs) e aparece num OpenAPI de terceiros para a Log API. O teste real deve confirmar. Qualquer 2xx seguido do log visível em Logs já prova que a chave funciona.",
+  "A doc de API keys descreve a license key como '40-character hexadecimal'. A doc de guided install diz que ela termina em 'NRAL', o que não é hexadecimal. O formato exato não importa para o teste: vale o resultado HTTP.",
+  "Os nomes de menu da UI (ex.: 'APM & Services', 'All capabilities', 'Administration > Access management > Accounts') vêm da doc atual, mas a New Relic muda a navegação com frequência. Se o caminho não existir, use a busca da UI ou o link direto one.newrelic.com/api-keys.",
+  "A sintaxe ${env:NEW_RELIC_LICENSE_KEY} no YAML é da própria documentação do OpenTelemetry Collector, não da New Relic (a New Relic usa o placeholder <INSERT_NEW_RELIC_LICENSE_KEY>). Não foi consultada nesta sessão e deve ser conferida para a versão do Collector usada no projeto.",
+  "A doc da New Relic não diz se o endpoint OTLP aceita OTLP/HTTP com JSON. Ela só recomenda protobuf binário. Por isso não foi proposto teste OTLP manual via PowerShell. A prova OTLP real fica para o B1, com o Collector.",
+  "A tabela de retenção da doc não diz explicitamente a quais edições se aplica. A página de preços do Free diz apenas 'pelo menos 8 dias'. Confira em Administration > Data management > Data retention na própria conta.",
+  "Os preços por GB (US$ 0,40/0,60) vêm de newrelic.com/info/pricing e só valem para edição paga. A conta Free não é cobrada: ela é bloqueada ao passar de 100 GB."
+ ],
+ "fontes": [
+  {
+   "titulo": "New Relic OTLP endpoint (best practices)",
+   "url": "https://docs.newrelic.com/docs/opentelemetry/best-practices/opentelemetry-otlp/"
+  },
+  {
+   "titulo": "OpenTelemetry Collector for data processing",
+   "url": "https://docs.newrelic.com/docs/opentelemetry/get-started/collector-processing/opentelemetry-collector-processing-intro/"
+  },
+  {
+   "titulo": "New Relic API keys",
+   "url": "https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/"
+  },
+  {
+   "titulo": "Guided install overview (formato da license key, NRAL)",
+   "url": "https://docs.newrelic.com/docs/infrastructure/infrastructure-agent/new-relic-guided-install-overview/"
+  },
+  {
+   "titulo": "Find your account ID",
+   "url": "https://docs.newrelic.com/docs/accounts/accounts-billing/account-structure/account-id/"
+  },
+  {
+   "titulo": "Choose your data center (US/EU)",
+   "url": "https://docs.newrelic.com/docs/accounts/accounts-billing/account-setup/choose-your-data-center/"
+  },
+  {
+   "titulo": "Send your logging data with our Log API",
+   "url": "https://docs.newrelic.com/docs/logs/log-api/introduction-log-api/"
+  },
+  {
+   "titulo": "Report metrics via the Metric API (202 e requestId, NrIntegrationError)",
+   "url": "https://docs.newrelic.com/docs/data-apis/ingest-apis/metric-api/report-metrics-metric-api/"
+  },
+  {
+   "titulo": "Use the logs UI",
+   "url": "https://docs.newrelic.com/docs/logs/ui-data/use-logs-ui/"
+  },
+  {
+   "titulo": "Query syntax for logs",
+   "url": "https://docs.newrelic.com/docs/logs/ui-data/query-syntax-logs/"
+  },
+  {
+   "titulo": "How New Relic pricing works",
+   "url": "https://docs.newrelic.com/docs/accounts/accounts-billing/new-relic-one-pricing-billing/new-relic-one-pricing-billing/"
+  },
+  {
+   "titulo": "Manage data retention",
+   "url": "https://docs.newrelic.com/docs/data-apis/manage-data/manage-data-retention/"
+  },
+  {
+   "titulo": "New Relic Pricing (Free tier)",
+   "url": "https://newrelic.com/pricing"
+  },
+  {
+   "titulo": "New Relic Pricing: Free Tier, 100GB Monthly Data Ingest",
+   "url": "https://newrelic.com/info/pricing"
+  },
+  {
+   "titulo": "OpenTelemetry APM UI",
+   "url": "https://docs.newrelic.com/docs/opentelemetry/get-started/apm-monitoring/opentelemetry-apm-ui/"
+  },
+  {
+   "titulo": "Service map: Visualize your entities",
+   "url": "https://docs.newrelic.com/docs/new-relic-solutions/new-relic-one/ui-data/service-maps/service-maps/"
+  },
+  {
+   "titulo": "Understand and use the distributed tracing UI",
+   "url": "https://docs.newrelic.com/docs/distributed-tracing/ui-data/understand-use-distributed-tracing-ui/"
+  },
+  {
+   "titulo": "External services (OpenTelemetry, amostragem)",
+   "url": "https://docs.newrelic.com/docs/apm/apm-ui-pages/monitoring/external-services/external-services-intro/"
+  }
+ ]
+}

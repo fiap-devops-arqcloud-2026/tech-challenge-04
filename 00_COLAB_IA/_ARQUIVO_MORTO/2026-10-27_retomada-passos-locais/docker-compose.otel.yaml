@@ -1,0 +1,66 @@
+# Usar após docker-compose.yaml e docker-compose.integration.yaml.
+# Somente telemetria local: não contém exporter/chave New Relic.
+x-otel-environment: &otel-environment
+  OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
+  OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
+  OTEL_RESOURCE_ATTRIBUTES: deployment.environment.name=local
+  OTEL_TRACES_SAMPLER: parentbased_always_on
+  OTEL_SDK_DISABLED: "false"
+
+services:
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.163.2@sha256:7f22d2a6748110ffb6a59bc0df448bccbf501cdb667d610ede4c61d3863d5849
+    # O script usa o UID/GID do operador para escrever no bind mount em Linux.
+    user: "${OTEL_UID:-10001}:${OTEL_GID:-10001}"
+    command: ["--config=/etc/otelcol-contrib/config.yaml"]
+    volumes:
+      - ./observability/otel-collector-local.yaml:/etc/otelcol-contrib/config.yaml:ro
+      - ${OTEL_TRACE_DIR:-./00_COLAB_IA/02_TRABALHO/qa-otel}:/var/lib/otel
+    ports:
+      - "127.0.0.1:4318:4318"
+      - "127.0.0.1:13133:13133"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    networks: [toggle-net]
+
+  auth-service:
+    environment:
+      <<: *otel-environment
+      OTEL_SERVICE_NAME: auth-service
+    depends_on:
+      otel-collector:
+        condition: service_started
+
+  flag-service:
+    environment:
+      <<: *otel-environment
+      OTEL_SERVICE_NAME: flag-service
+    depends_on:
+      otel-collector:
+        condition: service_started
+
+  targeting-service:
+    environment:
+      <<: *otel-environment
+      OTEL_SERVICE_NAME: targeting-service
+    depends_on:
+      otel-collector:
+        condition: service_started
+
+  evaluation-service:
+    environment:
+      <<: *otel-environment
+      OTEL_SERVICE_NAME: evaluation-service
+    depends_on:
+      otel-collector:
+        condition: service_started
+
+  analytics-service:
+    environment:
+      <<: *otel-environment
+      OTEL_SERVICE_NAME: analytics-service
+    depends_on:
+      otel-collector:
+        condition: service_started

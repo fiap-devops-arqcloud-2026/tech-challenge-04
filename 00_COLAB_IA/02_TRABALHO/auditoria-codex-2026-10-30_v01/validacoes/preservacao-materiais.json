@@ -1,0 +1,290 @@
+{
+  "originais": [
+    {
+      "path": "POSTECH - Tech Challenge - Fase 4.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/00.Welcome to Observabilidade e Monitoramento/POSTECH - Capítulo de Projeto - Fase 4.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/01.Observabilidade e Monitoramento/POSTECH - Observabilidade e Monitoramento - Aula 1.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/01.Observabilidade e Monitoramento/POSTECH - Observabilidade e Monitoramento - Aula 2.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/01.Observabilidade e Monitoramento/POSTECH - Observabilidade e Monitoramento - Aula 3.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/01.Observabilidade e Monitoramento/POSTECH - Observabilidade e Monitoramento - Aula 4.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/01.Observabilidade e Monitoramento/POSTECH - Observabilidade e Monitoramento - Aula 5.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 1.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 2.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 3.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 4.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 5.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 6.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 7.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 8.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 1.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 10.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 2.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 3.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 4.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 5.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 6.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 7.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 8.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 9.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 1.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 2.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 3.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 4.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 5.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 6.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 7.pdf",
+      "ok": true
+    }
+  ],
+  "protegidos": [
+    {
+      "path": "docs/aulas-fiap/00.Welcome to Observabilidade e Monitoramento/GUIA-ESTUDO-Welcome-to-Observabilidade-e-Monitoramento.html",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/00.Welcome to Observabilidade e Monitoramento/POSTECH - Capítulo de Projeto - Fase 4.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/01.Observabilidade e Monitoramento/GUIA-ESTUDO-Observabilidade-e-Monitoramento.html",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/01.Observabilidade e Monitoramento/POSTECH - Observabilidade e Monitoramento - Aula 1.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/01.Observabilidade e Monitoramento/POSTECH - Observabilidade e Monitoramento - Aula 2.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/01.Observabilidade e Monitoramento/POSTECH - Observabilidade e Monitoramento - Aula 3.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/01.Observabilidade e Monitoramento/POSTECH - Observabilidade e Monitoramento - Aula 4.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/01.Observabilidade e Monitoramento/POSTECH - Observabilidade e Monitoramento - Aula 5.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/GUIA-ESTUDO-Monitoramento-Opensource.html",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 1.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 2.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 3.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 4.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 5.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 6.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 7.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 8.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/GUIA-ESTUDO-APM.html",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 1.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 10.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 2.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 3.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 4.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 5.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 6.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 7.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 8.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 9.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/GUIA-ESTUDO-Automacao-de-incidentes.html",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 1.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 2.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 3.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 4.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 5.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 6.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 7.pdf",
+      "ok": true
+    },
+    {
+      "path": "docs/requisitos/README.md",
+      "ok": true
+    },
+    {
+      "path": "docs/requisitos/REQUISITOS.html",
+      "ok": true
+    },
+    {
+      "path": "POSTECH - Tech Challenge - Fase 4.pdf",
+      "ok": true
+    }
+  ]
+}

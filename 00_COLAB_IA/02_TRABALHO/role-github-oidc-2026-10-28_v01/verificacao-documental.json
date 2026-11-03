@@ -1,0 +1,13 @@
+{
+  "data": "2026-10-28T12:00:27-03:00",
+  "jsons_validos": true,
+  "subject_main_exato": true,
+  "cinco_arns_sem_curinga": true,
+  "nove_acoes_ecr_conferidas": true,
+  "get_authorization_token_global": true,
+  "links_locais_validos": 3,
+  "template_aws_account_id": "SUBSTITUA_ID_AWS",
+  "aws_consultada": false,
+  "ci_executado": false,
+  "historico_log_preservado": true
+}

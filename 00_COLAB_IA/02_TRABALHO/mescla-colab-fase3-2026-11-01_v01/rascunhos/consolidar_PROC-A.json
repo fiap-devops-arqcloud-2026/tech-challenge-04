@@ -1,0 +1,460 @@
+{
+ "temas": [
+  {
+   "tema": "Leitura do enunciado e critério de avaliação",
+   "itens": [
+    {
+     "titulo": "Critério literal para obrigatório x opcional e varredura do enunciado",
+     "texto_final": "Na Fase 3 (2026-07-30 a 2026-09-09), o enunciado virou checklist com IDs: 39 obrigatórios (O-01 a O-39), 9 opcionais (R-01 a R-09) e 9 sugestões das aulas (S-01 a S-09). Obrigatório era o que estava em 'Requisitos Técnicos' e 'Entregáveis'; opcional, o que o PDF marca como opcional, recomendado, preferencialmente, se houver, ou oferece como alternativa. Antes de cortar algo, varria-se o PDF extraído por palavras-chave (em 2026-08-27 os termos de acesso externo/Ingress apareceram zero vezes); sugestão das aulas não vale ponto sozinha e pode ser cortada se trouxer risco. Quando um requisito não podia ser cumprido, o professor era consultado e a resposta registrada (caso dos 3 RDS).",
+     "data": "2026-07-30 a 2026-09-09",
+     "fontes": [
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:405-407",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:465-467",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:68",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:14",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:412-420",
+      "docs/00_COLAB_IA/DECISOES.md:120",
+      "docs/00_COLAB_IA/DECISOES.md:176",
+      "docs/00_COLAB_IA/DECISOES.md:214"
+     ],
+     "ja_coberto_em": "Sim, em essência: 00_COLAB_IA/LEIA-PRIMEIRO.md, seção 'Limites e conflitos' (não transformar conteúdo didático em obrigação; cada obrigação com página); 00_COLAB_IA/DOSSIE_CONTEXTO.md §9 ('Opção do enunciado não implica nota extra. Exemplo de aula não é requisito'); 00_COLAB_IA/DECISOES.md D-002; docs/requisitos/README.md:46 (critério de obrigatório da Fase 4) e :99-109 (REQ-BON e SUG separados). Faltam só o método de varredura por palavras-chave e a regra de consultar o professor e registrar.",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "docs/requisitos/README.md:46 aplica o mesmo critério ao PDF da Fase 4; REQ-BON-01/02 (:99-100) e SUG-01..04 (:106-109) separam opção e sugestão do obrigatório.",
+     "relacao_fase4": "Mesmo princípio de 'consultar e registrar' vale para Q-03 (entrega individual, REQ-OBR-41), Q-05/Q-06 (prazo e canal) e Q-13 (usernames); achado DOC-08 aponta que a confirmação do tutor sobre entrega individual não está registrada. P-002 mantém Q-03/Q-05/Q-06 abertas.",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Regras gerais de avaliação: Fase 3 x Fase 4",
+     "texto_final": "O enunciado da Fase 3 dizia que o Tech Challenge vale 90% da nota das disciplinas da fase, orientava dúvidas pelo Discord da turma e usava a frase-guia 'Se não está no código, não existe'; a contagem de 39 obrigatórios era decomposição interna, não contagem oficial de pontos. O enunciado da Fase 4 mantém os 90% (p. 2) e o Discord para dúvidas (p. 6) e acrescenta a dedução direta de pontos para requisito não demonstrado no vídeo ou não documentado no relatório (p. 5).",
+     "data": "2026-09-09 (leitura do enunciado da Fase 3)",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-fiap-texto-por-pagina-2026-09-09.txt:12-29",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-fiap-texto-por-pagina-2026-09-09.txt:46",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-fiap-texto-por-pagina-2026-09-09.txt:101",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-fiap-texto-por-pagina-2026-09-09.txt:148",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:30",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:154"
+     ],
+     "ja_coberto_em": "docs/requisitos/README.md:35 (90%), :37 (Discord só para dúvidas), :38 (dedução direta, Q-07); 00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md, P-009 ('Não é percentual de nota').",
+     "vale_no_codigo_atual": "nao_se_aplica",
+     "evidencia_atual": "Conferido no texto extraído do PDF da Fase 4 (00_COLAB_IA/02_TRABALHO/extracoes-pdfium/00-POSTECH - Tech Challenge - Fase 4.txt:9-10, :107-111, :149).",
+     "relacao_fase4": "Contexto já incorporado ao catálogo de requisitos; a frase-guia é reaproveitada na narração (ver tema do vídeo). A opção AWS Academy/LabRole da Fase 3 não se aplica à conta nova.",
+     "relevancia": "media",
+     "destino": "RELATORIO_MESCLA"
+    },
+    {
+     "titulo": "Vídeo e relatório deixados para o fim na Fase 3",
+     "texto_final": "Em 2026-09-09, o placar da Fase 3 era 24 obrigatórios comprovados, 6 escritos e validados sem apply e 9 não iniciados; os 9 eram justamente vídeo e relatório, com entrega em 2026-09-15. Lição para a Fase 4: começar cedo o esqueleto do relatório e o roteiro do vídeo, sem esperar a demonstração, e manter a separação comprovado / escrito / não iniciado.",
+     "data": "2026-09-09",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:74-85",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:134",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:420"
+     ],
+     "ja_coberto_em": "Parcial: 00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md P-009 (matriz de 2026-10-28: 2 comprovados localmente, 10 parciais, 28 pendentes, 2 a confirmar) e P-015 B5/B6. A lição de começar cedo não está registrada.",
+     "vale_no_codigo_atual": "nao_se_aplica",
+     "evidencia_atual": "README.md:25 diz que vídeo e relatório 'serão produzidos após a demonstração funcional'.",
+     "relacao_fase4": "DOC-01 (não existe relatório nem esqueleto da Fase 4; recomenda criar já docs/RELATORIO_ENTREGA_FASE4.md com checklist REQ-OBR-32..40); P-015 B5 (vídeo 10-12/11) e B6 (relatório 13-16/11).",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Cronograma interno não é prazo da FIAP",
+     "texto_final": "Na Fase 3, os marcos M1 a M5 eram proposta do assistente, marcados como tal para não virarem regra; M1 (2026-08-08) e M2 (2026-08-22) venceram sem conclusão e o cronograma foi rebaseado em 2026-08-27. Na Fase 4 a separação já existe: 2026-11-17 é prazo informado pelo usuário (não consta do PDF) e 2026-11-12 é meta interna.",
+     "data": "2026-07-30 / 2026-08-27",
+     "fontes": [
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:447",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:455"
+     ],
+     "ja_coberto_em": "README.md:25; docs/requisitos/README.md:36 (Q-05); 00_COLAB_IA/DECISOES.md D-009; PENDENCIAS, 'Orientação de avanço — 2026-10-27'.",
+     "vale_no_codigo_atual": "nao_se_aplica",
+     "evidencia_atual": "",
+     "relacao_fase4": "P-015 já propõe blocos B0-B6 com datas; mesma regra de rotular metas internas.",
+     "relevancia": "baixa",
+     "destino": "RELATORIO_MESCLA"
+    },
+    {
+     "titulo": "Entregáveis de vídeo e relatório: o que mudou da Fase 3 para a Fase 4",
+     "texto_final": "Na Fase 3 (enunciado p. 5-6) o vídeo tinha até 20 min e 5 cenas (IaC, pipeline falhando no passo de segurança e depois passando, tag atualizada no GitOps, ArgoCD sincronizando sozinho e interface do ArgoCD com os 5 serviços), e o relatório (.PDF ou .txt) pedia participantes, link da documentação e do vídeo, desafios/decisões e print da estimativa de custos AWS. Na Fase 4 o vídeo vai até 25 min e o relatório é só PDF, com nomes, RMs e usernames, links do repositório e do vídeo, 4 prints obrigatórios (dashboard Grafana, trace no APM, notificação no ChatOps e log/execução do self-healing) e justificativa técnica (arquitetura OTel; Datadog x New Relic; OpsGenie x PagerDuty). Print de custo, link da documentação e resumo de desafios não constam da lista da p. 6 da Fase 4.",
+     "data": "2026-09-11 (Fase 3); conferido no PDF da Fase 4 em 2026-11-01",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:34-58",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:830-834",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:7-12",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-fiap-texto-por-pagina-2026-09-09.txt:142-146"
+     ],
+     "ja_coberto_em": "docs/requisitos/README.md:73-91 (REQ-OBR-24 a REQ-OBR-42 com página e trecho).",
+     "vale_no_codigo_atual": "nao_se_aplica",
+     "evidencia_atual": "00_COLAB_IA/02_TRABALHO/extracoes-pdfium/00-POSTECH - Tech Challenge - Fase 4.txt:117-148 (lista de vídeo e de relatório da Fase 4).",
+     "relacao_fase4": "REQ-OBR-24 a 40; DOC-01. A conclusão da Fase 3 de que 'nada além disso vale nota' não se transporta: a Fase 4 tem lista própria e regra de dedução.",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    }
+   ]
+  },
+  {
+   "tema": "Roteiro e planejamento do vídeo",
+   "itens": [
+    {
+     "titulo": "Matriz requisito → evidência na tela",
+     "texto_final": "Técnica usada na Fase 3 (2026-09-09 a 2026-09-15): tabela 'o que pedem → o que aparece na tela → onde está (custo)', com checklist final de cada evidência, separando o já comprovado do que depende do cluster. Exemplos: pipeline falhando = job de segurança vermelho e jobs de imagem/GitOps cinza (skipped); tag atualizada = commit do robô e diff do kustomization.yaml; sincronização = card do ArgoCD indo de OutOfSync para Synced sozinho. Demonstrar causa real (falha por CVE, não por lint ou sintaxe) e mostrar desvios de frente. Na Fase 4, montar a mesma tabela para REQ-OBR-25 a 31 e para os 4 prints do relatório.",
+     "data": "2026-09-09 a 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:63-74",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:387",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:964-979",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:834",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/EVIDENCIAS.md:12-31",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:40"
+     ],
+     "ja_coberto_em": "Parcial: docs/requisitos/README.md:106 (SUG-01, matriz de evidências e ensaio) e P-002 E6 em PENDENCIAS. Não há roteiro nem matriz requisito→tela da Fase 4.",
+     "vale_no_codigo_atual": "parcial",
+     "evidencia_atual": "As evidências da Fase 3 ainda são produzíveis: .github/workflows/_ci-python.yml:359 (job image depende de build/lint/sast/sca) e :364 (só push na main); _ci-python.yml:632 e _ci-go.yml:602 (commit 'chore(gitops): ... [skip ci]'); terraform/k8s/argocd.tf:320-325 (prune e selfHeal). As cenas da Fase 4 (Grafana, Loki, alerta, incidente, self-healing) ainda não têm código.",
+     "relacao_fase4": "SUG-01; P-002 E6; P-015 B4/B5; REQ-OBR-24..31 e 35..38; CIC-01 (workflow de self-healing inexistente) e GIT-01 (stack fora do GitOps) impedem hoje as cenas novas.",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Separar cenas sem cluster das que exigem cluster",
+     "texto_final": "Na Fase 3 (F-028 de 2026-08-27 e guia de 2026-09-11), metade do vídeo não precisava de cluster: pipeline falhando/passando e tag no GitOps rodavam só no GitHub Actions, com custo AWS zero; o plan também era gratuito, enquanto apply, resultado na AWS e ArgoCD custavam ~US$ 0,37/h (estimativa da época). O bloco gratuito foi estimado em 35-45 min de gravação para 8-9 min de vídeo final e foi gravado antes da sessão paga. Na Fase 4 a parte sem cluster é menor, porque REQ-OBR-25 exige EKS e ArgoCD rodando com a nova stack e as cenas de Grafana, alerta, incidente e self-healing dependem do ambiente no ar; candidatas a gravar antes: abertura, configurações das contas e workflows. [INCERTO] se um Service Map gerado a partir do Compose atende REQ-OBR-27.",
+     "data": "2026-08-27 a 2026-09-11",
+     "fontes": [
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:265",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:359",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:375",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:407",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:30",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:118-121",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:147-149",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:423",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:13-31",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:78-81",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:342-344",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:561-589"
+     ],
+     "ja_coberto_em": "Não.",
+     "vale_no_codigo_atual": "nao_se_aplica",
+     "evidencia_atual": "Requisito de cluster na Fase 4: docs/requisitos/README.md:74 (REQ-OBR-25).",
+     "relacao_fase4": "P-015 B1 (trace e Service Map no New Relic a partir do Compose), B4 (cadeia gravada até 10/11) e B5; REQ-OBR-25..31; DOC-04 (trial do PagerDuty).",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Gravar fora de ordem sem cortar o intervalo que prova a automação",
+     "texto_final": "Na Fase 3 (2026-09-11/15) as cenas foram gravadas conforme o ambiente ficava pronto e montadas na edição na ordem do roteiro; esperas de pipeline (1 a 5 min) eram cortadas e, do apply longo, gravavam-se começo e fim. O intervalo entre o commit do robô e o Synced do ArgoCD nunca podia ser cortado, porque prova que ninguém mandou sincronizar. Na Fase 4, o trecho equivalente é a cadeia falha → Firing → incidente no PagerDuty → Slack → self-healing; definir antes quais intervalos não podem ter corte.",
+     "data": "2026-09-11 / 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:634-635",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:836-837",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:289-291",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:353-355"
+     ],
+     "ja_coberto_em": "Não.",
+     "vale_no_codigo_atual": "nao_se_aplica",
+     "evidencia_atual": "",
+     "relacao_fase4": "P-015 B4/B5; REQ-OBR-28..31; CIC-01 (workflow repository_dispatch ainda inexistente).",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Roteiro de cenas e durações (modelo da Fase 3)",
+     "texto_final": "Roteiro final da Fase 3 (2026-09-15, cerca de 18:30 para limite de 20 min): 1 abertura com slides 1:00 (encurtar); 2 IaC plan/apply da base 3:00 (não cortar); 3 DevSecOps, prova histórica e falha/correção ao vivo 4:00 (não cortar); 4 resultado na AWS 1:30 (encurtar); 5 ArgoCD com os 5 serviços 1:30 (não cortar); 6 merge → pipeline → commit do robô → Synced → versão nova 4:00 (nunca cortar); 7 prova funcional 2:00 (cortar primeiro); 8 desafios e custo 1:30 (cortar). Nomes, links e custo iam no relatório, não no vídeo. Usar como base para dividir os 25 min da Fase 4, marcando quais cenas cobrem REQ-OBR-25 a 31.",
+     "data": "2026-09-09 / 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/ROTEIRO_VIDEO.md:1-19",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:828-850",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:72-77"
+     ],
+     "ja_coberto_em": "Não. Os slides da abertura da Fase 3 estão em docs/apresentacao/ToggleMaster_Fase3.pptx.",
+     "vale_no_codigo_atual": "nao_se_aplica",
+     "evidencia_atual": "",
+     "relacao_fase4": "P-015 B5; REQ-OBR-24 (até 25 min) a REQ-OBR-31.",
+     "relevancia": "media",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Critérios de risco na demonstração",
+     "texto_final": "Na Fase 3 (2026-08-27 a 2026-09-09), evitou-se peça nova em runtime no caminho crítico da gravação (motivo do corte do External Secrets Operator, com sessão de cluster de cerca de 3 h) e passo manual na demo (o robô comita direto na main, sem fila de PRs). O acesso às interfaces era por kubectl port-forward, sem Ingress. No código atual seguem os Services ClusterIP sem Ingress, os outputs com o port-forward e com o comando da senha do ArgoCD, o commit do robô direto na main com [skip ci] e o ArgoCD com prune e selfHeal. Na Fase 4, aplicar o mesmo critério à cadeia alerta → PagerDuty → Slack → self-healing e resolver antes os riscos já mapeados.",
+     "data": "2026-08-27 a 2026-09-09",
+     "fontes": [
+      "docs/00_COLAB_IA/DECISOES.md:69",
+      "docs/00_COLAB_IA/DECISOES.md:124",
+      "docs/00_COLAB_IA/DECISOES.md:212-214"
+     ],
+     "ja_coberto_em": "Parcial: docs/ARQUITETURA.md:205 (histórico: ClusterIP, sem Ingress, port-forward) e docs/GUIA_DE_REPRODUCAO.md:460-472 (histórico). Critério de risco para a demo da Fase 4 não registrado.",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "gitops/base/flag-service/service.yaml:20 (e demais service.yaml) com type ClusterIP; nenhum 'kind: Ingress' em gitops/; terraform/k8s/outputs.tf:23 (port-forward) e :36 (senha inicial); .github/workflows/_ci-python.yml:632; terraform/k8s/argocd.tf:320-325.",
+     "relacao_fase4": "GIT-04/TFK-06 (selfHeal x HPA disputam replicas do evaluation e analytics, risco na cena de self-healing); TFK-11 (repo 04 privado e token do ArgoCD opcional); CIC-07 (commits do bot na main); XCL-08 (pré-requisitos do self-healing); TFC-01 (2 x c7i-flex.large pode não comportar a stack).",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Ensaio completo com folga antes da gravação",
+     "texto_final": "Na Fase 3 o ensaio (M4) foi colocado 4 dias antes da gravação (M5) para corrigir, com o cluster desligado, falhas do primeiro apply completo; o plano previa duas sessões de cluster de 3 h e destruir os recursos ao fim. Na Fase 4, o ensaio da cadeia completa precisa caber antes do fim do trial do PagerDuty (cerca de 2026-11-11; a linha 'Events' do plano Free aparecia como 'Not included' no registro de 2026-10-30) e antes de 2026-11-17.",
+     "data": "2026-08-27 a 2026-09-09",
+     "fontes": [
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:261",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:359",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:184",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:136-148"
+     ],
+     "ja_coberto_em": "00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md: P-002 E6 (ensaio e matriz de evidências), P-015 B4 (cadeia gravada até 10/11) e P-003 nota de 2026-10-30 (trial e Events).",
+     "vale_no_codigo_atual": "nao_se_aplica",
+     "evidencia_atual": "",
+     "relacao_fase4": "DOC-04 (trial do PagerDuty termina antes da meta e da entrega e não aparece no README); P-015 B3/B4.",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Narração: explicar o porquê de cada evidência",
+     "texto_final": "O guia da Fase 3 (2026-09-11) trazia falas prontas: o problema do enunciado e a frase 'Se não está no código, não existe'; no DevSecOps, o único job vermelho é o de segurança e os seguintes ficam pulados; o commit de tag é do robô e o [skip ci] evita laço infinito; 'o portão não foi afrouxado, o problema foi resolvido'; o tfstate guarda senhas em texto puro, por isso o backend S3 criptografado e versionado; base64 não é criptografia. Na Fase 4, manter o estilo e incluir a explicação de como o Collector roteia os dados, exigida em REQ-OBR-26(d).",
+     "data": "2026-09-11",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:100-109",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:212-219",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:285-287",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:316-319",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:530-532",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:623-628",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:807-810"
+     ],
+     "ja_coberto_em": "Parcial: README.md:226 (state pode conter senhas; sensitive não as remove).",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": ".github/workflows/_ci-python.yml:628-632 e _ci-go.yml:598-602 ([skip ci] no commit do robô); README.md:226.",
+     "relacao_fase4": "REQ-OBR-26(d) e REQ-OBR-39; TFC-09 (senhas RDS repetidas no state) reforça a fala sobre o tfstate.",
+     "relevancia": "media",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Demonstração DevSecOps/GitOps da Fase 3 (referência histórica)",
+     "texto_final": "Em 2026-09-15, no repositório público da Fase 3, PyYAML 5.3.1 com CVE-2020-14343 CRITICAL barrou o SCA (run 34985289399) e a troca para 6.0.1 deixou verde (run 34985477955). O merge do PR #16 (a509d67) gerou a run 34997028995, que publicou a imagem; o robô comitou a0c7b8e (flag-service v1.0.0-a509d67), o ArgoCD sincronizou sozinho e o selfHeal desfez um kubectl scale. Bloqueio anterior por CVE em golang.org/x/crypto: run 34360653255. São evidência da Fase 3, conferidas com gh run view em 2026-09-15, não da Fase 4.",
+     "data": "2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:18",
+      "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:134-146"
+     ],
+     "ja_coberto_em": "docs/RELATORIO_DE_ENTREGA.md:43, :52 e :57-68 (histórico).",
+     "vale_no_codigo_atual": "nao_se_aplica",
+     "evidencia_atual": "",
+     "relacao_fase4": "Modelo de sequência para mostrar que o ArgoCD continua rodando (REQ-OBR-25); CIC-07 (bot na main).",
+     "relevancia": "media",
+     "destino": "RELATORIO_MESCLA"
+    }
+   ]
+  },
+  {
+   "tema": "Preparação técnica da gravação",
+   "itens": [
+    {
+     "titulo": "Áudio: falha da Fase 3 e protocolo de checagem",
+     "texto_final": "A gravação da Fase 3 de 2026-09-11 saiu sem áudio e o vídeo foi regravado em 2026-09-15, dia da entrega; o principal suspeito foi a Ferramenta de Captura, que ficou com o mesmo fluxo de microfone aberto por quase quatro horas. Protocolo adotado (2 min antes de cada bloco): conferir o microfone em Configurações > Sistema > Som > Entrada, fechar e reabrir a Ferramenta de Captura, fechar apps que usam microfone (Câmera, Teams, Discord), conferir o ícone do microfone na barra, gravar 15 s e escutar com fone, e gravar em blocos curtos ouvindo o começo de cada um. Plano B: gravar só a tela e narrar depois (Clipchamp ou Gravador de Som).",
+     "data": "2026-09-11 / 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:12",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:79",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:135-150",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:856-860"
+     ],
+     "ja_coberto_em": "Não.",
+     "vale_no_codigo_atual": "nao_se_aplica",
+     "evidencia_atual": "",
+     "relacao_fase4": "P-015 B5 (vídeo 10-12/11); gravar com folga antes de 2026-11-17.",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Tela legível e segredos fora do vídeo",
+     "texto_final": "Preparação de tela da Fase 3: abas abertas na ordem de uso, terminal Git Bash maximizado, fonte grande no terminal e no navegador (o avaliador assiste num player pequeno), última linha do plan na tela por 3 s, notificações silenciadas, carregador ligado e internet estável. Comandos que exibem segredo, como a senha do admin do ArgoCD, rodam antes de gravar. Na Fase 4 a regra vale também para a license key do New Relic, a routing key do PagerDuty, o webhook do Slack e tokens do GitHub.",
+     "data": "2026-09-11 / 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:83-96",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:141",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:128-133",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:622-627"
+     ],
+     "ja_coberto_em": "Não.",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "terraform/k8s/outputs.tf:36 imprime o comando que mostra a senha inicial do ArgoCD.",
+     "relacao_fase4": "TFK-04 (tokens externos em texto no state; output sugere digitar token na linha de comando); TFK-09 (Secret da senha inicial mantido); CIC-05 e XCL-09 (segredos novos da Fase 4).",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Guia de comandos explicados para a gravação",
+     "texto_final": "Em 2026-09-11 o guia de gravação da Fase 3 ganhou apêndice com cada comando explicado parte por parte (passou de 570 para 959 linhas), cobrindo conferências iniciais, 8 cenas e encerramento: && como 'só continue se der certo', -chdir em vez de cd porque cada camada é um projeto independente, base64 -d, --wait=false e o apply da camada k8s em duas etapas. Os blocos foram escritos para Git Bash porque o PowerShell 5.1 não aceita && nem barra invertida de continuação. Na Fase 4 ainda não há roteiro vigente; o guia de reprodução é histórico.",
+     "data": "2026-09-11 a 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:75",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:187-190"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md (histórico, banner na linha 1).",
+     "vale_no_codigo_atual": "parcial",
+     "evidencia_atual": "Segundo DOC-02, o apply da camada k8s em duas etapas (-target=helm_release.argocd) continua necessário; o GUIA tem comandos incompatíveis com o código atual.",
+     "relacao_fase4": "DOC-02 (não há roteiro de implantação vigente); F-021 em P-010.",
+     "relevancia": "media",
+     "destino": "DOSSIE"
+    }
+   ]
+  },
+  {
+   "tema": "Montagem do relatório de entrega",
+   "itens": [
+    {
+     "titulo": "Estrutura do relatório (modelo das Fases 2 e 3)",
+     "texto_final": "O relatório da Fase 3 (2026-09-11) seguiu a estrutura e a capa do relatório da Fase 2, aprovado com nota máxima: capa institucional (instituição, programa, título da fase, subtítulo, nomes, cidade e ano), identificação, links, problema e o que foi automatizado (tabela antes/depois), IaC, CI/DevSecOps, CD/GitOps, desafios e decisões (desafio + decisão + alternativas descartadas), custos com captura e limites, atividades opcionais e anexo de opcionais atendidos. A versão de 2026-09-11 listava 8 desafios; a versão final preservada em docs/RELATORIO_DE_ENTREGA.md (revisão de 2026-09-15) tem 5. Nessa fase o relatório exigido pela FIAP só podia ser alinhado, não reescrito; na Fase 4, preservar o da Fase 3 e criar documento novo.",
+     "data": "2026-09-11 / 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:7-12",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:316-325",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/gerar-relatorio-pdf_2026-09-11_v00.py:5-7",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:3-5",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:194-196",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:200",
+      "docs/00_COLAB_IA/LEIA-PRIMEIRO.md:26",
+      "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:13",
+      "docs/00_COLAB_IA/DECISOES.md:16"
+     ],
+     "ja_coberto_em": "docs/RELATORIO_DE_ENTREGA.md:1 (banner histórico), :47-53 (5 desafios), :100 (base editorial na Fase 2).",
+     "vale_no_codigo_atual": "parcial",
+     "evidencia_atual": "Divergência de versão: LOG da Fase 3 cita 8 desafios (versão 2026-09-11); docs/RELATORIO_DE_ENTREGA.md:47-53 traz 5. Não há relatório da Fase 4.",
+     "relacao_fase4": "DOC-01 (criar docs/RELATORIO_ENTREGA_FASE4.md preservando o da Fase 3, com checklist REQ-OBR-32..40); DOC-07 (seção OTel a partir de arquitetura vigente); DOC-11 (linha 100 cita o PDF da Fase 3, apagado na árvore).",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Desvios a declarar no relatório",
+     "texto_final": "Desvios declarados na Fase 3 (2026-09-09 a 2026-09-15): 2 RDS + PostgreSQL do targeting em pod no EKS em vez de 3 RDS (combinado com o professor em 2026-08-27; comprovante escrito não localizado), sem Ingress/Load Balancer (acesso por port-forward), External Secrets Operator cortado, c7i-flex.large em vez de t3.medium, EKS 1.34 em vez de 1.31 e exceções nominais no .trivyignore (3 CVEs críticos sem correção em perl-base). Todos seguem no código atual. O enunciado da Fase 4 não pede seção de desafios, mas pede mostrar o EKS rodando com a nova stack; recomenda-se citar esses desvios na justificativa técnica.",
+     "data": "2026-09-09 a 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:31",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:85",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:150-152",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:307-308",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:400-401",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:419",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/EVIDENCIAS.md:33-36",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:24-25",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:124-128",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:26-28",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:185",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:87-90",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:919-961",
+      "docs/00_COLAB_IA/DECISOES.md:15",
+      "docs/00_COLAB_IA/DECISOES.md:126",
+      "docs/00_COLAB_IA/DECISOES.md:178"
+     ],
+     "ja_coberto_em": "docs/RELATORIO_DE_ENTREGA.md:41 e :49 (2 RDS, histórico); docs/ARQUITETURA.md:205 (sem Ingress, histórico). Nada na documentação vigente da Fase 4.",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "terraform/cluster/main.tf:91-92 (mapa com os dois bancos RDS); gitops/base/postgres-targeting/ existe; gitops/base/*/service.yaml com ClusterIP e sem Ingress; terraform/cluster/variables.tf:76 (default 1.34) e :86 (c7i-flex.large); .trivyignore presente na raiz.",
+     "relacao_fase4": "TFC-03 (1.34 sem upgrade_policy; fim do suporte padrão em 2026-12-02); CIC-08 e F-022 (exceções Trivy com revisão vencida em 2026-10-15); TFC-01 e XCL-10 (dimensionamento); REQ-OBR-25 e REQ-OBR-39/40.",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Print de custo",
+     "texto_final": "Na Fase 3 o print de custo (O-39) usou a estimativa do AWS Pricing Calculator de 2026-09-11 (US$ 281,03/mês em us-east-2, 730 h) e indicava também o Cost Explorer filtrado pela tag project = fiap; mostrar os dois era considerado mais forte. O enunciado da Fase 4 não pede print de custo. Se o custo entrar como contexto, as tags project = fiap e phase = 4 já estão no Terraform.",
+     "data": "2026-09-11 / 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:984-990",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:813-818",
+      "docs/00_COLAB_IA/DECISOES.md:248",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:262"
+     ],
+     "ja_coberto_em": "docs/RELATORIO_DE_ENTREGA.md:70-88 (estimativa histórica com captura em docs/evidencias/estimativa-custos-aws-2026-09-11.png).",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "terraform/variables.tf:57-58 e terraform/cluster/variables.tf:59-60 (project = \"fiap\", phase = \"4\").",
+     "relacao_fase4": "Não é requisito da Fase 4 (lista da p. 6); XCL-10 e TFB-10 apontam custo estimado divergente/subestimado se o tema for usado.",
+     "relevancia": "baixa",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Checklist antes do envio",
+     "texto_final": "Regras de fechamento da Fase 3 (2026-09-14/15): não enviar o PDF com placeholder de vídeo ou seção opcional vazia; não afirmar teste funcional, seed ou gravação sem evidência; manter marcador explícito para o link do vídeo (PREENCHER_URL_DO_VIDEO) até a publicação, testar a URL sem login e pôr o link no README e no relatório; regerar e conferir o PDF antes do envio; marcar como PRELIMINAR enquanto houver pendência; usar tabela de evidências com status (Histórico, Comprovado, Atual, Pendente); garantir acesso do avaliador (o repositório estava privado em 2026-09-14 e ficou público em 2026-09-15). Um link para PDF em pasta ignorada pelo Git (output/) ficou quebrado no GitHub. Na Fase 4 o repositório 04 é privado e a entrega individual ainda não tem confirmação do tutor registrada.",
+     "data": "2026-09-14 / 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:97-109",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:7-9",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:225-241",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:278-304",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:336-366",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:230-231",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:813-824",
+      "docs/00_COLAB_IA/LEIA-PRIMEIRO.md:26",
+      "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:12",
+      "docs/00_COLAB_IA/DECISOES.md:7",
+      "docs/00_COLAB_IA/DECISOES.md:15-16"
+     ],
+     "ja_coberto_em": "docs/RELATORIO_DE_ENTREGA.md:90-96 (checklist histórico); 00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md P-015 B6 (acesso do avaliador e submissão até 17/11).",
+     "vale_no_codigo_atual": "parcial",
+     "evidencia_atual": "Repositório 04 privado (TFK-11; DOSSIE, nota F-023/P-012 de 2026-10-28); docs/requisitos/README.md:90 (REQ-OBR-41 [INCERTO]) e :198 (Q-13, plataforma dos usernames).",
+     "relacao_fase4": "P-015 B6; DOC-08 (confirmação do tutor); TFK-11; DOC-05 (links do README para arquivos fora do Git, mesmo tipo de quebra do output/); REQ-OBR-33, 34 e 42; Q-03, Q-05, Q-06 e Q-13.",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Documentação alinhada alimenta o relatório",
+     "texto_final": "Na Fase 3 (2026-08-27), o usuário pediu manter contexto e documentação sempre atualizados porque o relatório da FIAP e o README seriam montados a partir deles. Na Fase 4, a explicação da arquitetura OTel do relatório (REQ-OBR-39) depende de um documento de arquitetura vigente, que ainda não existe.",
+     "data": "2026-08-27",
+     "fontes": [
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:262",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:353",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:419",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:455"
+     ],
+     "ja_coberto_em": "CLAUDE.md (atualizar LOG/PENDENCIAS/DECISOES/DOSSIE antes de encerrar) e LEIA-PRIMEIRO.md, 'Ritual e retomada'.",
+     "vale_no_codigo_atual": "nao_se_aplica",
+     "evidencia_atual": "",
+     "relacao_fase4": "DOC-07 (sem arquitetura vigente da Fase 4; reaproveitar como seção OTel do relatório); DOC-05 (README aponta para artefatos fora do Git).",
+     "relevancia": "media",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Gerador do PDF do relatório",
+     "texto_final": "Os geradores de PDF da Fase 3 existem só na pasta histórica: gerar-relatorio-pdf_2026-09-11_v00.py (markdown + weasyprint) e build-report-fase3_2026-09-14.py (reportlab; gerador canônico desde 2026-09-14). Em 2026-09-15 o reportlab não estava instalado na máquina. O repositório atual não tem gerador em scripts/; se docs/00_COLAB_IA for descartada, recuperar com git show 3b21e65:docs/00_COLAB_IA/_ARQUIVO_MORTO/<arquivo> ou escolher outra ferramenta.",
+     "data": "2026-09-11 a 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/gerar-relatorio-pdf_2026-09-11_v00.py:5-35",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:3-21",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:820-824",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:198"
+     ],
+     "ja_coberto_em": "Não.",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "scripts/ contém só integration/, security-check.sh, test-compose.sh, test-observability.sh e validate-all.sh (listagem em 2026-11-01).",
+     "relacao_fase4": "REQ-OBR-32 (relatório em PDF); DOC-01; P-015 B6.",
+     "relevancia": "media",
+     "destino": "PENDENCIAS"
+    }
+   ]
+  }
+ ],
+ "pendencias": [
+  {
+   "id": "PROC-A-01",
+   "descricao": "Definir como será gerado o PDF do relatório da Fase 4. Os dois geradores da Fase 3 (markdown+weasyprint e reportlab) só existem em docs/00_COLAB_IA/_ARQUIVO_MORTO, que será descartada, e não há gerador em scripts/.",
+   "dono": "usuário (decisão) e agente (execução)",
+   "aplicavel_fase4": "sim",
+   "motivo": "REQ-OBR-32 exige relatório em PDF; em 2026-09-15 a falta do reportlab já atrapalhou a regeração. Descartar a pasta remove os geradores da árvore.",
+   "acao_sugerida": "Antes de apagar a pasta, registrar no DOSSIE o caminho de recuperação via git show 3b21e65:docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py e gerar-relatorio-pdf_2026-09-11_v00.py; escolher a ferramenta da Fase 4 e testá-la cedo, gerando o PDF dentro de pasta versionada ou sem linkar caminho ignorado.",
+   "relacao_fase4": "DOC-01; P-015 B6.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:3-21",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/gerar-relatorio-pdf_2026-09-11_v00.py:15-35",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:820-824"
+   ]
+  }
+ ],
+ "conflitos": [],
+ "descartados": [
+  {
+   "titulo": "Composição nominal do grupo da Fase 3 (nomes e RMs dos integrantes)",
+   "motivo": "Dado pessoal, que não deve ser reproduzido. Também não se aplica: a Fase 4 é individual (D-009) e DOC-08 recomenda não copiar a tabela de participantes da Fase 3. Só a regra genérica (confirmar a composição e registrar a resposta do tutor) foi mantida no checklist."
+  },
+  {
+   "titulo": "Detalhes de comandos específicos da Fase 3 ([-1] no --query do ECR, || do grep)",
+   "motivo": "Explicações ligadas a comandos do roteiro antigo. Foi mantida só a lição (preparar um guia com os comandos explicados); os comandos da Fase 4 serão outros (DOC-02)."
+  }
+ ],
+ "limitacoes": "Li a entrada inteira: 33 itens, de 536 linhas. Nos originais de docs/00_COLAB_IA conferi por amostragem GUIA_GRAVACAO, PLANO_GRAVACAO, EVIDENCIAS, INSTRUCOES_ASSISTENTES, LOG, DECISOES, AUDITORIA, CHECKLIST, o relatório v00 e os geradores. Não abri todas as linhas citadas, como ROTEIRO_VIDEO, RUNBOOK-SESSAO e BOOTSTRAP-BACKEND-S3; nesses casos usei o conteúdo extraído, que bateu nas amostras. Tirei os achados P-015 do grep e li em detalhe só os DOC, além de TFK-11 e GIT-04. A estimativa de ~US$ 0,37/h e os demais custos são da Fase 3 e não valem para a conta nova. Não consultei AWS, GitHub remoto nem plataformas de vídeo. A visibilidade do repositório 04 vem dos registros de 2026-10-28 e do achado TFK-11. No código atual, só conferi o .trivyignore como arquivo presente; não validei se as 3 exceções de perl-base continuam lá. Também não verifiquei se o enunciado da Fase 4 aceita uma cena de Service Map gerada a partir do Compose; esse ponto ficou marcado [INCERTO]. Este relatório não contém dados pessoais (nomes, RMs, usuários) nem o ID da conta da Fase 3."
+}

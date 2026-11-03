@@ -1,0 +1,3385 @@
+{
+ "itens": [
+  {
+   "tipo": "boa_pratica",
+   "titulo": "Ao terminar uma sessão: destruir cluster e desligar NAT",
+   "conteudo": "O que custa é a camada do meio. Ao terminar, rodar terraform -chdir=terraform/cluster destroy e desligar o NAT Gateway (passo 4.3 do runbook da Fase 3). A camada cluster deve ser destruída ao fim de cada ensaio ou gravação.",
+   "data": "2026-09-09",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Regra operacional para a conta nova durante ensaios da Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_EXECUCAO.md:39-42",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/ESTIMATIVA_CUSTOS_AWS.md:24-26"
+   ],
+   "lote": "G10-menores"
+  },
+  {
+   "tipo": "boa_pratica",
+   "titulo": "Arquivo morto somente leitura e movimentos com git mv separados",
+   "conteudo": "Versões substituídas vão para _ARQUIVO_MORTO com sufixo _AAAA-MM-DD; o conteúdo arquivado não se edita, nem para consertar link. Movimentos foram feitos com git mv num commit separado das escritas (3317204) para preservar o git log --follow. Histórico não se reescreve: entradas antigas mantêm caminhos da época e uma tabela de-para resolve.",
+   "data": "2026-09-15",
+   "relevancia_fase4": "media",
+   "uso_na_fase4": "Útil na mesclagem: mover ou remover em commit separado das edições de conteúdo preserva o rastreamento.",
+   "fontes": [
+    "docs/00_COLAB_IA/LEIA-PRIMEIRO.md:30-32",
+    "docs/00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md:42",
+    "docs/00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md:50"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "tipo": "boa_pratica",
+   "titulo": "Cada fato com detalhe em um só lugar",
+   "conteudo": "Divisão dos documentos públicos: README (o quê e por quê: intuito, diagrama, decisões, dificuldades, escopo, custo, integrantes); docs/GUIA_DE_REPRODUCAO.md (comandos, tempos medidos, valores fixos a trocar em outra conta, bucket, destroy, armadilhas, Compose, demonstração); docs/ARQUITETURA.md (portas, probes, IRSA, Secrets, criptografia, jobs, versões); docs/RELATORIO_DE_ENTREGA.md (relatório da FIAP); SECURITY.md (credenciais); terraform/README.md; gitops/README.md; gitops/SECRETS-CONTRATO.md; .trivyignore. Nos outros lugares, uma frase com link.",
+   "data": "2026-09-15",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Esses documentos existem em docs/ da Fase 4 (conferido em 2026-11-01); a seção de observabilidade deve seguir a mesma divisão.",
+   "fontes": [
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:91-105",
+    "docs/00_COLAB_IA/LEIA-PRIMEIRO.md:19-26"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "tipo": "boa_pratica",
+   "titulo": "Classificação de controles DevSecOps e de segurança dos estudos",
+   "conteudo": "Guias de 2026-07-18: Gitleaks, SAST, SCA, scan de imagem e scan de IaC como gates essenciais; DAST muito útil; DefectDojo e dashboards como diferenciais. MFA, OIDC, menor privilégio, rede restrita, criptografia, segredos e auditoria como controles essenciais; CSPM com Prowler muito útil; CWPP com Falco diferencial; CASB fora do núcleo. O módulo DevSecOps inclui observabilidade.",
+   "data": "2026-07-18",
+   "relevancia_fase4": "media",
+   "uso_na_fase4": "Referência para manter os gates do CI e escolher extras sem inflar escopo.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:525-527",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:501-503"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "tipo": "boa_pratica",
+   "titulo": "Consolidar documentacao sem apagar historico",
+   "conteudo": "Ter um README atual, um runbook executado de ponta a ponta, checklist com estados distintos e LOG/PENDENCIAS curtos e coerentes. Arquivar documentos substituidos com de-para; preservar testes uteis (TESTE_COMPOSE.md, testes de docs/OPERACAO.md). Nao remover docs/ inteira. Historico Git guarda exclusoes, mas nao equivale ao arquivo morto pedido pelo usuario. Corrigir estado por nova entrada datada, preservando o registro anterior.",
+   "data": "2026-09-09",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Aplica-se diretamente a mesclagem das duas pastas 00_COLAB_IA e ao descarte da sobressalente.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:95",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:70",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:73"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "tipo": "boa_pratica",
+   "titulo": "Convenção de nomes e destinos de arquivos",
+   "conteudo": "Datas ISO AAAA-MM-DD. Evitar 'copia', 'final-final' ou duplicatas sem versão; usar _v01, _v02 ou _VIGENTE. Serviços: <nome>-service, igual ao ECR e Kustomize. Destinos: código em services/<nome>-service/, infra em terraform/, manifestos em gitops/base/<servico>/ e gitops/overlays/<ambiente>/, pipelines em .github/workflows/; trabalho em andamento em 02_TRABALHO, entregáveis finais (relatório, links, prints de custo) em 03_ENTREGAVEIS, referências em 04_REFERENCIAS, versões antigas em _ARQUIVO_MORTO.",
+   "data": "2026-08-27",
+   "relevancia_fase4": "media",
+   "uso_na_fase4": "Aplicar na 00_COLAB_IA da raiz (Fase 4).",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/ORGANIZACAO_DE_PASTAS_2026-08-27.md:48-68"
+   ],
+   "lote": "G10-menores"
+  },
+  {
+   "tipo": "boa_pratica",
+   "titulo": "Disciplina de execucao de destroy",
+   "conteudo": "Executar blocos um por vez e conferir a saida; checar $LASTEXITCODE e interromper em falha; nunca usar -auto-approve; revisar o plan -destroy antes de digitar 'yes'. Validar a conta por STS e abortar se divergir. Fixar o contexto kubectl com --context para nao agir no cluster errado. Conferir branch e 'git status' para nao sobrescrever configuracao de outra pessoa. Em outra maquina, 'terraform init' por camada e conferir bucket/chave do backend.tf. Nao usar 'init -upgrade' no encerramento; preservar lockfiles e os mesmos valores/arquivos de variaveis do apply. O tfvars da base nao e carregado pelas subpastas. Se houver erro de backend, estado vazio inesperado ou workspace diferente, parar: nao criar estado novo nem tratar AccessDenied como ausencia de recursos. Repetir planos e consultas na hora de executar; plan e previsao, nao prova.",
+   "data": "2026-09-11",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Regras de operacao para qualquer destroy na conta nova.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:38-75",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:216-220"
+   ],
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "tipo": "boa_pratica",
+   "titulo": "Distinguir cinco estados de evidencia",
+   "conteudo": "Separar: codigo existente, verificacao local, execucao no CI, funcionamento na AWS e evidencia de entrega. Um nao substitui o outro. CI verde nao comprova provisionamento, servicos no EKS nem sync do ArgoCD; Compose com AWS emulada nao prova operacao na AWS; terraform validate nao garante CRDs/bancos em execucao.",
+   "data": "2026-09-09",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Usar no checklist da Fase 4 (telemetria local aprovada nao prova coleta no EKS nem alerta no PagerDuty).",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:14",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:139",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:26",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:97"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "tipo": "boa_pratica",
+   "titulo": "Entregar o básico que funciona",
+   "conteudo": "O alvo é o enunciado da FIAP. Extra só com justificativa direta e sem peça nova em runtime.",
+   "data": "2026-09-15",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Útil para limitar escopo; a parte \"sem peça nova em runtime\" deve ser lida contra o enunciado da Fase 4, que exige componentes novos.",
+   "fontes": [
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:69"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "tipo": "boa_pratica",
+   "titulo": "Extras que valem manter e regra de escopo",
+   "conteudo": "Manter OIDC/IRSA (sem chaves estaticas), DLQ (pouca complexidade), estados separados, Kustomize e workflows reutilizaveis, Compose integrado. Preferir corrigir o basico a adicionar plataformas. Nao afirmar que um extra 'nao vale nota': nao ha rubrica detalhada. Comentarios didaticos sao preferencia do usuario, mas devem ser exatos.",
+   "data": "2026-09-09",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Guiar escopo da Fase 4: entregar o pedido (observabilidade, alerta, incidente, ChatOps, self-healing) sem inflar a arquitetura.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:111",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:159-175",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:27"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "tipo": "boa_pratica",
+   "titulo": "Fazer primeiro o que nao custa e concentrar o cluster em poucas sessoes",
+   "conteudo": "Principio de ordenacao do plano da Fase 3: fazer primeiro tudo que nao custa nada e deixar o cluster para o fim, em poucas sessoes de ate 3 horas (ensaio e gravacao), destruindo ao fim e conferindo na conta que nada caro ficou de pe.",
+   "data": "2026-09-09",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Planejar as sessoes na conta nova antes do fim do trial do PagerDuty (~2026-11-11) e da entrega.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:104",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:108-145"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "tipo": "boa_pratica",
+   "titulo": "Legenda de três estados no checklist e no README",
+   "conteudo": "O checklist misturava 'escrito' com 'aplicado' em [x]. Criada legenda de três estados: comprovado / escrito e validado / pendente ([x], [~], [ ]). Itens que dependiam do apply (O-03, O-04, O-06, O-23, O-25) e S-08 (o workflow roda fmt e validate, não plan) foram rebaixados para [~]. Placar em 2026-09-09: 24 / 6 / 9.",
+   "data": "2026-09-09",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Usar a mesma legenda no checklist da Fase 4 para não confundir código escrito com funcionamento comprovado.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:256",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:262"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "tipo": "boa_pratica",
+   "titulo": "Marcadores do checklist: [x] comprovado, [~] escrito/validado, [ ] nao iniciado",
+   "conteudo": "[x] so quando existe na AWS ou rodou verde no CI com evidencia registrada; [~] escrito e validado mas nao aplicado, ou atendimento parcial consciente; [ ] nao iniciado. Criado porque a lista misturava 'codigo existe' com 'recurso de pe'. A revalidacao recomendou ir alem: separar escrito/validado/executado/evidenciado.",
+   "data": "2026-09-09",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Adotar no checklist de requisitos da Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:9-18",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:73"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "tipo": "boa_pratica",
+   "titulo": "Medir antes de endurecer regra de segurança",
+   "conteudo": "Rodar a ferramenta no artefato real e ver o efeito antes de mudar o pipeline (foi assim com o .trivyignore).",
+   "data": "2026-09-15",
+   "relevancia_fase4": "media",
+   "uso_na_fase4": "Aplicar a qualquer novo gate (por exemplo, scan de imagens da stack de observabilidade).",
+   "fontes": [
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:68"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "tipo": "boa_pratica",
+   "titulo": "Não expor segredos no terminal",
+   "conteudo": "Guardar URLs de banco, MASTER_KEY e chave de API em variáveis do shell, nunca colar valores; conferir mostrando só prefixo (ex.: ${CHAVE:0:12}... ou protocolo e host da URL). Senha impressa em terminal compartilhado ou capturado é senha vazada. Evitar exibir DATABASE_URL completa. Token do GitHub só em variável de ambiente TF_VAR_, nunca em arquivo. base64 de Secret não é criptografia.",
+   "data": "2026-09-15",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Essencial na gravação do vídeo da Fase 4 (terminal capturado) e para chaves de New Relic, PagerDuty e Slack.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1065-1076",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1146-1153",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1245-1246",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:979-995",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1051"
+   ],
+   "lote": "G05-operacao"
+  },
+  {
+   "tipo": "boa_pratica",
+   "titulo": "Ordem de dependência entre imagens e camada k8s",
+   "conteudo": "Republicação de imagens pode rodar em paralelo ao apply do cluster, mas não aplicar a camada k8s antes de as 5 tags do overlay estarem no ECR; senão pods nascem em ImagePullBackOff e o retry pode levar até 5 min (destravar apagando o pod). Criar e testar token do repo privado antes de subir o cluster. Anotar o horário ao ligar o NAT (começa o relógio de custo).",
+   "data": "2026-09-15",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Sequência ideal para a primeira subida na conta nova.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:648-649",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:729-733",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:776-778",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:938-939",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:614-616"
+   ],
+   "lote": "G05-operacao"
+  },
+  {
+   "tipo": "boa_pratica",
+   "titulo": "Planos salvos em arquivo e apply do plano conferido",
+   "conteudo": "Cada camada usa terraform plan -out=<nome>.tfplan, confere o resumo (to destroy deve ser 0 na subida) e depois terraform apply <arquivo>, sem prompt. Destroy também é planejado (plan -destroy -out=...) e conferido antes. *.tfplan é ignorado pelo Git. Todas as variáveis das 3 camadas tinham valor padrão, então nenhum comando para pedindo valor. Se o plan da base mostrar algo em to destroy, não aplicar: conferir conta e tfvars.",
+   "data": "2026-09-15",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Padrão a manter nos applies da conta nova.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:64",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:69",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:194-217",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:862-867"
+   ],
+   "lote": "G06-gravacao"
+  },
+  {
+   "tipo": "boa_pratica",
+   "titulo": "Regras de destino de arquivos",
+   "conteudo": "Documento público em docs/ com nome MAIUSCULAS_COM_UNDERSCORE.md; material de aula em docs/aulas-fiap/<nn>_<Módulo>/, versionado por decisão do usuário; enunciado em docs/ com o nome do PDF original; evidência datada em docs/evidencias/ com data ISO no nome; script em scripts/ só se executável e em uso; saída de geradores e rascunhos em output/ e tmp/, ignorados pelo .gitignore.",
+   "data": "2026-09-15",
+   "relevancia_fase4": "media",
+   "uso_na_fase4": "Padrão reutilizável para evidências de alertas, incidentes e capturas da Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md:33-44"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "tipo": "boa_pratica",
+   "titulo": "Relatório como Markdown versionado e PDF reproduzível",
+   "conteudo": "O gerador v00 converte docs/RELATORIO_DE_ENTREGA.md em PDF (markdown + WeasyPrint): o texto entra em diff de PR e qualquer integrante gera o mesmo documento. Remove notas internas do topo, transforma título e metadados em capa, usa CSS de paginação (@page) para numerar páginas e evitar tabela cortada, e resolve a imagem relativa (evidencias/...) por base_url. Dependências: pip install markdown weasyprint. O gerador ReportLab de 14/09 depende das fontes Segoe UI em C:\\Windows\\Fonts e da imagem docs/evidencias/estimativa-custos-aws-2026-09-11.png; falha se faltarem. O ReportLab troca travessões tipográficos por hífen ASCII no PDF.",
+   "data": "2026-09-11 / 2026-09-14",
+   "relevancia_fase4": "media",
+   "uso_na_fase4": "Escolher uma única fonte de texto para o relatório da Fase 4 e um gerador reproduzível; os dois scripts são moldes.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/gerar-relatorio-pdf_2026-09-11_v00.py:1-69",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/gerar-relatorio-pdf_2026-09-11_v00.py:104-210",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:46-62",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:117-121"
+   ],
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "tipo": "boa_pratica",
+   "titulo": "Shell e ambiente de operação no Windows",
+   "conteudo": "Usar só Git Bash para os comandos do runbook. No PowerShell, comandos com -out=arquivo precisam do token --% senão dá 'Too many command line arguments'. Exportar AWS_PAGER=\"\" para a AWS CLI não parar esperando tecla. Pré-voo: conferir conta (sts get-caller-identity), provedor OIDC, chaves enable_nat_gateway e create_github_oidc_provider no tfvars, Terraform 1.11 ou mais novo, kubectl e gh auth status.",
+   "data": "2026-09-11 / 2026-09-15",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Mesma máquina Windows na Fase 4; adaptar o pré-voo para a conta nova.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:15",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:77-96",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:607-609"
+   ],
+   "lote": "G06-gravacao"
+  },
+  {
+   "tipo": "boa_pratica",
+   "titulo": "Tags AWS em minúsculas via default_tags",
+   "conteudo": "Todo recurso leva project=fiap e phase=<fase>, em minúsculas, aplicado uma vez via default_tags no provider aws. Chave de tag diferencia maiúsculas (Project x project geram grupos separados no Cost Explorer). O bucket de estado é criado manualmente e recebe as tags à mão. Serve ao print de estimativa de custos do relatório (O-39).",
+   "data": "2026-08-27",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Código já usa phase=4; criar o bucket de estado da conta nova com as mesmas tags.",
+   "fontes": [
+    "docs/00_COLAB_IA/DECISOES.md:246-254"
+   ],
+   "lote": "G01-decisoes"
+  },
+  {
+   "tipo": "boa_pratica",
+   "titulo": "Tags default_tags para isolar custo no Cost Explorer",
+   "conteudo": "Todos os recursos recebem project = fiap e phase = 3 via default_tags no provider, permitindo filtrar o Cost Explorer para isolar o gasto real da entrega.",
+   "data": "2026-09-11",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Manter a prática ajustando para phase = 4 na conta nova.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:300-302"
+   ],
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "tipo": "boa_pratica",
+   "titulo": "Teste integrado com Compose economiza ensaios na AWS",
+   "conteudo": "O teste Compose integrado exercita persistencia, autenticacao, cache e eventos; confirmou sete eventos persistidos pelo analytics com SQS/DynamoDB emulados e SQS drenada. Evidenciou regressao real de merge. Nao testa RDS gerenciado, IAM/IRSA, EKS ou ArgoCD.",
+   "data": "2026-09-09",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Manter como validacao barata antes de subir o cluster; base para testes locais de telemetria.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:109",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:113",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:157",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:169",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:91"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "tipo": "boa_pratica",
+   "titulo": "Verificações de documentação antes de fechar",
+   "conteudo": "Conferir links relativos e âncoras (81 links, zero quebrado em 2026-09-11); extrair blocos bash e testar com bash -n; analisar blocos PowerShell com o parser sem executar; git diff --check; validate-all.sh verde; provar que o código não mudou com kubectl kustomize gitops/overlays/prod (23 objetos), terraform fmt -check -recursive terraform; conferir PDF com pypdf. Revisão adversarial dos rascunhos contra o repositório encontrou 54 problemas (números divergentes, links inexistentes, citações imprecisas do enunciado).",
+   "data": "2026-09-11 a 2026-09-15",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Reaplicar na documentação e no relatório da Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:42",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:117",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:146",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:163",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:204"
+   ],
+   "lote": "G03-log-recente"
+  },
+  {
+   "tipo": "boa_pratica",
+   "titulo": "tfvars local por camada, ignorado pelo Git",
+   "conteudo": "Usar um tfvars local por camada (ignorado por *.tfvars) para que apply e destroy leiam os mesmos enable_nat_gateway, create_github_oidc_provider, github_repository e gitops_repo_url. Passar -var em cada comando é fácil de esquecer no destroy; com create_github_oidc_provider errado, o destroy tentaria apagar provedor alheio. Reprodução em outra conta por tabela de valores fixos no guia, sem mudar padrões de variables.tf.",
+   "data": "2026-09-15",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Configurar a conta nova sem editar padrões no código e sem versionar valores.",
+   "fontes": [
+    "docs/00_COLAB_IA/DECISOES.md:39",
+    "docs/00_COLAB_IA/DECISOES.md:41",
+    "docs/00_COLAB_IA/DECISOES.md:16",
+    "docs/00_COLAB_IA/DECISOES.md:20"
+   ],
+   "lote": "G01-decisoes"
+  },
+  {
+   "tipo": "licao_aprendida",
+   "titulo": "Apply que falha no meio nao corrompe o state",
+   "conteudo": "Em 2026-09-07 recursos antigos da Fase 2 (de junho) ainda existiam na conta e o primeiro apply criou 19 de 33 recursos; 7 falharam com RepositoryAlreadyExists, QueueAlreadyExists e ResourceInUseException (5 ECR com 3 imagens cada; tabela ToggleMasterAnalytics com 117.757 itens, 13,7 MB). Caminhos avaliados: terraform import (nao destrutivo) ou apagar e recriar; o usuario apagou manualmente e o apply seguinte criou os 14 restantes sem erro. Licao: o state guarda o que deu certo e o proximo apply mira so no que falta.",
+   "data": "2026-09-07",
+   "relevancia_fase4": "media",
+   "uso_na_fase4": "Conta nova nao deve ter sobras, mas a licao vale para applies parciais e para o relatorio.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:391-401"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "tipo": "licao_aprendida",
+   "titulo": "Arquivos soltos e scripts úteis",
+   "conteudo": "Script de captura da estimativa estava em tmp/, pasta não ignorada; foi promovido a scripts/ e tmp/ entrou no .gitignore. Em 2026-09-15 os scripts de relatório e captura foram arquivados.",
+   "data": "2026-09-11",
+   "relevancia_fase4": "baixa",
+   "uso_na_fase4": "Manter auxiliares em 00_COLAB_IA/02_TRABALHO e fora do Git quando forem renderizações ou caches.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:202",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:23-24"
+   ],
+   "lote": "G03-log-recente"
+  },
+  {
+   "tipo": "licao_aprendida",
+   "titulo": "Bot GitOps faz push direto na main e conflita com protecao de branch",
+   "conteudo": "Jobs GitOps fazem push direto na main (_ci-go.yml:563, _ci-python.yml:589). Exigir PR na main pode bloquear o bot. Ajustar politica do bot e protecao juntos, por exemplo com PR de promocao. Consulta de protecao/rulesets retornou HTTP 403 (exige mudanca de plano/visibilidade em repo privado); protecao efetiva nao comprovada. Apos o PR #3 houve 12 commits em main: 4 humanos e 8 do bot.",
+   "data": "2026-09-09",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Self-healing via GitHub Actions e atualizacao de tag tambem vao commitar; definir politica antes de ativar protecao.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:11",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:85",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:123-130"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "tipo": "licao_aprendida",
+   "titulo": "Documentação divergente do código é risco real",
+   "conteudo": "Em 2026-09-09 vários documentos descreviam arquiteturas antigas: README dizia que EKS/ArgoCD/workflows estavam 'a escrever'; terraform/README dizia 'duas camadas' havendo três; gitops/README mandava usar ESO já cortado; docs/OPERACAO.md mandava criar AWS_ACCESS_KEY_ID e AWS_SECRET_ACCESS_KEY nos Secrets do GitHub (o oposto do OIDC usado) e apontava para pastas removidas — foi chamado de 'o documento mais perigoso do repositório' e virou um índice curto; ARQUITETURA.md tinha Ingress, 3 RDS e LabRole do Academy; EVIDENCIAS e ROTEIRO_VIDEO citavam 3 RDS e 'cinco Applications'; CLAUDE.md dizia que terraform/, gitops/ e workflows estavam vazios.",
+   "data": "2026-09-09",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Revisar README, ARQUITETURA, OPERACAO, EVIDENCIAS e ROTEIRO_VIDEO após cada mudança da Fase 4; nunca documentar chaves estáticas da AWS no GitHub (usar OIDC).",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:254-263",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:318",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:335"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "tipo": "licao_aprendida",
+   "titulo": "Gravação de 11/09 saiu sem áudio",
+   "conteudo": "A gravação de 11/09/2026 (17min58s, mais de 1 GB) saiu muda: as amostras de áudio eram todas zero. O teste das 08:38 já estava mudo e ninguém escutou. Suspeito principal: a Ferramenta de Captura ficou com o mesmo fluxo de microfone aberto por quase quatro horas. Outra causa possível: a haste do microfone do headset levantada corta o som no próprio headset, e o Windows continua mostrando o microfone 'em uso'.",
+   "data": "2026-09-11",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Incluir o protocolo de teste de áudio no plano de gravação da Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:3-5",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:45-46",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:137-142",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:1059"
+   ],
+   "lote": "G06-gravacao"
+  },
+  {
+   "tipo": "licao_aprendida",
+   "titulo": "Health verde não prova banco pronto",
+   "conteudo": "auth e flag sobem e respondem /health 200 sem schema, falhando só no primeiro INSERT. A lista de pods não vazia também não prova nada: pods em ImagePullBackOff aparecem nela. Critério correto: todos Running e READY 1/1, e tabelas conferidas com \\dt.",
+   "data": "2026-09-15",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Ao desenhar health checks, alertas e SLOs da Fase 4, não depender só de /health; prever verificação de dependências.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1010-1012",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:911-915",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1552"
+   ],
+   "lote": "G05-operacao"
+  },
+  {
+   "tipo": "licao_aprendida",
+   "titulo": "Item escrito no checklist nao e item funcionando",
+   "conteudo": "Auditoria de 2026-09-09 achou 4 falhas bloqueantes invisiveis no checklist: (a) os 5 Secrets referenciados pelos pods nao eram criados por nada apos cortar o ESO (CreateContainerConfigError); (b) ArgoCD existia so como comentario e rotulo; (c) volumeClaimTemplates sem storageClassName, reintroduzindo o F-025; (d) ECR com 0 imagens. (a)-(c) corrigidos no mesmo dia; (d) dependia do pipeline verde na main. Regra derivada: nao tratar ArgoCD escrito como instalado.",
+   "data": "2026-09-09",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Distinguir escrito, validado e comprovado ao marcar requisitos da Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:322-333",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:41",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:14"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "tipo": "licao_aprendida",
+   "titulo": "Merge com -X theirs perdeu codigo",
+   "conteudo": "Merge com -X theirs (F-040) causou perda do suporte aos endpoints de teste, depois restaurado. O teste Compose integrado evidenciou a regressao. Nao escolher automaticamente um lado para todos os conflitos.",
+   "data": "2026-09-09",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Aplicar em merges entre dev/main e na integracao de branches de observabilidade.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:122",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:169"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "tipo": "licao_aprendida",
+   "titulo": "Merge escolhendo um lado inteiro descarta exclusivos em silencio",
+   "conteudo": "No merge hibrido com -X theirs (2026-09-09) sumiu o suporte a SQS_ENDPOINT e DYNAMODB_ENDPOINT, do qual o teste de integracao depende; so foi percebido porque o compose-integration ficou vermelho. Tag de backup criada antes no remoto.",
+   "data": "2026-09-09",
+   "relevancia_fase4": "media",
+   "uso_na_fase4": "Em merges/mesclas, conferir exclusivos dentro de arquivos conflitantes e manter teste de integracao como rede de seguranca.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:266-281"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "tipo": "licao_aprendida",
+   "titulo": "Nunca git add de tudo",
+   "conteudo": "Em 2026-09-15, um git add de tudo levou 13 arquivos não revisados e a trava ~$ToggleMaster_Fase3.pptx para a main (commit 06f97c6). Regra: adicionar por caminho; assistente não faz git add, commit, push, mv, rm, stash ou checkout sem pedido explícito do usuário.",
+   "data": "2026-09-15",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Manter na colaboração da Fase 4, principalmente com relatórios e evidências locais ignoradas.",
+   "fontes": [
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:51-52",
+    "docs/00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md:72"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "tipo": "licao_aprendida",
+   "titulo": "Plan limpo não garante apply limpo com recursos fora do estado",
+   "conteudo": "A AWS aceita um único provedor OIDC por URL (token.actions.githubusercontent.com). Se a conta já tiver o provedor, o apply falha com EntityAlreadyExists, e o plan não avisa porque compara só com o estado. Solução da Fase 3: variável create_github_oidc_provider; com false, data source lê o provedor sem possuí-lo (destroy nunca o apaga); bloco moved preserva estados antigos. Plan com false: 35 recursos; com true: 36. Commit b78f6bd, PR #15.",
+   "data": "2026-09-14",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Antes do primeiro apply na conta nova, verificar se o provedor OIDC já existe e ajustar a variável (o example atual usa true).",
+   "fontes": [
+    "docs/00_COLAB_IA/DECISOES.md:45-59"
+   ],
+   "lote": "G01-decisoes"
+  },
+  {
+   "tipo": "licao_aprendida",
+   "titulo": "Procurar a informação na fonte óbvia",
+   "conteudo": "Os nomes do grupo estavam no README da Fase 2 desde sempre; a P-018 ficou 28 dias aberta porque ninguém olhou na fonte óbvia (F-029). Também a P-031 ficou obsoleta desde D-015 sem ser fechada.",
+   "data": "2026-08-27",
+   "relevancia_fase4": "media",
+   "uso_na_fase4": "Antes de abrir pendência ou perguntar ao usuário, conferir README e documentos das fases anteriores; revisar pendências obsoletas após cada decisão.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:375",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:363"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "tipo": "licao_aprendida",
+   "titulo": "Procurar na fonte obvia antes de manter pendencia aberta",
+   "conteudo": "Os nomes e RMs do Grupo 203 estavam no README da Fase 2 desde sempre; a P-018 ficou aberta 28 dias porque ninguem procurou la. Outro exemplo: o furo do state unico (F-030) so apareceu porque o usuario questionou a ordem de aplicar.",
+   "data": "2026-08-27",
+   "relevancia_fase4": "baixa",
+   "uso_na_fase4": "Conferir README e docs herdados antes de perguntar ao usuario.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:424",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:422"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "tipo": "licao_aprendida",
+   "titulo": "README de serviço não é fonte para decisão de infraestrutura",
+   "conteudo": "A região foi inferida como us-east-1 a partir do exemplo em services/analytics-service/README.md (herdado da Fase 2); services/evaluation-service/README.md tem o mesmo problema. Estava errado. Lição: confirmar com o usuário. Virou P-024 (corrigir os READMEs, aguardando aval).",
+   "data": "2026-08-27",
+   "relevancia_fase4": "media",
+   "uso_na_fase4": "Conferir se os READMEs dos serviços ainda citam us-east-1 e não usá-los como fonte.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:435-437"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "tipo": "licao_aprendida",
+   "titulo": "Testar pre-requisitos gratuitos antes da sessao paga",
+   "conteudo": "Criar e testar o token do GitHub antes de subir o cluster: criar leva 3 minutos e nao custa nada; descobrir que falha com o cluster no ar custa a sessao. Teste: 'git ls-remote https://git:$TF_VAR_github_token@github.com/<org>/<repo>.git | head -3' usa o mesmo mecanismo do ArgoCD (HTTPS, usuario git, token como senha). Para token fine-grained de organizacao, o erro comum e escolher o dono errado (conta pessoal em vez da organizacao): o token e criado e falha ao clonar. Pode ficar 'pending approval' ate um dono da organizacao aprovar. Fase 0 do runbook: conferir STS, terraform, kubectl e aws antes de criar qualquer recurso.",
+   "data": "2026-09-09",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Testar antes da sessao tambem as chaves de New Relic, PagerDuty, Slack e GitHub Actions.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:23-26",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:43-71",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:73-157"
+   ],
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "tipo": "licao_aprendida",
+   "titulo": "Um texto por assunto evita documentação divergente",
+   "conteudo": "O GUIA_EXECUCAO antigo tinha comandos que não funcionavam mais (pastas terraform/bootstrap e environments/dev removidas, ArgoCD por kubectl) e mandava guardar chaves AWS estáticas no GitHub. Foi reduzido a um índice que aponta para README (como reproduzir), RUNBOOK-SESSAO (sessão completa), terraform/README (camadas e custo), gitops/SECRETS-CONTRATO (Secrets que precisam coincidir) e TESTE_COMPOSE (local). Arquitetura e checklist de evidências também tinham ficado com o plano inicial e foram corrigidos em 2026-09-09.",
+   "data": "2026-09-09",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Ao mesclar as pastas 00_COLAB_IA, manter um documento por assunto e evitar cópias desatualizadas.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_EXECUCAO.md:3-25",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/ARQUITETURA.md:3-9",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/EVIDENCIAS.md:3-10"
+   ],
+   "lote": "G10-menores"
+  },
+  {
+   "tipo": "licao_aprendida",
+   "titulo": "Upgrade de dependencia por seguranca arrasta a versao do Go",
+   "conteudo": "Corrigir CVE-2026-56854 subindo golang.org/x/crypto para v0.55.0 elevou a diretiva go dos modulos de 1.21 para 1.25.0 e quebrou em sequencia: Dockerfile (golang:1.22-alpine), go-version fixo do SAST (1.23) e golangci-lint v1.61 (recusa modulo com versao maior que a usada para compila-lo). Todo lugar que fixa versao de Go precisa ser revisado junto.",
+   "data": "2026-09-09",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "SDK OpenTelemetry para Go tambem pode exigir Go mais novo; revisar Dockerfile, CI e linter juntos.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:294-301"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "tipo": "licao_aprendida",
+   "titulo": "continue-on-error escondia um CVE crítico real",
+   "conteudo": "Ao ligar o portão de bloqueio (removendo continue-on-error dos scans), apareceu um CVE crítico real que já estava no projeto e o pipeline passava verde: CVE-2026-56854 em golang.org/x/crypto. Lição registrada: 'Um pipeline verde não prova que o código é seguro; prova que ninguém configurou o pipeline para reclamar.'",
+   "data": "2026-09-11",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Argumento para o relatório e regra para não usar continue-on-error em scans na Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:183",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:232-235",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:519",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:946-952"
+   ],
+   "lote": "G06-gravacao"
+  },
+  {
+   "tipo": "processo_colaboracao",
+   "titulo": "Documentar com fonte, data e limite da verificacao",
+   "conteudo": "O guia de destruicao separa o que foi confirmado ao vivo (com horario, branch e HEAD) do que nao foi executado, cita fontes (comandos, arquivos com linhas e documentacao oficial com data de consulta) e explicita o limite da verificacao. Conflitos entre documentos sao registrados como 'CONFLITO DOCUMENTAL' com ID (F-050), preservando os originais. Cada documento tem TL;DR e linha 'Ultima atualizacao' com data e autor (assistente).",
+   "data": "2026-09-11",
+   "relevancia_fase4": "media",
+   "uso_na_fase4": "Padrao compativel com a regra vigente de dados com data e fonte e rastreabilidade.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:1-25",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:214-220",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:1-7"
+   ],
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "tipo": "processo_colaboracao",
+   "titulo": "Formato de entrada do LOG e trabalho paralelo",
+   "conteudo": "Cada entrada tem TL;DR com data, hora e autor, Pedido/Feito, Decisões/Por que, Arquivos, Descobertas, VERIFICAÇÃO e 'Estado p/ o próximo agente'. LOG append-only: retificações viram nota, sem reescrever. Escritas em paralelo com posse disjunta de arquivos por dono (W1 a W5) e commits/PR/merge com o orquestrador. Um assistente confere o trabalho do outro (aritmética refeita, script testado) e registra conflitos em vez de apagar.",
+   "data": "2026-09-11 a 2026-09-15",
+   "relevancia_fase4": "media",
+   "uso_na_fase4": "Manter o formato no LOG vigente e a posse disjunta em trabalhos paralelos.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:10-12",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:165",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:198-202"
+   ],
+   "lote": "G03-log-recente"
+  },
+  {
+   "tipo": "processo_colaboracao",
+   "titulo": "Formato de runbook que funcionou para a pessoa operadora",
+   "conteudo": "O plano de 15/09 foi escrito para ser seguido sem abrir outro documento: blocos coláveis inteiros com o comando demorado por último, comentários explicando cada linha, marca 'Esperado' com a saída exata antes de seguir, marca de cena gravada, tabela de janelas de terminal e seu uso, cronograma com T+N, e seção de contingências com correção pronta para cada falha conhecida. O guia de 11/09 tinha apêndice explicando cada comando parte por parte, porque 'saber explicar o comando enquanto ele roda vale mais do que o resultado na tela'.",
+   "data": "2026-09-11 / 2026-09-15",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Modelo para o runbook de subida e gravação da Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:7-39",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:854-1065",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:528-534"
+   ],
+   "lote": "G06-gravacao"
+  },
+  {
+   "tipo": "processo_colaboracao",
+   "titulo": "Formato e regras do log de trabalho",
+   "conteudo": "Log append-only, entradas novas no topo, com campos TL;DR, Feito, Decisões/Por que, Arquivos, Descobertas, Verificação e Estado p/ o próximo agente, mais 'Última atualização' com data, hora, fuso e agente. Não reescrever entradas de outros agentes; acrescentar notas. Não atribuir a um agente alterações feitas por outro (ex.: PRs #4/#5). Não confiar em resumos históricos sem conferir no código.",
+   "data": "2026-09-09",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Formato compatível com o LOG vigente em 00_COLAB_IA da Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:237-271",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:297",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:316",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:322",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:339"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "tipo": "processo_colaboracao",
+   "titulo": "Formato preferido para guias de estudo",
+   "conteudo": "Um guia HTML por vez, na pasta do próprio módulo, com introdução para leigos, glossário, fichas (finalidade, caso de uso, aplicação no ToggleMaster) e resumo. Guias Markdown agrupados foram rejeitados pelo usuário. Não copiar PDFs de fases anteriores; registrar só sínteses próprias.",
+   "data": "2026-07-18",
+   "relevancia_fase4": "media",
+   "uso_na_fase4": "Padrão caso novos guias sejam pedidos.",
+   "fontes": [
+    "docs/00_COLAB_IA/DECISOES.md:300-338"
+   ],
+   "lote": "G01-decisoes"
+  },
+  {
+   "tipo": "processo_colaboracao",
+   "titulo": "Notas de topo com TL;DR, data, autor e fonte; historico preservado abaixo",
+   "conteudo": "Padrao usado por Codex e Claude: cada atualizacao entra no topo com TL;DR, data/hora com fuso, autor e fonte; registros anteriores ficam abaixo marcados como historicos; listas 'Nao repetir' evitam retrabalho (ex.: nao sincronizar commits ja sincronizados, nao tratar escrito como instalado, nao rodar k8s apply direto). Ressalva da propria fonte: o plano acumulado mistura tarefas abertas e encerradas e nao deve ser usado isoladamente como estado atual.",
+   "data": "2026-09-09 a 2026-09-11",
+   "relevancia_fase4": "media",
+   "uso_na_fase4": "Manter o padrao no LOG/PENDENCIAS vigentes, com consolidacao periodica para nao acumular contradicoes.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:3-10",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:38-43",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:101"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "tipo": "processo_colaboracao",
+   "titulo": "Onde registrar o trabalho e ritual de sessão",
+   "conteudo": "Sessão no topo do LOG_DE_TRABALHO; decisão com alternativa descartada no topo de DECISOES; o que fica para depois em PENDENCIAS; arquivo substituído vai para _ARQUIVO_MORTO com data no nome e de-para no LOG. Ritual: conferir data e hora antes de registrar fato temporal; conferir git status --short e a branch antes de editar; se dois arquivos se contradizem, não sobrescrever, registrar CONFLITO e perguntar ao usuário; ao terminar, atualizar LOG, PENDENCIAS e, se houver, DECISOES.",
+   "data": "2026-09-15",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Coincide com o CLAUDE.md da Fase 4 (atualizar LOG/PENDENCIAS/DECISOES/DOSSIE); a regra de CONFLITO é útil na mesclagem.",
+   "fontes": [
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:107-114",
+    "docs/00_COLAB_IA/LEIA-PRIMEIRO.md:34-39"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "tipo": "processo_colaboracao",
+   "titulo": "Regras de colaboracao entre pessoas e assistentes que seguem uteis",
+   "conteudo": "Confrontar registros (decisoes, checklist, pendencias, runbook) com codigo e Git, sem trata-los como prova. Nao presumir autoria individual de GPT/Claude; atribuir so por metadado (ex.: Co-Authored-By). Auditoria nao altera codigo, nao publica commits nem executa infraestrutura sem autorizacao; nao alterar plano, visibilidade ou regras do GitHub. Usar subagentes independentes por tema e consolidar; passo final de VERIFICACAO (referencias, limites dos testes, diff documental, handoff). Registrar conflitos documentais sem apagar registros anteriores. Proximo agente le o topo do LOG/PENDENCIAS antes dos resumos historicos. Marcar fatos nao confirmados como [INCERTO].",
+   "data": "2026-09-09",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Compativel com o protocolo da 00_COLAB_IA vigente; incorporar na mesclagem.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:6",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:11",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:80",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:126",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:187",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:12",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:45",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/PLANO_AUDITORIA_2026-09-09_v01.md:23",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/PLANO_AUDITORIA_2026-09-09_v01.md:38-40",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:132"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "tipo": "processo_colaboracao",
+   "titulo": "Regras documentais e de commit da consolidação",
+   "conteudo": "Cada fato com detalhe em um único documento (README = o quê/por quê; GUIA_DE_REPRODUCAO = como; ARQUITETURA = referência técnica; READMEs de pasta só da pasta). Arquivar em vez de apagar quando o usuário pede (PNGs da auditoria). Para mover e reescrever arquivos, fazer dois commits: primeiro só git mv/git rm, depois as escritas, para manter git log --follow. Provar que só comentários mudaram com kubectl kustomize e comparação das assinaturas sem comentário.",
+   "data": "2026-09-15",
+   "relevancia_fase4": "media",
+   "uso_na_fase4": "Aplicável à mesclagem atual das pastas 00_COLAB_IA e à documentação final da Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/DECISOES.md:10-17",
+    "docs/00_COLAB_IA/DECISOES.md:22"
+   ],
+   "lote": "G01-decisoes"
+  },
+  {
+   "tipo": "processo_colaboracao",
+   "titulo": "Regras essenciais de colaboração com assistentes (Fase 3)",
+   "conteudo": "Português do Brasil. Explicar primeiro de forma simples e depois técnica. Comentar linha a linha todo código criado (Terraform, YAML, workflows, scripts), explicando o que cada linha faz e por quê — padrão pedido pelo usuário em 2026-08-27. Não inventar: marcar [INCERTO] quando faltar confirmação. Não commitar segredos. Entradas são somente leitura. Antes de editar, conferir git status e branch. Preservar fontes, segredos fora do Git e registros anteriores. Documentar o trabalho e verificar antes de encerrar. Ler LEIA-PRIMEIRO, topo de PENDENCIAS e LOG antes de trabalhar. Manter o CLAUDE.md curto da raiz apontando para as instruções, para o Claude Code encontrá-las.",
+   "data": "2026-08-27 a 2026-09-14",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Quase todas já estão no CLAUDE.md da Fase 4; confirmar com o usuário se 'comentar linha a linha' continua valendo.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:8-9",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:63-72",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:162-169"
+   ],
+   "lote": "G10-menores"
+  },
+  {
+   "tipo": "processo_colaboracao",
+   "titulo": "Revisão cruzada entre agentes e preservação de arquivos",
+   "conteudo": "O Claude revisou o parecer do Codex: os cinco bloqueios listados eram reais e foram fechados; discordou de adaptar o robô a D-020 e registrou o motivo (D-021). Arquivos do outro agente (AGENTS.md e notas de revalidação) foram preservados integralmente. Versões substituídas de entregáveis vão para _ARQUIVO_MORTO com de-para.",
+   "data": "2026-09-09",
+   "relevancia_fase4": "media",
+   "uso_na_fase4": "Manter revisão cruzada e preservação ao trabalhar com Claude e Codex na Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:267",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:295",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:316"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "tipo": "processo_colaboracao",
+   "titulo": "Sincronizar a dev com a main antes de começar",
+   "conteudo": "Como o robô comita na main, antes de editar: git switch dev; git fetch origin; git merge --ff-only origin/main (se recusar, parar e perguntar ao usuário); git status --short.",
+   "data": "2026-09-15",
+   "relevancia_fase4": "media",
+   "uso_na_fase4": "Volta a valer quando o CI da Fase 4 estiver publicando na main; nesta etapa da Fase 4 não há push nem alteração da main.",
+   "fontes": [
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:53-64",
+    "docs/00_COLAB_IA/LEIA-PRIMEIRO.md:37"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "tipo": "referencia",
+   "titulo": "Captura automatizada da estimativa do AWS Pricing Calculator",
+   "conteudo": "Uso: node capturar-estimativa-aws.cjs <url> <saida.png>. Requer playwright e Chrome local (CHROME_PATH ou caminho padrão do Chrome no Windows). Headless, viewport 1680x1300, locale pt-BR; espera 'Resumo da estimativa' por até 120 s; fecha notificação e chat; tenta Decline/Recusar e, se não houver, Accept/Aceitar no banner de cookies; zoom 80%; captura de página inteira. O gerador ReportLab assume a proporção 2100x1300 para a imagem.",
+   "data": "2026-09-11",
+   "relevancia_fase4": "media",
+   "uso_na_fase4": "Reproduzir a captura obrigatória de custos da Fase 4. Ajustar para nunca aceitar cookies não essenciais.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/capturar-estimativa-aws_2026-09-11.cjs:1-49",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:399-401"
+   ],
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "tipo": "referencia",
+   "titulo": "Documentacao oficial consultada em 2026-09-11",
+   "conteudo": "ArgoCD: exclusao de aplicacoes e finalizers (argo-cd.readthedocs.io, user-guide/app_deletion). Kubernetes: Persistent Volumes. AWS: cuidados antes de excluir cluster EKS (eks/userguide/delete-cluster). AWS: excluir bucket versionado (AmazonS3/userguide/delete-bucket). HashiCorp: terraform destroy e plan -destroy (plan so mostra a proposta; destroy pede confirmacao e exclui o que esta no estado atual).",
+   "data": "2026-09-11",
+   "relevancia_fase4": "media",
+   "uso_na_fase4": "Fontes para justificar procedimentos no relatorio.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:100",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:131",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:191",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:206",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:220"
+   ],
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "tipo": "referencia",
+   "titulo": "Documentacao oficial consultada na auditoria",
+   "conteudo": "Consultadas em 2026-09-09: filtro de vulnerabilidades do Trivy (ignore-unfixed); tutorial HashiCorp do provider kubernetes (separar em duas etapas); calendario de versoes do EKS e pagina de precos do EKS; documentacao ArgoCD de Kustomize; documentacao GitHub de branches protegidas e de workflows pulados por filtro.",
+   "data": "2026-09-09",
+   "relevancia_fase4": "media",
+   "uso_na_fase4": "Reconsultar as mesmas paginas (especialmente calendario e precos do EKS) antes do apply na conta nova.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:38",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:46",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:101",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:130",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:173"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "tipo": "referencia",
+   "titulo": "Documentos de apoio citados (Fase 3)",
+   "conteudo": "Referencias citadas: DESTRUIR_AWS_2026-09-11.md (guia PowerShell de exclusao, em _ARQUIVO_MORTO), GUIA_GRAVACAO.md (roteiro cena a cena), docs/OPERACAO.md (runbook), terraform/BOOTSTRAP-BACKEND-S3.md, gitops/SECRETS-CONTRATO.md, terraform/k8s/argocd.tf, .pylintrc e .trivyignore na raiz, AUDITORIA_FIAP_2026-09-09_v01.md e REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md em 03_ENTREGAVEIS, CHECKLIST_REQUISITOS_FASE3.md, scripts security-check.sh e validate-all.sh.",
+   "data": "2026-09-11",
+   "relevancia_fase4": "media",
+   "uso_na_fase4": "Indice para localizar originais (no Git ou no tech-challenge-03) durante a mescla.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:7",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:22",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:30",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:58",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:72",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:193",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:243",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:83-85"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "tipo": "referencia",
+   "titulo": "Documentos relacionados citados pelo guia",
+   "conteudo": "README.md (projeto, esteira, decisões), terraform/README.md (3 camadas), gitops/SECRETS-CONTRATO.md (Secrets e valores que precisam coincidir), docs/ARQUITETURA.md (diagramas), terraform/BOOTSTRAP-BACKEND-S3.md (criar bucket de estado).",
+   "data": "2026-09-15",
+   "relevancia_fase4": "media",
+   "uso_na_fase4": "Verificar se esses arquivos existem e estão atualizados na base da Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1628-1636"
+   ],
+   "lote": "G05-operacao"
+  },
+  {
+   "tipo": "referencia",
+   "titulo": "Evidências históricas de pipeline da Fase 3 (run IDs)",
+   "conteudo": "No repositório público da Fase 3 (organização da turma, repositório tech-challenge-03) existem execuções usadas como prova: run 34596859079 (commit 8d1da56, PyYAML CVE-2020-14343 CRITICAL, SCA vermelho, imagem e GitOps pulados); run 34597106311 (commit eb7ffc2, correção, tudo verde); run 34360653255 (CVE-2026-56854 em golang.org/x/crypto); run 34610575185 (SCA barrou PyYAML 5.3.1 em 11/09); run 34606996327 (run completo e verde na main em 11/09, seis jobs). Tags GitOps em 15/09: auth e evaluation v1.0.0-7ab0602; targeting e analytics v1.0.0-ff441a1; flag v1.0.0-e6b144f.",
+   "data": "2026-09-11 / 2026-09-15",
+   "relevancia_fase4": "baixa",
+   "uso_na_fase4": "Só como referência histórica; a Fase 4 terá suas próprias execuções no repositório novo.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:174-192",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:65",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:239-242",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:279-286",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:316-318"
+   ],
+   "lote": "G06-gravacao"
+  },
+  {
+   "tipo": "referencia",
+   "titulo": "Identificadores Git da Fase 3 citados",
+   "conteudo": "Commits/PRs citados: 3317204 (git mv/git rm da consolidação), 3a193c4 (commit do robô em 2026-09-15), b78f6bd e PR #15 com merge a4184a2 (OIDC), 5b8cd86 (main/dev alinhadas em 2026-09-09), PRs #3, #4 e #5.",
+   "data": "2026-09-09 a 2026-09-15",
+   "relevancia_fase4": "baixa",
+   "uso_na_fase4": "Rastreabilidade no histórico importado.",
+   "fontes": [
+    "docs/00_COLAB_IA/DECISOES.md:17",
+    "docs/00_COLAB_IA/DECISOES.md:36",
+    "docs/00_COLAB_IA/DECISOES.md:51",
+    "docs/00_COLAB_IA/DECISOES.md:90-92"
+   ],
+   "lote": "G01-decisoes"
+  },
+  {
+   "tipo": "referencia",
+   "titulo": "READMEs de services/ desatualizados",
+   "conteudo": "Os READMEs de services/ são herança da Fase 2 (Go 1.21, Python 3.9, us-east-1, chaves estáticas) e ficaram assim porque editá-los dispara o pipeline do serviço. O guia prevalece.",
+   "data": "2026-09-15",
+   "relevancia_fase4": "media",
+   "uso_na_fase4": "Atualizar junto com a instrumentação OTel, quando a role do CI existir.",
+   "fontes": [
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:116",
+    "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:26"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "tipo": "referencia",
+   "titulo": "Requisitos tecnicos da Fase 3 que a base precisa manter",
+   "conteudo": "Terraform modular com VPC, subnets publicas e privadas, IGW, route tables, EKS e node groups, 3 RDS PostgreSQL (com excecao D-015), 1 ElastiCache Redis, 1 DynamoDB ToggleMasterAnalytics, 1 SQS, 5 ECR (opcional via Terraform, recomendado); tfstate remoto em S3, use_lockfile opcional. CI por servico em PR e push na main com build/testes, lint, SAST, SCA, bloqueio de critica, build/scan/login/push ECR com tag de hash (ex.: v1.0.0-a1b2c3d). GitOps em repo ou pasta separada, ArgoCD no EKS, CI atualiza tag, sync automatico.",
+   "data": "Enunciado da Fase 3 lido em 2026-09-09",
+   "relevancia_fase4": "media",
+   "uso_na_fase4": "Nao regredir esses requisitos ao acrescentar observabilidade; a demonstracao da Fase 4 pode reaproveitar o fluxo.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-fiap-texto-por-pagina-2026-09-09.txt:53-118"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "tipo": "referencia",
+   "titulo": "Teste integrado local com Docker Compose e Moto",
+   "conteudo": "Workflow Compose Integration constrói e sobe o Compose em runner Linux; manualmente: bash scripts/test-compose.sh (Linux/WSL, Compose v2, Python 3). Usa .env.example, portas 8000-8005, 5433, 5434 e 6379, projeto tc03-integration. docker-compose.integration.yaml acrescenta Moto (SQS e DynamoDB simulados) e um inicializador cria fila e tabela. Endpoints alternativos são opcionais no código. Confirma: health dos 5 serviços; rejeição de credencial inválida e criação/validação de chave local; persistência de flags e regras; avaliação ligada/desligada/inexistente e regras 0%/100%; cache Redis com TTL; publicação no SQS, consumo pelo analytics, gravação no DynamoDB simulado e remoção da mensagem. A chave local vai só por variável de ambiente, não é impressa nem gravada. Limpeza só do projeto: docker compose --env-file .env.example -p tc03-integration -f docker-compose.yaml -f docker-compose.integration.yaml down -v. Não cobre IAM, EKS, ECR, rede nem serviços reais da AWS.",
+   "data": "2026-09-04 (último commit de conteúdo 8ff78ae); revisado em 2026-09-11",
+   "relevancia_fase4": "media",
+   "uso_na_fase4": "Base do laboratório local de observabilidade; o nome do projeto tc03-integration pode precisar ser revisto.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/TESTE_COMPOSE.md:1-44"
+   ],
+   "lote": "G10-menores"
+  },
+  {
+   "tipo": "regra_permanente",
+   "titulo": "A branch dev não implica outro ambiente AWS",
+   "conteudo": "Trabalhar na dev não significa criar um ambiente de infraestrutura separado; o ambiente de infraestrutura continua sendo prod (overlay gitops/overlays/prod).",
+   "data": "2026-09-09",
+   "relevancia_fase4": "media",
+   "uso_na_fase4": "Evita duplicar custos na conta nova.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:168"
+   ],
+   "lote": "G10-menores"
+  },
+  {
+   "tipo": "regra_permanente",
+   "titulo": "Comandos que exigem pedido explícito",
+   "conteudo": "Sem pedido explícito: nada de terraform init/plan/apply/destroy com backend, aws com escrita, gh run rerun, gh workflow run ou gh pr. Leitura é livre: git grep, git log, terraform fmt -check, kubectl kustomize, gh run view, gh run list.",
+   "data": "2026-09-15",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Compatível com a regra da Fase 4 de não fazer deploy sem autorização.",
+   "fontes": [
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:70"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "tipo": "regra_permanente",
+   "titulo": "Documentos públicos não citam IA nem códigos internos",
+   "conteudo": "Fora da pasta de colaboração, nada de IA, assistente, Claude, Codex, agente, \"gerado por\", nome da pasta 00_COLAB_IA ou códigos internos (D-, F-, P-, O-, R-, S-). Dentro da pasta pode.",
+   "data": "2026-09-15",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Aplicar ao README, guias e relatório PDF da Fase 4; ver conflito com o CLAUDE.md na raiz.",
+   "fontes": [
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:39",
+    "docs/00_COLAB_IA/LEIA-PRIMEIRO.md:28",
+    "docs/00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md:37"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "tipo": "regra_permanente",
+   "titulo": "Fluxo Git: dev -> PR -> main",
+   "conteudo": "Toda alteração humana parte da dev; a main recebe promoção por PR dev -> main e merge. Não usar branches auxiliares direto para a main sem nova instrução. Sincronizar a dev após cada merge. Branch dev não cria ambiente AWS. Não presumir aprovação para mudar plano, visibilidade ou política do repositório.",
+   "data": "2026-09-09",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Continua válido; na etapa atual não há autorização de push/PR.",
+   "fontes": [
+    "docs/00_COLAB_IA/DECISOES.md:80-109"
+   ],
+   "lote": "G01-decisoes"
+  },
+  {
+   "tipo": "regra_permanente",
+   "titulo": "Nada é destruído antes de o vídeo estar validado",
+   "conteudo": "Só derrubar a AWS depois de: exportar o vídeo, ouvir o arquivo exportado inteiro com fone, terminar o upload e abrir o link numa aba anônima e dar play.",
+   "data": "2026-09-15",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Aplicar ao roteiro de gravação da Fase 4 antes de qualquer destroy.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:51-52",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:739-747"
+   ],
+   "lote": "G06-gravacao"
+  },
+  {
+   "tipo": "regra_permanente",
+   "titulo": "Nunca git add -A; nunca --delete-branch no merge",
+   "conteudo": "Adicionar ao commit só os arquivos da mudança (havia arquivos do relatório alterados que não deviam entrar). Em gh pr merge, nunca usar --delete-branch, porque apagaria a dev. Merges usam --merge (commit de merge, preserva histórico).",
+   "data": "2026-09-15",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Vale para commits e PRs da Fase 4 quando autorizados.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:49-50",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:653-654",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:837"
+   ],
+   "lote": "G06-gravacao"
+  },
+  {
+   "tipo": "regra_permanente",
+   "titulo": "Nunca versionar",
+   "conteudo": "terraform.tfstate e variantes, *.tfvars, .env, chaves .pem/.key, kubeconfigs e qualquer credencial AWS. O .gitignore da raiz cobre esses padrões.",
+   "data": "2026-08-27",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Acrescentar chaves de licença New Relic, tokens Slack e integration keys PagerDuty à mesma regra.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/ORGANIZACAO_DE_PASTAS_2026-08-27.md:70-72",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:69"
+   ],
+   "lote": "G10-menores"
+  },
+  {
+   "tipo": "regra_permanente",
+   "titulo": "Não executar destroy nem recriar sem pedido explícito",
+   "conteudo": "Pedido de orientação não é autorização para destruir. Não executar destroy por continuidade automática; não recriar nada sem pedido do usuário. Planos de destroy podem ser validados sem aplicar; não salvar plano binário, tfstate, senhas ou kubeconfig.",
+   "data": "2026-09-11 a 2026-09-15",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Coerente com a regra atual da Fase 4 de nenhum deploy sem autorização.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:81",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:155",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:157",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:167"
+   ],
+   "lote": "G03-log-recente"
+  },
+  {
+   "tipo": "regra_permanente",
+   "titulo": "Regras de colaboracao herdadas da Fase 3",
+   "conteudo": "Responder em portugues do Brasil; explicar de forma simples antes da parte tecnica; usar datas absolutas; nao registrar segredos, credenciais ou dados sensiveis; varrer o diff em busca de credenciais antes de qualquer commit; ao substituir arquivo, mover a versao antiga para _ARQUIVO_MORTO/ e registrar no log; preservar registros de outros agentes sem apagar historico, registrando conflitos documentais com as duas versoes; nao tratar repos de fases anteriores como destino de edicao.",
+   "data": "2026-08-27 a 2026-09-09",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Compativeis com o CLAUDE.md da Fase 4; incorporar no LEIA-PRIMEIRO vigente.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:51-56",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:94",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:148",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:80",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:101"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "tipo": "regra_permanente",
+   "titulo": "Regras de escrita e de código",
+   "conteudo": "Português do Brasil com acentuação; primeiro explicação simples, depois detalhe técnico. Não inventar; faltou confirmação, marcar [INCERTO]; número medido sempre com data. Evidência pública com link completo para o GitHub. Todo código criado vem comentado linha a linha (o que faz e por quê). Todo comando mostrado ao usuário vem com uma linha de comentário acima dizendo o que faz, porque o usuário quer aprender.",
+   "data": "2026-09-15",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Manter na colaboração da Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:38-45"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "tipo": "regra_permanente",
+   "titulo": "Regras operacionais permanentes do guia",
+   "conteudo": "Ler o bloco inteiro da fase antes de executar. Nenhuma chave estática AWS. Ordem das camadas não negociável. Base recriada = ECR vazio. Encerramento não é opcional; ler resumo antes de digitar yes. Não editar tags de imagem à mão. Não commitar direto na main. Seed refeito a cada sessão (destroy apaga os bancos).",
+   "data": "2026-09-15",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Incorporar ao guia operacional vigente da Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:7-8",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:27-56",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1217-1218",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1418-1423"
+   ],
+   "lote": "G05-operacao"
+  },
+  {
+   "tipo": "regra_permanente",
+   "titulo": "Segredos e arquivos que nunca se versionam",
+   "conteudo": "Nunca segredo, token, senha ou chave em arquivo versionado nem em mensagem. Nunca versionar terraform.tfstate e variantes, *.tfvars, *.tfplan, .env, chaves, kubeconfig, travas ~$* do Office ou qualquer credencial.",
+   "data": "2026-09-15",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Vale para as novas chaves da Fase 4 (New Relic, Slack, PagerDuty, Grafana).",
+   "fontes": [
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:48",
+    "docs/00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md:46"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "tipo": "regra_permanente",
+   "titulo": "Sucesso no Compose não comprova EKS",
+   "conteudo": "O workflow Compose Integration roda com AWS emulada (sete eventos) e ficou verde no HEAD; a auditoria registrou que isso não comprova funcionamento no EKS. Não afirmar funcionamento EKS com base no Compose e não tratar status históricos como prova de execução atual.",
+   "data": "2026-09-09",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Testes locais de OTel/Collector (P-008 local) também não comprovam o ambiente na AWS; separar evidência local de evidência no cluster.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:303",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:305",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:320",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:337"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "tipo": "regra_permanente",
+   "titulo": "Terraform sempre com plano salvo",
+   "conteudo": "Usar terraform plan -out=<arquivo>.tfplan e depois terraform apply <arquivo>.tfplan. Nunca apply interativo: colado em bloco, a linha seguinte vira a resposta do \"yes\".",
+   "data": "2026-09-15",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Aplicar em todas as camadas na conta nova.",
+   "fontes": [
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:47"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "tipo": "regra_permanente",
+   "titulo": "Todo código comentado linha a linha",
+   "conteudo": "O usuário estabeleceu que todo código criado deve vir comentado linha a linha; registrado em CLAUDE.md e na memória do projeto. Os 14 arquivos .tf e o terraform.tfvars.example foram reescritos assim. Os manifestos de infra/k8s da Fase 2 já seguiam o padrão.",
+   "data": "2026-08-27",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Aplicar aos novos manifestos de observabilidade, workflows de self-healing e Terraform da Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:393-395",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:371"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "tipo": "risco",
+   "titulo": "Achados da auditoria FIAP F-042 a F-049",
+   "conteudo": "Auditoria de 2026-09-09 (parecer em docs/00_COLAB_IA/03_ENTREGAVEIS/AUDITORIA_FIAP_2026-09-09_v01.md): ignore-unfixed em scans CRITICAL; CRD do ArgoCD ausente no primeiro plan; schemas RDS não executados; seed com parâmetros/regra errados e Secret sujeito a reversão; Redis placeholder; documentos/scripts de arquiteturas diferentes; default EKS 1.31. Na revalidação (17:57), o default EKS 1.34 e os parâmetros/regra do seed estavam corrigidos e os schemas documentados sem execução AWS comprovada. F-042, F-043, F-046, F-047 e F-048 foram fechados às 22:40.",
+   "data": "2026-09-09",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Lista de verificação para o primeiro apply na conta nova: schemas, seed, Redis real, CRD do ArgoCD.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:318",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:301",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:239",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:312"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "tipo": "risco",
+   "titulo": "Combinado com o professor sem comprovante escrito",
+   "conteudo": "O desvio de 2 RDS e banco do targeting em StatefulSet foi combinado com o professor em 2026-08-27, mas o comprovante escrito não foi localizado.",
+   "data": "2026-08-27 (registrado em 2026-09-15)",
+   "relevancia_fase4": "baixa",
+   "uso_na_fase4": "Lição: registrar por escrito qualquer combinado com professores na Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:32"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "tipo": "risco",
+   "titulo": "Documentacao herdada descreve arquiteturas incompativeis",
+   "conteudo": "Em 2026-09-09: docs/OPERACAO.md orientava chaves estaticas, AWS Academy/LabRole e pastas removidas (terraform/bootstrap, terraform/environments/dev); ARQUITETURA, EVIDENCIAS e ROTEIRO_VIDEO descreviam Ingress, tres RDS e cinco Applications; terraform/README.md descrevia duas camadas; gitops/README.md e SECRETS-CONTRATO.md mandavam instalar ESO removido; RUNBOOK-SESSAO.md:158 recomendava push direto na main; validate-all.sh validava diretorios inexistentes (corrigido no PR #5).",
+   "data": "2026-09-09",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Ao importar a base, conferir se esses documentos ainda estao no repo e se foram corrigidos antes de usa-los como guia.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:78-95",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:59-71"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "tipo": "risco",
+   "titulo": "Fim do suporte padrão do EKS 1.34",
+   "conteudo": "Em 2026-12-01 o EKS 1.34 sai do suporte padrão e o control plane passa de US$ 0,10/h para US$ 0,60/h. Numa recriação depois disso, conferir aws eks describe-cluster-versions e ajustar kubernetes_version.",
+   "data": "registrado em 2026-09-15",
+   "relevancia_fase4": "media",
+   "uso_na_fase4": "A entrega (2026-11-17) é antes da data, mas qualquer recriação após 2026-12-01 encarece; o código da Fase 4 já pede confirmar a versão antes da implantação.",
+   "fontes": [
+    "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:46"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "tipo": "risco",
+   "titulo": "Limites rigidos do plano gratuito novo da AWS (conta anterior)",
+   "conteudo": "A conta da Fase 3 estava no plano gratuito novo da AWS, com dois bloqueios de API comprovados na Fase 2: (1) maximo de 2 instancias RDS simultaneas ('maximum number of instances available with free plan accounts'); (2) so tipos elegiveis ao Free Tier podem ser lancados (t3.medium recusada com 'not eligible for Free Tier'). Nao sao limites de custo, sao recusa de API. Contornos: targeting_db em StatefulSet e node c7i-flex.large.",
+   "data": "2026-08-27",
+   "relevancia_fase4": "alta",
+   "uso_na_fase4": "Verificar logo no inicio se a conta nova tem o mesmo tipo de plano e os mesmos bloqueios antes de dimensionar.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:427-428"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "tipo": "risco",
+   "titulo": "Servicos sem testes unitarios em 2026-09-09",
+   "conteudo": "0 arquivos de teste Go e 0 Python nos servicos; go test responde 'no test files'. O enunciado pede testes 'se houver', entao nao era requisito. Era o item opcional mais barato de fechar.",
+   "data": "2026-09-09",
+   "relevancia_fase4": "baixa",
+   "uso_na_fase4": "Contexto historico: o CLAUDE.md da Fase 4 registra testes Go/Python aprovados em P-008; conferir se os workflows passaram a executa-los.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:113",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:142",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:99"
+   ],
+   "lote": "G09-auditoria-fiap"
+  }
+ ],
+ "pendencias": [
+  {
+   "id_original": "P-110 a P-115",
+   "descricao": "Ajustes em services/** e .github/workflows/** adiados na consolidação de 2026-09-15 (não detalhados neste arquivo).",
+   "dono": "[INCERTO] não informado na fonte",
+   "estado_na_fonte": "Abertas em PENDENCIAS da Fase 3",
+   "aplicavel_fase4": "talvez",
+   "motivo": "Podem ainda se aplicar ao código importado; conferir o detalhe no PENDENCIAS da Fase 3.",
+   "fontes": [
+    "docs/00_COLAB_IA/DECISOES.md:12"
+   ],
+   "lote": "G01-decisoes"
+  },
+  {
+   "id_original": "P-103",
+   "descricao": "Confirmação independente dos nomes dos integrantes no relatório; [INCERTO] mantido.",
+   "dono": "Usuário",
+   "estado_na_fonte": "Aberta em 2026-09-15",
+   "aplicavel_fase4": "sim",
+   "motivo": "O relatório da Fase 4 também precisa dos nomes do grupo.",
+   "fontes": [
+    "docs/00_COLAB_IA/DECISOES.md:15",
+    "docs/00_COLAB_IA/DECISOES.md:23"
+   ],
+   "lote": "G01-decisoes"
+  },
+  {
+   "id_original": "P-018",
+   "descricao": "Nomes dos integrantes não informados (registro de 2026-07-30).",
+   "dono": "Usuário",
+   "estado_na_fonte": "Aberta na época; depois ligada a P-103",
+   "aplicavel_fase4": "sim",
+   "motivo": "Mesmo item do relatório.",
+   "fontes": [
+    "docs/00_COLAB_IA/DECISOES.md:288"
+   ],
+   "lote": "G01-decisoes"
+  },
+  {
+   "id_original": "P-051",
+   "descricao": "Sincronização da dev com a main e regras remotas do repositório não executadas na auditoria de 2026-09-09.",
+   "dono": "Usuário/assistentes",
+   "estado_na_fonte": "Aberta em 2026-09-09; estado posterior: main/dev em 5b8cd86 (D-020)",
+   "aplicavel_fase4": "talvez",
+   "motivo": "Proteção da main e regras remotas continuam sem decisão registrada aqui.",
+   "fontes": [
+    "docs/00_COLAB_IA/DECISOES.md:109",
+    "docs/00_COLAB_IA/DECISOES.md:92"
+   ],
+   "lote": "G01-decisoes"
+  },
+  {
+   "id_original": "(sem ID) PREENCHER_URL_DO_VIDEO",
+   "descricao": "Link do vídeo no relatório ficou com marcador a preencher.",
+   "dono": "Usuário",
+   "estado_na_fonte": "Marcador inserido em 2026-09-15",
+   "aplicavel_fase4": "sim",
+   "motivo": "Mesmo cuidado vale para o relatório da Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/DECISOES.md:16"
+   ],
+   "lote": "G01-decisoes"
+  },
+  {
+   "id_original": "P-052",
+   "descricao": "Push do robô na main parecia contradizer D-020.",
+   "dono": "-",
+   "estado_na_fonte": "Encerrada por D-021 sem alterar workflow",
+   "aplicavel_fase4": "nao",
+   "motivo": "Resolvida.",
+   "fontes": [
+    "docs/00_COLAB_IA/DECISOES.md:65",
+    "docs/00_COLAB_IA/DECISOES.md:77"
+   ],
+   "lote": "G01-decisoes"
+  },
+  {
+   "id_original": "P-037, P-023, P-032, P-033, P-005, P-004, P-021, P-016, P-017",
+   "descricao": "Pendências da Fase 3 encerradas por D-018, D-013, D-015, D-008, D-007, D-014 e D-006.",
+   "dono": "-",
+   "estado_na_fonte": "Encerradas",
+   "aplicavel_fase4": "nao",
+   "motivo": "Já decididas.",
+   "fontes": [
+    "docs/00_COLAB_IA/DECISOES.md:134",
+    "docs/00_COLAB_IA/DECISOES.md:206",
+    "docs/00_COLAB_IA/DECISOES.md:182",
+    "docs/00_COLAB_IA/DECISOES.md:266",
+    "docs/00_COLAB_IA/DECISOES.md:278",
+    "docs/00_COLAB_IA/DECISOES.md:190",
+    "docs/00_COLAB_IA/DECISOES.md:282"
+   ],
+   "lote": "G01-decisoes"
+  },
+  {
+   "id_original": "P-100",
+   "descricao": "Excluir o bucket de estado da Fase 3 (togglemaster-tfstate-<CONTA_FASE3>-us-east-2-an), removendo todas as versões e depois o bucket.",
+   "dono": "usuário",
+   "estado_na_fonte": "Aberta; bloqueada por permissão em 2026-09-15; só fazer quando não houver mais recriação.",
+   "aplicavel_fase4": "nao",
+   "motivo": "Pertence à conta da Fase 3, que a Fase 4 não deve usar; fica como lembrete pessoal do usuário (custo residual).",
+   "fontes": [
+    "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:11",
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:14-15",
+    "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:53"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "id_original": "P-101",
+   "descricao": "Excluir a VPC da Fase 2 que restou em us-east-2.",
+   "dono": "usuário",
+   "estado_na_fonte": "Aberta; bloqueada por permissão em 2026-09-15.",
+   "aplicavel_fase4": "nao",
+   "motivo": "Conta antiga, fora do escopo da Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:12",
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:16"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "id_original": "P-102",
+   "descricao": "Publicar o vídeo da Fase 3 e trocar PREENCHER_URL_DO_VIDEO no README.md e no docs/RELATORIO_DE_ENTREGA.md.",
+   "dono": "usuário",
+   "estado_na_fonte": "Aberta em 2026-09-15; URL não informada.",
+   "aplicavel_fase4": "talvez",
+   "motivo": "O vídeo da Fase 3 já não importa, mas o README e o relatório herdados podem ainda conter o marcador; conferir antes de reescrevê-los para a Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:13",
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:12"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "id_original": "P-103",
+   "descricao": "Confirmar a composição do Grupo 203 e retirar o [INCERTO] da linha 15 do relatório.",
+   "dono": "usuário",
+   "estado_na_fonte": "Aberta; o README não é confirmação independente (Revisões 1 e 2).",
+   "aplicavel_fase4": "sim",
+   "motivo": "O relatório da Fase 4 também lista integrantes; a composição precisa de confirmação.",
+   "fontes": [
+    "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:14",
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:20"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "id_original": "P-104",
+   "descricao": "Decidir sobre dados pessoais na pasta pública: nomes de usuário de Discord no relatório preliminar arquivado e caminho de usuário do Windows com nome completo em DECISOES D-001.",
+   "dono": "usuário",
+   "estado_na_fonte": "Aberta; editar arquivado é proibido e D-001 é histórico.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Esses arquivos foram importados com o histórico para o repositório da Fase 4; a mesclagem deve evitar copiar esses dados para a pasta vigente, e o histórico Git continua contendo-os.",
+   "fontes": [
+    "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:15"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "id_original": "P-105",
+   "descricao": "Opcional: limpar \"generated using python-pptx\" nas propriedades do .pptx da Fase 3.",
+   "dono": "usuário",
+   "estado_na_fonte": "Aberta, opcional.",
+   "aplicavel_fase4": "talvez",
+   "motivo": "Só se a apresentação da Fase 3 continuar no repositório; para material novo da Fase 4, conferir metadados que citem geradores.",
+   "fontes": [
+    "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:16"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "id_original": "P-110",
+   "descricao": "Corrigir comentários desatualizados em _ci-python.yml e _ci-go.yml: \"git pull --rebase\" (o job faz fetch e reset) e \"única permissão de escrita\" (jobs sem permissions herdam o teto do chamador).",
+   "dono": "não definido (técnica)",
+   "estado_na_fonte": "Adiada por gatilho de CI sem a role da AWS.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Workflows herdados; corrigir quando a role do CI existir na conta nova.",
+   "fontes": [
+    "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:24"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "id_original": "P-111",
+   "descricao": "Declarar permissions por job em build, lint, sast e sca nos workflows reutilizáveis.",
+   "dono": "não definido (técnica)",
+   "estado_na_fonte": "Adiada por gatilho de CI.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Melhoria de segurança aplicável aos workflows da Fase 4, inclusive aos novos de self-healing.",
+   "fontes": [
+    "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:25"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "id_original": "P-112",
+   "descricao": "Reescrever ou apagar os READMEs herdados da Fase 2 em services/*/README.md (Go 1.21, Python 3.9, us-east-1, chaves estáticas).",
+   "dono": "não definido (técnica)",
+   "estado_na_fonte": "Adiada por gatilho de CI.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Podem ser atualizados junto com a instrumentação OTel.",
+   "fontes": [
+    "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:26",
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:116"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "id_original": "P-113",
+   "descricao": "Fixar versões de Flask, gunicorn e setuptools em services/analytics-service/requirements.txt.",
+   "dono": "não definido (técnica)",
+   "estado_na_fonte": "Adiada por gatilho de CI.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Novas dependências de OTel tornam a fixação de versões mais importante.",
+   "fontes": [
+    "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:27"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "id_original": "P-114",
+   "descricao": "Decidir se o PyYAML==6.0.1 que sobrou da demonstração fica em services/flag-service/requirements.txt (o serviço não usa YAML).",
+   "dono": "não definido (técnica)",
+   "estado_na_fonte": "Adiada por gatilho de CI; também é pré-condição da demonstração.",
+   "aplicavel_fase4": "sim",
+   "motivo": "A linha ainda existe no código da Fase 4 (conferido em 2026-11-01); decidir se a demonstração de CVE será repetida.",
+   "fontes": [
+    "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:28"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "id_original": "P-115",
+   "descricao": "Remover comentários que ainda citam ESO ou externalsecret.yaml em gitops/base/*/deployment.yaml (auth, evaluation, flag).",
+   "dono": "não definido (técnica)",
+   "estado_na_fonte": "Aberta; não dispara CI, mas ficou fora do escopo de D-024.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Os deployments serão editados para OTel na Fase 4; aproveitar.",
+   "fontes": [
+    "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:29"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "id_original": "P-120",
+   "descricao": "enable_nat_gateway = false no terraform.tfvars.example contradiz o padrão true e quebra uma recriação do zero.",
+   "dono": "não definido (técnica)",
+   "estado_na_fonte": "Aberta; mudança de código proibida em D-024; o guia recomenda tfvars local.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Ainda false em terraform/terraform.tfvars.example:41 (conferido em 2026-11-01); afeta o primeiro apply na conta nova.",
+   "fontes": [
+    "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:35",
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:129"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "id_original": "P-121",
+   "descricao": "Comentários sobre EKS 1.31, \"repositório privado\" e \"evita o provider helm\"; ordem das camadas sem a k8s, em cluster/main.tf, modules/eks/main.tf, k8s/variables.tf, k8s/argocd.tf e cluster/backend.tf.",
+   "dono": "não definido (técnica)",
+   "estado_na_fonte": "Aberta; D-024 só corrigiu comentários com link quebrado ou comando errado.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Código herdado pela Fase 4; não conferido arquivo a arquivo neste lote.",
+   "fontes": [
+    "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:36"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "id_original": "P-122",
+   "descricao": "Comentário que cita GUIA-AWS.md da Fase 2 em terraform/modules/messaging/main.tf.",
+   "dono": "não definido (técnica)",
+   "estado_na_fonte": "Aberta.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Código herdado; correção simples.",
+   "fontes": [
+    "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:37"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "id_original": "P-123",
+   "descricao": "ecr_image_tag_mutability = MUTABLE em terraform/variables.tf.",
+   "dono": "não definido (técnica)",
+   "estado_na_fonte": "Aberta; decisão de código.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Ainda MUTABLE no exemplo da Fase 4 (conferido em 2026-11-01); decidir antes de criar o ECR na conta nova.",
+   "fontes": [
+    "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:38"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "id_original": "P-124",
+   "descricao": "A exclusão *.example.* do scripts/security-check.sh não cobre .env.example.",
+   "dono": "não definido (técnica)",
+   "estado_na_fonte": "Aberta; script fora do escopo.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Script herdado; relevante se novas variáveis de chaves forem adicionadas ao .env.example.",
+   "fontes": [
+    "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:39"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "id_original": "P-130",
+   "descricao": "Revisar em 2026-10-15 as 3 exceções do perl-base no .trivyignore: rodar o Trivy de novo na imagem e manter ou retirar.",
+   "dono": "não definido",
+   "estado_na_fonte": "Data a vigiar.",
+   "aplicavel_fase4": "sim",
+   "motivo": "A data venceu; o .trivyignore da Fase 4 ainda diz \"Revisar em: 2026-10-15\" (linha 58, conferido em 2026-11-01).",
+   "fontes": [
+    "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:45",
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:105"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "id_original": "P-131",
+   "descricao": "Em 2026-12-01 o EKS 1.34 sai do suporte padrão (control plane de US$ 0,10/h para US$ 0,60/h); conferir aws eks describe-cluster-versions e ajustar kubernetes_version numa recriação posterior.",
+   "dono": "não definido",
+   "estado_na_fonte": "Data a vigiar.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Afeta escolha de versão e custo de qualquer recriação; a entrega de 2026-11-17 cai antes da data.",
+   "fontes": [
+    "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:46"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "id_original": "P-132",
+   "descricao": "Cerca de 30 dias após cada run [INCERTO], o GitHub deixa de aceitar gh run rerun dos runs de push na main; usar o caminho padrão do guia (commit na main que toque os _ci-*.yml ou services/<svc>/**).",
+   "dono": "não definido",
+   "estado_na_fonte": "Data a vigiar, com prazo [INCERTO].",
+   "aplicavel_fase4": "talvez",
+   "motivo": "Na Fase 4 as imagens terão de ser publicadas no ECR novo pelo repositório da Fase 4; o rerun de runs antigos não serve para a conta nova.",
+   "fontes": [
+    "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:47",
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:123"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "id_original": "P-100",
+   "descricao": "Bucket de estado do Terraform na conta da Fase 3 com exclusão bloqueada por permissão.",
+   "dono": "Usuário",
+   "estado_na_fonte": "Pendente em 2026-09-15.",
+   "aplicavel_fase4": "nao",
+   "motivo": "Refere-se à conta da Fase 3, que não deve ser usada.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:71"
+   ],
+   "lote": "G03-log-recente"
+  },
+  {
+   "id_original": "P-101",
+   "descricao": "VPC da Fase 2 com exclusão bloqueada por permissão.",
+   "dono": "Usuário",
+   "estado_na_fonte": "Pendente em 2026-09-15.",
+   "aplicavel_fase4": "nao",
+   "motivo": "Conta antiga; fora do escopo da Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:71"
+   ],
+   "lote": "G03-log-recente"
+  },
+  {
+   "id_original": "P-102",
+   "descricao": "Link do vídeo regravado da Fase 3 ainda não informado.",
+   "dono": "Usuário",
+   "estado_na_fonte": "Aberta em 2026-09-15.",
+   "aplicavel_fase4": "talvez",
+   "motivo": "Só útil se a Fase 4 citar o vídeo da Fase 3 como referência.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:81"
+   ],
+   "lote": "G03-log-recente"
+  },
+  {
+   "id_original": "sem ID (services e workflows)",
+   "descricao": "Ajustes de documentação em services/** (READMEs) e .github/workflows/** não feitos porque disparariam pipelines que falham no OIDC sem a role.",
+   "dono": "Não definido",
+   "estado_na_fonte": "Movido para PENDENCIAS em 2026-09-15.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Na Fase 4, com a role criada na conta nova, esses ajustes podem ser feitos.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:14"
+   ],
+   "lote": "G03-log-recente"
+  },
+  {
+   "id_original": "sem ID (falha OIDC na main)",
+   "descricao": "Execução do flag-service na main falhou ao assumir a role OIDC depois da destruição da base, embora build, lint, SAST, SCA e scan tenham passado.",
+   "dono": "Não definido",
+   "estado_na_fonte": "Risco a avaliar no fechamento (2026-09-14).",
+   "aplicavel_fase4": "sim",
+   "motivo": "Merges na main sem a infraestrutura de pé geram runs vermelhos; considerar no plano de commits da Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:107"
+   ],
+   "lote": "G03-log-recente"
+  },
+  {
+   "id_original": "F-050",
+   "descricao": "Camada k8s descrita como opcional no README conflitava com o runbook; EBS externo requer verificação.",
+   "dono": "Não definido",
+   "estado_na_fonte": "Descoberta registrada em 2026-09-11.",
+   "aplicavel_fase4": "talvez",
+   "motivo": "Verificar se a documentação atual ainda traz essa contradição.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:161"
+   ],
+   "lote": "G03-log-recente"
+  },
+  {
+   "id_original": "F-051",
+   "descricao": "Implantação viva posterior aos registros de apply pendente.",
+   "dono": "Não definido",
+   "estado_na_fonte": "Descoberta registrada em 2026-09-11.",
+   "aplicavel_fase4": "nao",
+   "motivo": "Estado de ambiente da conta antiga.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:161"
+   ],
+   "lote": "G03-log-recente"
+  },
+  {
+   "id_original": "P-053",
+   "descricao": "Execução do guia de exclusão completa da AWS, condicional à decisão do usuário.",
+   "dono": "Usuário",
+   "estado_na_fonte": "Condicional em 2026-09-11; o ambiente foi destruído em 2026-09-15.",
+   "aplicavel_fase4": "nao",
+   "motivo": "Superada pela destruição de 2026-09-15 na conta antiga.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:167",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:67-71"
+   ],
+   "lote": "G03-log-recente"
+  },
+  {
+   "id_original": "P-041, P-047, P-042",
+   "descricao": "Pendências citadas como não encerradas sem evidências próprias (conteúdo não descrito neste trecho).",
+   "dono": "Não definido",
+   "estado_na_fonte": "Abertas em 2026-09-11.",
+   "aplicavel_fase4": "talvez",
+   "motivo": "Conteúdo precisa ser lido em PENDENCIAS da Fase 3.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:167"
+   ],
+   "lote": "G03-log-recente"
+  },
+  {
+   "id_original": "O-37",
+   "descricao": "Link do vídeo no relatório da Fase 3.",
+   "dono": "Usuário",
+   "estado_na_fonte": "Aberto em 2026-09-11.",
+   "aplicavel_fase4": "nao",
+   "motivo": "Específico da entrega da Fase 3.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:206"
+   ],
+   "lote": "G03-log-recente"
+  },
+  {
+   "id_original": "P-047, P-041, P-042",
+   "descricao": "Executar os schemas dos RDS e o ensaio completo com cluster no ar (apply, schemas, seed, ArgoCD sincronizando).",
+   "dono": "grupo/usuário com apoio dos agentes",
+   "estado_na_fonte": "Aberta em 2026-09-09 22:40; 'o que falta é a sessão com o cluster no ar'.",
+   "aplicavel_fase4": "sim",
+   "motivo": "A conta nova exige refazer apply, schemas e seed antes de instrumentar e gravar.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:271",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:305",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:322"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "id_original": "P-006, P-043",
+   "descricao": "Vídeo e relatório da Fase 3.",
+   "dono": "grupo",
+   "estado_na_fonte": "Abertas em 2026-09-09.",
+   "aplicavel_fase4": "nao",
+   "motivo": "Entregáveis da Fase 3; a Fase 4 tem vídeo e relatório próprios.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:305",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:322"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "id_original": "P-040",
+   "descricao": "Preencher os placeholders do gitops/ (overlays/prod/patches, endpoints.yaml com Redis) após o primeiro apply.",
+   "dono": "agente/usuário",
+   "estado_na_fonte": "Aberta em 2026-08-27; citada como prioridade em 2026-09-09; comando pronto no runbook (F-047).",
+   "aplicavel_fase4": "sim",
+   "motivo": "Endpoints mudam na conta nova.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:363",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:389",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:250",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:288"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "id_original": "P-039",
+   "descricao": "Instalar Metrics Server para os HPA não ficarem <unknown>.",
+   "dono": "não informado",
+   "estado_na_fonte": "Aberta em 2026-08-27; estado final não consta neste lote.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Necessário para escala e métricas no cluster.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:363",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:353"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "id_original": "P-035",
+   "descricao": "Addon aws-ebs-csi-driver com StorageClass default.",
+   "dono": "não informado",
+   "estado_na_fonte": "Aberta em 2026-08-27; estado final não consta neste lote.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Persistência de postgres-targeting e de ferramentas de observabilidade.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:389",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:353"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "id_original": "P-036",
+   "descricao": "Usar o binário kustomize standalone no CI (kubectl kustomize não tem edit).",
+   "dono": "não informado",
+   "estado_na_fonte": "Aberta em 2026-08-27; estado final não consta neste lote.",
+   "aplicavel_fase4": "talvez",
+   "motivo": "Provavelmente já resolvido nos workflows; conferir.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:387"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "id_original": "P-034",
+   "descricao": "Runbook de custo (subir e derrubar a camada cara).",
+   "dono": "não informado",
+   "estado_na_fonte": "Prevista em 2026-08-27; estado final não consta neste lote.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Conta nova e crédito limitado exigem o mesmo controle.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:389"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "id_original": "P-024",
+   "descricao": "Corrigir os READMEs de analytics-service e evaluation-service, que trazem us-east-1 em exemplo de variável.",
+   "dono": "agente, após aval do usuário",
+   "estado_na_fonte": "Aberta em 2026-08-27 aguardando aval.",
+   "aplicavel_fase4": "talvez",
+   "motivo": "Conferir se a correção já foi feita no código importado.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:435-437"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "id_original": "P-049",
+   "descricao": "Consolidar achado da auditoria (documentos/scripts de arquiteturas diferentes, segundo a lista F-042 a F-049).",
+   "dono": "agentes",
+   "estado_na_fonte": "Citada como 'consolidar P-049' em 2026-09-09 17:57; a correspondência exata P-049 x achado não está explícita neste lote [ambíguo].",
+   "aplicavel_fase4": "talvez",
+   "motivo": "Se ainda houver documentos divergentes, afetam o relatório da Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:305",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:322"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "id_original": "P-045, P-046, P-048, P-050",
+   "descricao": "Correções apontadas pela auditoria FIAP (achados F-042 a F-049).",
+   "dono": "agentes",
+   "estado_na_fonte": "Abertas às 13:31 e 18:09 de 2026-09-09; às 22:40 os achados F-042, F-043, F-046, F-047 e F-048 foram fechados. O mapeamento P x F não está explícito neste lote.",
+   "aplicavel_fase4": "talvez",
+   "motivo": "Conferir no PENDENCIAS da Fase 3 se ficaram fechadas.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:239",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:288",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:322"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "id_original": "P-052",
+   "descricao": "Workflows reutilizáveis fazem git push origin HEAD:main; avaliar adaptação a D-020.",
+   "dono": "agentes/usuário",
+   "estado_na_fonte": "Encerrada por D-021 em 2026-09-09 22:40 (push do robô mantido).",
+   "aplicavel_fase4": "talvez",
+   "motivo": "Self-healing e atualização de tag na Fase 4 podem reabrir a questão.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:284",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:265"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "id_original": "P-051",
+   "descricao": "Sincronizar dev e main.",
+   "dono": "agentes",
+   "estado_na_fonte": "Resolvida em 2026-09-09 (0/0).",
+   "aplicavel_fase4": "nao",
+   "motivo": "Estado de branches da Fase 3.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:301",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:243"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "id_original": "P-037",
+   "descricao": "Avaliar cortar o External Secrets Operator.",
+   "dono": "usuário",
+   "estado_na_fonte": "Aberta em 2026-08-27; resolvida com D-018 (corte), conforme registro de 2026-09-09.",
+   "aplicavel_fase4": "nao",
+   "motivo": "Já decidida.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:377",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:365",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:258"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "id_original": "P-018",
+   "descricao": "Confirmar nomes e composição do grupo.",
+   "dono": "usuário",
+   "estado_na_fonte": "Aberta em 2026-07-30; nomes encontrados no README da Fase 2 em 2026-08-27, faltando confirmação; O-36 marcado [x] em 2026-09-09.",
+   "aplicavel_fase4": "sim",
+   "motivo": "O relatório da Fase 4 também precisa dos participantes; confirmar se o grupo mudou.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:453",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:375",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:262"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "id_original": "P-038, P-030, P-028, P-026, P-027",
+   "descricao": "Aplicar a base com NAT desligado (P-038), escrever os 5 workflows de CI (P-030, cobria 12 obrigatórios), Etapa 2 do Terraform (P-028), Etapa 1 (P-026) e gitops/base (P-027).",
+   "dono": "usuário e agentes",
+   "estado_na_fonte": "Abertas em 2026-08-27; em 2026-09-09 os workflows, EKS e ArgoCD existiam e tinham rodado na conta da Fase 3.",
+   "aplicavel_fase4": "talvez",
+   "motivo": "O apply da base precisa ser refeito na conta nova (equivalente a P-038).",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:365",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:353",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:389",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:413",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:256"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "id_original": "F-014 (risco)",
+   "descricao": "ID da conta embutido no nome do bucket e no backend.tf versionado; mitigação: repositório privado até a entrega.",
+   "dono": "grupo",
+   "estado_na_fonte": "Aceito como risco em 2026-08-27.",
+   "aplicavel_fase4": "sim",
+   "motivo": "O backend.tf da Fase 4 não pode carregar o bucket/ID da conta da Fase 3; escolher nome do bucket novo com cautela.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:423"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "id_original": "P-001 a P-015, P-004, P-005, P-016, P-017, P-019, P-020 a P-023, P-025, P-031",
+   "descricao": "Revisões dos guias de estudo, decisões iniciais (código, Kustomize, prazo, bucket, plano Terraform) e migração do targeting para RDS.",
+   "dono": "usuário/agentes",
+   "estado_na_fonte": "Encerradas ou canceladas ao longo de julho e agosto de 2026 (P-031 cancelada por D-015).",
+   "aplicavel_fase4": "nao",
+   "motivo": "Históricas da Fase 3.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:509",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:441",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:405",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:417",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:363"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "id_original": "(sem ID) Tempo da base do zero",
+   "descricao": "Tempo de apply da camada base criada do zero não foi medido; o guia manda reservar 10 min.",
+   "dono": "não definido",
+   "estado_na_fonte": "não medido",
+   "aplicavel_fase4": "sim",
+   "motivo": "A primeira subida na conta nova será base do zero; é a oportunidade de medir.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:591",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1603"
+   ],
+   "lote": "G05-operacao"
+  },
+  {
+   "id_original": "(sem ID) Suporte padrão do K8s 1.34",
+   "descricao": "Reconferir se Kubernetes 1.34 segue em suporte padrão do EKS antes de subir o ambiente (fora dele o control plane custa US$ 0,60/h).",
+   "dono": "não definido",
+   "estado_na_fonte": "recomendação aberta",
+   "aplicavel_fase4": "sim",
+   "motivo": "Em 2026-11 a situação pode ter mudado; impacta custo 6x.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1589-1592"
+   ],
+   "lote": "G05-operacao"
+  },
+  {
+   "id_original": "(sem ID) Identificador do ElastiCache",
+   "descricao": "Confirmar a cada recriação se o endereço do ElastiCache e as roles IRSA batem com o overlay; a hipótese de que o identificador pertence à conta/região foi inferida do histórico, não confirmada.",
+   "dono": "não definido",
+   "estado_na_fonte": "hipótese, 'ainda assim, confira'",
+   "aplicavel_fase4": "sim",
+   "motivo": "Na conta nova o identificador será diferente com certeza; o overlay precisa ser atualizado.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:835-839"
+   ],
+   "lote": "G05-operacao"
+  },
+  {
+   "id_original": "(sem ID) Bucket de estado",
+   "descricao": "Bucket de estado do Terraform é criado uma vez fora do Terraform, seguindo terraform/BOOTSTRAP-BACKEND-S3.md; o nome citado é o da conta da Fase 3.",
+   "dono": "não definido",
+   "estado_na_fonte": "existente na conta da Fase 3",
+   "aplicavel_fase4": "sim",
+   "motivo": "A conta nova precisa de bucket próprio e backends atualizados.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:436-438"
+   ],
+   "lote": "G05-operacao"
+  },
+  {
+   "id_original": "(sem ID) Automação do schema e seed",
+   "descricao": "Schemas do RDS e troca da SERVICE_API_KEY são manuais e refeitos a cada sessão (~15 min).",
+   "dono": "não definido",
+   "estado_na_fonte": "manual, sem automação prevista no guia",
+   "aplicavel_fase4": "talvez",
+   "motivo": "Automatizar reduziria erro na gravação, mas não é exigido; decisão da Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1003-1012",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1217-1218",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1607"
+   ],
+   "lote": "G05-operacao"
+  },
+  {
+   "id_original": "(sem ID) Pendência que antecede o PDF",
+   "descricao": "Outro agente deixou alterações não commitadas no README, no relatório e nos geradores de PDF; o README apontava para um PDF dentro de output/ (pasta ignorada pelo Git, link quebrado no GitHub) e o gerador escolhido dependia do pacote reportlab, não instalado na máquina.",
+   "dono": "Não definido na fonte (pessoa operadora da gravação)",
+   "estado_na_fonte": "Aberta em 2026-09-15; desfecho não registrado neste lote.",
+   "aplicavel_fase4": "talvez",
+   "motivo": "O relatório PDF da Fase 4 precisará de um gerador; vale verificar se o link do PDF no README e a dependência do gerador foram resolvidos ou se o problema volta.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:820-824"
+   ],
+   "lote": "G06-gravacao"
+  },
+  {
+   "id_original": "(sem ID) Limpeza pós-demonstração da PyYAML",
+   "descricao": "Remover PyYAML==6.0.1 de services/flag-service/requirements.txt, que entrou só para a demonstração de segurança e o serviço não usa YAML.",
+   "dono": "Não definido",
+   "estado_na_fonte": "Item de checklist do guia de 11/09; o plano de 15/09 pedia explicitamente para não remover antes da Cena 6. Verificação local nesta análise: a linha PyYAML==6.0.1 continua na linha 8 do requirements.txt do flag-service na branch dev da Fase 4.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Dependência sem uso herdada na base da Fase 4; decidir se remove (mudança em services/ dispara pipeline e nova imagem).",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:980-982",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:414-415"
+   ],
+   "lote": "G06-gravacao"
+  },
+  {
+   "id_original": "(sem ID) Revisão da exceção temporária de CVE",
+   "descricao": "Modelo de exceção no .trivyignore previa comentário 'excecao temporaria. Revisar em 2026-10-15' para CVE crítico sem correção.",
+   "dono": "Não definido",
+   "estado_na_fonte": "Contingência do plano de 15/09; não se sabe se foi usada.",
+   "aplicavel_fase4": "talvez",
+   "motivo": "Se alguma exceção com data de revisão vencida estiver no .trivyignore, deve ser revista na Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:921-922",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:944"
+   ],
+   "lote": "G06-gravacao"
+  },
+  {
+   "id_original": "P-053",
+   "descricao": "Executar o encerramento total da AWS seguindo o roteiro (Application -> k8s -> PV/EBS -> cluster -> base -> sobras -> bucket).",
+   "dono": "Usuario (condicional a decisao de encerrar)",
+   "estado_na_fonte": "Condicional; nenhuma exclusao executada em 2026-09-11.",
+   "aplicavel_fase4": "talvez",
+   "motivo": "Refere-se a conta da Fase 3, que nao deve ser usada; o roteiro serve de modelo para a conta nova. Se a conta antiga ainda tem recursos, e assunto fora do repo.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:7"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "id_original": "P-041",
+   "descricao": "Sessao de ensaio com o cluster: subir pilha completa seguindo o runbook, conferir ArgoCD e destruir; reservar 3h.",
+   "dono": "Grupo/usuario",
+   "estado_na_fonte": "Aberta em 2026-09-09 (caminho critico); em 2026-09-11 as tres camadas estavam aplicadas, mas sem confirmar conclusao do ensaio.",
+   "aplicavel_fase4": "sim",
+   "motivo": "A conta nova exige um ensaio completo equivalente, agora com observabilidade.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:28",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:9"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "id_original": "P-047",
+   "descricao": "Criar os schemas idempotentes nos RDS auth e flag antes do seed (runbook 1.7, comandos Bash).",
+   "dono": "Grupo/usuario",
+   "estado_na_fonte": "Documentada, nunca executada ate 2026-09-09; em 2026-09-11 a fonte nao confirma execucao.",
+   "aplicavel_fase4": "sim",
+   "motivo": "RDS novos na conta nova nascem vazios.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:29",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:78",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:9"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "id_original": "P-042 / P-006",
+   "descricao": "Gravar o video (O-27 a O-32) e montar o video final dentro do limite.",
+   "dono": "Grupo",
+   "estado_na_fonte": "Aberta em 2026-09-11.",
+   "aplicavel_fase4": "nao",
+   "motivo": "Video da Fase 3; a Fase 4 tem video proprio (ate 25 min). Metodo de gravacao reaproveitavel.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:30",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:147-149"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "id_original": "P-043",
+   "descricao": "Relatorio de entrega da Fase 3 (O-36 a O-39) com desvios e print do Pricing Calculator.",
+   "dono": "Grupo",
+   "estado_na_fonte": "Aberta em 2026-09-11.",
+   "aplicavel_fase4": "nao",
+   "motivo": "Entregavel da Fase 3; estrutura serve de modelo para o relatorio da Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:31",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:150-152"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "id_original": "P-018",
+   "descricao": "Confirmar os integrantes do grupo para o relatorio (tabela do README ja tinha os 5 do Grupo 203).",
+   "dono": "Usuario",
+   "estado_na_fonte": "Aberta; faltava so confirmacao do usuario.",
+   "aplicavel_fase4": "sim",
+   "motivo": "O relatorio da Fase 4 tambem precisa da composicao do grupo atualizada.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:32",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:156"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "id_original": "R-04",
+   "descricao": "Testes unitarios: em 2026-09-09 nao havia nenhum arquivo de teste nos 5 servicos; um teste por servico fecharia o item.",
+   "dono": "Grupo",
+   "estado_na_fonte": "Opcional, nao iniciado em 2026-09-09.",
+   "aplicavel_fase4": "talvez",
+   "motivo": "O contexto da Fase 4 cita testes Go/Python aprovados em 2026-10-27; verificar se ja foi resolvido.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:36"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "id_original": "P-024",
+   "descricao": "Corrigir exemplos de AWS_REGION (us-east-1) nos READMEs de analytics-service e evaluation-service.",
+   "dono": "Nao definido",
+   "estado_na_fonte": "Fora do caminho critico, aberta.",
+   "aplicavel_fase4": "talvez",
+   "motivo": "Documentacao dos servicos herdada; verificar se ainda esta errada.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:160-161",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:414"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "id_original": "P-050 (residual)",
+   "descricao": "Revisar estimativa de custo e compatibilidade da versao EKS 1.34 no ensaio.",
+   "dono": "Grupo",
+   "estado_na_fonte": "Default corrigido; revisao no ensaio pendente.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Versao e tarifa precisam ser reconferidas em novembro de 2026 na conta nova.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:61"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "id_original": "F-050 (conflito documental)",
+   "descricao": "README do Terraform chama o destroy de k8s de opcional; runbook o exige. Originais preservados.",
+   "dono": "Nao definido",
+   "estado_na_fonte": "Registrado, nao resolvido em 2026-09-11.",
+   "aplicavel_fase4": "sim",
+   "motivo": "README/Terraform herdados podem ainda conter a orientacao errada.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:8"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "id_original": "P-007, P-009, P-011, P-013, P-015",
+   "descricao": "Revisao pelo usuario dos cinco guias HTML de estudo da Fase 3.",
+   "dono": "Usuario",
+   "estado_na_fonte": "Baixa prioridade, aberta.",
+   "aplicavel_fase4": "nao",
+   "motivo": "Guias da Fase 3; sem impacto na Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:165",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:121"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "id_original": "(sem ID) Exclusao completa da AWS da Fase 3",
+   "descricao": "Guia de exclusao completa dos recursos da conta da Fase 3 (EKS, 2 RDS, Redis, NAT, ECR, SQS, DynamoDB, IAM/OIDC, bucket de estado).",
+   "dono": "Grupo / usuario (execucao humana; guia preparado pelo Codex)",
+   "estado_na_fonte": "Preparado e revisado, NAO executado em 2026-09-11. Planos e consultas executados; destroy, espera do EBS e esvaziamento do bucket nao.",
+   "aplicavel_fase4": "talvez",
+   "motivo": "A conta da Fase 3 nao deve ser usada na Fase 4. Este lote nao mostra se a limpeza foi feita depois; confirmar com o usuario se ainda ha custo na conta antiga, sem usar suas credenciais no trabalho da Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:3",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:216-218"
+   ],
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "id_original": "(sem ID) Bootstrap do bucket na conta nova",
+   "descricao": "Criar o bucket S3 de estado (versionado, SSE-S3, bloqueio publico, DenyInsecureTransport, lifecycle) na conta nova, antes do primeiro init com backend.",
+   "dono": "Usuario (console ou CLI)",
+   "estado_na_fonte": "Na Fase 3 foi executado em 2026-08-27; checklist da secao 7 tem so o item do nome marcado.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Os backend.tf da Fase 4 estao parciais e indicam bucket novo pendente.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/BOOTSTRAP-BACKEND-S3_2026-08-27.md:5",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/BOOTSTRAP-BACKEND-S3_2026-08-27.md:284-291"
+   ],
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "id_original": "(sem ID) Desativar identidades manuais",
+   "descricao": "Usuarios IAM de acesso manual nao sao removidos pelos states; desativar credenciais e identidades exclusivas do projeto depois da limpeza, se nao servirem a outro trabalho. Conferir de novo o provider OIDC do GitHub (global) antes de excluir.",
+   "dono": "Usuario",
+   "estado_na_fonte": "Recomendado, nao executado.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Vale para a conta antiga (higiene) e, ao final, para a conta nova.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:23",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:208"
+   ],
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "id_original": "F-050",
+   "descricao": "Conflito documental: README do Terraform (linha 58 na epoca) chamava o destroy de k8s de opcional, enquanto o runbook exige essa etapa para remover PVC/EBS com EKS/CSI vivos.",
+   "dono": "Documentacao",
+   "estado_na_fonte": "Registrado como conflito; originais preservados.",
+   "aplicavel_fase4": "nao",
+   "motivo": "O README atual da Fase 4 ja exige confirmar a remocao de PVCs/PVs/EBS antes de remover cluster/CSI e o bucket por ultimo.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:214"
+   ],
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "id_original": "F-047",
+   "descricao": "REDIS_URL em gitops/overlays/prod/patches/endpoints.yaml com a palavra literal PREENCHER; precisa do output redis_url apos o apply do cluster. irsa.yaml com dois ARNs a conferir.",
+   "dono": "Quem opera a sessao",
+   "estado_na_fonte": "Aberto em 2026-09-09 (passo manual por sessao).",
+   "aplicavel_fase4": "sim",
+   "motivo": "A conta nova gera novo endpoint Redis e novos ARNs IRSA; os patches importados precisam ser preenchidos.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:260-285"
+   ],
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "id_original": "P-034",
+   "descricao": "Runbook de sessao (subir, semear, gravar, derrubar).",
+   "dono": "Claude (autor da atualizacao de 2026-09-09)",
+   "estado_na_fonte": "Coberto pelo documento; depois o conteudo foi referenciado como OPERACAO.md pelo guia de destruicao.",
+   "aplicavel_fase4": "sim",
+   "motivo": "A Fase 4 precisa de runbook equivalente, incluindo a subida e a derrubada da stack de observabilidade.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:7",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:214"
+   ],
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "id_original": "(sem ID) Schemas e seed por sessao",
+   "descricao": "Aplicar init.sql de auth e flag nos RDS e refazer o seed (chave, SERVICE_API_KEY, flag, regra) a cada sessao, porque o destroy apaga os bancos.",
+   "dono": "Quem opera a sessao",
+   "estado_na_fonte": "Passo manual recorrente.",
+   "aplicavel_fase4": "sim",
+   "motivo": "A base importada mantem o mesmo comportamento; candidato a automacao (Job ou script).",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:331-345",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:465-469",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:506-518"
+   ],
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "id_original": "P-045 / F-042",
+   "descricao": "Retirar ignore-unfixed dos 4 scans Trivy e capturar falha e sucesso reais por seguranca.",
+   "dono": "Grupo/assistentes (nao nominal)",
+   "estado_na_fonte": "Aberta nos pareceres de 2026-09-09; checklist registra como reforcado em 2026-09-10 (ignore-unfixed false, .trivyignore, 5 servicos verdes).",
+   "aplicavel_fase4": "nao",
+   "motivo": "Resolvida segundo o checklist; so conferir que o pipeline herdado manteve a configuracao.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:34-40",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:49",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:53"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "id_original": "P-046 / F-043",
+   "descricao": "Separar instalacao do ArgoCD/CRD da criacao da Application e validar a partir de cluster novo.",
+   "dono": "Grupo/assistentes",
+   "estado_na_fonte": "Aberta na revalidacao (17:55); checklist diz 'corrigido e documentado em 2026-09-09' com apply pendente.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Primeiro bootstrap na conta nova ainda nao foi ensaiado neste lote.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:42-48",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:50",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:63"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "id_original": "P-047 / F-044",
+   "descricao": "Executar schemas de auth e flag de forma idempotente nos RDS antes do seed e testar criacao de chave/flag.",
+   "dono": "Grupo/assistentes",
+   "estado_na_fonte": "Parcialmente resolvida: etapa 1.7 no runbook, execucao nao demonstrada.",
+   "aplicavel_fase4": "sim",
+   "motivo": "RDS da conta nova nascera vazio.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:50-56",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:40",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:54"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "id_original": "P-048 / F-045 / F-046",
+   "descricao": "Corrigir roteiro funcional e definir dono unico da SERVICE_API_KEY para que apply/restart nao desfaca o seed.",
+   "dono": "Grupo/assistentes",
+   "estado_na_fonte": "Roteiro corrigido (F-045); disputa da chave (F-046) ainda aberta em 2026-09-09 17:55.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Self-healing reinicia pods; a falha de autenticacao pos-restart afetaria a demonstracao.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:58-70",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:39",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:51"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "id_original": "P-040 / F-047",
+   "descricao": "Preencher endpoint Redis (PREENCHER) e conferir ARNs no overlay prod apos o apply, via dev -> PR -> main.",
+   "dono": "Grupo/assistentes",
+   "estado_na_fonte": "Aberta em 2026-09-09.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Todos os endpoints mudam na conta nova.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:72-76",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:52"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "id_original": "P-049 / F-048",
+   "descricao": "Consolidar documentos e scripts (README, runbook, checklist, security-check com falso positivo da conta, validate-all) preservando historico.",
+   "dono": "Grupo/assistentes",
+   "estado_na_fonte": "Parcial: modulos sem uso removidos e caminhos do validate-all corrigidos; security-check ainda bloqueava.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Documentos importados podem conter instrucoes obsoletas; security-check precisa refletir a conta nova.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:78-97",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:41-42",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:53"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "id_original": "P-050 / F-049",
+   "descricao": "Escolher versao EKS em suporte padrao compativel com modulos/addons e gerar print da estimativa de custo.",
+   "dono": "Grupo/assistentes",
+   "estado_na_fonte": "Versao corrigida para 1.34 no codigo; compatibilidade e estimativa final pendentes.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Reconferir suporte e preco em 2026-11 e gerar print da conta nova.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:99-105",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:38"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "id_original": "P-051",
+   "descricao": "Sincronizar dev com main e retomar mudancas via PR; preparar politica do bot.",
+   "dono": "Grupo/assistentes",
+   "estado_na_fonte": "Resolvida quanto a sincronizacao (0/0 em 5b8cd86); disciplina de fluxo segue relevante.",
+   "aplicavel_fase4": "talvez",
+   "motivo": "Fluxo dev -> PR -> main continua; estado de sincronizacao da Fase 3 nao vale para o repo novo.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:179",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:37",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:105"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "id_original": "P-052",
+   "descricao": "Ajustar jobs GitOps que fazem push direto na main (_ci-go.yml:563, _ci-python.yml:589) para compatibilizar com D-020/protecao de branch.",
+   "dono": "Grupo/assistentes",
+   "estado_na_fonte": "Aberta em 2026-09-09; workflows nao modificados.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Mesmos workflows herdados; self-healing tambem pode commitar.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:11",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/PLANO_AUDITORIA_2026-09-09_v01.md:8"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "id_original": "P-041 / P-042",
+   "descricao": "Ensaio no EKS: cinco servicos funcionais, ArgoCD Synced/Healthy e mudanca de imagem sincronizada automaticamente; encerrar recursos.",
+   "dono": "Grupo/assistentes",
+   "estado_na_fonte": "Aberta em 2026-09-09.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Pre-requisito para qualquer demonstracao de observabilidade na conta nova.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:184",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:54"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "id_original": "P-006 / P-043",
+   "descricao": "Video ate 20 min e relatorio PDF/TXT com links, participantes, desafios, excecao D-015 e estimativa AWS.",
+   "dono": "Grupo",
+   "estado_na_fonte": "Abertos em 2026-09-09; relatorio com secoes 7 e 8 escritas em 2026-09-11, faltando URL do video e print de custo.",
+   "aplicavel_fase4": "nao",
+   "motivo": "Entregaveis da Fase 3; a Fase 4 tem os proprios (video ate 25 min).",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:185",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:55",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:88-90"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "id_original": "P-018",
+   "descricao": "Confirmar nomes/composicao do grupo para o relatorio.",
+   "dono": "Usuario",
+   "estado_na_fonte": "[INCERTO]; nomes na tabela do README, faltava confirmar que a composicao nao mudou desde a Fase 2.",
+   "aplicavel_fase4": "sim",
+   "motivo": "Relatorio da Fase 4 tambem pede participantes; reconfirmar.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:87",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:132"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "id_original": "D-015 (comprovante)",
+   "descricao": "Vincular ao relatorio o anexo/print/link da aprovacao do professor para a excecao 2 RDS + pod.",
+   "dono": "Usuario",
+   "estado_na_fonte": "Comprovante nao localizado em 2026-09-09.",
+   "aplicavel_fase4": "talvez",
+   "motivo": "So se a Fase 4 mantiver 2 RDS + pod e quiser rastreabilidade.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:28",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:103"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "id_original": "S-03 / S-04 / S-07 / R-04 / R-08",
+   "descricao": "Sugestoes nao implementadas: scan de IaC (Checkov/tfsec/Trivy config), Prowler, CloudTrail e logs do EKS, testes unitarios, SonarCloud.",
+   "dono": "Grupo (opcional)",
+   "estado_na_fonte": "Nao iniciadas em 2026-09-09.",
+   "aplicavel_fase4": "talvez",
+   "motivo": "Logs do EKS/CloudTrail podem complementar observabilidade; demais sao opcionais.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:99",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:103",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:112-116"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "id_original": "P-052",
+   "descricao": "Adaptar os pushes automáticos de tag GitOps que o CI faz direto na main ao fluxo dev -> PR -> main.",
+   "dono": "não informado",
+   "estado_na_fonte": "Pendente em 2026-09-09; em 2026-09-14 tratado como exceção intencional D-021.",
+   "aplicavel_fase4": "sim",
+   "motivo": "O GitOps e o self-healing da Fase 4 continuam escrevendo no Git; a política de branch precisa ser decidida.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:41",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:167",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:33-35"
+   ],
+   "lote": "G10-menores"
+  },
+  {
+   "id_original": "sem ID (proteção de branch)",
+   "descricao": "O GitHub não tinha proteção de branch; a disciplina dev -> PR -> main era apenas processual.",
+   "dono": "usuário",
+   "estado_na_fonte": "Aberta em 2026-09-14.",
+   "aplicavel_fase4": "talvez",
+   "motivo": "Depende de o usuário querer impor a regra na plataforma; nesta etapa não há alteração remota autorizada.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:34-35"
+   ],
+   "lote": "G10-menores"
+  },
+  {
+   "id_original": "P-018 / sem ID",
+   "descricao": "Confirmar a composição do grupo e garantir acesso do avaliador ao repositório privado.",
+   "dono": "usuário",
+   "estado_na_fonte": "Aberta em 2026-09-14 (faltavam vídeo, confirmação dos participantes e acesso do avaliador).",
+   "aplicavel_fase4": "sim",
+   "motivo": "A Fase 4 terá nova entrega em grupo; integrantes e acesso precisam ser confirmados de novo.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:24-25",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:83-85"
+   ],
+   "lote": "G10-menores"
+  },
+  {
+   "id_original": "sem ID (reconstrução)",
+   "descricao": "Recriar base, imagens, cluster e k8s; atualizar endpoint Redis; rodar schemas/seed; capturar nova tag sincronizada pelo ArgoCD.",
+   "dono": "não informado",
+   "estado_na_fonte": "Pré-requisito de novo ensaio em 2026-09-14.",
+   "aplicavel_fase4": "sim",
+   "motivo": "É exatamente o que a conta nova exigirá antes de qualquer demonstração de observabilidade.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:27-31"
+   ],
+   "lote": "G10-menores"
+  },
+  {
+   "id_original": "P-049",
+   "descricao": "Consolidar os documentos antigos preservados (contexto histórico de instruções).",
+   "dono": "não informado",
+   "estado_na_fonte": "Citada em 2026-09-09; os arquivos foram movidos para _ARQUIVO_MORTO em 2026-09-15 (git log).",
+   "aplicavel_fase4": "nao",
+   "motivo": "Superada pela mescla das pastas 00_COLAB_IA pedida na Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:54"
+   ],
+   "lote": "G10-menores"
+  },
+  {
+   "id_original": "P-025",
+   "descricao": "Aguardar aprovação do usuário para o plano do Terraform.",
+   "dono": "usuário",
+   "estado_na_fonte": "Aberta em 2026-08-27; superada pelo apply da base em 2026-09-07.",
+   "aplicavel_fase4": "nao",
+   "motivo": "Histórica.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:61",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:101"
+   ],
+   "lote": "G10-menores"
+  },
+  {
+   "id_original": "sem ID (checklist dependente do cluster)",
+   "descricao": "Itens de evidência que dependiam do cluster no ar (apply cluster/k8s, EKS, RDS, Redis, ArgoCD Synced/Healthy, sincronização de tag, teste funcional, DynamoDB) e entregáveis (vídeo, relatório) desmarcados.",
+   "dono": "grupo",
+   "estado_na_fonte": "Desmarcados em 2026-09-09 (estado posterior não registrado neste arquivo).",
+   "aplicavel_fase4": "talvez",
+   "motivo": "Os mesmos itens precisarão ser refeitos na conta nova se entrarem no vídeo da Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/EVIDENCIAS.md:21-36"
+   ],
+   "lote": "G10-menores"
+  },
+  {
+   "id_original": "RELATORIO 2 / build-report pág. 2",
+   "descricao": "Inserir o link do vídeo de demonstração e testar sem login.",
+   "dono": "grupo (não nominado)",
+   "estado_na_fonte": "pendente em 2026-09-14",
+   "aplicavel_fase4": "sim",
+   "motivo": "A Fase 4 também exige vídeo (até 25 min) com link acessível; a pendência da Fase 3 em si é histórica.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:31",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:278"
+   ],
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "id_original": "build-report capa e pág. 2",
+   "descricao": "Confirmar a composição do grupo e garantir acesso do avaliador ao repositório (privado em 2026-09-14).",
+   "dono": "grupo (não nominado)",
+   "estado_na_fonte": "pendente em 2026-09-14",
+   "aplicavel_fase4": "sim",
+   "motivo": "O repositório da Fase 4 também precisa estar acessível ao avaliador, e a lista de integrantes precisa ser reconfirmada.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:226-228",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:264",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:288-292",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:344"
+   ],
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "id_original": "build-report tabela de evidências",
+   "descricao": "Gravar no vídeo a nova tag sincronizada e os cinco serviços no ArgoCD.",
+   "dono": "grupo (não nominado)",
+   "estado_na_fonte": "pendente em 2026-09-14",
+   "aplicavel_fase4": "talvez",
+   "motivo": "Só se a Fase 4 quiser mostrar o ciclo GitOps como contexto.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:285",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:343"
+   ],
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "id_original": "build-report D-015",
+   "descricao": "Anexar o comprovante do professor para o desvio de duas instâncias RDS, se disponível.",
+   "dono": "não informado",
+   "estado_na_fonte": "pendente/condicional em 2026-09-14",
+   "aplicavel_fase4": "talvez",
+   "motivo": "Só se a Fase 4 mantiver o desvio na conta nova.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:315"
+   ],
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "id_original": "RELATORIO 9",
+   "descricao": "Inserir URL do perfil público/badge do Google Cloud Skills Boost (atividade opcional).",
+   "dono": "não informado",
+   "estado_na_fonte": "placeholder vazio em 2026-09-11",
+   "aplicavel_fase4": "talvez",
+   "motivo": "Depende de a Fase 4 ter atividade opcional equivalente.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:309-312"
+   ],
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "id_original": "RELATORIO 7.5",
+   "descricao": "Revisar os três CVEs críticos de perl-base no .trivyignore na data de revisão registrada.",
+   "dono": "não informado",
+   "estado_na_fonte": "exceções com data de revisão (data não citada neste lote)",
+   "aplicavel_fase4": "sim",
+   "motivo": "As exceções continuam no código herdado e podem vencer ou ganhar correção durante a Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:200-206"
+   ],
+   "lote": "G11-relatorio-scripts"
+  }
+ ],
+ "conflitos_extracao": [
+  {
+   "descricao": "D-024 proíbe editar services/** e .github/workflows/**. A Fase 4 precisa instrumentar os 5 serviços com OTel e criar workflow de self-healing. A regra era circunstancial (role OIDC destruída) e deve ser tratada como superada; continua valendo apenas o cuidado de não fazer merge na main antes de a role existir na conta nova.",
+   "fontes": [
+    "docs/00_COLAB_IA/DECISOES.md:12",
+    "docs/00_COLAB_IA/DECISOES.md:24"
+   ],
+   "lote": "G01-decisoes"
+  },
+  {
+   "descricao": "D-022 registra create_github_oidc_provider = false porque a conta da Fase 3 já tinha o provedor de outro projeto. Na conta nova o valor provavelmente é true (o terraform.tfvars.example atual já usa true); precisa ser verificado antes do apply.",
+   "fontes": [
+    "docs/00_COLAB_IA/DECISOES.md:47",
+    "docs/00_COLAB_IA/DECISOES.md:49-51"
+   ],
+   "lote": "G01-decisoes"
+  },
+  {
+   "descricao": "D-016 e D-015 se apoiam em limites do plano gratuito da conta da Fase 3 (t3.medium recusada, 3a instância RDS recusada) e em crédito de US$ 70,33. A conta nova pode ter limites e créditos diferentes; a escolha de instância e o arranjo 2 RDS + pod devem ser revalidados, e a aprovação do professor foi dada para a Fase 3.",
+   "fontes": [
+    "docs/00_COLAB_IA/DECISOES.md:158-168",
+    "docs/00_COLAB_IA/DECISOES.md:172-176"
+   ],
+   "lote": "G01-decisoes"
+  },
+  {
+   "descricao": "D-012 (sem Ingress nem LB; varredura do enunciado da Fase 3) foi justificada pelo enunciado da Fase 3. A Fase 4 inclui Grafana, PagerDuty, Slack e self-healing; é preciso repetir a análise sobre o enunciado da Fase 4 antes de manter a decisão.",
+   "fontes": [
+    "docs/00_COLAB_IA/DECISOES.md:208-218"
+   ],
+   "lote": "G01-decisoes"
+  },
+  {
+   "descricao": "D-009 fixa phase = 3. O código atual já usa phase = \"4\"; a regra de formato (minúsculas, default_tags) continua, mas o valor muda.",
+   "fontes": [
+    "docs/00_COLAB_IA/DECISOES.md:250"
+   ],
+   "lote": "G01-decisoes"
+  },
+  {
+   "descricao": "D-021/D-020 pressupõem PR e merge na main e push do robô na main. Na etapa atual da Fase 4 (CLAUDE.md) não há autorização de push, PR nem alteração da main; o fluxo continua como regra, mas sua execução depende de nova autorização.",
+   "fontes": [
+    "docs/00_COLAB_IA/DECISOES.md:67",
+    "docs/00_COLAB_IA/DECISOES.md:86"
+   ],
+   "lote": "G01-decisoes"
+  },
+  {
+   "descricao": "D-018 e D-024 citam o uso do Secrets Manager e chaves de aplicação; a Fase 4 traz segredos de terceiros (New Relic, PagerDuty, Slack). O padrão 'Terraform cria o Secret, nada no Git' deve ser estendido, mas o SECRETS-CONTRATO.md precisa ser atualizado para não ficar incompleto.",
+   "fontes": [
+    "docs/00_COLAB_IA/DECISOES.md:122",
+    "docs/00_COLAB_IA/DECISOES.md:132",
+    "docs/00_COLAB_IA/DECISOES.md:136"
+   ],
+   "lote": "G01-decisoes"
+  },
+  {
+   "descricao": "D-006 (prazo 2026-09-15) e D-001 (repo destino tech-challenge-03) são da Fase 3 e contradizem o contexto atual (entrega 2026-11-17; repo tech-challenge-04, com tech-challenge-03 somente leitura).",
+   "fontes": [
+    "docs/00_COLAB_IA/DECISOES.md:284",
+    "docs/00_COLAB_IA/DECISOES.md:294"
+   ],
+   "lote": "G01-decisoes"
+  },
+  {
+   "descricao": "D-017 e D-023 falam em estados no mesmo bucket e em sufixo do bucket real da conta antiga; na conta nova o bucket e as chaves de estado precisam ser novos, sem reaproveitar o estado da Fase 3.",
+   "fontes": [
+    "docs/00_COLAB_IA/DECISOES.md:142-145",
+    "docs/00_COLAB_IA/DECISOES.md:25"
+   ],
+   "lote": "G01-decisoes"
+  },
+  {
+   "descricao": "A Fase 3 proíbe citar IA, assistentes, o nome 00_COLAB_IA ou códigos internos fora da pasta de colaboração e afirma que não existem CLAUDE.md nem AGENTS.md na raiz. Na Fase 4 existe CLAUDE.md versionado na raiz citando 00_COLAB_IA, P-008 e Codex. Decidir se a regra continua valendo para documentos públicos (README, relatório) e se o CLAUDE.md fica fora dela.",
+   "fontes": [
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:5",
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:39",
+    "docs/00_COLAB_IA/LEIA-PRIMEIRO.md:28",
+    "CLAUDE.md (raiz da Fase 4, contexto)"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "descricao": "Na Fase 3 a memória fica em docs/00_COLAB_IA e as subpastas 02_TRABALHO e 03_ENTREGAVEIS deixaram de existir em 2026-09-15. Na Fase 4 a colaboração vigente fica em 00_COLAB_IA na raiz e usa 00_COLAB_IA/02_TRABALHO para auxiliares locais. As regras de destino e os links relativos (../../README.md, ../GUIA_DE_REPRODUCAO.md) da Fase 3 quebram ao mover o conteúdo.",
+   "fontes": [
+    "docs/00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md:25-31",
+    "docs/00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md:41-42",
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:97-114",
+    "CLAUDE.md (raiz da Fase 4, contexto)"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "descricao": "D-022 manda manter create_github_oidc_provider = false e nunca recriar o provedor OIDC, porque na conta da Fase 3 ele pertencia a outro projeto. A Fase 4 usa conta nova e o terraform.tfvars.example já traz true (conferido em 2026-11-01). A regra \"Não repetir\" da Fase 3 não deve ser copiada sem adaptação; verificar a conta nova antes do apply.",
+   "fontes": [
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:67",
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:124",
+    "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:51",
+    "terraform/terraform.tfvars.example:83"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "descricao": "Fatos fixos da Fase 3 que mudaram: tag phase=3 (Fase 4 usa phase=\"4\" em terraform/variables.tf:58) e chaves de estado prod/*.tfstate (Fase 4 usa phase4/prod/base.tfstate em terraform/backend.tf:43). O bucket de estado da Fase 3 é da conta antiga, proibida na Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:25-29",
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:14-15"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "descricao": "A regra \"extra só com justificativa direta e sem peça nova em runtime\" contraria o escopo da Fase 4, que exige componentes novos em runtime (OTel Collector, Prometheus, Loki, Grafana, APM New Relic). Manter a ideia de entregar o básico, mas medida contra o enunciado da Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:69"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "descricao": "A Fase 3 proíbe editar services/** e .github/workflows/** sem a role da AWS, porque o merge na main roda image e gitops e falha no OIDC. A Fase 4 precisa instrumentar os serviços com OTel e criar workflows de self-healing (o CLAUDE.md registra a integração OTel local concluída). A regra deve virar uma ordem de execução: criar a role do CI na conta nova antes de levar essas mudanças à main.",
+   "fontes": [
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:3",
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:78-86",
+    "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:52",
+    "CLAUDE.md (raiz da Fase 4, contexto)"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "descricao": "O ritual da Fase 3 manda sincronizar a dev com origin/main (git merge --ff-only) antes de editar. Na etapa atual da Fase 4 não há push, PR nem alteração da main, e a main do repositório da Fase 4 é outra; aplicar o ritual sem adaptação pode falhar ou trazer conteúdo indesejado.",
+   "fontes": [
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:53-64",
+    "docs/00_COLAB_IA/LEIA-PRIMEIRO.md:37",
+    "CLAUDE.md (raiz da Fase 4, contexto)"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "descricao": "A Fase 3 diz que o material de aula continua versionado por decisão do usuário e lista o enunciado da Fase 3 em docs/. No working tree da Fase 4 (git status do início da sessão) os PDFs e guias da Fase 3 em docs/aulas-fiap e o PDF do enunciado da Fase 3 aparecem como apagados, ainda não comitados. Confirmar com o usuário se a remoção é intencional.",
+   "fontes": [
+    "docs/00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md:21-24",
+    "docs/00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md:38-39"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "descricao": "Numeração: a Fase 3 usou P-001 a P-053 e F-001 a F-051 no histórico arquivado, depois P-100 a P-132, e D-001 a D-024 (próxima D-025). A Fase 4 já usa IDs como P-008 e E1. Ao mesclar, prefixar ou renumerar os itens herdados para evitar colisão de IDs.",
+   "fontes": [
+    "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:5",
+    "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:112",
+    "docs/00_COLAB_IA/LEIA-PRIMEIRO.md:15",
+    "CLAUDE.md (raiz da Fase 4, contexto)"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "descricao": "A Fase 3 define o _ARQUIVO_MORTO como somente leitura, que não se edita nem se apaga para consertar links. O usuário pediu para descartar a pasta da Fase 3 após a mesclagem. A pedido explícito do usuário prevalece; os originais seguem recuperáveis no Git e no repositório da Fase 3, e o de-para deve ser registrado no LOG.",
+   "fontes": [
+    "docs/00_COLAB_IA/LEIA-PRIMEIRO.md:30-32",
+    "docs/00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md:42"
+   ],
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "descricao": "D-024 proíbe que documentos públicos citem IA ou códigos internos (D-0xx, P-0xx, F-0xx, O-xx) e restringe esse material à pasta de colaboração. Na Fase 4, a pasta de colaboração vigente fica na raiz (00_COLAB_IA/) e o CLAUDE.md da raiz cita IA e códigos como P-008; é preciso decidir se a regra continua e como ela se aplica à nova localização.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:40",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:146"
+   ],
+   "lote": "G03-log-recente"
+  },
+  {
+   "descricao": "Regra 'nesta conta, sempre create_github_oidc_provider = false' e 'nunca destruir esse provedor' valem para a conta da Fase 3. Na conta nova da Fase 4 o provedor pode não existir, e o valor correto pode ser true.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:91",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:93"
+   ],
+   "lote": "G03-log-recente"
+  },
+  {
+   "descricao": "O usuário decidiu em 2026-09-13 manter o material de aula da FIAP no repositório (depois movido para docs/aulas-fiap/). No estado atual da Fase 4 esses arquivos aparecem como apagados na árvore de trabalho; confirmar se a decisão mudou.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:138-142"
+   ],
+   "lote": "G03-log-recente"
+  },
+  {
+   "descricao": "O conteúdo arquivado da Fase 3 não devia ser editado nem para consertar links. A mesclagem pedida para a Fase 4 descarta a pasta docs/00_COLAB_IA; os originais continuam recuperáveis no Git, mas a regra de imutabilidade do arquivo morto deixa de valer no repositório da Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:40"
+   ],
+   "lote": "G03-log-recente"
+  },
+  {
+   "descricao": "EKS 1.34 em suporte padrão até 2026-12-01: a entrega da Fase 4 (2026-11-17) fica dentro do prazo, mas com pouca folga; conferir se a versão continua adequada na conta nova.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:224"
+   ],
+   "lote": "G03-log-recente"
+  },
+  {
+   "descricao": "Mitigação de F-014: aceitar o ID da conta no nome do bucket e no backend.tf versionado, com o repositório privado até a entrega. Na Fase 4, IDs, ARNs e estado da conta da Fase 3 são proibidos; o backend e o security-check precisam refletir a conta nova e bloquear o ID antigo.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:423",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:251"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "descricao": "security-check.sh da Fase 3 trata como 'legado' só a conta do AWS Academy da Fase 2. Na Fase 4 a conta da Fase 3 também vira legado e deve ser bloqueada.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:251"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "descricao": "D-021 mantém o robô fazendo push direto na main. O CLAUDE.md da Fase 4 diz 'sem push, PR ou alteração da main nesta etapa', e o self-healing via GitHub Actions pode gravar no repositório. Precisa de decisão explícita na Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:265",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:284"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "descricao": "D-009 fixa a tag phase=3. Na Fase 4 o valor provavelmente deve mudar (ex.: phase=4), mantendo a grafia minúscula, para o print de custos.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:395",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:419"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "descricao": "D-012 (sem Ingress) foi validada contra o enunciado da Fase 3. A Fase 4 adiciona Grafana, APM, alertas e possivelmente testes de carga; é preciso reverificar o enunciado da Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:407"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "descricao": "Dimensionamento de 2 x t3.medium foi medido para a carga da Fase 3. A stack de observabilidade da Fase 4 (OTel Collector, Prometheus, Loki, Grafana) pode exigir mais capacidade.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:395",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:407"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "descricao": "Na Fase 3 preferências do usuário foram gravadas na 'memória do projeto' pelo assistente por iniciativa própria; o CLAUDE.md da Fase 4 diz 'Memória global somente quando pedida pelo usuário'.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:371",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:373",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:395"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "descricao": "O .trivyignore da Fase 3 foi justificado por 3 CVEs CRITICAL medidos em 2026-09-09 (perl-base do python:3.12-slim). Com imagens novas e dependências de OTel na Fase 4, a lista pode estar desatualizada e deve ser remedida.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:247"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "descricao": "Números de crédito (~190 horas em 2026-08-27) e prazo 2026-09-15 pertencem à conta e à entrega da Fase 3; não valem para a conta nova nem para 2026-11-17.",
+   "fontes": [
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:389",
+    "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:453"
+   ],
+   "lote": "G04-log-antigo"
+  },
+  {
+   "descricao": "O guia cita o bucket de estado da conta da Fase 3 (com o ID da conta) como pré-requisito. Na Fase 4 a conta da Fase 3 é proibida; o bucket, os backends e o pré-voo ('Account' igual à dona do bucket e das URLs do ECR) precisam refletir a conta nova.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:436-438",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:458-459"
+   ],
+   "lote": "G05-operacao"
+  },
+  {
+   "descricao": "Decisão de não ter Ingress nem Load Balancer (economia de US$ 16-20/mês) pode conflitar com a Fase 4 se Grafana, ArgoCD ou integrações (ChatOps no Slack, webhooks) precisarem de endpoint de entrada; com port-forward, a demonstração exige vários túneis.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1159-1160",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1198-1201"
+   ],
+   "lote": "G05-operacao"
+  },
+  {
+   "descricao": "Tabela de custo e tamanho do cluster (2 x c7i-flex.large, total US$ 0,385/h) não inclui Prometheus, Loki, Grafana e OTel Collector da Fase 4; capacidade dos nós e custo podem mudar.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1572-1581"
+   ],
+   "lote": "G05-operacao"
+  },
+  {
+   "descricao": "Publicação de imagem e GitOps só ocorrem em push na main; workflow_dispatch não publica. O self-healing via GitHub Actions da Fase 4, se disparado por evento externo (repository_dispatch/workflow_dispatch), não poderá republicar imagens sem ajustar essas condições.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:637-640",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1539"
+   ],
+   "lote": "G05-operacao"
+  },
+  {
+   "descricao": "O guia manda levar mudanças até a main via push na dev, PR e merge (inclusive comandos gh pr create/merge). Na etapa atual da Fase 4 não há autorização para push, PR ou alteração da main.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:859-898",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:694-702"
+   ],
+   "lote": "G05-operacao"
+  },
+  {
+   "descricao": "Instruções de clone e nomes de projeto apontam para tech-challenge-03 (URL, prefixo de containers, projeto Compose tc03-integration, nome de chave 'demo-fase3'); na Fase 4 o repositório é outro.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:108-124",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:164-175",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:374",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1243"
+   ],
+   "lote": "G05-operacao"
+  },
+  {
+   "descricao": "O guia afirma ser 'o único guia operacional do projeto'. Na Fase 4 a colaboração vigente fica em 00_COLAB_IA/ na raiz; é preciso definir qual guia operacional prevalece para não haver dois.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:3-5"
+   ],
+   "lote": "G05-operacao"
+  },
+  {
+   "descricao": "Limite do vídeo: a Fase 3 trabalhava com até 20 minutos (roteiro, tabela de cenas e checklist); a Fase 4 permite até 25 minutos. Roteiros e checklists herdados precisam ser recalibrados.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/ROTEIRO_VIDEO.md:1",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:38",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:968",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:828"
+   ],
+   "lote": "G06-gravacao"
+  },
+  {
+   "descricao": "Os runbooks usam a conta AWS da Fase 3 como conta 'esperada', o bucket de estado com o ID dela e o ARN da role do CI. A Fase 4 proíbe usar IDs, ARNs e estado da conta anterior; tudo deve ser regenerado na conta nova.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:84",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:217",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:606",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:155",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:553"
+   ],
+   "lote": "G06-gravacao"
+  },
+  {
+   "descricao": "Reaproveitamento do provedor OIDC de outro projeto (create_github_oidc_provider = false) era específico da conta da Fase 3. Na conta nova provavelmente não há provedor prévio, e o terraform.tfvars.example atual traz true; a conferência 'nenhuma linha de OIDC no destroy' se inverte quando o provedor é do próprio projeto.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:62",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:772-782",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:880-892"
+   ],
+   "lote": "G06-gravacao"
+  },
+  {
+   "descricao": "Valores dependentes da conta (REDIS_URL e ARNs de IRSA) estão gravados no GitOps; com conta nova eles mudam e precisam ser atualizados antes do primeiro sync. O repoURL do ArgoCD e as URLs do repositório também apontavam para o repositório da Fase 3.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:463-476",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:130",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:414-416"
+   ],
+   "lote": "G06-gravacao"
+  },
+  {
+   "descricao": "Decisões tomadas por limite do plano gratuito (2 RDS, c7i-flex.large) podem não valer na conta nova; e a stack de observabilidade da Fase 4 pode exigir nós maiores. Precisam ser revistas, não herdadas.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:378-385",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:940-943"
+   ],
+   "lote": "G06-gravacao"
+  },
+  {
+   "descricao": "Base 'permanente' com só NAT desligado (11/09) contra destruir as três camadas (15/09). A Fase 4 precisa escolher uma política; com base destruída, merges em services/ ou workflows falham no job de imagem por falta da role do CI.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:130-133",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:906-907",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:189-192",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:810-811"
+   ],
+   "lote": "G06-gravacao"
+  },
+  {
+   "descricao": "Regra do dia de 15/09: nenhum merge na main que mexa em services/ ou workflows fora da cena, porque cada merge publica imagem e comita tag. O self-healing via GitHub Actions da Fase 4 pode exigir workflows que agem na main ou no cluster; a regra deve ser reavaliada para não bloquear a demo.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:53-54"
+   ],
+   "lote": "G06-gravacao"
+  },
+  {
+   "descricao": "O guia de 11/09 apresenta a recriação de pod apagado como self-heal do ArgoCD. A Fase 4 exige self-healing via GitHub Actions; reaproveitar a narração herdada pode gerar afirmação tecnicamente imprecisa no vídeo.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:477-488"
+   ],
+   "lote": "G06-gravacao"
+  },
+  {
+   "descricao": "O guia afirma que o CI não faz deploy e prova ausência de kubectl apply nos workflows ('abandonar o push direto'). Se o self-healing da Fase 4 usar GitHub Actions agindo diretamente no cluster (ex.: rollout restart), isso muda essa narrativa e precisa ser justificado.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:330-338",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:702-717"
+   ],
+   "lote": "G06-gravacao"
+  },
+  {
+   "descricao": "Os runbooks da Fase 3 incluem caminhos locais com nome de usuário, nome de outro projeto pessoal e ID de conta; as regras da Fase 4 vedam reproduzir dados pessoais e IDs da conta anterior nos documentos de colaboração.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:30",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:62",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:1064"
+   ],
+   "lote": "G06-gravacao"
+  },
+  {
+   "descricao": "Conflito interno da Fase 3 que chega à Fase 4: o guia mandava remover PyYAML==6.0.1 após a demo; o plano mandava mantê-la para a Cena 6. A linha continua no requirements.txt do flag-service da dev.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:982",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:414-415"
+   ],
+   "lote": "G06-gravacao"
+  },
+  {
+   "descricao": "Pasta de colaboracao: a Fase 3 manda manter o contexto em docs/00_COLAB_IA/ e ler LEIA-PRIMEIRO/PENDENCIAS/CHECKLIST_REQUISITOS_FASE3 de la; na Fase 4 a colaboracao vigente e 00_COLAB_IA/ na raiz e docs/00_COLAB_IA sera descartada.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:55",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:85-86",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:169"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "descricao": "ID de conta e bucket: a Fase 3 registrou o ID da conta e o nome do bucket em documentos e no backend.tf versionado, mitigando com repositorio privado ate a entrega. Na Fase 4 a conta anterior e seus IDs/ARNs/estado sao proibidos, e o tratamento do ID da conta nova em arquivos versionados/publicos precisa ser decidido de novo.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:416",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:75"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "descricao": "Commit e push: a Fase 3 previa 'verificar, commitar e fazer push quando solicitado' e D-020 promovia por PR dev -> main; na etapa atual da Fase 4 nao ha autorizacao de push, PR nem alteracao da main.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:93",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:13"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "descricao": "D-021 permite push automatico do robo GitOps na main; o self-healing via GitHub Actions da Fase 4 pode ampliar escritas automaticas no repo e na main, o que pode conflitar com a disciplina de branch e com a regra atual de nao alterar a main.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:24",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:51"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "descricao": "Tag phase = 3 (D-009) fixada em minusculas via default_tags; na Fase 4 o valor provavelmente deve mudar (nao consta decisao neste lote).",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:76",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:107"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "descricao": "Limites do plano gratuito (2 RDS, so tipos Free Tier) e credito de US$ 70,33 valiam para a conta anterior; D-015 e D-016 dependem disso. Na conta nova os limites podem ser outros e as decisoes precisam ser reconfirmadas.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:426-428"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "descricao": "Sem Ingress/Load Balancer (D-012) foi justificado pelo enunciado da Fase 3; a Fase 4 (Grafana, ChatOps, PagerDuty, self-healing) pode exigir acesso externo ou webhooks entrantes, o que precisa ser verificado no enunciado da Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:110",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:420"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "descricao": "Sizing com 2 nos c7i-flex.large foi calculado para 450m CPU/512Mi de apps mais ArgoCD; a stack de observabilidade da Fase 4 aumenta o consumo e pode invalidar a folga (inferencia, nao medido na fonte).",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:432",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:428"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "descricao": "Prazo e video: Fase 3 tinha prazo 2026-09-15 e video ate 20 minutos; Fase 4 tem entrega em 2026-11-17 e video ate 25 minutos.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:85",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:103"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "descricao": "selfHeal do ArgoCD ligado (P-029) desfaz alteracoes manuais no cluster; demonstracoes de falha/incidente da Fase 4 podem ser revertidas antes de gerar alerta, se a falha for provocada por mudanca de manifesto.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:199-202",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:8"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "descricao": "Regra antiga de tratar repos de fases anteriores como fonte de leitura menciona tech-challenge-02; na Fase 4 a regra equivalente vale para tech-challenge-03 (somente leitura). Nao ha contradicao de principio, so de alvo.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:56"
+   ],
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "descricao": "A Fase 3 decidiu colocar o ID da conta no nome do bucket e no backend.tf versionado, com a mitigacao de manter o repositorio privado. Na Fase 4 os IDs, ARNs e o estado da conta antiga sao proibidos, e o backend esta em configuracao parcial (bucket e regiao via backend.hcl). Nao copiar o nome do bucket nem o bloco backend do bootstrap.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/BOOTSTRAP-BACKEND-S3_2026-08-27.md:34",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/BOOTSTRAP-BACKEND-S3_2026-08-27.md:300-316",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:17-21"
+   ],
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "descricao": "Chaves de estado: o bootstrap propunha global/terraform.tfstate e a Fase 3 usou prod/<camada>.tfstate. A Fase 4 usa phase4/prod/<camada>.tfstate. Os comandos do guia de destruicao assumem as chaves antigas.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/BOOTSTRAP-BACKEND-S3_2026-08-27.md:310",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:11-13"
+   ],
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "descricao": "A tag phase = 3 (D-009) e o filtro de conferencia phase=3 divergem do padrao atual phase = \"4\" (terraform/variables.tf da Fase 4). As consultas de conferencia precisam ser ajustadas.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/BOOTSTRAP-BACKEND-S3_2026-08-27.md:124",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:176"
+   ],
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "descricao": "O runbook manda dar commit, push, abrir PR e fazer merge na main durante a sessao (passo 1.5). Pela regra vigente da Fase 4 nesta etapa, nao ha push, PR nem alteracao da main. O fluxo D-020 (dev, PR, main) so pode voltar quando o usuario autorizar.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:293-309"
+   ],
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "descricao": "O guia de destruicao executa a partir do checkout do repositorio tech-challenge-03 e valida a conta da Fase 3; o runbook espera a conta antiga no STS. Na Fase 4, o tech-challenge-03 e somente leitura e a conta antiga nao pode ser usada.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:40-55",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:43-49"
+   ],
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "descricao": "Limite de video: o runbook cita 20 minutos (Fase 3); a Fase 4 permite video de ate 25 minutos. O mapa O-27 a O-32 e os IDs de checklist sao da Fase 3.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:563-589"
+   ],
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "descricao": "A estrategia de custo assume credito de US$ 70 (2026-08-27), cerca de US$ 0,37/h e cerca de 3 sessoes. A conta nova tem orcamento desconhecido neste lote, e a stack de observabilidade (Collector, Prometheus, Loki, Grafana) muda tempo, custo e talvez o tamanho dos nos.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:13-19",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:668-681"
+   ],
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "descricao": "Sem Ingress (D-012) e acesso so por port-forward podem conflitar com a Fase 4, que precisa de Grafana visivel, webhooks (PagerDuty, Slack) e self-healing via GitHub Actions alcancando o cluster. Se for adotado Load Balancer ou Ingress, volta o risco de DependencyViolation no destroy.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:608-611",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:19",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:165"
+   ],
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "descricao": "O token do ArgoCD foi pensado para a organizacao e o repositorio da Fase 3, com validade apos 2026-09-15. O repositorio da Fase 4 e outro; a visibilidade (privado ou publico) decide se o token e necessario.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:65-164"
+   ],
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "descricao": "Conflitos internos da Fase 3 a nao herdar sem verificar: o bootstrap fala em '3 RDS', mas o runbook e o inventario mostram 2 RDS e o targeting em pod; o runbook diz que ECR/SQS/DynamoDB/IAM nao cobram parados, enquanto o guia de destruicao diz que preservar a base pode manter custos; o runbook diz duracao alvo de 3 h, mas soma cerca de 2 h.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/BOOTSTRAP-BACKEND-S3_2026-08-27.md:326",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:209-210",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:647-649",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:212",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:3-4",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:677"
+   ],
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "descricao": "Regra de escopo da Fase 3: nao introduzir multiplos ambientes, Ingress, Helm charts proprios, ESO, KEDA, DAST ou 'plataformas de observabilidade', e 'nao acrescentar novos componentes'. A Fase 4 exige justamente OTel Collector, Prometheus, Loki, Grafana, New Relic, PagerDuty e Slack. A regra vale so como orientacao de nao inflar alem do pedido.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:105",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:175",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:101"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "descricao": "Limite do video: 20 min na Fase 3; a Fase 4 permite ate 25 min. Prazo da Fase 3 (2026-09-15) nao vale para a Fase 4 (2026-11-17).",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-fiap-texto-por-pagina-2026-09-09.txt:121",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:25"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "descricao": "S-08 evitou dar credencial AWS ao CI (sem plan automatizado) para nao expor a conta. Self-healing via GitHub Actions na Fase 4 provavelmente exige acesso do CI a AWS/cluster; a decisao precisa ser revista (OIDC ja existe).",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:117"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "descricao": "Fatos de estado da Fase 3 (base aplicada com 33 recursos, bucket de estado criado, ECR com imagens, tags com hash, CI verde) referem-se a conta da Fase 3, que e proibida na Fase 4. Nao podem ser marcados como comprovados na conta nova.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:35-58",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:130"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "descricao": "security-check.sh tratava o ID da conta vigente (Fase 3) como legado; na Fase 4 a logica se inverte (o ID da Fase 3 e que deve ser proibido). Script herdado pode estar desatualizado.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:89",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:53"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "descricao": "Versao EKS 1.34 e chart ArgoCD 7.7.11 foram escolhidos em 2026-09; podem nao estar em suporte padrao/compativeis em 2026-11.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:38",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:63"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "descricao": "Excecao D-015 (2 RDS + pod) foi motivada pelo limite do plano gratuito da conta da Fase 3 e aprovada para a Fase 3. Nao ha registro de que valha automaticamente para a Fase 4 na conta nova.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:39",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:28"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "descricao": "Fase 3 registrou 0 testes unitarios nos servicos; o CLAUDE.md da Fase 4 cita testes Go/Python aprovados (P-008). O fato da Fase 3 esta superado.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:142",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:99"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "descricao": "Os pareceres sao documentos com links publicos ao repositorio e runs da Fase 3 e citam hashes de commit da Fase 3. Se a Fase 4 tiver regra de que documentos publicos nao citam recursos da conta/repositorio anterior, esses links nao devem ser copiados para docs vigentes.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:121",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:149-155",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:91-95"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "descricao": "Checklist 'Fonte unica: paginas 2 a 6 do PDF' da Fase 3; o checklist da Fase 4 deve usar o enunciado da Fase 4 e manter os da Fase 3 so como nao regressao.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:27"
+   ],
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "descricao": "Duração do vídeo: a Fase 3 previa vídeo de até 20 minutos; o contexto da Fase 4 fala em até 25 minutos. Não copiar o limite antigo.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/EVIDENCIAS.md:35",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/ARQUITETURA.md:90"
+   ],
+   "lote": "G10-menores"
+  },
+  {
+   "descricao": "Bucket de estado e conta: as instruções da Fase 3 citam um bucket com o ID da conta antiga como 'fato que vale para qualquer sessão'. Na Fase 4 a conta é nova e esse bucket, ID e estado são proibidos.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:61",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:93"
+   ],
+   "lote": "G10-menores"
+  },
+  {
+   "descricao": "Tag phase = 3 nas regras da Fase 3; o Terraform atual da Fase 4 já usa phase = \"4\" (conferido em terraform/variables.tf em 2026-11-01). Manter a regra de minúsculas, não o valor.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:94-95"
+   ],
+   "lote": "G10-menores"
+  },
+  {
+   "descricao": "Fluxo Git: a Fase 3 prescrevia promover dev -> main por PR e aceitava pushes do robô direto na main (D-021); a Fase 4, nesta etapa, proíbe push, PR e alteração da main. O ArgoCD da Fase 3 observa a main, o que precisa ser repensado.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:20-22",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:33-35",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:162-165",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/ARQUITETURA.md:23-24"
+   ],
+   "lote": "G10-menores"
+  },
+  {
+   "descricao": "Local da memória compartilhada: a Fase 3 determina que registros de trabalho e 00_COLAB_IA fiquem dentro de docs/; na Fase 4 a colaboração vigente fica em 00_COLAB_IA/ na raiz.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:71",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/ORGANIZACAO_DE_PASTAS_2026-08-27.md:3",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/ORGANIZACAO_DE_PASTAS_2026-08-27.md:62-67"
+   ],
+   "lote": "G10-menores"
+  },
+  {
+   "descricao": "'Não há chave estática em lugar nenhum' (Fase 3) precisa ser reinterpretado na Fase 4: New Relic, PagerDuty e Slack exigem chaves/tokens. A regra continua valendo para credenciais AWS, mas os novos segredos precisam de um caminho definido (Secrets via Terraform conforme D-018 ou outro).",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:90-92",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_EXECUCAO.md:8-13",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/ARQUITETURA.md:95-97"
+   ],
+   "lote": "G10-menores"
+  },
+  {
+   "descricao": "TESTE_COMPOSE fala em 'sessão AWS Academy' e em validação posterior 'no Academy', o que contradiz D-016 (conta pessoal, sem AWS Academy). Texto ambíguo/desatualizado; não usar como regra.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/TESTE_COMPOSE.md:13",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/TESTE_COMPOSE.md:43-44",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/ARQUITETURA.md:42-44"
+   ],
+   "lote": "G10-menores"
+  },
+  {
+   "descricao": "A estimativa de custo inclui AWS Secrets Manager (2 segredos), enquanto D-018 diz que os Secrets do Kubernetes são criados pelo Terraform. As fontes deste lote não explicam quais segredos usam o Secrets Manager (ambíguo); conferir antes de refazer a estimativa.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/ESTIMATIVA_CUSTOS_AWS.md:18",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:127-128"
+   ],
+   "lote": "G10-menores"
+  },
+  {
+   "descricao": "Ponteiros da Fase 3 apontam para docs/OPERACAO.md, docs/RELATORIO_DE_ENTREGA.md, docs/ARQUITETURA.md e outros caminhos que podem não existir mais na Fase 4 (vários foram arquivados ou apagados). Não reaproveitar sem conferir.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:11-12",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:136-151",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_EXECUCAO.md:19-25"
+   ],
+   "lote": "G10-menores"
+  },
+  {
+   "descricao": "Acesso só por port-forward (D-012) pode conflitar com a demonstração de dashboards Grafana e com integrações de alerta/self-healing da Fase 4; avaliar se continua suficiente.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/ARQUITETURA.md:33-35"
+   ],
+   "lote": "G10-menores"
+  },
+  {
+   "descricao": "Tags de custo: a Fase 3 aplica phase = 3 via default_tags. Na conta nova da Fase 4, manter a tag com esse valor misturaria a identificação; deve virar phase = 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:300-302"
+   ],
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "descricao": "Regra 'nenhum kubectl apply nos workflows; o pipeline escreve no Git e o ArgoCD toca o cluster' e o self-heal do ArgoCD que desfaz mudanças diretas no cluster. O self-healing via GitHub Actions da Fase 4 pode precisar agir no cluster (por exemplo, reinício de pods); se agir fora do Git, contradiz a regra da Fase 3, e uma mudança de manifesto feita fora do Git seria revertida pelo ArgoCD.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:140-143"
+   ],
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "descricao": "Exceção de branch: o commit automático de tag vai direto para a main. A regra vigente da Fase 4 nesta etapa é trabalhar na dev, sem push, PR ou alteração da main; o fluxo herdado de CI comitando na main não deve ser acionado enquanto essa restrição valer.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:233-239",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:131-138"
+   ],
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "descricao": "Documentos públicos da Fase 3 citam links de execuções do Actions, do repositório tech-challenge-03 e da estimativa da conta antiga. Na Fase 4 é proibido reutilizar identificadores, ARNs, endpoints e estado da conta da Fase 3; links e evidências precisam ser regerados na conta e no repositório novos.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:267-276",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:361",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:250-251"
+   ],
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "descricao": "Afirmação 'nenhuma chave estática no projeto'. Na Fase 4, New Relic, PagerDuty e Slack exigem chaves/tokens; a afirmação só continua verdadeira se essas chaves ficarem fora do Git (GitHub Secrets/Secrets Manager) e o relatório precisar ser ajustado para diferenciar chaves AWS de chaves de terceiros.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:53",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:114-116"
+   ],
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "descricao": "Dimensionamento e custo: 2 nós c7i-flex.large (4 GB) e estimativa de US$ 281,03/mês foram feitos sem observabilidade. Prometheus, Loki, Grafana e OTel Collector podem exigir mais memória/volumes; a estimativa e o dimensionamento da Fase 3 não valem como estão.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:164-165",
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:253-263"
+   ],
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "descricao": "Restrições do plano gratuito (máximo de RDS, t3.medium recusado) foram observadas na conta da Fase 3; não há garantia de que valham para a conta nova da Fase 4.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:152-165"
+   ],
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "descricao": "Ausência de Ingress (acesso só por port-forward) pode conflitar com integrações da Fase 4 que precisem receber chamadas externas; avaliar caso a caso.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:224-231"
+   ],
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "descricao": "O script de captura aceita o banner de cookies (Accept/Aceitar) quando não acha a opção de recusa; isso contraria a prática de escolher a opção mais restritiva de privacidade.",
+   "fontes": [
+    "docs/00_COLAB_IA/_ARQUIVO_MORTO/capturar-estimativa-aws_2026-09-11.cjs:35-41"
+   ],
+   "lote": "G11-relatorio-scripts"
+  }
+ ]
+}

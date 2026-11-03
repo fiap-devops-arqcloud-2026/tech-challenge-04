@@ -1,0 +1,20 @@
+{
+  "consultado_em": "2026-10-28",
+  "agente": "Codex / validar_oidc_atual",
+  "metodo": "GET autenticado via gh api; connector sem acesso; nenhuma mutacao",
+  "repository": {
+    "full_name": "fiap-devops-arqcloud-2026/tech-challenge-04",
+    "id": 1373159817,
+    "owner_id": 287716251,
+    "created_at": "2026-09-16T14:29:16Z",
+    "visibility": "private"
+  },
+  "oidc": {
+    "use_default": true,
+    "use_immutable_subject": true,
+    "sub_claim_prefix": "repo:fiap-devops-arqcloud-2026@287716251/tech-challenge-04@1373159817"
+  },
+  "aws": "Nao consultada; ID da conta permanece a preencher pelo usuario",
+  "criterio": "Trust para main sem environment, compativel com jobs de publicacao locais. Sem prova de autenticacao end-to-end."
+}
+

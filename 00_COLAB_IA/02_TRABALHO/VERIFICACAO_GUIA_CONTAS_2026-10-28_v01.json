@@ -1,0 +1,13 @@
+{
+  "data": "2026-10-28T09:54:56-03:00",
+  "agente": "Codex",
+  "arquivo": "00_COLAB_IA\\02_TRABALHO\\GUIA_CONTAS_E_ACESSOS_FASE4_2026-10-28_v01.md",
+  "cinco_servicos": true,
+  "links_locais": 5,
+  "links_locais_inexistentes": [],
+  "fontes_http": 20,
+  "utf8": true,
+  "padroes_credenciais": false,
+  "log_anterior_preservado": true,
+  "escopo": "Verificacao documental; sem testes externos, criacao de contas ou notificacoes."
+}

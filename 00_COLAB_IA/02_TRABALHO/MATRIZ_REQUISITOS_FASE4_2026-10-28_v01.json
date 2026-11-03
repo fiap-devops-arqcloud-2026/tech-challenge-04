@@ -1,0 +1,351 @@
+{
+  "updated": "2026-10-28",
+  "agent": "Codex",
+  "source": "POSTECH - Tech Challenge - Fase 4.pdf",
+  "source_pages": 7,
+  "scope": "revisão local e evidências preservadas; sem consulta externa",
+  "counts": {
+    "Parcial": 10,
+    "Comprovado localmente": 2,
+    "Pendente": 28,
+    "Confirmar": 2
+  },
+  "requirements": [
+    {
+      "id": "REQ-OBR-01",
+      "requirement": "Manter toda a base das Fases 1, 2 e 3 funcionando.",
+      "pdf_evidence": "p. 2: “é obrigatório que toda a base das Fases 1, 2 e 3 esteja funcionando”",
+      "status": "Parcial",
+      "current_evidence": "E 01/E 03: fluxo funcional local aprovado; AWS simulada por Moto.",
+      "remaining_and_acceptance": "Reproduzir a base completa no cluster/conta da Fase 4, incluindo autenticação, regras, cache, fila e persistência; tratar F-017/F-018 ao definir as falhas."
+    },
+    {
+      "id": "REQ-OBR-02",
+      "requirement": "Manter os cinco microsserviços conteinerizados.",
+      "pdf_evidence": "p. 2: “Os 5 microsserviços conteinerizados.”",
+      "status": "Comprovado localmente",
+      "current_evidence": "E 01/E 03: Dockerfiles e execução dos cinco serviços comprovados.",
+      "remaining_and_acceptance": "Preservar este resultado na versão publicada e demonstrar a implantação conjunta; a exigência específica de conteinerização está comprovada localmente."
+    },
+    {
+      "id": "REQ-OBR-03",
+      "requirement": "Provisionar a infraestrutura por Terraform.",
+      "pdf_evidence": "p. 2: “A infraestrutura provisionada via código (Terraform).”",
+      "status": "Parcial",
+      "current_evidence": "E 04: 40 arquivos .tf; três raízes validadas sem erros.",
+      "remaining_and_acceptance": "Confirmar conta/backend/parâmetros e provisionar a infraestrutura via Terraform; validate não comprova apply ou recursos ativos."
+    },
+    {
+      "id": "REQ-OBR-04",
+      "requirement": "Manter pipelines CI/CD com DevSecOps (GitHub Actions ou similar).",
+      "pdf_evidence": "p. 2: “Pipelines de CI/CD (GitHub Actions ou similar) com DevSecOps.”",
+      "status": "Parcial",
+      "current_evidence": "E 04: nove workflows, build/testes/lint/SAST/SCA/imagens/GitOps declarados.",
+      "remaining_and_acceptance": "Executar CI/CD no repo04 e registrar os resultados/gates; configurar destino AWS. Revisar exceções com revisão vencida e incluir regressão OTel como melhoria F-020."
+    },
+    {
+      "id": "REQ-OBR-05",
+      "requirement": "Implantar no Kubernetes (EKS, GKE ou AKS), com a implantação gerenciada via GitOps (ArgoCD/Flux). Ver Q-01.",
+      "pdf_evidence": "p. 2: “Implantação no Kubernetes (EKS, GKE, AKS) gerenciada via GitOps”",
+      "status": "Parcial",
+      "current_evidence": "E 04: manifests GitOps renderizam 23 objetos; ArgoCD declarado.",
+      "remaining_and_acceptance": "Implantar no Kubernetes via ArgoCD, substituir sentinelas, publicar imagens, inicializar schemas/chaves e comprovar fluxo funcional, não só Running/Synced."
+    },
+    {
+      "id": "REQ-OBR-06",
+      "requirement": "Provisionar a stack de observabilidade no cluster e acrescentar Helm charts ao repositório GitOps.",
+      "pdf_evidence": "p. 3: “adicionando os Helm charts ao seu repositório GitOps”",
+      "status": "Pendente",
+      "current_evidence": "E 04: não há charts/Applications da stack de observabilidade no GitOps operacional.",
+      "remaining_and_acceptance": "Adicionar Helm charts e valores versionados, provisionar a stack dentro do cluster e demonstrar reconciliação GitOps."
+    },
+    {
+      "id": "REQ-OBR-07",
+      "requirement": "Usar Prometheus para armazenar e consultar métricas de infraestrutura.",
+      "pdf_evidence": "p. 3: “Prometheus: para armazenamento e consulta de métricas de infraestrutura.”",
+      "status": "Pendente",
+      "current_evidence": "E 03/E 04: Prometheus não está implementado na composição/overlay operacional.",
+      "remaining_and_acceptance": "Instalar Prometheus e comprovar coleta, armazenamento e consulta de métricas reais de infraestrutura."
+    },
+    {
+      "id": "REQ-OBR-08",
+      "requirement": "Usar Loki para centralizar e indexar todos os logs dos contêineres do cluster.",
+      "pdf_evidence": "p. 3: “Loki: para centralização e indexação de todos os logs dos contêineres do cluster.”",
+      "status": "Pendente",
+      "current_evidence": "E 03/E 04: logs JSON existem no stdout; Loki/coleta central não existem.",
+      "remaining_and_acceptance": "Implantar coleta e Loki com cobertura dos logs dos contêineres do cluster; conferir namespaces/seletores e pesquisar logs reais."
+    },
+    {
+      "id": "REQ-OBR-09",
+      "requirement": "Usar Grafana como visualização principal.",
+      "pdf_evidence": "p. 3: “Grafana: como ferramenta principal de visualização.”",
+      "status": "Pendente",
+      "current_evidence": "E 04: Grafana só aparece no desenho e material didático.",
+      "remaining_and_acceptance": "Implantar Grafana como visualização principal e configurar fontes de dados funcionais."
+    },
+    {
+      "id": "REQ-OBR-10",
+      "requirement": "Criar no Grafana ao menos um dashboard customizado que centralize a saúde do ecossistema: (a) uso de recursos do cluster; (b) taxa de requisições dos microsserviços; (c) painel de logs em tempo real.",
+      "pdf_evidence": "p. 3: “no mínimo, 1 Dashboard customizado”",
+      "status": "Pendente",
+      "current_evidence": "E 05: nenhum dashboard operacional da Fase 4 localizado.",
+      "remaining_and_acceptance": "Criar e mostrar pelo menos um dashboard com recursos do cluster, taxa de requisições dos microsserviços e logs em tempo real."
+    },
+    {
+      "id": "REQ-OBR-11",
+      "requirement": "Centralizar métricas, logs e traces dos microsserviços no OTel Collector, recebendo, processando e exportando para os backends corretos (Prometheus, Loki e APM). Ver Q-08.",
+      "pdf_evidence": "p. 4: “receber, processar e exportar suas métricas, logs e traces”",
+      "status": "Parcial",
+      "current_evidence": "E 02/E 03: Collector local recebe/processa traces e grava arquivo/debug; logs correlacionados no stdout.",
+      "remaining_and_acceptance": "Implementar métricas e coleta de logs, configurar pipelines e exportação para Prometheus/Loki/APM e comprovar os três sinais. JSONL local não é APM."
+    },
+    {
+      "id": "REQ-OBR-12",
+      "requirement": "Escolher UMA ferramenta APM: Datadog OU New Relic; o PDF orienta contas gratuitas for education. Ver Q-04.",
+      "pdf_evidence": "p. 4: “Datadog OU New Relic - use as contas gratuitas for education”",
+      "status": "Parcial",
+      "current_evidence": "E 07/D-009: New Relic escolhido; última informação do usuário é conta ainda indisponível.",
+      "remaining_and_acceptance": "Disponibilizar/configurar conta e validar uso do APM; confirmar acesso educacional indicado no PDF, sem presumir gratuidade/benefícios."
+    },
+    {
+      "id": "REQ-OBR-13",
+      "requirement": "Alterar o código-fonte ou Dockerfile dos microsserviços com bibliotecas de instrumentação.",
+      "pdf_evidence": "p. 4: “altere o código-fonte ou o Dockerfile dos microsserviços”",
+      "status": "Comprovado localmente",
+      "current_evidence": "E 02/E 03: cinco serviços instrumentados, 19 spans e testes; 28 fontes correspondem ao ensaio.",
+      "remaining_and_acceptance": "Preservar a instrumentação e suas regressões na publicação; seu código/funcionamento local estão comprovados. Ingestão APM é tratada em 14/15."
+    },
+    {
+      "id": "REQ-OBR-14",
+      "requirement": "Gerar tracing distribuído e mostrar no APM o caminho de uma requisição ao evaluation-service.",
+      "pdf_evidence": "p. 4: “Ao fazer uma requisição no evaluation-service, o APM deve mostrar o \"caminho\"”",
+      "status": "Parcial",
+      "current_evidence": "E 02/E 03: trace W3C atravessa cinco serviços, HTTP/SQS/SQL/Redis/DynamoDB localmente.",
+      "remaining_and_acceptance": "Exportar ao New Relic e exibir no painel o caminho de uma requisição ao evaluation-service, incluindo dependências."
+    },
+    {
+      "id": "REQ-OBR-15",
+      "requirement": "Exibir no APM o mapa de dependências dos cinco microsserviços.",
+      "pdf_evidence": "p. 4: “mapa de dependências dos seus 5 microsserviços”",
+      "status": "Pendente",
+      "current_evidence": "E 03/E 05: árvore local de spans existe, mas não há Service Map comprovado em APM.",
+      "remaining_and_acceptance": "Exibir o mapa de dependências dos cinco microsserviços no New Relic; testar reconhecimento das relações HTTP e assíncronas."
+    },
+    {
+      "id": "REQ-OBR-16",
+      "requirement": "Configurar um alerta inteligente no Grafana ou no APM.",
+      "pdf_evidence": "p. 5: “configure um alerta inteligente (no Grafana ou APM)”",
+      "status": "Pendente",
+      "current_evidence": "E 04: não há regra operacional de alerta inteligente Grafana/APM.",
+      "remaining_and_acceptance": "Definir sinal, condição, janela e cenário; provocar a condição e comprovar Firing. Limiar de 5% do enunciado é exemplo, não valor obrigatório."
+    },
+    {
+      "id": "REQ-OBR-17",
+      "requirement": "Criar conta no PagerDuty OU OpsGenie e integrar o alerta para abrir incidente automaticamente, com a ferramenta acionando o time (objetivo da p. 3). Ver Q-09.",
+      "pdf_evidence": "p. 5: “integre o alerta para abrir um incidente automaticamente”",
+      "status": "Pendente",
+      "current_evidence": "E 07: PagerDuty escolhido; sem integração/evidência operacional no repo.",
+      "remaining_and_acceptance": "Configurar conta, integração e responsável/escala; comprovar abertura automática de incidente e acionamento do responsável."
+    },
+    {
+      "id": "REQ-OBR-18",
+      "requirement": "Enviar notificação detalhada de ChatOps a Slack, Discord ou Teams. Ver Q-02.",
+      "pdf_evidence": "p. 5: “notificação detalhada para um canal do Slack, Discord ou Teams”",
+      "status": "Pendente",
+      "current_evidence": "E 07: Slack escolhido; sem configuração/evidência operacional de ChatOps.",
+      "remaining_and_acceptance": "Integrar o alerta/incidente e comprovar chegada de notificação detalhada ao canal Slack escolhido."
+    },
+    {
+      "id": "REQ-OBR-19",
+      "requirement": "Criar automação de Self-Healing que reaja automaticamente ao alerta e tente mitigar sem intervenção humana.",
+      "pdf_evidence": "p. 5: “reaja automaticamente ao alerta criado”",
+      "status": "Pendente",
+      "current_evidence": "E 04: não há automação reativa ao alerta; selfHeal do ArgoCD é reconciliação GitOps.",
+      "remaining_and_acceptance": "Implementar e testar mitigação automática ligada ao alerta, com ação pertinente à falha. Confirmar recuperação após a ação como verificação recomendada."
+    },
+    {
+      "id": "REQ-OBR-20",
+      "requirement": "Entregar no repositório IaC/GitOps atualizado com stack e OTel Collector.",
+      "pdf_evidence": "p. 5: “Código IaC/GitOps atualizado para incluir a stack de monitoramento e o OTel Collector.”",
+      "status": "Parcial",
+      "current_evidence": "E 03/E 04: base IaC/GitOps e configuração Collector local existem, mas stack/Collector Kubernetes faltam.",
+      "remaining_and_acceptance": "Completar e entregar código IaC/GitOps da stack e Collector no repositório acessível; verificar implantação a partir dessa versão."
+    },
+    {
+      "id": "REQ-OBR-21",
+      "requirement": "Entregar código das aplicações atualizado com instrumentação.",
+      "pdf_evidence": "p. 5: “Código fonte das aplicações atualizado com a instrumentação.”",
+      "status": "Parcial",
+      "current_evidence": "E 03/E 09: aplicações instrumentadas no checkout dev; alterações ainda locais.",
+      "remaining_and_acceptance": "Consolidar/versionar/publicar o código após autorização e testar acesso do avaliador. Código no checkout não comprova entrega remota."
+    },
+    {
+      "id": "REQ-OBR-22",
+      "requirement": "Entregar scripts ou automações de Self-Healing.",
+      "pdf_evidence": "p. 5: “Scripts ou automações criadas para o Self-Healing.”",
+      "status": "Pendente",
+      "current_evidence": "E 04: scripts/workflow de self-healing da Fase 4 não localizados.",
+      "remaining_and_acceptance": "Implementar, versionar e entregar os scripts/workflows que realizam a mitigação automática demonstrada."
+    },
+    {
+      "id": "REQ-OBR-23",
+      "requirement": "Evidenciar funcionamento prático de todas as métricas, configurações e requisitos; material apenas configurado não basta.",
+      "pdf_evidence": "p. 5: “Não basta configurar; é preciso mostrar operando na prática.”",
+      "status": "Parcial",
+      "current_evidence": "E 01/E 02: há evidências locais funcionais e traces; faltam provas da maioria dos novos componentes.",
+      "remaining_and_acceptance": "Completar evidências de cada requisito no vídeo/PDF; cruzar requisito, teste, print, minuto do vídeo e versão implantada."
+    },
+    {
+      "id": "REQ-OBR-24",
+      "requirement": "Entregar vídeo com duração de até 25 minutos.",
+      "pdf_evidence": "p. 5: “Vídeo de Demonstração (até 25 min)”",
+      "status": "Pendente",
+      "current_evidence": "E 05/E 06: vídeo/link final da Fase 4 não localizado.",
+      "remaining_and_acceptance": "Gravar, revisar e disponibilizar vídeo de até 25 min com todo o roteiro obrigatório."
+    },
+    {
+      "id": "REQ-OBR-25",
+      "requirement": "Mostrar no vídeo EKS (IaC) e ArgoCD (GitOps) rodando com a nova stack. [INCERTO]: divergência com alternativas da p. 2; Q-01.",
+      "pdf_evidence": "p. 5: “mostre que o cluster EKS (IaC) e o ArgoCD (GitOps) continuam rodando”",
+      "status": "Pendente",
+      "current_evidence": "E 05: nenhuma gravação atual de cluster/ArgoCD/stack da Fase 4.",
+      "remaining_and_acceptance": "Mostrar no vídeo EKS/IaC e ArgoCD/GitOps rodando com a nova stack; a escolha EKS/ArgoCD segue a formulação conservadora Q-01."
+    },
+    {
+      "id": "REQ-OBR-26",
+      "requirement": "No vídeo: (a) abrir o Grafana; (b) exibir o dashboard customizado com as métricas; (c) buscar logs no Loki; (d) explicar como o Collector roteia esses dados.",
+      "pdf_evidence": "p. 5: “Busque logs no Loki. Explique rapidamente como o OTel Collector está roteando esses dados.”",
+      "status": "Pendente",
+      "current_evidence": "E 05: guias/diagramas não constituem a demonstração pedida.",
+      "remaining_and_acceptance": "No vídeo, abrir Grafana/dashboard, buscar logs Loki e explicar o roteamento efetivamente usado pelo Collector."
+    },
+    {
+      "id": "REQ-OBR-27",
+      "requirement": "No vídeo: (a) abrir o painel do Datadog/New Relic e mostrar o Service Map; (b) fazer uma requisição de teste; (c) exibir o trace distribuído detalhado.",
+      "pdf_evidence": "p. 6: “Faça uma requisição de teste e exiba o Trace Distribuído detalhado no APM.”",
+      "status": "Pendente",
+      "current_evidence": "E 05: não há gravação APM; prova JSONL local não é tela New Relic.",
+      "remaining_and_acceptance": "No vídeo, abrir New Relic, exibir Service Map, fazer requisição e mostrar trace distribuído detalhado."
+    },
+    {
+      "id": "REQ-OBR-28",
+      "requirement": "No vídeo: causar um problema proposital no sistema.",
+      "pdf_evidence": "p. 6: “Cause um problema proposital no sistema”",
+      "status": "Pendente",
+      "current_evidence": "E 03/E 05: sondas de auditoria não constituem o incidente demonstrado no sistema implantado.",
+      "remaining_and_acceptance": "Escolher/implementar uma falha controlada e provocá-la durante a demonstração."
+    },
+    {
+      "id": "REQ-OBR-29",
+      "requirement": "No vídeo: mostrar o alerta em Firing no Grafana/APM.",
+      "pdf_evidence": "p. 6: “Mostre o alerta disparando (Firing) no Grafana/APM.”",
+      "status": "Pendente",
+      "current_evidence": "E 04/E 05: alerta operacional e respectiva gravação ausentes.",
+      "remaining_and_acceptance": "Mostrar alerta em Firing no Grafana/APM durante a falha demonstrada."
+    },
+    {
+      "id": "REQ-OBR-30",
+      "requirement": "No vídeo: (a) mostrar o incidente sendo aberto no PagerDuty/OpsGenie; (b) mostrar a notificação chegando ao Slack/Discord. [INCERTO] para Teams; Q-02.",
+      "pdf_evidence": "p. 6: “notificação chegando no Slack/Discord”",
+      "status": "Pendente",
+      "current_evidence": "E 05: sem evidência de incidente/notificação da Fase 4.",
+      "remaining_and_acceptance": "Mostrar abertura no PagerDuty e chegada ao Slack durante o mesmo ciclo de falha. Slack evita a ambiguidade Q-02 sobre Teams."
+    },
+    {
+      "id": "REQ-OBR-31",
+      "requirement": "No vídeo: mostrar a automação de Self-Healing acionada e executando a ação corretiva.",
+      "pdf_evidence": "p. 6: “Mostre a automação de Self-Healing sendo acionada e executando a ação corretiva”",
+      "status": "Pendente",
+      "current_evidence": "E 04/E 05: sem automação corretiva/gravação do acionamento.",
+      "remaining_and_acceptance": "Mostrar a automação acionada automaticamente e executando a ação corretiva, com log/terminal correspondente."
+    },
+    {
+      "id": "REQ-OBR-32",
+      "requirement": "Entregar relatório no formato PDF.",
+      "pdf_evidence": "p. 6: “Relatório de Entrega (.PDF)”",
+      "status": "Pendente",
+      "current_evidence": "E 05: relatórios internos Markdown existem; o relatório PDF final da Fase 4 não foi localizado.",
+      "remaining_and_acceptance": "Gerar/revisar o PDF final com identificação, links, quatro prints e justificativas."
+    },
+    {
+      "id": "REQ-OBR-33",
+      "requirement": "Incluir nomes, RMs e usernames no relatório.",
+      "pdf_evidence": "p. 6: “Nomes, RMs e usernames.”",
+      "status": "Pendente",
+      "current_evidence": "E 05: identificação final não consolidada em PDF da Fase 4.",
+      "remaining_and_acceptance": "Inserir nomes, RMs e usernames dos participantes efetivos; confirmar escopo dos usernames/Q-13 sem copiar o grupo antigo."
+    },
+    {
+      "id": "REQ-OBR-34",
+      "requirement": "Incluir links do repositório de código e do vídeo no relatório.",
+      "pdf_evidence": "p. 6: “Links do repositório de código e do vídeo.”",
+      "status": "Pendente",
+      "current_evidence": "E 05/E 06: link final de vídeo e links de código/vídeo no PDF ainda pendentes.",
+      "remaining_and_acceptance": "Incluir links válidos de código e vídeo no PDF e verificar acesso com as permissões do avaliador."
+    },
+    {
+      "id": "REQ-OBR-35",
+      "requirement": "Incluir print do dashboard do Grafana no relatório.",
+      "pdf_evidence": "p. 6: “Print do Dashboard do Grafana.”",
+      "status": "Pendente",
+      "current_evidence": "E 05: nenhum print final do dashboard da Fase 4.",
+      "remaining_and_acceptance": "Inserir no PDF captura legível do dashboard Grafana operando com dados atuais."
+    },
+    {
+      "id": "REQ-OBR-36",
+      "requirement": "Incluir print de trace distribuído no APM no relatório.",
+      "pdf_evidence": "p. 6: “Print de um Trace distribuído no APM.”",
+      "status": "Pendente",
+      "current_evidence": "E 05: resultado de traces local não substitui captura do APM.",
+      "remaining_and_acceptance": "Inserir no PDF print legível do trace distribuído no New Relic."
+    },
+    {
+      "id": "REQ-OBR-37",
+      "requirement": "Incluir print da notificação de incidente no ChatOps no relatório.",
+      "pdf_evidence": "p. 6: “Print da notificação de incidente no ChatOps.”",
+      "status": "Pendente",
+      "current_evidence": "E 05: nenhuma captura de notificação de incidente da Fase 4.",
+      "remaining_and_acceptance": "Inserir no PDF print da notificação detalhada no Slack."
+    },
+    {
+      "id": "REQ-OBR-38",
+      "requirement": "Incluir print de log/execução da automação de Self-Healing no relatório.",
+      "pdf_evidence": "p. 6: “Print do log/execução da automação de Self-Healing.”",
+      "status": "Pendente",
+      "current_evidence": "E 05: nenhuma evidência visual de execução corretiva da Fase 4.",
+      "remaining_and_acceptance": "Inserir no PDF print de log/execução da automação de self-healing."
+    },
+    {
+      "id": "REQ-OBR-39",
+      "requirement": "Explicar brevemente a arquitetura OTel implementada no relatório.",
+      "pdf_evidence": "p. 6: “breve explicação da arquitetura do OTel implementada”",
+      "status": "Pendente",
+      "current_evidence": "E 06/E 07: arquitetura explicada no README e plano, mas PDF final ausente.",
+      "remaining_and_acceptance": "Incluir no PDF breve explicação da arquitetura OTel realmente implantada; corrigir divergência de roteamento do plano histórico."
+    },
+    {
+      "id": "REQ-OBR-40",
+      "requirement": "Justificar no relatório escolhas Datadog versus New Relic e OpsGenie versus PagerDuty.",
+      "pdf_evidence": "p. 6: “escolha entre Datadog vs New Relic e OpsGenie vs PagerDuty”",
+      "status": "Pendente",
+      "current_evidence": "E 07: escolhas New Relic/PagerDuty registradas; justificativa final no PDF ausente.",
+      "remaining_and_acceptance": "Explicar no PDF a escolha New Relic versus Datadog e PagerDuty versus OpsGenie com motivos aplicáveis/verificados."
+    },
+    {
+      "id": "REQ-OBR-41",
+      "requirement": "Desenvolver em grupo, por interpretação conservadora. [INCERTO]: o PDF diz \"em princípio\"; Q-03.",
+      "pdf_evidence": "p. 2: “em princípio, deve ser desenvolvida em grupo”",
+      "status": "Confirmar",
+      "current_evidence": "E 07: usuário escolheu execução solo; PDF diz em princípio em grupo.",
+      "remaining_and_acceptance": "[INCERTO] Confirmar com tutor se entrega individual é aceita e registrar composição/anuência. Não tratar decisão pessoal como dispensa acadêmica."
+    },
+    {
+      "id": "REQ-OBR-42",
+      "requirement": "Submeter a entrega da fase (código, vídeo e relatório) dentro do prazo oficial. [INCERTO]: data, horário e canal não constam no PDF; Q-05 e Q-06.",
+      "pdf_evidence": "p. 2: “Importante atentar-se ao prazo de entrega”",
+      "status": "Confirmar",
+      "current_evidence": "E 06/E 07: prazo informado pelo usuário 2026-11-17; PDF não dá data/hora/canal.",
+      "remaining_and_acceptance": "[INCERTO] Confirmar prazo oficial, horário, canal e procedimento; submeter código/vídeo/PDF e guardar comprovante. Meta interna 2026-11-12 não é prazo FIAP."
+    }
+  ]
+}

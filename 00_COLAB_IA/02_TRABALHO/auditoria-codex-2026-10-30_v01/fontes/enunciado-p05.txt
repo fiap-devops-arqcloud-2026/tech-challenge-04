@@ -1,0 +1,32 @@
+Tech Challenge  Página 5 de 7 
+ 
+• Criação do Alerta:  configure um alerta inteligente (no Grafana ou 
+APM). Exemplo: Disparar se a taxa de erros HTTP 5xx do auth-service 
+for maior que 5%. 
+• Gerenciamento de Incidentes:  crie uma conta no PagerDuty OU 
+OpsGenie e integre o alerta para abrir um incidente automaticamente. 
+• Notificação (ChatOps):  configure o env io de uma notificação 
+detalhada para um canal do Slack, Discord ou Teams. 
+• Self-Healing (Obrigatório):  crie uma automação (Runbook 
+Automation, AWS Lambda, ou GitHub Action disparada via webhook) 
+que reaja automaticamente ao alerta criado. Exemplo: se o aler ta 
+disparar, o script deve executar um kubectl rollout restart 
+deployment/auth-service para tentar mitigar a falha sem intervenção 
+humana. 
+Entregáveis da Fase 4 
+REGRA DE AVALIAÇÃO: É obrigatório evidenciar o funcionamento de 
+todas as métricas, configurações e requisitos solicitados abaixo. Qualquer 
+requisito que não for claramente demonstrado no vídeo ou documentado no 
+relatório sofrerá dedução direta de pontos . Não basta configurar; é  preciso 
+mostrar operando na prática. 
+Código Fonte no Repositório: 
+• Código IaC/GitOps atualizado para incluir a stack de monitoramento e 
+o OTel Collector. 
+• Código fonte das aplicações atualizado com a instrumentação. 
+• Scripts ou automações criadas para o Self-Healing. 
+Vídeo de Demonstração (até 25 min): 
+• Visão Geral: mostre que o cluster EKS (IaC) e o ArgoCD (GitOps) 
+continuam rodando com a nova stack. 
+• Métricas, Logs e OTel:  abra o Grafana . Mostre seu dashboard 
+customizado exibindo as métricas. Busque logs no Loki. Explique 
+rapidamente como o OTel Collector está roteando esses dados. 

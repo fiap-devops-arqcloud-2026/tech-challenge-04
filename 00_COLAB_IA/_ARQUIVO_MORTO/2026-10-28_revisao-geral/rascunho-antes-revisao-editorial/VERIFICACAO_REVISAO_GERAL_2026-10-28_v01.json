@@ -1,0 +1,38 @@
+{
+  "updated": "2026-10-28T09:21:29.417358-03:00",
+  "requirements": 42,
+  "counts": {
+    "Parcial": 10,
+    "Comprovado localmente": 2,
+    "Pendente": 28,
+    "Confirmar": 2
+  },
+  "pdf_quotes_verified": 42,
+  "local_report_links_checked": 37,
+  "operational_and_document_sources_preserved": 205,
+  "production_hashes_matching": 28,
+  "protected_files_preserved": 39,
+  "preexisting_deletions_preserved": 33,
+  "branch": "dev",
+  "head": "3b21e65d8b22c454e43ba7dc3b3eb3a039ea061e",
+  "main": "003a7075a8908011ece83d317d5c700ac2525b58",
+  "source03_clean": true,
+  "terraform_validations_from_2026_10_27": [
+    true,
+    true,
+    true
+  ],
+  "gitops_objects_from_2026_10_27": {
+    "Namespace": 1,
+    "ServiceAccount": 2,
+    "ConfigMap": 6,
+    "Service": 6,
+    "Deployment": 5,
+    "StatefulSet": 1,
+    "HorizontalPodAutoscaler": 2
+  },
+  "new_runtime_test": "sonda observacional targeting em cópia isolada,2026-10-27",
+  "full_integration_rerun": false,
+  "cloud_or_remote_queries": false,
+  "issues": []
+}

@@ -1,0 +1,604 @@
+{
+  "name": "tech-challenge-04",
+  "networks": {
+    "toggle-net": {
+      "name": "tech-challenge-04_toggle-net",
+      "driver": "bridge",
+      "ipam": {}
+    }
+  },
+  "services": {
+    "analytics-service": {
+      "build": {
+        "context": "C:\\Users\\Gabriel\\Documents\\GitHub\\tech-challenge-04\\services\\analytics-service",
+        "dockerfile": "Dockerfile"
+      },
+      "command": null,
+      "depends_on": {
+        "aws-local-init": {
+          "condition": "service_completed_successfully",
+          "required": true
+        },
+        "dynamodb-local": {
+          "condition": "service_started",
+          "required": true
+        },
+        "otel-collector": {
+          "condition": "service_started",
+          "required": true
+        }
+      },
+      "entrypoint": null,
+      "environment": {
+        "AWS_ACCESS_KEY_ID": "test",
+        "AWS_DYNAMODB_TABLE": "ToggleMasterAnalytics",
+        "AWS_EC2_METADATA_DISABLED": "true",
+        "AWS_REGION": "us-east-2",
+        "AWS_SECRET_ACCESS_KEY": "test",
+        "AWS_SQS_URL": "http://aws-local:5000/123456789012/evaluations",
+        "DYNAMODB_ENDPOINT": "http://aws-local:5000",
+        "OTEL_EXPORTER_OTLP_ENDPOINT": "http://otel-collector:4318",
+        "OTEL_EXPORTER_OTLP_PROTOCOL": "http/protobuf",
+        "OTEL_RESOURCE_ATTRIBUTES": "deployment.environment.name=local",
+        "OTEL_SDK_DISABLED": "false",
+        "OTEL_SERVICE_NAME": "analytics-service",
+        "OTEL_TRACES_SAMPLER": "parentbased_always_on",
+        "PORT": "8005",
+        "SQS_ENDPOINT": "http://aws-local:5000"
+      },
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:8005/health')"
+        ],
+        "timeout": "5s",
+        "interval": "10s",
+        "retries": 5,
+        "start_period": "15s"
+      },
+      "networks": {
+        "toggle-net": null
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "target": 8005,
+          "published": "8005",
+          "protocol": "tcp"
+        }
+      ],
+      "restart": "on-failure",
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "C:\\Users\\Gabriel\\Documents\\GitHub\\tech-challenge-04\\scripts\\integration",
+          "target": "/tests",
+          "read_only": true,
+          "bind": {}
+        }
+      ]
+    },
+    "auth-service": {
+      "build": {
+        "context": "C:\\Users\\Gabriel\\Documents\\GitHub\\tech-challenge-04\\services\\auth-service",
+        "dockerfile": "Dockerfile"
+      },
+      "command": null,
+      "depends_on": {
+        "otel-collector": {
+          "condition": "service_started",
+          "required": true
+        },
+        "postgres-auth": {
+          "condition": "service_healthy",
+          "required": true
+        }
+      },
+      "entrypoint": null,
+      "environment": {
+        "DATABASE_URL": "postgres://toggle:toggle-local-only@postgres-auth:5432/auth_db",
+        "MASTER_KEY": "local-master-key-change-me",
+        "OTEL_EXPORTER_OTLP_ENDPOINT": "http://otel-collector:4318",
+        "OTEL_EXPORTER_OTLP_PROTOCOL": "http/protobuf",
+        "OTEL_RESOURCE_ATTRIBUTES": "deployment.environment.name=local",
+        "OTEL_SDK_DISABLED": "false",
+        "OTEL_SERVICE_NAME": "auth-service",
+        "OTEL_TRACES_SAMPLER": "parentbased_always_on",
+        "PORT": "8001"
+      },
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "wget",
+          "-qO-",
+          "http://localhost:8001/health"
+        ],
+        "timeout": "5s",
+        "interval": "10s",
+        "retries": 5,
+        "start_period": "15s"
+      },
+      "networks": {
+        "toggle-net": null
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "target": 8001,
+          "published": "8001",
+          "protocol": "tcp"
+        }
+      ],
+      "restart": "on-failure"
+    },
+    "aws-local": {
+      "command": null,
+      "entrypoint": null,
+      "environment": {
+        "MOTO_PORT": "5000"
+      },
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:5000/moto-api/')"
+        ],
+        "timeout": "5s",
+        "interval": "3s",
+        "retries": 30
+      },
+      "image": "motoserver/moto:5.2.2@sha256:d8ae5edc2bf080e7e4c13f9bd4b29b53ac3b4427e92956318db3dbe23ec43eb7",
+      "networks": {
+        "toggle-net": null
+      }
+    },
+    "aws-local-init": {
+      "build": {
+        "context": "C:\\Users\\Gabriel\\Documents\\GitHub\\tech-challenge-04\\services\\analytics-service",
+        "dockerfile": "Dockerfile"
+      },
+      "command": null,
+      "depends_on": {
+        "aws-local": {
+          "condition": "service_healthy",
+          "required": true
+        }
+      },
+      "entrypoint": [
+        "python",
+        "/tests/bootstrap-aws.py"
+      ],
+      "environment": {
+        "AWS_ACCESS_KEY_ID": "test",
+        "AWS_DEFAULT_REGION": "us-east-2",
+        "AWS_DYNAMODB_TABLE": "ToggleMasterAnalytics",
+        "AWS_EC2_METADATA_DISABLED": "true",
+        "AWS_SECRET_ACCESS_KEY": "test"
+      },
+      "networks": {
+        "toggle-net": null
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "C:\\Users\\Gabriel\\Documents\\GitHub\\tech-challenge-04\\scripts\\integration",
+          "target": "/tests",
+          "read_only": true,
+          "bind": {}
+        }
+      ]
+    },
+    "dynamodb-local": {
+      "command": [
+        "-jar",
+        "DynamoDBLocal.jar",
+        "-sharedDb",
+        "-inMemory"
+      ],
+      "entrypoint": null,
+      "image": "amazon/dynamodb-local:3.3.0",
+      "networks": {
+        "toggle-net": null
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "target": 8000,
+          "published": "8000",
+          "protocol": "tcp"
+        }
+      ],
+      "restart": "unless-stopped"
+    },
+    "evaluation-service": {
+      "build": {
+        "context": "C:\\Users\\Gabriel\\Documents\\GitHub\\tech-challenge-04\\services\\evaluation-service",
+        "dockerfile": "Dockerfile"
+      },
+      "command": null,
+      "depends_on": {
+        "aws-local-init": {
+          "condition": "service_completed_successfully",
+          "required": true
+        },
+        "flag-service": {
+          "condition": "service_healthy",
+          "required": true
+        },
+        "otel-collector": {
+          "condition": "service_started",
+          "required": true
+        },
+        "redis": {
+          "condition": "service_healthy",
+          "required": true
+        },
+        "targeting-service": {
+          "condition": "service_healthy",
+          "required": true
+        }
+      },
+      "entrypoint": null,
+      "environment": {
+        "AWS_ACCESS_KEY_ID": "test",
+        "AWS_EC2_METADATA_DISABLED": "true",
+        "AWS_REGION": "us-east-2",
+        "AWS_SECRET_ACCESS_KEY": "test",
+        "AWS_SQS_URL": "http://aws-local:5000/123456789012/evaluations",
+        "FLAG_SERVICE_URL": "http://flag-service:8002",
+        "OTEL_EXPORTER_OTLP_ENDPOINT": "http://otel-collector:4318",
+        "OTEL_EXPORTER_OTLP_PROTOCOL": "http/protobuf",
+        "OTEL_RESOURCE_ATTRIBUTES": "deployment.environment.name=local",
+        "OTEL_SDK_DISABLED": "false",
+        "OTEL_SERVICE_NAME": "evaluation-service",
+        "OTEL_TRACES_SAMPLER": "parentbased_always_on",
+        "PORT": "8004",
+        "REDIS_URL": "redis://redis:6379",
+        "SERVICE_API_KEY": "",
+        "SQS_ENDPOINT": "http://aws-local:5000",
+        "TARGETING_SERVICE_URL": "http://targeting-service:8003"
+      },
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "wget",
+          "-qO-",
+          "http://localhost:8004/health"
+        ],
+        "timeout": "5s",
+        "interval": "10s",
+        "retries": 5,
+        "start_period": "15s"
+      },
+      "networks": {
+        "toggle-net": null
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "target": 8004,
+          "published": "8004",
+          "protocol": "tcp"
+        }
+      ],
+      "restart": "on-failure"
+    },
+    "flag-service": {
+      "build": {
+        "context": "C:\\Users\\Gabriel\\Documents\\GitHub\\tech-challenge-04\\services\\flag-service",
+        "dockerfile": "Dockerfile"
+      },
+      "command": null,
+      "depends_on": {
+        "auth-service": {
+          "condition": "service_healthy",
+          "required": true
+        },
+        "otel-collector": {
+          "condition": "service_started",
+          "required": true
+        },
+        "postgres-app": {
+          "condition": "service_healthy",
+          "required": true
+        }
+      },
+      "entrypoint": null,
+      "environment": {
+        "AUTH_SERVICE_URL": "http://auth-service:8001",
+        "DATABASE_URL": "postgres://toggle:toggle-local-only@postgres-app:5432/flags_db",
+        "OTEL_EXPORTER_OTLP_ENDPOINT": "http://otel-collector:4318",
+        "OTEL_EXPORTER_OTLP_PROTOCOL": "http/protobuf",
+        "OTEL_RESOURCE_ATTRIBUTES": "deployment.environment.name=local",
+        "OTEL_SDK_DISABLED": "false",
+        "OTEL_SERVICE_NAME": "flag-service",
+        "OTEL_TRACES_SAMPLER": "parentbased_always_on",
+        "PORT": "8002"
+      },
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:8002/health')"
+        ],
+        "timeout": "5s",
+        "interval": "10s",
+        "retries": 5,
+        "start_period": "15s"
+      },
+      "networks": {
+        "toggle-net": null
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "target": 8002,
+          "published": "8002",
+          "protocol": "tcp"
+        }
+      ],
+      "restart": "on-failure"
+    },
+    "otel-collector": {
+      "command": [
+        "--config=/etc/otelcol-contrib/config.yaml"
+      ],
+      "deploy": {
+        "resources": {
+          "limits": {
+            "memory": "268435456"
+          }
+        },
+        "placement": {}
+      },
+      "entrypoint": null,
+      "image": "otel/opentelemetry-collector-contrib:0.163.2@sha256:7f22d2a6748110ffb6a59bc0df448bccbf501cdb667d610ede4c61d3863d5849",
+      "networks": {
+        "toggle-net": null
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "host_ip": "127.0.0.1",
+          "target": 4318,
+          "published": "4318",
+          "protocol": "tcp"
+        },
+        {
+          "mode": "ingress",
+          "host_ip": "127.0.0.1",
+          "target": 13133,
+          "published": "13133",
+          "protocol": "tcp"
+        }
+      ],
+      "user": "10001:10001",
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "C:\\Users\\Gabriel\\Documents\\GitHub\\tech-challenge-04\\observability\\otel-collector-local.yaml",
+          "target": "/etc/otelcol-contrib/config.yaml",
+          "read_only": true,
+          "bind": {}
+        },
+        {
+          "type": "bind",
+          "source": "C:\\Users\\Gabriel\\Documents\\GitHub\\tech-challenge-04\\00_COLAB_IA\\02_TRABALHO\\qa-otel",
+          "target": "/var/lib/otel",
+          "bind": {}
+        }
+      ]
+    },
+    "postgres-app": {
+      "command": null,
+      "entrypoint": null,
+      "environment": {
+        "FLAGS_DB": "flags_db",
+        "POSTGRES_DB": "flags_db",
+        "POSTGRES_PASSWORD": "toggle-local-only",
+        "POSTGRES_USER": "toggle",
+        "TARGETING_DB": "targeting_db"
+      },
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "pg_isready -U toggle -d flags_db"
+        ],
+        "timeout": "5s",
+        "interval": "5s",
+        "retries": 20
+      },
+      "image": "postgres:16-alpine",
+      "networks": {
+        "toggle-net": null
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "target": 5432,
+          "published": "5434",
+          "protocol": "tcp"
+        }
+      ],
+      "restart": "unless-stopped",
+      "volumes": [
+        {
+          "type": "volume",
+          "source": "pg_app_data",
+          "target": "/var/lib/postgresql/data",
+          "volume": {}
+        },
+        {
+          "type": "bind",
+          "source": "C:\\Users\\Gabriel\\Documents\\GitHub\\tech-challenge-04\\infra\\postgres-app\\01-init-multi-db.sh",
+          "target": "/docker-entrypoint-initdb.d/01-init-multi-db.sh",
+          "read_only": true,
+          "bind": {}
+        },
+        {
+          "type": "bind",
+          "source": "C:\\Users\\Gabriel\\Documents\\GitHub\\tech-challenge-04\\services\\flag-service\\db\\init.sql",
+          "target": "/opt/schema/flags.sql",
+          "read_only": true,
+          "bind": {}
+        },
+        {
+          "type": "bind",
+          "source": "C:\\Users\\Gabriel\\Documents\\GitHub\\tech-challenge-04\\services\\targeting-service\\db\\init.sql",
+          "target": "/opt/schema/targeting.sql",
+          "read_only": true,
+          "bind": {}
+        }
+      ]
+    },
+    "postgres-auth": {
+      "command": null,
+      "entrypoint": null,
+      "environment": {
+        "POSTGRES_DB": "auth_db",
+        "POSTGRES_PASSWORD": "toggle-local-only",
+        "POSTGRES_USER": "toggle"
+      },
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "pg_isready -U toggle -d auth_db"
+        ],
+        "timeout": "5s",
+        "interval": "5s",
+        "retries": 20
+      },
+      "image": "postgres:16-alpine",
+      "networks": {
+        "toggle-net": null
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "target": 5432,
+          "published": "5433",
+          "protocol": "tcp"
+        }
+      ],
+      "restart": "unless-stopped",
+      "volumes": [
+        {
+          "type": "volume",
+          "source": "pg_auth_data",
+          "target": "/var/lib/postgresql/data",
+          "volume": {}
+        },
+        {
+          "type": "bind",
+          "source": "C:\\Users\\Gabriel\\Documents\\GitHub\\tech-challenge-04\\services\\auth-service\\db\\init.sql",
+          "target": "/docker-entrypoint-initdb.d/01-auth.sql",
+          "read_only": true,
+          "bind": {}
+        }
+      ]
+    },
+    "redis": {
+      "command": null,
+      "entrypoint": null,
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "redis-cli",
+          "ping"
+        ],
+        "timeout": "3s",
+        "interval": "5s",
+        "retries": 30
+      },
+      "image": "redis:7-alpine",
+      "networks": {
+        "toggle-net": null
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "target": 6379,
+          "published": "6379",
+          "protocol": "tcp"
+        }
+      ],
+      "restart": "unless-stopped"
+    },
+    "targeting-service": {
+      "build": {
+        "context": "C:\\Users\\Gabriel\\Documents\\GitHub\\tech-challenge-04\\services\\targeting-service",
+        "dockerfile": "Dockerfile"
+      },
+      "command": null,
+      "depends_on": {
+        "auth-service": {
+          "condition": "service_healthy",
+          "required": true
+        },
+        "otel-collector": {
+          "condition": "service_started",
+          "required": true
+        },
+        "postgres-app": {
+          "condition": "service_healthy",
+          "required": true
+        }
+      },
+      "entrypoint": null,
+      "environment": {
+        "AUTH_SERVICE_URL": "http://auth-service:8001",
+        "DATABASE_URL": "postgres://toggle:toggle-local-only@postgres-app:5432/targeting_db",
+        "OTEL_EXPORTER_OTLP_ENDPOINT": "http://otel-collector:4318",
+        "OTEL_EXPORTER_OTLP_PROTOCOL": "http/protobuf",
+        "OTEL_RESOURCE_ATTRIBUTES": "deployment.environment.name=local",
+        "OTEL_SDK_DISABLED": "false",
+        "OTEL_SERVICE_NAME": "targeting-service",
+        "OTEL_TRACES_SAMPLER": "parentbased_always_on",
+        "PORT": "8003"
+      },
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:8003/health')"
+        ],
+        "timeout": "5s",
+        "interval": "10s",
+        "retries": 5,
+        "start_period": "15s"
+      },
+      "networks": {
+        "toggle-net": null
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "target": 8003,
+          "published": "8003",
+          "protocol": "tcp"
+        }
+      ],
+      "restart": "on-failure"
+    }
+  },
+  "volumes": {
+    "pg_app_data": {
+      "name": "tech-challenge-04_pg_app_data"
+    },
+    "pg_auth_data": {
+      "name": "tech-challenge-04_pg_auth_data"
+    }
+  },
+  "x-otel-environment": {
+    "OTEL_EXPORTER_OTLP_ENDPOINT": "http://otel-collector:4318",
+    "OTEL_EXPORTER_OTLP_PROTOCOL": "http/protobuf",
+    "OTEL_RESOURCE_ATTRIBUTES": "deployment.environment.name=local",
+    "OTEL_SDK_DISABLED": "false",
+    "OTEL_TRACES_SAMPLER": "parentbased_always_on"
+  }
+}

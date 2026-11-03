@@ -1,0 +1,146 @@
+ M 00_COLAB_IA/DECISOES.md
+ M 00_COLAB_IA/DOSSIE_CONTEXTO.md
+ M 00_COLAB_IA/LEIA-PRIMEIRO.md
+ M 00_COLAB_IA/LOG_DE_TRABALHO.md
+ M 00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md
+ M CLAUDE.md
+ M README.md
+ D "docs/POSTECH - Tech Challenge - Fase 3.pdf"
+ D "docs/aulas-fiap/01_Welcome to Automa\303\247\303\243o e Seguran\303\247a na Cloud/GUIA-ESTUDO-Automacao-e-Seguranca-na-Cloud.html"
+ D "docs/aulas-fiap/01_Welcome to Automa\303\247\303\243o e Seguran\303\247a na Cloud/POSTECH - Capitulo de Projeto - Fase 3.pdf"
+ D docs/aulas-fiap/02_CI-CD/GUIA-ESTUDO-CI-CD.html
+ D "docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 1.pdf"
+ D "docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 2.pdf"
+ D "docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 3.pdf"
+ D "docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 4.pdf"
+ D "docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 5.pdf"
+ D "docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 6.pdf"
+ D "docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 7.pdf"
+ D "docs/aulas-fiap/03_Infraestrutura como c\303\263digo/GUIA-ESTUDO-Infraestrutura-como-Codigo.html"
+ D "docs/aulas-fiap/03_Infraestrutura como c\303\263digo/POSTECH - Infraestrutura como co\314\201digo - Aula 1.pdf"
+ D "docs/aulas-fiap/03_Infraestrutura como c\303\263digo/POSTECH - Infraestrutura como co\314\201digo - Aula 2.pdf"
+ D "docs/aulas-fiap/03_Infraestrutura como c\303\263digo/POSTECH - Infraestrutura como co\314\201digo - Aula 3.pdf"
+ D "docs/aulas-fiap/03_Infraestrutura como c\303\263digo/POSTECH - Infraestrutura como co\314\201digo - Aula 4.pdf"
+ D "docs/aulas-fiap/03_Infraestrutura como c\303\263digo/POSTECH - Infraestrutura como co\314\201digo - Aula 5.pdf"
+ D "docs/aulas-fiap/03_Infraestrutura como c\303\263digo/POSTECH - Infraestrutura como co\314\201digo - Aula 6.pdf"
+ D "docs/aulas-fiap/03_Infraestrutura como c\303\263digo/POSTECH - Infraestrutura como co\314\201digo - Aula 7.pdf"
+ D "docs/aulas-fiap/03_Infraestrutura como c\303\263digo/POSTECH - Infraestrutura como co\314\201digo - Aula 8.pdf"
+ D "docs/aulas-fiap/04_Seguran\303\247a em DevOps (DevSecOps)/GUIA-ESTUDO-Seguranca-em-DevOps-DevSecOps.html"
+ D "docs/aulas-fiap/04_Seguran\303\247a em DevOps (DevSecOps)/POSTECH - Seguranc\314\247a em DevOps (DevSecOps) - Aula 1.pdf"
+ D "docs/aulas-fiap/04_Seguran\303\247a em DevOps (DevSecOps)/POSTECH - Seguranc\314\247a em DevOps (DevSecOps) - Aula 2.pdf"
+ D "docs/aulas-fiap/04_Seguran\303\247a em DevOps (DevSecOps)/POSTECH - Seguranc\314\247a em DevOps (DevSecOps) - Aula 3.pdf"
+ D "docs/aulas-fiap/04_Seguran\303\247a em DevOps (DevSecOps)/POSTECH - Seguranc\314\247a em DevOps (DevSecOps) - Aula 4.pdf"
+ D "docs/aulas-fiap/04_Seguran\303\247a em DevOps (DevSecOps)/POSTECH - Seguranc\314\247a em DevOps (DevSecOps) - Aula 5.pdf"
+ D "docs/aulas-fiap/04_Seguran\303\247a em DevOps (DevSecOps)/POSTECH - Seguranc\314\247a em DevOps (DevSecOps) - Aula 6.pdf"
+ D "docs/aulas-fiap/04_Seguran\303\247a em DevOps (DevSecOps)/POSTECH - Seguranc\314\247a em DevOps (DevSecOps) - Aula 7.pdf"
+ D "docs/aulas-fiap/05_Seguran\303\247a na Cloud/GUIA-ESTUDO-Seguranca-na-Cloud.html"
+ D "docs/aulas-fiap/05_Seguran\303\247a na Cloud/POSTECH - Seguranc\314\247a na Cloud - Aula 1.pdf"
+ D "docs/aulas-fiap/05_Seguran\303\247a na Cloud/POSTECH - Seguranc\314\247a na Cloud - Aula 2.pdf"
+ D "docs/aulas-fiap/05_Seguran\303\247a na Cloud/POSTECH - Seguranc\314\247a na Cloud - Aula 3.pdf"
+ D "docs/aulas-fiap/05_Seguran\303\247a na Cloud/POSTECH - Seguranc\314\247a na Cloud - Aula 4.pdf"
+ D "docs/aulas-fiap/05_Seguran\303\247a na Cloud/POSTECH - Seguranc\314\247a na Cloud - Aula 5.pdf"
+ M scripts/security-check.sh
+ M scripts/test-compose.sh
+ M services/analytics-service/Dockerfile
+ M services/analytics-service/README.md
+ M services/analytics-service/app.py
+ M services/analytics-service/requirements.txt
+ M services/auth-service/README.md
+ M services/auth-service/go.mod
+ M services/auth-service/go.sum
+ M services/auth-service/handlers.go
+ M services/auth-service/key.go
+ M services/auth-service/main.go
+ M services/evaluation-service/README.md
+ M services/evaluation-service/evaluator.go
+ M services/evaluation-service/go.mod
+ M services/evaluation-service/go.sum
+ M services/evaluation-service/handlers.go
+ M services/evaluation-service/main.go
+ M services/evaluation-service/sqs.go
+ M services/evaluation-service/types.go
+ M services/flag-service/Dockerfile
+ M services/flag-service/README.md
+ M services/flag-service/app.py
+ M services/flag-service/requirements.txt
+ M services/targeting-service/Dockerfile
+ M services/targeting-service/README.md
+ M services/targeting-service/app.py
+ M services/targeting-service/requirements.txt
+ M terraform/main.tf
+ M terraform/modules/iam-ci/main.tf
+ M terraform/modules/iam-ci/variables.tf
+ M terraform/terraform.tfvars.example
+ M terraform/variables.tf
+?? 00_COLAB_IA/02_TRABALHO/CONFERENCIA_PLANO_FASE4_2026-10-21_v01.md
+?? 00_COLAB_IA/02_TRABALHO/GUIA_CONTAS_E_ACESSOS_FASE4_2026-10-28_v01.md
+?? 00_COLAB_IA/02_TRABALHO/MATRIZ_REQUISITOS_FASE4_2026-10-28_v01.json
+?? 00_COLAB_IA/02_TRABALHO/RELATORIO_GO_OTEL_2026-10-27_v01.md
+?? 00_COLAB_IA/02_TRABALHO/RELATORIO_PASSO1_INTEGRACAO_LOCAL_2026-10-22_v01.md
+?? 00_COLAB_IA/02_TRABALHO/RELATORIO_PASSO1_REVALIDACAO_2026-10-27_v01.md
+?? 00_COLAB_IA/02_TRABALHO/RELATORIO_PASSO2_OBSERVABILIDADE_LOCAL_2026-10-27_v01.md
+?? 00_COLAB_IA/02_TRABALHO/RELATORIO_TERRAFORM_BACKEND_2026-10-22_v01.md
+?? 00_COLAB_IA/02_TRABALHO/RESULTADO_PASSOS_LOCAIS_2026-10-27_v01.json
+?? 00_COLAB_IA/02_TRABALHO/REVISAO_GERAL_APLICACOES_2026-10-28_v01.md
+?? 00_COLAB_IA/02_TRABALHO/REVISAO_GERAL_DOCUMENTACAO_2026-10-27_v01.md
+?? 00_COLAB_IA/02_TRABALHO/REVISAO_GERAL_FASE4_2026-10-28_v01.md
+?? 00_COLAB_IA/02_TRABALHO/REVISAO_GERAL_INFRA_2026-10-28_v01.md
+?? 00_COLAB_IA/02_TRABALHO/REVISAO_PYTHON_OTEL_2026-10-27_v01.md
+?? 00_COLAB_IA/02_TRABALHO/REVISAO_TERRAFORM_E_OTEL_2026-10-27_v01.md
+?? 00_COLAB_IA/02_TRABALHO/VERIFICACAO_GUIA_CONTAS_2026-10-28_v01.json
+?? 00_COLAB_IA/02_TRABALHO/VERIFICACAO_REVISAO_GERAL_2026-10-28_v01.json
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/
+?? 00_COLAB_IA/02_TRABALHO/aula05-terraform-2026-10-22_v01/
+?? 00_COLAB_IA/02_TRABALHO/estado-antes-readme-2026-10-22_v01.json
+?? 00_COLAB_IA/02_TRABALHO/estado-retomada-passos-locais-2026-10-27_v01.json
+?? 00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/
+?? 00_COLAB_IA/02_TRABALHO/gerar-revisao-geral-2026-10-28_v01.py
+?? 00_COLAB_IA/02_TRABALHO/otel-python-2026-10-22_v01/
+?? 00_COLAB_IA/02_TRABALHO/preservacao-passos-locais-2026-10-22_v01.json
+?? 00_COLAB_IA/02_TRABALHO/resultado-render-readme-2026-10-22_v01.json
+?? 00_COLAB_IA/02_TRABALHO/revisar-projeto-2026-10-27_v01.py
+?? 00_COLAB_IA/02_TRABALHO/role-github-oidc-2026-10-28_v01/
+?? 00_COLAB_IA/02_TRABALHO/validar-readme-2026-10-22_v01.mjs
+?? 00_COLAB_IA/02_TRABALHO/verificacao-passos-locais-2026-10-27_v01.json
+?? 00_COLAB_IA/02_TRABALHO/verificacao-readme-2026-10-22_v01.json
+?? 00_COLAB_IA/02_TRABALHO/verificar-passos-locais-2026-10-27_v01.py
+?? 00_COLAB_IA/02_TRABALHO/verificar-revisao-geral-2026-10-28_v01.py
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-21_conferencia-plano/
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-21_explicacao-observabilidade/
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-21_explicacao-pods-collector/
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_aula05-terraform/
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_proximos-passos/
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_readme-observabilidade/
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-go/
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-python/
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_orientacao-proximos-passos/
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_retomada-passos-locais/
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_revisao-geral/
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_apos-passo7_144715/
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_auditoria-claude/
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_criar-role-oidc_120027/
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_etapas8-9/
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_guia-contas/
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_orientacao-aws-cli_110640/
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_orientacao-ecr-github_113309/
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_orientacao-role-arn_114517/
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_revisao-geral/
+?? docker-compose.otel.yaml
+?? observability/
+?? scripts/integration/test-traces.py
+?? scripts/test-observability.sh
+?? services/analytics-service/telemetry.py
+?? services/analytics-service/tests/
+?? services/auth-service/handlers_test.go
+?? services/auth-service/telemetry.go
+?? services/auth-service/telemetry_test.go
+?? services/evaluation-service/evaluator_test.go
+?? services/evaluation-service/telemetry.go
+?? services/evaluation-service/telemetry_test.go
+?? services/flag-service/telemetry.py
+?? services/flag-service/tests/
+?? services/targeting-service/telemetry.py
+?? services/targeting-service/tests/

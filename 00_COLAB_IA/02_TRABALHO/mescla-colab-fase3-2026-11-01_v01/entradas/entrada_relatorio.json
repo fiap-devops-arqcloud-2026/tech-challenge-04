@@ -1,0 +1,1167 @@
+{
+ "arquivos": [
+  {
+   "caminho": "docs/00_COLAB_IA/DECISOES.md",
+   "leitura": "Integral, linhas 1 a 339 (arquivo texto de ~30 KB; o PowerShell conta 179 quebras CRLF, a leitura mostrou 339 linhas). Nenhuma parte pulada.",
+   "resumo": "Registro de decisões da Fase 3 (D-001 a D-024, sem D-021 duplicada; D-002 substituída). Cobre: fluxo Git (dev -> PR -> main, robô do CI comitando na main), ordem de subida/destruição das 3 camadas Terraform com planos salvos, reaproveitamento do provedor OIDC existente, corte do External Secrets Operator, dois estados Terraform (base/cluster, depois k8s), node group c7i-flex.large, 2 RDS + targeting em pod, reaproveitamento de manifestos da Fase 2, ausência de Ingress/LB, ambiente único prod, módulos Terraform, padrão de tags, Kustomize, monorepo, prazo/modalidade, guias de estudo HTML e consolidação da documentação final. Várias decisões têm 'Nota de superação (2026-09-15)'.",
+   "valor_fase4": "alto",
+   "motivo_valor": "É a fonte das decisões de arquitetura e operação herdadas pela Fase 4 (camadas Terraform, GitOps, CI, segredos, custo, ordem de apply/destroy). Também explica restrições ligadas à conta antiga (plano gratuito, OIDC de outro projeto) que precisam ser revistas na conta nova.",
+   "lote": "G01-decisoes"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md",
+   "leitura": "Integral, linhas 1 a 148 (148 linhas).",
+   "resumo": "Instruções vigentes da Fase 3 para assistentes, versão de 2026-09-15 19:03 -03:00. Seis partes: estado do projeto em 2026-09-15 e fatos técnicos (serviços, conta, Terraform em 3 camadas, CI, GitOps, desvios, custo); regras permanentes de escrita, código, Git e AWS; mapa de gatilhos de CI por caminho; mapa da documentação e onde registrar; armadilhas de operação; evidências conferidas (runs, PRs e commits do repositório da Fase 3) e três afirmações falsas comuns sobre o pipeline.",
+   "valor_fase4": "alto",
+   "motivo_valor": "Concentra a arquitetura herdada, as regras de trabalho, o mapa de gatilhos de CI e as armadilhas de subida e destruição que valem diretamente para a recriação na conta nova. Parte do estado (sobras na conta antiga, link do vídeo, D-022) está superada e precisa ser filtrada.",
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/LEIA-PRIMEIRO.md",
+   "leitura": "Integral, linhas 1 a 39 (39 linhas).",
+   "resumo": "Porta de entrada da memória de trabalho da Fase 3 (2026-09-15). Diz que o projeto foi entregue e o ambiente destruído; dá a ordem de leitura; lista os 4 documentos públicos centrais (README, GUIA_DE_REPRODUCAO, ARQUITETURA, RELATORIO_DE_ENTREGA); define o arquivo morto como somente leitura; define o ritual de sessão.",
+   "valor_fase4": "medio",
+   "motivo_valor": "O ritual de sessão, a regra de conflito e a divisão dos documentos públicos continuam úteis. O estado e a ordem de leitura são específicos da pasta da Fase 3 que será descartada.",
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md",
+   "leitura": "Integral, linhas 1 a 72 (72 linhas).",
+   "resumo": "Estrutura do monorepo da Fase 3 em 2026-09-15, regras de destino de cada tipo de arquivo, lista do que nunca versionar e tabela de-para dos movimentos feitos com git mv no commit 3317204 (aulas para docs/aulas-fiap, OPERACAO.md para o arquivo morto, etc.).",
+   "valor_fase4": "medio",
+   "motivo_valor": "As regras de destino e a lista do que nunca versionar seguem válidas. A árvore e o de-para são históricos; o local da memória (docs/00_COLAB_IA) e a extinção de 02_TRABALHO contradizem a organização da Fase 4.",
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md",
+   "leitura": "Integral, linhas 1 a 53 (53 linhas).",
+   "resumo": "Pendências abertas no fim da Fase 3 (2026-09-15), numeradas a partir de P-100: do usuário (P-100 a P-105), técnicas adiadas por gatilho de CI (P-110 a P-115), de código Terraform (P-120 a P-124), datas a vigiar (P-130 a P-132) e lista do que não repetir.",
+   "valor_fase4": "alto",
+   "motivo_valor": "A maior parte das pendências técnicas está no código herdado pela Fase 4 e continua aberta (conferido em 2026-11-01: PyYAML==6.0.1, enable_nat_gateway=false no exemplo, ECR MUTABLE, revisão do .trivyignore vencida em 2026-10-15). As datas de EKS e de rerun afetam a recriação.",
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/LOG_DE_TRABALHO.md",
+   "leitura": "Lidas integralmente as linhas 1 a 236 (escopo do lote), em duas partes (1-119 e 120-236). Cobre as entradas de 2026-09-15 19:03 até 2026-09-10. O restante do arquivo (entradas mais antigas) não faz parte deste lote.",
+   "resumo": "Diário append-only da Fase 3, do mais recente para o mais antigo. O trecho cobre: consolidação final da documentação pública (D-024); recriação do ambiente do zero, regravação do vídeo e destruição total com tempos medidos (D-023); provedor OIDC do GitHub já existente na conta (D-022); revisão final do relatório para a FIAP; reorganização para repositório público; guia de exclusão completa da AWS; guia de gravação e relatório de entrega com estimativa oficial de custo; merge do PR #6 e pre-flight da sessão paga (versões, cotas, disponibilidade).",
+   "valor_fase4": "alto",
+   "motivo_valor": "Traz a ordem de subida e destruição validada na prática, tempos medidos de destroy, armadilhas de operação (OIDC já existente, ECR vazio, kubeconfig antigo, PowerShell 5.1, apply interativo, git add de tudo), regras do Trivy, lições de gravação (vídeo sem áudio) e o modelo de relatório (estrutura da Fase 2, gerador de PDF, estimativa no Pricing Calculator). Tudo isso se aplica diretamente à mesma base na conta nova da Fase 4.",
+   "lote": "G03-log-recente"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/LOG_DE_TRABALHO.md",
+   "leitura": "Lidas integralmente as linhas 237 a 581 (entradas de 2026-09-09 22:40 até 2026-07-17 16:31), em duas partes (237-411 e 412-581), sem pular trechos. O restante do arquivo (linhas 1-236) não faz parte deste lote.",
+   "resumo": "Trecho mais antigo do log append-only da Fase 3 (entradas novas no topo). Cobre: estudos dos 5 módulos em guias HTML (julho); checklist de requisitos e condições de entrega (30/07); bootstrap do bucket de estado, região us-east-2, padrão de tags, plano do Terraform aprovado, validação do Terraform, criação do gitops/, README com âncora de escopo, plano em 4 fases ordenado por custo e separação do Terraform em camadas com estados independentes (27/08); auditoria FIAP do Codex, revalidação após PRs #4/#5, adoção da regra dev -> PR -> main e correção dos achados F-042/F-043/F-046/F-047/F-048 pelo Claude (09/09). Há um cabeçalho antigo solto nas linhas 339-341 (resto de mesclagem de versões do log).",
+   "valor_fase4": "alto",
+   "motivo_valor": "Concentra o porquê das decisões de arquitetura que a Fase 4 herda (camadas do Terraform, Kustomize/images, IRSA, sem Ingress, Secrets sem ESO, bootstrap do ArgoCD em duas etapas, Trivy sem ignore-unfixed), armadilhas reais (provider/kubectl, Git Bash/Windows, tags sensíveis a caixa, README de serviço com região errada, documentação divergente do código) e regras de colaboração e de vídeo/relatório. A parte de estudos e de sincronização de branches tem valor baixo.",
+   "lote": "G04-log-antigo"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md",
+   "leitura": "Integral, linhas 1-1637, lidas em duas partes (1-1115 e 1116-1637), sem pular.",
+   "resumo": "Guia operacional único da Fase 3, versão de 2026-09-15, arquivado em _ARQUIVO_MORTO. Cobre: regras mínimas (sem chave estática, ordem das 3 camadas Terraform, ECR vazio após recriar a base, custo do NAT); qual shell usar (Git Bash x PowerShell 5.1); execução local com Docker Compose (9 containers, portas, criação da SERVICE_API_KEY, teste integrado com Moto); provisionamento AWS em 7 passos (pré-voo, base+NAT, republicação de imagens no ECR, cluster, kubeconfig, camada k8s em dois comandos, conferência do overlay GitOps, token do ArgoCD para repo privado); criação manual dos schemas no RDS via pod psql; acesso ao ArgoCD por port-forward; verificação ponta a ponta (seed, troca da chave, flag/regra, 4 conferências); teardown com conferência de recursos caros; tabela de 30 armadilhas; custos por hora/mês e tempos medidos na sessão de 2026-09-11.",
+   "valor_fase4": "alto",
+   "motivo_valor": "A Fase 4 usa a mesma base (3 camadas Terraform, EKS, ArgoCD, CI/CD, 5 serviços). O roteiro de subida/descida, os tempos medidos, os custos, as armadilhas e os comandos de verificação são reaproveitáveis quase integralmente na conta nova. Precisa de ajuste: nome do bucket de estado (conta da Fase 3), URL de clone do repo da Fase 3, custo sem a stack de observabilidade, decisão de não ter Ingress a revisar para Grafana/integrações.",
+   "lote": "G05-operacao"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md",
+   "leitura": "Integral, linhas 1-1065 (lido em duas partes: 1-550 e 550-1065).",
+   "resumo": "Plano operacional da manhã de 15/09/2026 para recriar toda a AWS do zero e regravar o vídeo da Fase 3, porque a gravação de 11/09 saiu sem áudio e a conta foi destruída depois. Traz: regras do dia, pré-voo técnico e de áudio, cronograma T-30 a T+80 (~2h20), 16 passos com todos os comandos (base, republicação das imagens via rerun, cluster, cenas de DevSecOps ao vivo, kubectl, camada k8s em duas etapas, conferência do GitOps, init dos bancos, semeadura de dados, cenas AWS/ArgoCD/GitOps, exportação, destroy em 3 camadas com conferência final, entrega), tabela de cenas do vídeo (~18:30) e 15 contingências com correções.",
+   "valor_fase4": "alto",
+   "motivo_valor": "É o runbook mais completo e mais recente da Fase 3 para subir e derrubar o ambiente inteiro do zero, na mesma base de código que a Fase 4 usa. Ordem de camadas, armadilhas (CRD do ArgoCD, OIDC, REDIS_URL e IRSA fixos no GitOps, cancelamento de run, Trivy na última linha), tempos estimados, conferência pós-destroy e o método de gravação (áudio, blocos curtos, cenas fora de ordem) são diretamente reaproveitáveis. Precisa de adaptação: ID de conta, bucket, nomes de repositório, URLs e run IDs são da Fase 3; caminhos locais têm nome de usuário.",
+   "lote": "G06-gravacao"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md",
+   "leitura": "Integral, linhas 1-996 (lido em duas partes: 1-500 e 500-996).",
+   "resumo": "Guia de gravação criado em 11/09/2026 e marcado como substituído em 14/09 pelo PLANO_GRAVACAO_2026-09-15. Contém: transcrição literal dos requisitos de vídeo e relatório do enunciado da Fase 3 (p. 5-6), tradução de cada requisito em 'o que aparece na tela', divisão em BLOCO A (gravável sem custo, só GitHub) e BLOCO B (com cluster, ~US$ 0,37/h), falas sugeridas por cena, explicação parte a parte de cada comando, tabela de desvios do enunciado para o relatório (2 RDS, sem Ingress, c7i-flex.large, EKS 1.34, .trivyignore), fontes do print de custo e checklist final de vídeo, limpeza e relatório.",
+   "valor_fase4": "alto",
+   "motivo_valor": "A estratégia de mapear cada requisito do enunciado em uma evidência visual, separar o que se grava sem custo do que exige cluster, a tabela de desvios para o relatório, o checklist final e as explicações de comandos se aplicam à Fase 4. O próprio arquivo avisa que algumas cenas não funcionam com conta recriada (plan do cluster antes da base, fala de base permanente, ArgoCD trocando réplicas em vez de versão).",
+   "lote": "G06-gravacao"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/ROTEIRO_VIDEO.md",
+   "leitura": "Integral, linhas 1-19.",
+   "resumo": "Linha do tempo resumida do vídeo da Fase 3 (máximo 20 minutos) em 8 blocos, ajustada em 2026-09-09 para 2 RDS + 1 banco em pod (D-015) e uma única Application do Argo CD com os cinco serviços. Aponta para GUIA_GRAVACAO.md e RUNBOOK-SESSAO.md.",
+   "valor_fase4": "medio",
+   "motivo_valor": "Serve de modelo de distribuição de tempo por tema (contexto, arquitetura, IaC, console, pipeline, ArgoCD, demo funcional, custo/conclusão). Foi superado pela tabela de cenas do PLANO_GRAVACAO_2026-09-15 e o limite da Fase 4 é outro (25 min).",
+   "lote": "G06-gravacao"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md",
+   "leitura": "Integral, linhas 1 a 432 (37.007 bytes), lido em duas partes (1-220 e 220-432).",
+   "resumo": "Snapshot arquivado em 2026-09-11 das pendencias da Fase 3. Empilha notas de Codex e Claude de 2026-08-27 a 2026-09-11: roteiro de exclusao AWS (P-053), estado apos correcoes (placar 24/6/9), regra de branch dev (D-020/D-021), auditoria FIAP de 2026-09-09 (P-045 a P-052, F-042 a F-049), plano em 4 fases ate 2026-09-15, riscos da primeira execucao do CI, lista de pendencias encerradas e um bloco grande de achados F-001 a F-051 com licoes de operacao (apply parcial, merge hibrido, concorrencia do job GitOps, cadeia de upgrade de Go, Trivy com continue-on-error, limites do plano gratuito, custos por hora, sizing).",
+   "valor_fase4": "alto",
+   "motivo_valor": "Concentra as armadilhas e licoes reais de operacao da mesma base (Terraform 3 camadas, ArgoCD, CI DevSecOps, seed/schemas, destroy com EBS do CSI) e numeros de custo e sizing que orientam a nova conta. Varios itens estao datados e superados; usar como fonte de licoes, nao como estado atual.",
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md",
+   "leitura": "Integral, linhas 1 a 169 (13.661 bytes), lido de uma vez.",
+   "resumo": "Snapshot arquivado em 2026-09-11 do dossie da Fase 3. Topo com snapshot operacional vivo (EKS ACTIVE, ArgoCD Synced/Healthy, EBS de 5 GiB fora do state, plans de destroy 14/35/36), diretriz D-020, revalidacao de 2026-09-09 e sintese da auditoria. Abaixo, conteudo de 2026-08-27: objetivo, regras de colaboracao, contexto (regiao, conta, bucket, tags), caminhos, processos, decisoes D-001 a D-014, pendencias antigas, glossario, cuidados e resumo das conversas.",
+   "valor_fase4": "medio",
+   "motivo_valor": "Util para regras de colaboracao, decisoes estruturais (monorepo, Kustomize, prod, sem Ingress, tags) e cuidados de seguranca. Boa parte e historico de estudo e estado de agosto de 2026 ja superado; contem ID de conta e caminhos locais que nao devem ser levados adiante.",
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md",
+   "leitura": "Integral, linhas 1-220 (arquivo tem 220 linhas; o Read mostrou 221 com a linha final em branco).",
+   "resumo": "Guia de exclusao completa da AWS da Fase 3, atualizado em 2026-09-11 pelo Codex (branch dev, HEAD eb0bdf3). Foi preparado e revisado, mas NAO executado. Traz inventario vivo de 2026-09-11 (12:53-12:58, -03:00): contagens de plan -destroy por camada, recursos e flags de exclusao do Terraform. Define a ordem: Application ArgoCD, k8s, conferir PV/EBS, cluster, base, conferencia final e bucket de estado por ultimo. Inclui blocos PowerShell com checks de exit code, a alternativa de pausa (D-017) e o conflito documental F-050.",
+   "valor_fase4": "alto",
+   "motivo_valor": "A ordem de destruicao, as armadilhas (corrida entre ArgoCD e namespace, EBS orfao do CSI, bucket versionado, DependencyViolation) e a conferencia final valem para a conta nova, com a mesma topologia de 3 camadas. Os valores de conta, bucket, volumes e o contexto kubectl sao da Fase 3 e nao podem ser reaproveitados.",
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/BOOTSTRAP-BACKEND-S3_2026-08-27.md",
+   "leitura": "Integral, linhas 1-353 (arquivo tem 353 linhas; o Read mostrou 354 com a linha final em branco).",
+   "resumo": "Passo a passo para criar, uma vez e fora do Terraform, o bucket S3 do tfstate. O usuario executou pelo console em 2026-08-27. Traz decisoes (regiao us-east-2, nome com conta e regiao, versionamento, SSE-S3 com Bucket Key, bloqueio publico, policy DenyInsecureTransport, lifecycle de 30 dias, use_lockfile com Terraform >= 1.11, tags project/phase). Tambem traz pre-requisitos de IAM e MFA, caminhos por console, CLI e Terraform (Apendice A), conferencia pela CLI, bloco backend e tabela de erros comuns.",
+   "valor_fase4": "alto",
+   "motivo_valor": "A conta nova da Fase 4 precisa de um bucket de estado novo (os backend.tf atuais estao parciais e pendentes). O procedimento, as configuracoes de seguranca e a tabela de erros podem ser reaplicados. O nome do bucket, o ID da conta e a chave de estado sao da Fase 3 e estao superados.",
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md",
+   "leitura": "Integral, linhas 1-681 (arquivo tem 681 linhas; o Read mostrou 682 com a linha final em branco).",
+   "resumo": "Runbook de uma sessao paga na Fase 3, atualizado em 2026-09-09 pelo Claude (cobre P-034). Fases: 0 pre-voo (identidade, ferramentas, token do GitHub para o ArgoCD); 1 subir (NAT, cluster, kubeconfig, k8s em duas etapas, placeholders do GitOps, ArgoCD, schemas RDS por pod psql); 2 seed (chave de API, sincronizar SERVICE_API_KEY, flag e regra PERCENTAGE, avaliacao ponta a ponta); 3 gravar (mapa O-27 a O-32); 4 derrubar (k8s, cluster, NAT off, conferencia). Inclui tabela de armadilhas e estimativas de tempo e custo.",
+   "valor_fase4": "alto",
+   "motivo_valor": "A Fase 4 usa a mesma base. A ordem de subida, as armadilhas (NAT, CRD Application, schemas nao aplicados, SERVICE_API_KEY provisoria, parametros do /evaluate, cache Redis, shells) e a disciplina de derrubar ao fim da sessao continuam uteis. Custos, credito, conta, token e o mapa de itens O-xx sao da Fase 3 e precisam ser revistos (a stack de observabilidade muda tempo e custo).",
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md",
+   "leitura": "integral, linhas 1-187",
+   "resumo": "Parecer de auditoria do Codex (2026-09-09 13:28 -03:00) sobre a entrega da Fase 3 no snapshot main 0242d33. Compara requisitos do enunciado por pagina com codigo, CI e Git. Registra achados F-042 a F-049 (Trivy ignore-unfixed, bootstrap do CRD do ArgoCD, schemas nao aplicados nos RDS, roteiro com parametros errados, disputa da SERVICE_API_KEY, placeholder Redis, documentacao com duas arquiteturas, custo EKS em suporte estendido), avalia organizacao, fluxo dev -> PR -> main, evidencias de CI e extras que valem manter. Fecha com ordem minima de trabalho.",
+   "valor_fase4": "alto",
+   "motivo_valor": "Concentra licoes tecnicas reaproveitaveis na mesma base (CRD do ArgoCD em duas etapas, schemas idempotentes, dono unico de segredo, custo de versao EKS, politica do bot GitOps, criterio de cinco estados de evidencia) e mostra o que um auditor cobra.",
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md",
+   "leitura": "integral, linhas 1-107",
+   "resumo": "Complemento do parecer, feito pelo Codex apos os PRs 4 e 5 (17:55 e 18:09 de 2026-09-09, HEAD 5b8cd86). Registra o que foi corrigido (EKS 1.34, roteiro com flag_name/user_id/PERCENTAGE, modulos sem uso removidos, validate-all com tres camadas), o que persistia (ignore-unfixed, CRD ArgoCD, chave do seed, Redis, security-check), a regra D-020 (trabalho so na dev), a pendencia P-052 do bot GitOps e a armadilha do redirecionamento Bash no PowerShell.",
+   "valor_fase4": "alto",
+   "motivo_valor": "Estado mais recente das pendencias tecnicas na data e regras de fluxo de branch e de bot que continuam relevantes; inclui armadilha de shell no Windows.",
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md",
+   "leitura": "integral, linhas 1-154",
+   "resumo": "Checklist (Claude, 2026-09-09, com acrescimos ate 2026-09-11) dos 39 requisitos obrigatorios O-01 a O-39, 9 opcionais R-01 a R-09 e 9 sugestoes de aula S-01 a S-09, com marcadores [x] comprovado, [~] escrito/validado, [ ] nao iniciado. Traz fatos medidos (base aplicada com 33 recursos em 2026-09-07, plan do cluster com 35 recursos, estado de 61 KiB, 23 recursos Kustomize, custo US$ 0,368/h), provas de CI (CVE critico barrado, tag v1.0.0-122174a), lista de 8 desafios do relatorio, marcos M1-M6 e observacoes de leitura do enunciado.",
+   "valor_fase4": "alto",
+   "motivo_valor": "Modelo de checklist com estados distintos e inventario do que ja esta comprovado na base herdada; numeros e decisoes servem de baseline e de material para o relatorio da Fase 4.",
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/PLANO_AUDITORIA_2026-09-09_v01.md",
+   "leitura": "integral, linhas 1-40",
+   "resumo": "Plano e registro de execucao da auditoria (Codex, 2026-09-09 13:24 a 18:09): tarefas marcadas, estado inicial (main 0242d33, dev cc80c4e), uso de subagentes independentes para PDF, Git/CI e Terraform/GitOps, conclusao no snapshot 5b8cd86 e revisao complementar que transferiu o checkout para dev e registrou D-020 e P-052.",
+   "valor_fase4": "baixo",
+   "motivo_valor": "Valor apenas como modelo de processo de auditoria (subagentes independentes, passo de verificacao final); o conteudo tecnico esta nos dois pareceres.",
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-fiap-texto-por-pagina-2026-09-09.txt",
+   "leitura": "integral, linhas 1-156",
+   "resumo": "Extracao de texto, pagina a pagina, do enunciado do Tech Challenge Fase 3 (7 paginas; requisitos nas paginas 2 a 6). Contem: peso de 90% da nota, opcoes A (AWS Academy/LabRole) e B (conta pessoal), cenario da DevOps Solutions Inc., requisitos de Terraform, CI/DevSecOps, CD/GitOps, entregaveis (video ate 20 min, codigo, relatorio .PDF ou .txt).",
+   "valor_fase4": "medio",
+   "motivo_valor": "Requisitos da Fase 3 que a base herdada precisa continuar atendendo e regras que provavelmente persistem (conta pessoal pode criar IAM, relatorio com print de custo). O PDF original aparece como excluido no working tree (git status), entao este texto e a copia legivel restante dentro da pasta; o original segue no Git e no tech-challenge-03.",
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-pagina-1.png",
+   "leitura": "binario nao aberto; inventariado por nome e tamanho (90285 bytes)",
+   "resumo": "Imagem da pagina 1 do enunciado da Fase 3, usada na inspecao visual da auditoria. O texto extraido dessa pagina so tem o cabecalho 'Pagina 1 de 7' (capa).",
+   "valor_fase4": "nenhum",
+   "motivo_valor": "Capa do enunciado da Fase 3; sem requisito.",
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-pagina-2.png",
+   "leitura": "binario nao aberto; inventariado por nome e tamanho (141567 bytes)",
+   "resumo": "Imagem da pagina 2 do enunciado da Fase 3; texto correspondente nas linhas 7-39 do .txt (peso da nota, opcoes Academy/conta pessoal, cenario).",
+   "valor_fase4": "nenhum",
+   "motivo_valor": "Conteudo coberto pelo .txt e pelo PDF original recuperavel no Git.",
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-pagina-3.png",
+   "leitura": "binario nao aberto; inventariado por nome e tamanho (142579 bytes)",
+   "resumo": "Imagem da pagina 3 do enunciado da Fase 3; texto nas linhas 41-71 do .txt (requisitos de Terraform e backend S3).",
+   "valor_fase4": "nenhum",
+   "motivo_valor": "Redundante com o .txt.",
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-pagina-4.png",
+   "leitura": "binario nao aberto; inventariado por nome e tamanho (150797 bytes)",
+   "resumo": "Imagem da pagina 4 do enunciado da Fase 3; texto nas linhas 73-105 do .txt (CI/DevSecOps e inicio do GitOps).",
+   "valor_fase4": "nenhum",
+   "motivo_valor": "Redundante com o .txt.",
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-pagina-5.png",
+   "leitura": "binario nao aberto; inventariado por nome e tamanho (150168 bytes)",
+   "resumo": "Imagem da pagina 5 do enunciado da Fase 3; texto nas linhas 107-136 do .txt (ArgoCD, sync, entregaveis video e codigo).",
+   "valor_fase4": "nenhum",
+   "motivo_valor": "Redundante com o .txt.",
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-pagina-6.png",
+   "leitura": "binario nao aberto; inventariado por nome e tamanho (36149 bytes)",
+   "resumo": "Imagem da pagina 6 do enunciado da Fase 3; texto nas linhas 139-150 do .txt (relatorio de entrega).",
+   "valor_fase4": "nenhum",
+   "motivo_valor": "Redundante com o .txt.",
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-pagina-7.png",
+   "leitura": "binario nao aberto; inventariado por nome e tamanho (211554 bytes)",
+   "resumo": "Imagem da pagina 7 do enunciado da Fase 3. O .txt nao extraiu texto dessa pagina (linhas 153-156 so com cabecalho); provavelmente pagina grafica. Conteudo nao verificado.",
+   "valor_fase4": "nenhum",
+   "motivo_valor": "Sem texto extraido e sem requisito citado pelos pareceres (requisitos substantivos nas paginas 2-6).",
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md",
+   "leitura": "integral (171 linhas, 1-171)",
+   "resumo": "Consolida as antigas instruções de CLAUDE.md e AGENTS.md da Fase 3 (movidas em 2026-09-11). Parte 1: camadas de estado (2026-09-14, 2026-09-09, 2026-08-27) com fluxo dev -> PR -> main (D-019/D-020), exceção D-021 dos pushes GitOps na main, desmontagem da AWS em 2026-09-11, placar de requisitos, Terraform em 3 camadas (D-017), nós c7i-flex.large (F-023), EKS 1.34, desvios conscientes (D-012, D-015, D-018), correções de auditoria (F-042 a F-048), regras essenciais de colaboração e ponteiros. Parte 2: regras dos agentes (branch dev, PR, sem push na main).",
+   "valor_fase4": "alto",
+   "motivo_valor": "Concentra decisões de arquitetura e de fluxo Git, regras de colaboração ainda aplicáveis, armadilhas (CRD do ArgoCD, SERVICE_API_KEY, Redis, Free Tier) e o roteiro de reconstrução após destroy. Contém o ID da conta da Fase 3 em nome de bucket (linhas 61 e 93), que não pode ser reutilizado.",
+   "lote": "G10-menores"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/ORGANIZACAO_DE_PASTAS_2026-08-27.md",
+   "leitura": "integral (72 linhas, 1-73)",
+   "resumo": "Estrutura do monorepo (D-007) em 2026-08-27, convenções de nomes, regras de destino de arquivos e lista do que nunca versionar. Na época, terraform/, gitops/ e workflows ainda estavam vazios.",
+   "valor_fase4": "medio",
+   "motivo_valor": "Convenções de nome e a lista 'nunca versionar' continuam válidas. A árvore de pastas está desatualizada (00_COLAB_IA da Fase 4 fica na raiz; material de aula foi reorganizado).",
+   "lote": "G10-menores"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/ARQUITETURA.md",
+   "leitura": "integral (106 linhas, 1-107)",
+   "resumo": "Arquitetura da Fase 3 atualizada em 2026-09-09: diagrama Mermaid (EKS com 5 serviços, 2 RDS, postgres-targeting em StatefulSet, ElastiCache Redis, SQS+DLQ, DynamoDB ToggleMasterAnalytics, 5 ECR, GitHub Actions, ArgoCD observando gitops/overlays/prod na main), três desvios do desenho original (sem Ingress/LB, 2 RDS, IAM por Terraform), encaixe das 3 camadas Terraform com custo, mapa mental e controles de segurança.",
+   "valor_fase4": "alto",
+   "motivo_valor": "É a base sobre a qual a Fase 4 acrescenta observabilidade. Os desvios e controles de segurança precisam ser mantidos ou reavaliados (por exemplo, acesso por port-forward afeta como Grafana/ArgoCD serão mostrados).",
+   "lote": "G10-menores"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/ESTIMATIVA_CUSTOS_AWS.md",
+   "leitura": "integral (36 linhas, 1-37)",
+   "resumo": "Estimativa da AWS Pricing Calculator consultada em 2026-09-11, us-east-2: total mensal US$ 281,03 (730 h) e US$ 3.372,36 em 12 meses, com detalhamento por serviço e limites da estimativa. Referencia captura em docs/evidencias/estimativa-custos-aws-2026-09-11.png (existe no repositório) e um link público da calculadora.",
+   "valor_fase4": "alto",
+   "motivo_valor": "Ponto de partida para a estimativa de custo da Fase 4, que precisará somar a stack de observabilidade (nós/volumes extras). Mostra o formato de evidência de custo usado no relatório.",
+   "lote": "G10-menores"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/EVIDENCIAS.md",
+   "leitura": "integral (36 linhas, 1-37)",
+   "resumo": "Checklist do que precisava aparecer na tela na gravação da Fase 3 (2026-09-09): itens já comprovados sem cluster (pipelines, bloqueio CRITICAL, tags v1.0.0-<commit>, commit chore(gitops), estado no S3, recursos base no console), itens dependentes do cluster (apply, EKS, RDS, Redis, ArgoCD Synced/Healthy, sincronização de tag, teste funcional, evento no DynamoDB) e entregáveis (vídeo até 20 min, relatório).",
+   "valor_fase4": "medio",
+   "motivo_valor": "Modelo reaproveitável de checklist de evidências para o vídeo da Fase 4; o estado dos checkboxes é histórico.",
+   "lote": "G10-menores"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_EXECUCAO.md",
+   "leitura": "integral (42 linhas, 1-43)",
+   "resumo": "Índice reescrito em 2026-09-09 apontando para README, RUNBOOK-SESSAO, terraform/README, gitops/SECRETS-CONTRATO e TESTE_COMPOSE. Explica por que a versão antiga era perigosa (pastas inexistentes, ArgoCD por kubectl, chaves estáticas no GitHub) e lista três regras mínimas: sem credencial AWS no GitHub (OIDC, role togglemaster-github-actions), ordem obrigatória das camadas com k8s em dois comandos (F-043), e destruir cluster/desligar NAT (~US$ 33/mês).",
+   "valor_fase4": "alto",
+   "motivo_valor": "As três regras mínimas continuam válidas na Fase 4 e o princípio 'um texto por assunto' ajuda a evitar divergência documental.",
+   "lote": "G10-menores"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/TESTE_COMPOSE.md",
+   "leitura": "integral (44 linhas, 1-45)",
+   "resumo": "Descreve o teste integrado local dos 5 serviços (workflow Compose Integration e scripts/test-compose.sh), com Moto simulando SQS/DynamoDB, portas usadas, projeto tc03-integration, o que o teste confirma e como limpar somente os dados do projeto de teste.",
+   "valor_fase4": "medio",
+   "motivo_valor": "Base do teste local que a Fase 4 já estendeu (P-008 local com OTel/Collector). Útil para reproduzir testes sem AWS. Menciona 'AWS Academy', o que conflita com a conta pessoal (D-016).",
+   "lote": "G10-menores"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md",
+   "leitura": "integral (325 linhas, 16.058 bytes)",
+   "resumo": "Versão preliminar (11/09/2026) do texto do relatório de entrega da Fase 3. Traz identificação do grupo, links, o que foi automatizado (Fase 2 manual para Fase 3 em código), Terraform em 3 camadas com custo parado, 9 workflows de CI/DevSecOps, ciclo GitOps com ArgoCD, 8 desafios e decisões (limite de RDS, tipo de máquina, versão do EKS, CVE oculto por continue-on-error, CVEs sem correção com .trivyignore nominal, bootstrap do ArgoCD em duas etapas, remoção do Ingress, disciplina de branches), estimativa de custos AWS de 11/09/2026 e anexo de itens opcionais.",
+   "valor_fase4": "alto",
+   "motivo_valor": "Concentra as decisões de arquitetura e as lições da base que a Fase 4 herda, além de servir de modelo de estrutura para o relatório PDF da Fase 4 (exigências do enunciado, seção de desafios, seção de custos). Os números de custo precisam ser refeitos para a conta nova e para a pilha de observabilidade.",
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py",
+   "leitura": "integral (422 linhas, 17.688 bytes)",
+   "resumo": "Gerador canônico (desde 14/09/2026) do PDF preliminar da Fase 3, em ReportLab, com fontes Segoe UI, capa com selo PRELIMINAR, página de participantes e links, página de desafios/decisões/evidências e página de custos com a captura do AWS Pricing Calculator. Registra o estado em 14/09/2026: pilha aplicada em 11/09, destruída depois, estados vazios, vídeo e acesso do avaliador pendentes.",
+   "valor_fase4": "medio",
+   "motivo_valor": "Reaproveitável como molde técnico do gerador do relatório da Fase 4 (layout, tabela de evidências com status, alerta de pendências antes do envio). Traz também o estado das evidências da Fase 3 e decisões resumidas. Contém dados pessoais e links da Fase 3 que não devem ser copiados.",
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/capturar-estimativa-aws_2026-09-11.cjs",
+   "leitura": "integral (49 linhas, 1.608 bytes)",
+   "resumo": "Script Node com Playwright que abre um link público do AWS Pricing Calculator no Chrome local em modo headless, espera o texto 'Resumo da estimativa', fecha notificações e banner de cookies, aplica zoom de 80% e salva captura de página inteira em PNG (viewport 1680x1300, locale pt-BR).",
+   "valor_fase4": "medio",
+   "motivo_valor": "Útil para reproduzir a captura obrigatória da estimativa de custos no relatório da Fase 4 de forma automatizada. Atenção: o script clica em 'Accept'/'Aceitar' do banner de cookies se 'Decline'/'Recusar' não existir.",
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/gerar-relatorio-pdf_2026-09-11_v00.py",
+   "leitura": "integral (210 linhas, 7.268 bytes)",
+   "resumo": "Primeiro gerador (v00, 11/09/2026) do PDF: converte docs/RELATORIO_DE_ENTREGA.md em HTML (markdown com extensões tables e extra) e renderiza com WeasyPrint, com capa no formato do relatório da Fase 2, remoção do bloco de notas internas, CSS de impressão (A4, número de página, tabelas sem quebra) e caminho relativo da imagem de custos.",
+   "valor_fase4": "medio",
+   "motivo_valor": "Documenta a abordagem 'relatório em Markdown versionado e PDF reproduzível', ainda válida para a Fase 4. Foi superado pelo gerador ReportLab de 14/09/2026. A capa contém nomes de pessoas e cidade.",
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "caminho": "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.pdf",
+   "leitura": "não aberto (binário); inventariado por nome e tamanho (247.558 bytes)",
+   "resumo": "PDF preliminar v00 do relatório da Fase 3, datado de 11/09/2026 pelo nome. Pela data e pelo sufixo v00, corresponde ao texto preliminar .md de mesmo nome. O nome não coincide com a saída de nenhum dos dois geradores (o WeasyPrint grava 'Relatorio de Entrega - Tech Challenge Fase 3 - Grupo 203.pdf'; o ReportLab grava '..._2026-09-14_v01_PRELIMINAR.pdf'), então qual gerador o produziu é ambíguo; deve ter sido renomeado ao arquivar.",
+   "valor_fase4": "baixo",
+   "motivo_valor": "Artefato renderizado e superado; o conteúdo está no .md e o original continua no Git e no tech-challenge-03. Contém dados pessoais. Serve apenas como referência visual de formato.",
+   "lote": "G11-relatorio-scripts"
+  }
+ ],
+ "descartavel": [
+  {
+   "o_que": "D-001 (repo destino tech-challenge-03) e o caminho local citado",
+   "por_que": "Superada pelo repo da Fase 4; contém caminho com nome de usuário.",
+   "lote": "G01-decisoes"
+  },
+  {
+   "o_que": "D-002 (guias Markdown em docs/guias-de-estudo/fase-2/)",
+   "por_que": "Substituída por D-005 e os guias foram apagados.",
+   "lote": "G01-decisoes"
+  },
+  {
+   "o_que": "D-006 (prazo 2026-09-15)",
+   "por_que": "Prazo da Fase 3 vencido; só o lembrete sobre nomes dos integrantes tem valor.",
+   "lote": "G01-decisoes"
+  },
+  {
+   "o_que": "Texto original de D-013 sobre o ESO",
+   "por_que": "Superado por D-018; o que importa (IRSA no lugar de chaves estáticas) já está registrado.",
+   "lote": "G01-decisoes"
+  },
+  {
+   "o_que": "D-019 como texto completo",
+   "por_que": "Conteúdo útil absorvido por D-020 e D-021; resta só valor histórico.",
+   "lote": "G01-decisoes"
+  },
+  {
+   "o_que": "Detalhes da consolidação de 2026-09-15 sobre arquivos específicos (OPERACAO.md de 1.636 linhas, BOOTSTRAP arquivado, scripts arquivados, link para output/pdf)",
+   "por_que": "Descrevem a limpeza documental da Fase 3; sem efeito na decisão técnica da Fase 4.",
+   "lote": "G01-decisoes"
+  },
+  {
+   "o_que": "Hashes de commits e números de PR da Fase 3",
+   "por_que": "Úteis só para rastrear histórico; não orientam decisões novas.",
+   "lote": "G01-decisoes"
+  },
+  {
+   "o_que": "Estado da entrega da Fase 3 em 2026-09-15 (projeto entregue, ambiente destruído, marcador PREENCHER_URL_DO_VIDEO, integrantes pendentes).",
+   "por_que": "Retrato de um momento já encerrado; para a Fase 4 basta a lição sobre o áudio e o marcador do vídeo.",
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "o_que": "Tabela de-para dos movimentos de 2026-09-15 (commit 3317204) em ORGANIZACAO_DE_PASTAS.md:48-72.",
+   "por_que": "Só resolve caminhos citados em entradas antigas do LOG e de DECISOES da Fase 3, que não serão mantidas na pasta vigente; continua no Git.",
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "o_que": "Árvore de pastas de tech-challenge-03 e a ordem de leitura da pasta da Fase 3.",
+   "por_que": "Descrevem a pasta que será descartada; a estrutura útil já está resumida nos conhecimentos.",
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "o_que": "Referências aos antigos CLAUDE.md e AGENTS.md arquivados em INSTRUCOES_ASSISTENTES_2026-09-14.md.",
+   "por_que": "Histórico de instruções substituídas duas vezes.",
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "o_que": "Pendências P-100 e P-101 (bucket e VPC na conta da Fase 3) e P-105 (metadado do .pptx da Fase 3).",
+   "por_que": "Dizem respeito à conta antiga ou a artefato da Fase 3; não afetam a entrega da Fase 4. P-100/P-101 podem ficar só como lembrete pessoal ao usuário.",
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "o_que": "Lista de limpezas já feitas em 2026-09-15 (log groups de RDS da Fase 2, VPC da Fase 1, roles IAM da Fase 2).",
+   "por_que": "Ações concluídas na conta antiga; só a lição sobre retenção de logs interessa.",
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "o_que": "Tabela de movimentos de arquivos de 2026-09-15 (caminhos antigos e novos).",
+   "por_que": "Histórico de reorganização da Fase 3; recuperável no Git e sem efeito em decisões da Fase 4.",
+   "lote": "G03-log-recente"
+  },
+  {
+   "o_que": "IDs de runs, hashes de commits, horários UTC e tags de imagem específicas da Fase 3 (v1.0.0-7ab0602, a509d67 etc.).",
+   "por_que": "Referem-se ao histórico e ao ECR da conta antiga; não serão reutilizados.",
+   "lote": "G03-log-recente"
+  },
+  {
+   "o_que": "Retificação de horário da entrada de 2026-09-11 13:00.",
+   "por_que": "Detalhe de registro sem impacto técnico.",
+   "lote": "G03-log-recente"
+  },
+  {
+   "o_que": "Estado da AWS da conta da Fase 3 (bucket de 687 bytes, roles da Fase 2, VPCs antigas, P-100, P-101).",
+   "por_que": "Conta proibida na Fase 4.",
+   "lote": "G03-log-recente"
+  },
+  {
+   "o_que": "Placar do checklist da Fase 3 (25 comprovados, 8 escritos, 6 não iniciados) e estados de branch (a38db95, c60e792).",
+   "por_que": "Retrato da entrega anterior, sem uso para a Fase 4.",
+   "lote": "G03-log-recente"
+  },
+  {
+   "o_que": "Descrição dos donos W1 a W5 da consolidação.",
+   "por_que": "Só o princípio de posse disjunta é útil; a divisão concreta é histórica.",
+   "lote": "G03-log-recente"
+  },
+  {
+   "o_que": "Contagens e hashes de sincronização entre main e dev (0/0, 5b8cd86, 0242d33, cc80c4e, 19 commits faltando) e conferência das branches auxiliares.",
+   "por_que": "Estado de branches da Fase 3, sem efeito na Fase 4.",
+   "lote": "G04-log-antigo"
+  },
+  {
+   "o_que": "Entradas de progresso dos guias de estudo (início e conclusão por módulo, espera de revisão P-007 a P-015, commit 200cdf5).",
+   "por_que": "Histórico de estudo da Fase 3; o conteúdo útil (classificação de controles) já foi extraído.",
+   "lote": "G04-log-antigo"
+  },
+  {
+   "o_que": "Marcos M1 a M5 e datas-alvo da Fase 3.",
+   "por_que": "Cronograma interno de uma entrega já encerrada.",
+   "lote": "G04-log-antigo"
+  },
+  {
+   "o_que": "Cabeçalho solto 'TL;DR: log append-only...' e 'Última atualização: 2026-08-27 20:40' nas linhas 339-341.",
+   "por_que": "Resto de mesclagem de versões do log, sem conteúdo.",
+   "lote": "G04-log-antigo"
+  },
+  {
+   "o_que": "Lista de arquivos alterados em cada entrada.",
+   "por_que": "Recuperável pelo Git; não ajuda a decidir.",
+   "lote": "G04-log-antigo"
+  },
+  {
+   "o_que": "Entrada de início da auditoria (13:24) e de início do estudo de Segurança (11:18).",
+   "por_que": "Superadas pelas entradas de conclusão.",
+   "lote": "G04-log-antigo"
+  },
+  {
+   "o_que": "Comandos de clone do repositório tech-challenge-03 e exemplo de saída do docker compose ps com prefixo tech-challenge-03",
+   "por_que": "Específicos do repositório da Fase 3; o conteúdo útil (lista de containers e estados esperados) já está extraído.",
+   "lote": "G05-operacao"
+  },
+  {
+   "o_que": "Índice e âncoras internas do Markdown (linhas 12-23) e a tabela final de documentos relacionados como links relativos",
+   "por_que": "Navegação do documento antigo; os caminhos citados já foram registrados como referência.",
+   "lote": "G05-operacao"
+  },
+  {
+   "o_que": "Passo a passo detalhado de criação de token fine-grained no GitHub para repo privado",
+   "por_que": "Só útil se o repositório da Fase 4 for privado; a decisão e o essencial (Contents read-only, Resource owner = organização, testar com git ls-remote) foram preservados.",
+   "lote": "G05-operacao"
+  },
+  {
+   "o_que": "Valores de exemplo de saída (tm_key_3f9a..., JSON de resposta com usuario-1/2/3)",
+   "por_que": "Ilustrativos, sem valor de decisão.",
+   "lote": "G05-operacao"
+  },
+  {
+   "o_que": "Run IDs específicos, hashes de commit e tags de imagem da Fase 3 (ex.: runs 3453..., 3459..., 3460..., 3461..., 3466...; tags v1.0.0-7ab0602, v1.0.0-ff441a1, v1.0.0-e6b144f)",
+   "por_que": "Referem-se ao repositório e ao ECR da Fase 3; não existem na conta nova nem no repositório da Fase 4.",
+   "lote": "G06-gravacao"
+  },
+  {
+   "o_que": "Comandos de backup e plano C da gravação muda de 11/09 (cópia do .mp4 e abertura da pasta de backup)",
+   "por_que": "Específicos do vídeo da Fase 3; contêm caminhos pessoais.",
+   "lote": "G06-gravacao"
+  },
+  {
+   "o_que": "Cena de abertura com slides ToggleMaster_Fase3.pptx e falas sobre evolução Fase 2 → Fase 3",
+   "por_que": "Conteúdo da apresentação da Fase 3; a Fase 4 terá abertura própria.",
+   "lote": "G06-gravacao"
+  },
+  {
+   "o_que": "Cena do ArgoCD trocando réplicas (replicas: 1 → 2) do guia de 11/09",
+   "por_que": "Superada no próprio projeto pela cena de troca de versão; não mostra 'nova versão'.",
+   "lote": "G06-gravacao"
+  },
+  {
+   "o_que": "Plan da camada cluster antes da base e fala de 'base permanente' do guia de 11/09",
+   "por_que": "Marcados como não funcionais com conta recriada do zero pelo próprio arquivo.",
+   "lote": "G06-gravacao"
+  },
+  {
+   "o_que": "Transcrição literal dos requisitos do enunciado da Fase 3",
+   "por_que": "Útil só como método; os requisitos da Fase 4 vêm do PDF próprio da Fase 4.",
+   "lote": "G06-gravacao"
+  },
+  {
+   "o_que": "Referências a docs/OPERACAO.md e a RUNBOOK-SESSAO.md como guias vigentes",
+   "por_que": "docs/OPERACAO.md não existe no repositório atual; RUNBOOK-SESSAO.md está no arquivo morto da Fase 3.",
+   "lote": "G06-gravacao"
+  },
+  {
+   "o_que": "Historico de estudo e guias (D-001, D-002, D-004, D-005, P-001, P-002, P-007 a P-015, F-001 a F-007, resumo das conversas de julho, processo de extrair PDFs com pypdf para guias).",
+   "por_que": "Trata da trilha de estudo da Fase 3, ja concluida; sem efeito em decisoes da Fase 4.",
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "o_que": "Sincronizacao main/dev de 2026-09-09 (19 commits, HEADs 0242d33, cc80c4e, 5b8cd86, PRs #4/#5, P-051).",
+   "por_que": "Estado de branches da Fase 3, superado pela importacao na Fase 4.",
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "o_que": "Plano em 4 fases com datas ate 2026-09-15 e marcos M1/M2 vencidos (F-013).",
+   "por_que": "Cronograma de outra entrega; so o principio de ordenacao foi aproveitado.",
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "o_que": "Nome do bucket, caminho do state e ID da conta da Fase 3; estado vivo de 2026-09-11 (EKS ACTIVE etc.).",
+   "por_que": "Conta anterior proibida na Fase 4; manter so o padrao (chaves prod/*.tfstate, protecoes do bucket).",
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "o_que": "Caminhos locais do tech-challenge-02 e do tech-challenge-03 com nome de usuario.",
+   "por_que": "Especificos da maquina e contem dado pessoal.",
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "o_que": "Glossario basico (IaC, CI/CD, EKS, ECR, RDS, SQS, IAM, KMS, CSPM, CWPP, CASB).",
+   "por_que": "Definicoes genericas sem decisao associada; podem ser reescritas se necessario.",
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "o_que": "Pendencias antigas ja encerradas (P-003, P-019 a P-023, P-025 a P-040, P-044 a P-049, P-052) e o placar 24/6/9 da Fase 3.",
+   "por_que": "Encerradas na Fase 3; o conhecimento util foi extraido como licoes e decisoes.",
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "o_que": "Secao 'Memoria interna <-> espelho' e 'Instrucoes iniciais para o proximo assistente' de 2026-08-27.",
+   "por_que": "Instrucoes de inicio da implementacao da Fase 3 (criar bucket, backend.tf), ja cumpridas e substituidas pelo LEIA-PRIMEIRO da Fase 4.",
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "o_que": "Detalhes do merge hibrido de 2026-09-09 (lista de pastas e workflows removidos).",
+   "por_que": "Historico de reconciliacao de duas implementacoes; so a licao sobre -X theirs tem valor.",
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "o_que": "Valores especificos da conta da Fase 3: ID da conta, nome do bucket, ARN do contexto kubectl, IDs de PV e de volume EBS, perfil 'default' da maquina.",
+   "por_que": "Sao proibidos na Fase 4 e nao identificam nada da conta nova.",
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "o_que": "Passos de criacao do token para a organizacao e o repositorio da Fase 3 (nome do token, dono, data de expiracao apos 2026-09-15).",
+   "por_que": "Repositorio, organizacao e prazo mudaram; so a forma (fine-grained read-only via TF_VAR_github_token) tem valor.",
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "o_que": "Geracao de sufixo aleatorio para o nome do bucket (passo 1 do Caminho A).",
+   "por_que": "O grupo nao usou; so serve se a Fase 4 preferir sufixo aleatorio.",
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "o_que": "Links relativos para terraform/BOOTSTRAP-BACKEND-S3.md e ../../OPERACAO.md e para linhas do README Terraform antigo.",
+   "por_que": "Esses arquivos nao existem ou mudaram no repositorio da Fase 4; os caminhos estao quebrados.",
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "o_que": "Estado das tags de imagem (v1.0.0-placeholder ate 2026-09-10) e da Application 'Synced/Healthy' em 2026-09-11.",
+   "por_que": "Retrato da Fase 3; nao descreve a conta nova.",
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "o_que": "Mapa de itens O-27 a O-32 como identificadores.",
+   "por_que": "IDs do checklist da Fase 3; vale so como padrao de planejamento de gravacao.",
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "o_que": "Imagens enunciado-pagina-1.png a enunciado-pagina-7.png",
+   "por_que": "Redundantes com o texto extraido e com o PDF da Fase 3 recuperavel no Git (3b21e65) e no tech-challenge-03; paginas 1 e 7 sem requisito.",
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "o_que": "PLANO_AUDITORIA_2026-09-09_v01.md (lista de tarefas)",
+   "por_que": "Registro de execucao da auditoria; o unico valor (processo com subagentes e verificacao) foi extraido.",
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "o_que": "Hashes de commit, contagem de commits main/dev (19 a frente, 12 apos PR #3) e estado de sincronizacao 0/0",
+   "por_que": "Estado do repositorio da Fase 3 em 2026-09-09; sem efeito no repo da Fase 4.",
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "o_que": "Tabelas de runs do GitHub Actions e links de PRs da Fase 3",
+   "por_que": "Evidencia da entrega da Fase 3; nao comprovam nada na conta/repo da Fase 4.",
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "o_que": "Marcos M1-M6 e placar 24/6/9 dos 39 obrigatorios",
+   "por_que": "Cronograma e situacao da Fase 3, ja encerrada.",
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "o_que": "Pendencias de entregaveis da Fase 3 (URL do YouTube, print de custo da Fase 3, P-006/P-043)",
+   "por_que": "Entregaveis de outra fase.",
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "o_que": "Opcao A (AWS Academy/LabRole) do enunciado",
+   "por_que": "Projeto usa conta pessoal (Opcao B).",
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "o_que": "Camadas de estado datadas (2026-08-27, 2026-09-09 13:31 e 17:57, 2026-09-14) com hashes de commit (c60e792, 5b8cd86) e situação de sincronização de main/dev/origin.",
+   "por_que": "Retrato histórico do Git da Fase 3; não orienta decisões na Fase 4.",
+   "lote": "G10-menores"
+  },
+  {
+   "o_que": "Árvore de pastas de 2026-08-27 (incluindo a observação de que terraform/, gitops/ e workflows estavam vazios).",
+   "por_que": "Desatualizada; a estrutura atual da Fase 4 é outra.",
+   "lote": "G10-menores"
+  },
+  {
+   "o_que": "Ponteiros para arquivos da Fase 3 (OPERACAO, RELATORIO_DE_ENTREGA, GUIA_GRAVACAO, CHECKLIST_REQUISITOS_FASE3 etc.) e tabela de índice do GUIA_EXECUCAO.",
+   "por_que": "Caminhos antigos; o conteúdo útil já foi extraído ou está em outros lotes.",
+   "lote": "G10-menores"
+  },
+  {
+   "o_que": "Mapa mental Mermaid e diagramas como código-fonte.",
+   "por_que": "O conteúdo está resumido nos itens de arquitetura; o diagrama precisará ser refeito com a observabilidade.",
+   "lote": "G10-menores"
+  },
+  {
+   "o_que": "Estado dos checkboxes do EVIDENCIAS.md e placar de requisitos da Fase 3.",
+   "por_que": "Valem para a entrega encerrada em 2026-09-15.",
+   "lote": "G10-menores"
+  },
+  {
+   "o_que": "Link público da calculadora da Fase 3.",
+   "por_que": "Estimativa antiga; a Fase 4 precisa de nova consulta datada.",
+   "lote": "G10-menores"
+  },
+  {
+   "o_que": "Tabelas e capas com nomes, RMs e usuários de Discord/GitHub dos integrantes",
+   "por_que": "Dado pessoal da entrega da Fase 3; a composição do grupo da Fase 4 precisa ser reconfirmada e não deve ser copiada para a memória de trabalho.",
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "o_que": "Links do repositório tech-challenge-03, das execuções do Actions e da estimativa AWS da Fase 3",
+   "por_que": "Pertencem à conta e ao repositório antigos; a Fase 4 precisa de evidências próprias.",
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "o_que": "Estilos visuais (cores, tamanhos de fonte, margens, CSS) dos dois geradores",
+   "por_que": "Detalhe de layout sem impacto em decisão; os scripts continuam recuperáveis no Git se forem reutilizados.",
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "o_que": "PDF RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.pdf",
+   "por_que": "Artefato renderizado e superado pelo gerador de 14/09; contém dados pessoais e o conteúdo está no .md; recuperável no Git e no tech-challenge-03.",
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "o_que": "gerar-relatorio-pdf_2026-09-11_v00.py como ferramenta ativa",
+   "por_que": "Superado pelo gerador ReportLab de 14/09/2026; vale só como referência de abordagem (Markdown versionado para PDF).",
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "o_que": "Placeholders da Fase 3 (vídeo, badge do Google Cloud Skills Boost)",
+   "por_que": "Pendências específicas da entrega da Fase 3, já encerrada.",
+   "lote": "G11-relatorio-scripts"
+  }
+ ],
+ "sensiveis": [
+  {
+   "tipo": "dado_pessoal",
+   "descricao": "Caminho local absoluto do repositório tech-challenge-03 contendo o nome de usuário do Windows (nome pessoal).",
+   "arquivo": "docs/00_COLAB_IA/DECISOES.md",
+   "linhas": "294",
+   "lote": "G01-decisoes"
+  },
+  {
+   "tipo": "outro",
+   "descricao": "Nome de outro projeto pessoal do usuário que criou o provedor OIDC na conta da Fase 3; indica uso compartilhado da conta antiga.",
+   "arquivo": "docs/00_COLAB_IA/DECISOES.md",
+   "linhas": "49, 53",
+   "lote": "G01-decisoes"
+  },
+  {
+   "tipo": "outro",
+   "descricao": "Referência ao sufixo do nome real do bucket de estado da Fase 3 (o nome completo, que conteria o ID da conta, não aparece neste arquivo).",
+   "arquivo": "docs/00_COLAB_IA/DECISOES.md",
+   "linhas": "25",
+   "lote": "G01-decisoes"
+  },
+  {
+   "tipo": "outro",
+   "descricao": "Nome da role IAM do CI (togglemaster-github-actions) e URL do provedor OIDC público do GitHub; não há ARN nem ID de conta.",
+   "arquivo": "docs/00_COLAB_IA/DECISOES.md",
+   "linhas": "49, 51",
+   "lote": "G01-decisoes"
+  },
+  {
+   "tipo": "outro",
+   "descricao": "Valor de crédito AWS restante na conta da Fase 3 (dado financeiro da conta antiga).",
+   "arquivo": "docs/00_COLAB_IA/DECISOES.md",
+   "linhas": "176",
+   "lote": "G01-decisoes"
+  },
+  {
+   "tipo": "id_conta",
+   "descricao": "Nome do bucket de estado da Fase 3 contendo o ID de 12 dígitos da conta AWS da Fase 3.",
+   "arquivo": "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md",
+   "linhas": "15",
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "tipo": "id_conta",
+   "descricao": "Mesmo nome de bucket com o ID da conta da Fase 3, na pendência P-100.",
+   "arquivo": "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md",
+   "linhas": "11",
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "tipo": "dado_pessoal",
+   "descricao": "Menção (sem o valor) à existência de nomes de usuário de Discord e de um caminho de usuário com nome completo em outros arquivos da pasta (relatório preliminar arquivado e DECISOES D-001).",
+   "arquivo": "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md",
+   "linhas": "15",
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "tipo": "outro",
+   "descricao": "Nome de outro projeto pessoal do usuário que é dono do provedor OIDC do GitHub na conta da Fase 3.",
+   "arquivo": "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md",
+   "linhas": "67",
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "tipo": "endpoint",
+   "descricao": "URLs públicas do repositório da Fase 3 na organização do GitHub, com IDs de runs, PRs e um SHA completo de commit. Não são segredos, mas identificam a organização e o repositório antigo.",
+   "arquivo": "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md",
+   "linhas": "11, 140-146",
+   "lote": "G02-vigentes-f3"
+  },
+  {
+   "tipo": "dado_pessoal",
+   "descricao": "Menção a arquivo de trava do PowerPoint que continha nome de usuário (o valor não aparece no log) e a generalização de caminhos locais para C:\\Users\\<usuario>\\.",
+   "arquivo": "docs/00_COLAB_IA/LOG_DE_TRABALHO.md",
+   "linhas": "36, 38",
+   "lote": "G03-log-recente"
+  },
+  {
+   "tipo": "outro",
+   "descricao": "Nome de outro projeto pessoal do usuário que criou o provedor OIDC na conta da Fase 3, e referência à memória do usuário.",
+   "arquivo": "docs/00_COLAB_IA/LOG_DE_TRABALHO.md",
+   "linhas": "85, 91",
+   "lote": "G03-log-recente"
+  },
+  {
+   "tipo": "endpoint",
+   "descricao": "Endpoint público do provedor OIDC do GitHub Actions (não é segredo nem dado da conta).",
+   "arquivo": "docs/00_COLAB_IA/LOG_DE_TRABALHO.md",
+   "linhas": "87",
+   "lote": "G03-log-recente"
+  },
+  {
+   "tipo": "outro",
+   "descricao": "IDs de runs do GitHub Actions e hashes de commits da Fase 3 (não sensíveis, mas atrelados ao histórico da conta antiga).",
+   "arquivo": "docs/00_COLAB_IA/LOG_DE_TRABALHO.md",
+   "linhas": "52, 57-64, 215",
+   "lote": "G03-log-recente"
+  },
+  {
+   "tipo": "id_conta",
+   "descricao": "ID de 12 dígitos da conta AWS da Fase 3, citado como a 'conta ATUAL' na correção do security-check.sh.",
+   "arquivo": "docs/00_COLAB_IA/LOG_DE_TRABALHO.md",
+   "linhas": "251",
+   "lote": "G04-log-antigo"
+  },
+  {
+   "tipo": "id_conta",
+   "descricao": "Nome do bucket de estado da Fase 3 que embute o ID da conta (padrão togglemaster-tfstate-<CONTA_FASE3>-us-east-2-an).",
+   "arquivo": "docs/00_COLAB_IA/LOG_DE_TRABALHO.md",
+   "linhas": "423",
+   "lote": "G04-log-antigo"
+  },
+  {
+   "tipo": "dado_pessoal",
+   "descricao": "Nome de branch auxiliar remota que contém o primeiro nome de um integrante.",
+   "arquivo": "docs/00_COLAB_IA/LOG_DE_TRABALHO.md",
+   "linhas": "243",
+   "lote": "G04-log-antigo"
+  },
+  {
+   "tipo": "outro",
+   "descricao": "Caminhos locais do Windows com o nome do usuário já mascarado como <usuario> (pasta de Downloads com o Terraform e pasta do repositório da Fase 2).",
+   "arquivo": "docs/00_COLAB_IA/LOG_DE_TRABALHO.md",
+   "linhas": "393, 573",
+   "lote": "G04-log-antigo"
+  },
+  {
+   "tipo": "outro",
+   "descricao": "Referência indireta ao ID da conta do AWS Academy da Fase 2, sem reproduzir o número.",
+   "arquivo": "docs/00_COLAB_IA/LOG_DE_TRABALHO.md",
+   "linhas": "251",
+   "lote": "G04-log-antigo"
+  },
+  {
+   "tipo": "id_conta",
+   "descricao": "Nome do bucket de estado do Terraform contém o ID de 12 dígitos da conta AWS da Fase 3 (forma togglemaster-tfstate-<CONTA_FASE3>-us-east-2-an).",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md",
+   "linhas": "436",
+   "lote": "G05-operacao"
+  },
+  {
+   "tipo": "endpoint",
+   "descricao": "URL de clone do repositório da Fase 3 na organização do GitHub (não é pessoal, mas aponta para o repositório antigo).",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md",
+   "linhas": "110, 120",
+   "lote": "G05-operacao"
+  },
+  {
+   "tipo": "arn",
+   "descricao": "Modelo de ARN da role do CI com placeholder <conta>, sem ID real.",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md",
+   "linhas": "604",
+   "lote": "G05-operacao"
+  },
+  {
+   "tipo": "outro",
+   "descricao": "Valor local de laboratório da MASTER_KEY do .env.example (público, não é credencial real) e placeholders de chave/token (tm_key_..., github_pat_COLE_AQUI).",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md",
+   "linhas": "129-130, 218, 232, 239, 262, 287, 970, 976",
+   "lote": "G05-operacao"
+  },
+  {
+   "tipo": "id_conta",
+   "descricao": "ID de 12 dígitos da conta AWS da Fase 3 como valor esperado do sts get-caller-identity e da contingência de plan.",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md",
+   "linhas": "84, 865",
+   "lote": "G06-gravacao"
+  },
+  {
+   "tipo": "arn",
+   "descricao": "ARN completo da role do CI (togglemaster-github-actions) com o ID da conta da Fase 3.",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md",
+   "linhas": "217",
+   "lote": "G06-gravacao"
+  },
+  {
+   "tipo": "endpoint",
+   "descricao": "Nome do bucket S3 de estado do Terraform contendo o ID da conta da Fase 3 (togglemaster-tfstate-<CONTA_FASE3>-us-east-2-an).",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md",
+   "linhas": "606",
+   "lote": "G06-gravacao"
+  },
+  {
+   "tipo": "id_conta",
+   "descricao": "ID da conta da Fase 3 no bucket de estado e como conta esperada.",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md",
+   "linhas": "155, 553, 614",
+   "lote": "G06-gravacao"
+  },
+  {
+   "tipo": "dado_pessoal",
+   "descricao": "Caminhos locais do Windows com o nome de usuário da pessoa (pasta do projeto, pasta de vídeos e backup da gravação).",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md",
+   "linhas": "30, 81, 102, 121, 123, 125, 1064",
+   "lote": "G06-gravacao"
+  },
+  {
+   "tipo": "outro",
+   "descricao": "Nome de outro projeto pessoal que criou o provedor OIDC na conta da Fase 3.",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md",
+   "linhas": "62, 782",
+   "lote": "G06-gravacao"
+  },
+  {
+   "tipo": "endpoint",
+   "descricao": "URLs do GitHub da organização da turma (aba Actions e execuções específicas do repositório da Fase 3).",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md",
+   "linhas": "130",
+   "lote": "G06-gravacao"
+  },
+  {
+   "tipo": "endpoint",
+   "descricao": "URLs de execuções do GitHub Actions do repositório da Fase 3 na organização da turma.",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md",
+   "linhas": "181-183, 192",
+   "lote": "G06-gravacao"
+  },
+  {
+   "tipo": "outro",
+   "descricao": "Modelo do headset do usuário citado no protocolo de áudio (equipamento pessoal, baixo risco).",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md",
+   "linhas": "137-140, 858",
+   "lote": "G06-gravacao"
+  },
+  {
+   "tipo": "outro",
+   "descricao": "Número do grupo da turma citado (não há nomes de pessoas nestes arquivos).",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md",
+   "linhas": "106, 925",
+   "lote": "G06-gravacao"
+  },
+  {
+   "tipo": "id_conta",
+   "descricao": "ID de 12 digitos da conta AWS da Fase 3 dentro do caminho s3:// do state da camada base (nome do bucket).",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md",
+   "linhas": "228",
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "tipo": "id_conta",
+   "descricao": "ID da conta da Fase 3 no nome do bucket de state (P-019).",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md",
+   "linhas": "254",
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "tipo": "id_conta",
+   "descricao": "ID da conta da Fase 3 citado explicitamente em F-023.",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md",
+   "linhas": "427",
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "tipo": "id_conta",
+   "descricao": "ID da conta da Fase 3 explicito e repetido no nome do bucket de state.",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md",
+   "linhas": "75",
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "tipo": "dado_pessoal",
+   "descricao": "Nome de branch com primeiro nome de um integrante do grupo (PR #1).",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md",
+   "linhas": "356",
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "tipo": "dado_pessoal",
+   "descricao": "Caminhos locais do Windows contendo o nome de usuario do computador.",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md",
+   "linhas": "63, 80, 82",
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "tipo": "outro",
+   "descricao": "Mencao de que nomes e RMs do grupo estao no README da Fase 2 e na tabela do README (sem reproduzir os valores neste lote).",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md",
+   "linhas": "32, 424",
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "tipo": "outro",
+   "descricao": "SHA parcial da trivy-action (ed142fd0...) e nome da tag de backup no remoto; nao sao segredos, apenas referencias tecnicas.",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md",
+   "linhas": "267-268, 384",
+   "lote": "G07-pendencias-dossie-antigos"
+  },
+  {
+   "tipo": "id_conta",
+   "descricao": "ID de 12 digitos da conta AWS da Fase 3 (na conferencia STS e no throw de validacao).",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md",
+   "linhas": "17, 49",
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "tipo": "id_conta",
+   "descricao": "Nome do bucket de estado contendo o ID da conta da Fase 3 (togglemaster-tfstate-<CONTA_FASE3>-us-east-2-an).",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md",
+   "linhas": "21, 202",
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "tipo": "arn",
+   "descricao": "ARN do cluster EKS da Fase 3 usado como contexto kubectl, com o ID da conta.",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md",
+   "linhas": "51",
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "tipo": "outro",
+   "descricao": "Identificadores de PV do Kubernetes e de volume EBS da implantacao da Fase 3.",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md",
+   "linhas": "20",
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "tipo": "dado_pessoal",
+   "descricao": "Caminho local do Windows que contem o nome de usuario da maquina.",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md",
+   "linhas": "42",
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "tipo": "id_conta",
+   "descricao": "Nome do bucket de estado com o ID da conta da Fase 3 (status de execucao, tabela de decisoes, conferencia CLI, secao para o grupo e bloco backend).",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/BOOTSTRAP-BACKEND-S3_2026-08-27.md",
+   "linhas": "5, 34, 275, 295, 309",
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "tipo": "arn",
+   "descricao": "ARNs de bucket na policy, apenas com placeholder (SEU-BUCKET / $BUCKET); sem valor real.",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/BOOTSTRAP-BACKEND-S3_2026-08-27.md",
+   "linhas": "152-153, 222, 261",
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "tipo": "id_conta",
+   "descricao": "ID da conta AWS da Fase 3 como resultado esperado do STS.",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md",
+   "linhas": "49",
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "tipo": "outro",
+   "descricao": "Nome da organizacao GitHub e do repositorio da Fase 3 (privado na epoca), inclusive em URL de git ls-remote.",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md",
+   "linhas": "75, 82-88, 148",
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "tipo": "segredo_suspeito",
+   "descricao": "Apenas placeholders de token (github_pat_COLE_AQUI) e comandos que imprimem senha, URL de banco e MASTER_KEY a partir de Secrets; nenhum valor real de segredo no arquivo.",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md",
+   "linhas": "124, 130, 326, 460, 494",
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "tipo": "endpoint",
+   "descricao": "Formato generico de URL de conexao do RDS (postgres://toggle:SENHA@endereco...); sem endpoint real.",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md",
+   "linhas": "358-362",
+   "lote": "G08-runbooks-aws"
+  },
+  {
+   "tipo": "endpoint",
+   "descricao": "URLs do repositorio da Fase 3 na organizacao GitHub da turma (PRs #3, #4, #5) e de execucoes do GitHub Actions com IDs de run.",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md",
+   "linhas": "121, 149-155",
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "tipo": "endpoint",
+   "descricao": "URLs do repositorio da Fase 3 (PRs #3, #4, #5) e de execucoes do GitHub Actions com IDs de run.",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md",
+   "linhas": "77-79, 91-95",
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "tipo": "dado_pessoal",
+   "descricao": "Referencia a tabela do README com os 5 integrantes do grupo, RM e GitHub; os valores nao aparecem neste arquivo.",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md",
+   "linhas": "87",
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "tipo": "outro",
+   "descricao": "Mencao a scripts/security-check.sh que contem o ID da conta da Fase 3; o ID nao aparece neste lote (busca por 12 digitos e ARN sem ocorrencias).",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md",
+   "linhas": "89",
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "tipo": "outro",
+   "descricao": "Imagens das paginas do enunciado; podem conter elementos visuais nao inspecionados (nao abertas).",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-pagina-1.png a enunciado-pagina-7.png",
+   "linhas": "n/a (binario)",
+   "lote": "G09-auditoria-fiap"
+  },
+  {
+   "tipo": "id_conta",
+   "descricao": "Nome do bucket de estado da Fase 3 contém o ID de 12 dígitos da conta (togglemaster-tfstate-<CONTA_FASE3>-us-east-2-an).",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md",
+   "linhas": "61, 93",
+   "lote": "G10-menores"
+  },
+  {
+   "tipo": "endpoint",
+   "descricao": "Link público da estimativa na AWS Pricing Calculator (identificador de estimativa).",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/ESTIMATIVA_CUSTOS_AWS.md",
+   "linhas": "6",
+   "lote": "G10-menores"
+  },
+  {
+   "tipo": "outro",
+   "descricao": "Nome da role IAM do CI da Fase 3 (sem ARN, sem ID de conta).",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_EXECUCAO.md",
+   "linhas": "33",
+   "lote": "G10-menores"
+  },
+  {
+   "tipo": "dado_pessoal",
+   "descricao": "Referência ao número do grupo e à tabela de integrantes no README (os nomes não aparecem neste arquivo).",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md",
+   "linhas": "83-85",
+   "lote": "G10-menores"
+  },
+  {
+   "tipo": "dado_pessoal",
+   "descricao": "Nomes completos, RMs e usuários de Discord dos cinco integrantes.",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md",
+   "linhas": "18-24",
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "tipo": "dado_pessoal",
+   "descricao": "Nomes completos, RMs e usuários de GitHub dos cinco integrantes.",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py",
+   "linhas": "253-260",
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "tipo": "dado_pessoal",
+   "descricao": "Nomes completos dos integrantes na capa e cidade/UF do grupo.",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/gerar-relatorio-pdf_2026-09-11_v00.py",
+   "linhas": "84-92",
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "tipo": "dado_pessoal",
+   "descricao": "PDF renderizado provavelmente contém os mesmos nomes, RMs e usuários (não aberto; inferido pelo texto correspondente).",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.pdf",
+   "linhas": "não aplicável (binário)",
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "tipo": "endpoint",
+   "descricao": "URL do repositório da Fase 3 na organização do GitHub.",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md",
+   "linhas": "30",
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "tipo": "endpoint",
+   "descricao": "Link público da estimativa no AWS Pricing Calculator (ID de estimativa).",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md",
+   "linhas": "250-251",
+   "lote": "G11-relatorio-scripts"
+  },
+  {
+   "tipo": "endpoint",
+   "descricao": "URLs do repositório, do README, da estimativa AWS e de três execuções do GitHub Actions da Fase 3.",
+   "arquivo": "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py",
+   "linhas": "267-276, 361, 407",
+   "lote": "G11-relatorio-scripts"
+  }
+ ],
+ "limitacoes": {
+  "G01-decisoes": "Arquivo lido integralmente (linhas 1 a 339 na leitura; o PowerShell conta 179 por diferença de quebra de linha). As referências F-xxx, O-xx, R-xx, S-xx e as pendências P-xxx citadas apontam para outros arquivos da Fase 3 (FATOS, PENDENCIAS, requisitos) que não fazem parte deste lote; seu conteúdo detalhado não foi verificado. Para os conflitos, consultei apenas por grep o Terraform atual (phase = \"4\", create_github_oidc_provider = true no example, c7i-flex.large como padrão); não li o enunciado da Fase 4. A data de D-003 não aparece na fonte (marcada [INCERTO]). Nenhum ID de conta, ARN completo ou endpoint aparece neste arquivo. Nenhum arquivo foi alterado.",
+  "G02-vigentes-f3": "Li integralmente os 4 arquivos do lote (148, 39, 72 e 53 linhas). Os motivos, alternativas e consequências das decisões D-xxx não estão neste lote: aqui só aparecem citações curtas. O detalhe está em docs/00_COLAB_IA/DECISOES.md, que faz parte de outro lote; onde a fonte não informa, isso está dito. Para avaliar a aplicabilidade na Fase 4, conferi alguns valores no código atual da dev em 2026-11-01, só com leitura (grep e ls): enable_nat_gateway e ecr_image_tag_mutability no tfvars.example, create_github_oidc_provider=true, phase=\"4\", a chave de estado phase4/, PyYAML==6.0.1 e a data de revisão do .trivyignore. Não conferi os arquivos Terraform de P-121 nem os links do GitHub online. O conflito sobre os materiais de aula apagados vem do git status do início da sessão e não foi reconferido. Os IDs de runs, PRs e commits são do repositório público da Fase 3 e foram conferidos pela fonte em 2026-09-15, não por mim. Não escrevi o ID da conta da Fase 3 (está mascarado como <CONTA_FASE3>) nem dados pessoais.",
+  "G03-log-recente": "Li só as linhas 1 a 236 de docs/00_COLAB_IA/LOG_DE_TRABALHO.md, que são o escopo do lote. As entradas mais antigas ficam para outros lotes. O conteúdo de D-017, F-023, O-38, O-39, P-041, P-042 e P-047 é apenas citado neste trecho. O detalhe deles está em DECISOES e PENDENCIAS, que não li. Não encontrei o ID da conta AWS da Fase 3, ARNs nem segredos nestas linhas. O estado atual das pastas de aula vem do git status da sessão, não deste arquivo. Não verifiquei se a conta nova da Fase 4 já tem o provedor OIDC.",
+  "G04-log-antigo": "Li integralmente só as linhas 237-581 de docs/00_COLAB_IA/LOG_DE_TRABALHO.md, em duas partes. Referências a outros arquivos não foram abertas para confirmar: DECISOES, PENDENCIAS, parecer de auditoria, runbook, argocd.tf e SECRETS-CONTRATO. Por isso, os motivos de D-010, D-011, D-015 e F-020 e o estado final de várias pendências (P-034 a P-040, P-024, P-049) não constam deste lote. A correspondência entre os IDs de pendência (P-045 a P-050) e os achados (F-042 a F-049) não é explícita no log e ficou marcada como ambígua. A data de D-018 e a de D-015 não aparecem neste trecho. O render do Kustomize aparece com 29 recursos no overlay em 2026-08-27 e com 23 recursos na auditoria de 2026-09-09; são momentos diferentes e a fonte não explica a diferença. Não verifiquei se o código atual da Fase 4 ainda reflete esses fatos.",
+  "G05-operacao": "Arquivo lido integralmente (1637 linhas, em duas partes). Não abri os arquivos referenciados (terraform/README.md, gitops/SECRETS-CONTRATO.md, BOOTSTRAP-BACKEND-S3.md, workflows) para confirmar se o estado atual do código bate com o guia de 2026-09-15. O guia não traz IDs de decisão nem datas por decisão; usei a data do nome do arquivo (2026-09-15) e a data da sessão medida (11/09, interpretada como 2026-09-11). Motivos não declarados no texto (bancos em RDS x pod; publicação só em push na main) foram marcados como [INCERTO]. A linha de Secrets Manager (2 segredos) aparece só na tabela de custo, sem descrição de quais são. O ID da conta da Fase 3 foi mascarado como <CONTA_FASE3>; não há dados pessoais no arquivo.",
+  "G06-gravacao": "Os três arquivos foram lidos integralmente (PLANO 1-1065, GUIA 1-996, ROTEIRO 1-19). Os tempos de apply/destroy/pipeline nestes arquivos são estimativas de planejamento ('cerca de', 'de 15 a 30 minutos'), não medições registradas; não há confirmação neste lote de como a sessão de 15/09 terminou nem do desfecho da pendência do PDF. Há ambiguidade na fonte sobre o número '35 to add': o GUIA o atribui ao plan da camada cluster e o PLANO ao plan da base. As decisões D-012, D-015 e D-020 aparecem só citadas; o texto completo delas está em outros arquivos. Verificações locais somente leitura feitas para contexto: PyYAML==6.0.1 segue na linha 8 de services/flag-service/requirements.txt; timeout.reconciliation = 30s segue em terraform/k8s/argocd.tf:191; terraform.tfvars.example:83 tem create_github_oidc_provider = true; docs/OPERACAO.md não existe; RUNBOOK-SESSAO.md está em docs/00_COLAB_IA/_ARQUIVO_MORTO/. A observação de que a recriação de pod apagado é feita pelo controlador do Deployment, e não pelo self-heal do ArgoCD, é do analista e não consta na fonte. Nenhum arquivo foi alterado.",
+  "G07-pendencias-dossie-antigos": "Os dois arquivos foram lidos integralmente (432 e 169 linhas). Sao snapshots de 2026-09-11 com notas empilhadas de varias datas e autores, e a propria fonte avisa que o plano acumulado mistura tarefas abertas e encerradas. Algumas decisoes sao citadas so pelo ID: D-017, D-019, D-020 e D-021 aparecem sem data de criacao nem justificativa completa, que devem estar no DECISOES da Fase 3 (fora deste lote). O estado final de P-041, P-047, P-042 e P-043 apos 2026-09-11 nao consta aqui. Os documentos citados (DESTRUIR_AWS, GUIA_GRAVACAO, OPERACAO.md, auditorias) nao foram abertos, por estarem fora do lote. Os precos sao de 2026-08-27 e 2026-09-09, na conta anterior, e nao foram reconferidos. Os itens sobre impacto da observabilidade no sizing e sobre selfHeal nas demos sao inferencias minhas e estao marcados como tal. Os valores sensiveis (ID da conta, nome de branch com nome de pessoa, caminhos com usuario) foram so localizados, sem reproducao.",
+  "G08-runbooks-aws": "Os tres arquivos foram lidos do inicio ao fim (220, 353 e 681 linhas). Para os conflitos com a Fase 4, conferi so leituras pontuais no repositorio atual, sem alterar nada: as chaves de backend phase4/prod/*, use_lockfile, a tag phase=4, enable_nat_gateway, as flags destrutivas em rds/ecr e o trecho de cuidados do terraform/README.md. Nao consultei AWS nem GitHub. Nao sei se a exclusao da conta da Fase 3 foi executada depois de 2026-09-11; este lote so diz que nao foi ate aquela data. Os tempos do runbook sao estimativas, nao medicoes registradas, e tem inconsistencias internas (3 h alvo contra cerca de 2 h no total; 30-40 contra 35-45 min na subida). Os IDs F-xxx, D-xxx, O-xx, R-xx e S-xx citados dependem de outros arquivos que nao estao neste lote.",
+  "G09-auditoria-fiap": "Lidos integralmente os 5 arquivos de texto (187, 107, 154, 40 e 156 linhas). As 7 PNGs nao foram abertas; so nome e tamanho. Ambiguidades: (1) F-043 aparece 'corrigido e documentado em 2026-09-09' no checklist, mas a revalidacao das 17:55 do mesmo dia diz que ainda persistia; o checklist so traz data, sem hora, e inclui acrescimos ate 2026-09-11, entao a correcao provavelmente veio depois [nao confirmado]. (2) O-34 fala em 7 arquivos de workflow e R-09 em 9 workflows; a diferenca nao e explicada. (3) Os detalhes de D-010 a D-013, F-023, F-040 e do 'tipo de maquina recusado' nao estao neste lote. (4) O link do PDF citado nos pareceres (docs/POSTECH - Tech Challenge - Fase 3.pdf) aparece como excluido no working tree (git status inicial), entao esse link relativo esta quebrado; o original segue no Git e no tech-challenge-03. Nenhum ID de conta, ARN ou endpoint AWS foi encontrado no lote (busca por 12 digitos, 'arn:' e 'amazonaws'). Nenhum arquivo foi alterado.",
+  "G10-menores": "Os 7 arquivos foram lidos integralmente (507 linhas no total). Consultas auxiliares somente leitura: git log de cada arquivo (datas dos commits), existência de docs/evidencias/estimativa-custos-aws-2026-09-11.png, scripts/test-compose.sh e docker-compose.integration.yaml (existem), e default_tags atual em terraform/variables.tf (phase = \"4\"). Nenhum arquivo foi alterado. Detalhes de D-012, D-015, D-017, D-018, F-0xx, O-xx, S-xx e P-xxx vêm só do que estes arquivos dizem; o texto completo deles está em DECISOES/PENDENCIAS de outros lotes. O motivo de D-007, D-008 e D-018 não aparece neste lote. A data exata de D-021 e de D-017 não aparece aqui. Há ambiguidade sobre o uso do Secrets Manager na estimativa e sobre a menção a AWS Academy em TESTE_COMPOSE.",
+  "G11-relatorio-scripts": "Os quatro arquivos de texto foram lidos integralmente; o PDF não foi aberto, só inventariado por nome e tamanho (247.558 bytes). Não há ID de conta AWS nem ARN nestes arquivos. Não consegui confirmar qual gerador produziu o PDF v00, porque o nome dele não bate com a saída de nenhum dos dois scripts. Nenhum arquivo do lote traz tempos medidos de apply ou destroy. A diferença entre ~US$ 0,37/h (camada do cluster, seção 4) e ~US$ 0,385/h (tudo no ar, seção 8.2) não é explicada na fonte. A data de revisão dos CVEs do .trivyignore não aparece neste lote. O ID 'D-015' e o 'O-39' são citados, mas os registros completos estão em outros arquivos. Conferi, sem alterar nada, que docs/RELATORIO_DE_ENTREGA.md, docs/evidencias/estimativa-custos-aws-2026-09-11.png e scripts/ existem no repositório atual."
+ }
+}

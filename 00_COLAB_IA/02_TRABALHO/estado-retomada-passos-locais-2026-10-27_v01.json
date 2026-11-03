@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-27T10:43:17.313089-03:00",
+  "branch": "dev",
+  "head": "3b21e65d8b22c454e43ba7dc3b3eb3a039ea061e",
+  "main": "003a7075a8908011ece83d317d5c700ac2525b58",
+  "git_status_before": " M 00_COLAB_IA/DECISOES.md\u0000 M 00_COLAB_IA/DOSSIE_CONTEXTO.md\u0000 M 00_COLAB_IA/LOG_DE_TRABALHO.md\u0000 M 00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md\u0000 M README.md\u0000 D docs/aulas-fiap/01_Welcome to Automação e Segurança na Cloud/GUIA-ESTUDO-Automacao-e-Seguranca-na-Cloud.html\u0000 D docs/aulas-fiap/01_Welcome to Automação e Segurança na Cloud/POSTECH - Capitulo de Projeto - Fase 3.pdf\u0000 D docs/aulas-fiap/02_CI-CD/GUIA-ESTUDO-CI-CD.html\u0000 D docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 1.pdf\u0000 D docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 2.pdf\u0000 D docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 3.pdf\u0000 D docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 4.pdf\u0000 D docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 5.pdf\u0000 D docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 6.pdf\u0000 D docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 7.pdf\u0000 D docs/aulas-fiap/03_Infraestrutura como código/GUIA-ESTUDO-Infraestrutura-como-Codigo.html\u0000 D docs/aulas-fiap/03_Infraestrutura como código/POSTECH - Infraestrutura como código - Aula 1.pdf\u0000 D docs/aulas-fiap/03_Infraestrutura como código/POSTECH - Infraestrutura como código - Aula 2.pdf\u0000 D docs/aulas-fiap/03_Infraestrutura como código/POSTECH - Infraestrutura como código - Aula 3.pdf\u0000 D docs/aulas-fiap/03_Infraestrutura como código/POSTECH - Infraestrutura como código - Aula 4.pdf\u0000 D docs/aulas-fiap/03_Infraestrutura como código/POSTECH - Infraestrutura como código - Aula 5.pdf\u0000 D docs/aulas-fiap/03_Infraestrutura como código/POSTECH - Infraestrutura como código - Aula 6.pdf\u0000 D docs/aulas-fiap/03_Infraestrutura como código/POSTECH - Infraestrutura como código - Aula 7.pdf\u0000 D docs/aulas-fiap/03_Infraestrutura como código/POSTECH - Infraestrutura como código - Aula 8.pdf\u0000 D docs/aulas-fiap/04_Segurança em DevOps (DevSecOps)/GUIA-ESTUDO-Seguranca-em-DevOps-DevSecOps.html\u0000 D docs/aulas-fiap/04_Segurança em DevOps (DevSecOps)/POSTECH - Segurança em DevOps (DevSecOps) - Aula 1.pdf\u0000 D docs/aulas-fiap/04_Segurança em DevOps (DevSecOps)/POSTECH - Segurança em DevOps (DevSecOps) - Aula 2.pdf\u0000 D docs/aulas-fiap/04_Segurança em DevOps (DevSecOps)/POSTECH - Segurança em DevOps (DevSecOps) - Aula 3.pdf\u0000 D docs/aulas-fiap/04_Segurança em DevOps (DevSecOps)/POSTECH - Segurança em DevOps (DevSecOps) - Aula 4.pdf\u0000 D docs/aulas-fiap/04_Segurança em DevOps (DevSecOps)/POSTECH - Segurança em DevOps (DevSecOps) - Aula 5.pdf\u0000 D docs/aulas-fiap/04_Segurança em DevOps (DevSecOps)/POSTECH - Segurança em DevOps (DevSecOps) - Aula 6.pdf\u0000 D docs/aulas-fiap/04_Segurança em DevOps (DevSecOps)/POSTECH - Segurança em DevOps (DevSecOps) - Aula 7.pdf\u0000 D docs/aulas-fiap/05_Segurança na Cloud/GUIA-ESTUDO-Seguranca-na-Cloud.html\u0000 D docs/aulas-fiap/05_Segurança na Cloud/POSTECH - Segurança na Cloud - Aula 1.pdf\u0000 D docs/aulas-fiap/05_Segurança na Cloud/POSTECH - Segurança na Cloud - Aula 2.pdf\u0000 D docs/aulas-fiap/05_Segurança na Cloud/POSTECH - Segurança na Cloud - Aula 3.pdf\u0000 D docs/aulas-fiap/05_Segurança na Cloud/POSTECH - Segurança na Cloud - Aula 4.pdf\u0000 D docs/aulas-fiap/05_Segurança na Cloud/POSTECH - Segurança na Cloud - Aula 5.pdf\u0000 M scripts/test-compose.sh\u0000 M services/analytics-service/Dockerfile\u0000 M services/analytics-service/README.md\u0000 M services/analytics-service/app.py\u0000 M services/analytics-service/requirements.txt\u0000 M services/auth-service/go.mod\u0000 M services/auth-service/go.sum\u0000 M services/auth-service/main.go\u0000 M services/evaluation-service/go.mod\u0000 M services/evaluation-service/go.sum\u0000 M services/evaluation-service/main.go\u0000 M services/flag-service/Dockerfile\u0000 M services/flag-service/README.md\u0000 M services/flag-service/app.py\u0000 M services/flag-service/requirements.txt\u0000 M services/targeting-service/Dockerfile\u0000 M services/targeting-service/README.md\u0000 M services/targeting-service/app.py\u0000 M services/targeting-service/requirements.txt\u0000?? 00_COLAB_IA/02_TRABALHO/CONFERENCIA_PLANO_FASE4_2026-10-21_v01.md\u0000?? 00_COLAB_IA/02_TRABALHO/RELATORIO_PASSO1_INTEGRACAO_LOCAL_2026-10-22_v01.md\u0000?? 00_COLAB_IA/02_TRABALHO/RELATORIO_TERRAFORM_BACKEND_2026-10-22_v01.md\u0000?? 00_COLAB_IA/02_TRABALHO/aula05-terraform-2026-10-22_v01/\u0000?? 00_COLAB_IA/02_TRABALHO/estado-antes-readme-2026-10-22_v01.json\u0000?? 00_COLAB_IA/02_TRABALHO/otel-python-2026-10-22_v01/\u0000?? 00_COLAB_IA/02_TRABALHO/preservacao-passos-locais-2026-10-22_v01.json\u0000?? 00_COLAB_IA/02_TRABALHO/resultado-render-readme-2026-10-22_v01.json\u0000?? 00_COLAB_IA/02_TRABALHO/validar-readme-2026-10-22_v01.mjs\u0000?? 00_COLAB_IA/02_TRABALHO/verificacao-readme-2026-10-22_v01.json\u0000?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-21_conferencia-plano/\u0000?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-21_explicacao-observabilidade/\u0000?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-21_explicacao-pods-collector/\u0000?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_aula05-terraform/\u0000?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/\u0000?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/\u0000?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/\u0000?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_proximos-passos/\u0000?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_readme-observabilidade/\u0000?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-go/\u0000?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_retomada-passos-locais/\u0000?? docker-compose.otel.yaml\u0000?? observability/\u0000?? scripts/integration/test-traces.py\u0000?? scripts/test-observability.sh\u0000?? services/analytics-service/telemetry.py\u0000?? services/analytics-service/tests/\u0000?? services/auth-service/telemetry.go\u0000?? services/evaluation-service/telemetry.go\u0000?? services/flag-service/telemetry.py\u0000?? services/flag-service/tests/\u0000?? services/targeting-service/telemetry.py\u0000?? services/targeting-service/tests/\u0000",
+  "snapshots": [
+    {
+      "path": "README.md",
+      "sha256": "12dc5e7b75ca4e8ca9dd67e9ff43640ebb904c5dc7200dcdcbe7990f62df9531"
+    },
+    {
+      "path": "CLAUDE.md",
+      "sha256": "7cf81338d09f0f83dec7b37aa34728e432134466e98b4ddc573fb00321cda304"
+    },
+    {
+      "path": "00_COLAB_IA/LEIA-PRIMEIRO.md",
+      "sha256": "ef920821588445d468870c9459c862453213f1c75f6d03e8f6c05e7e718642ce"
+    },
+    {
+      "path": "00_COLAB_IA/DOSSIE_CONTEXTO.md",
+      "sha256": "b70fe4419494e783dadbccd6113a190f28d5b2c1b914abe9c5f2f8e4add4c6ad"
+    },
+    {
+      "path": "00_COLAB_IA/DECISOES.md",
+      "sha256": "abda2f6054b936812080c6e1099b2d02fdd96da179e511ba9cd17472346bbd6e"
+    },
+    {
+      "path": "00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md",
+      "sha256": "fa544b76420022fc412fd4601f5b4c3c9cf5cbefad62b0b4c5825e9d4c266a91"
+    },
+    {
+      "path": "00_COLAB_IA/LOG_DE_TRABALHO.md",
+      "sha256": "a3a6515a39b349a821e59ac6b51469820bf4c6858ce72302bc3a2b1ee9c266e2"
+    },
+    {
+      "path": "docker-compose.otel.yaml",
+      "sha256": "080018043939ecef420f17bd3e17f273d638c521da760a587a57bd76a12ab6ec"
+    },
+    {
+      "path": "observability/README.md",
+      "sha256": "d8982cccf4e72b0abad4869964653fbd3783efe84ea8d43cd36539f566c719b9"
+    },
+    {
+      "path": "observability/otel-collector-local.yaml",
+      "sha256": "20f5177eb68ac3dd77a181b3d6d1781ecd7715a8ed543bd672bb6948a506f978"
+    },
+    {
+      "path": "scripts/test-observability.sh",
+      "sha256": "233178869f074e7b4d574285220983f30b086ca00a63171ab1082713be323abf"
+    },
+    {
+      "path": "scripts/integration/test-traces.py",
+      "sha256": "64fa972539c81d0f5e5038b464d2dd41dab8857ee6dbb81d994fbb9530dc1a93"
+    }
+  ]
+}

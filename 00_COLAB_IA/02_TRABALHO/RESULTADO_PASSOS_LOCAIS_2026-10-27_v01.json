@@ -1,0 +1,225 @@
+{
+  "updated": "2026-10-27T11:08:05.169397-03:00",
+  "branch": "dev",
+  "scope": "local only",
+  "terraform_audit": {
+    "tf_files": 40,
+    "local_module_directories": 7,
+    "module_calls": 8,
+    "resource_blocks": 51,
+    "data_blocks": 13,
+    "roots": 3,
+    "real_aws_state": "not queried"
+  },
+  "functional_regression": "passed",
+  "expected_events_verified": 8,
+  "otel": {
+    "date": "2026-10-27",
+    "trace_id": "2b9da3639bd240fc9ae58d32fe2bf45a",
+    "services": [
+      "analytics-service",
+      "auth-service",
+      "evaluation-service",
+      "flag-service",
+      "targeting-service"
+    ],
+    "span_count": 19,
+    "producer_span_id": "5eee3db5fd259743",
+    "consumer_span_id": "6e043e9cbbb9f10f",
+    "http_sqs_parentage": "passed",
+    "business_contract": "passed",
+    "postgresql_client_spans": [
+      "auth-service",
+      "flag-service",
+      "targeting-service"
+    ],
+    "correlated_json_logs": [
+      "analytics-service",
+      "auth-service",
+      "evaluation-service",
+      "flag-service",
+      "targeting-service"
+    ],
+    "privacy_probe": "passed",
+    "health_exclusion": "passed",
+    "spans": [
+      {
+        "service": "auth-service",
+        "name": "postgresql SELECT",
+        "kind": 3,
+        "span_id": "30f9e9175f76a400",
+        "parent_span_id": "fb378d564626548c"
+      },
+      {
+        "service": "auth-service",
+        "name": "postgresql SELECT",
+        "kind": 3,
+        "span_id": "69893ec6f64c7bc7",
+        "parent_span_id": "e72a47140c37081a"
+      },
+      {
+        "service": "auth-service",
+        "name": "GET /validate",
+        "kind": 2,
+        "span_id": "fb378d564626548c",
+        "parent_span_id": "145e857166b0180b"
+      },
+      {
+        "service": "auth-service",
+        "name": "GET /validate",
+        "kind": 2,
+        "span_id": "e72a47140c37081a",
+        "parent_span_id": "dfde74f3dcd7a73e"
+      },
+      {
+        "service": "targeting-service",
+        "name": "GET",
+        "kind": 3,
+        "span_id": "dfde74f3dcd7a73e",
+        "parent_span_id": "de307299ea3c6bfd"
+      },
+      {
+        "service": "targeting-service",
+        "name": "SELECT",
+        "kind": 3,
+        "span_id": "fe79ebc845737e9e",
+        "parent_span_id": "de307299ea3c6bfd"
+      },
+      {
+        "service": "targeting-service",
+        "name": "GET /rules/<string:flag_name>",
+        "kind": 2,
+        "span_id": "de307299ea3c6bfd",
+        "parent_span_id": "ec8c249f9d87e1e6"
+      },
+      {
+        "service": "flag-service",
+        "name": "GET",
+        "kind": 3,
+        "span_id": "145e857166b0180b",
+        "parent_span_id": "a1a802fa0c7d8fc0"
+      },
+      {
+        "service": "flag-service",
+        "name": "SELECT",
+        "kind": 3,
+        "span_id": "634fc80a04b504b6",
+        "parent_span_id": "a1a802fa0c7d8fc0"
+      },
+      {
+        "service": "flag-service",
+        "name": "GET /flags/<string:name>",
+        "kind": 2,
+        "span_id": "a1a802fa0c7d8fc0",
+        "parent_span_id": "0ed4592ade95c656"
+      },
+      {
+        "service": "analytics-service",
+        "name": "dynamodb.PutItem",
+        "kind": 3,
+        "span_id": "10a04ee90fd66405",
+        "parent_span_id": "6e043e9cbbb9f10f"
+      },
+      {
+        "service": "analytics-service",
+        "name": "sqs.DeleteMessage",
+        "kind": 3,
+        "span_id": "e5027cedb280c2af",
+        "parent_span_id": "6e043e9cbbb9f10f"
+      },
+      {
+        "service": "analytics-service",
+        "name": "sqs.process",
+        "kind": 5,
+        "span_id": "6e043e9cbbb9f10f",
+        "parent_span_id": "5eee3db5fd259743"
+      },
+      {
+        "service": "evaluation-service",
+        "name": "redis GET",
+        "kind": 3,
+        "span_id": "6a9aab9233f29161",
+        "parent_span_id": "731daf2b1a361635"
+      },
+      {
+        "service": "evaluation-service",
+        "name": "redis SET",
+        "kind": 3,
+        "span_id": "8c466a1492b6af52",
+        "parent_span_id": "731daf2b1a361635"
+      },
+      {
+        "service": "evaluation-service",
+        "name": "sqs publish",
+        "kind": 4,
+        "span_id": "5eee3db5fd259743",
+        "parent_span_id": "731daf2b1a361635"
+      },
+      {
+        "service": "evaluation-service",
+        "name": "HTTP GET",
+        "kind": 3,
+        "span_id": "0ed4592ade95c656",
+        "parent_span_id": "731daf2b1a361635"
+      },
+      {
+        "service": "evaluation-service",
+        "name": "HTTP GET",
+        "kind": 3,
+        "span_id": "ec8c249f9d87e1e6",
+        "parent_span_id": "731daf2b1a361635"
+      },
+      {
+        "service": "evaluation-service",
+        "name": "GET /evaluate",
+        "kind": 2,
+        "span_id": "731daf2b1a361635",
+        "parent_span_id": "910f36f6ae15473c"
+      }
+    ]
+  },
+  "go": {
+    "top_level_tests": 13,
+    "subtests": 8,
+    "build": "passed",
+    "vet": "passed",
+    "gofmt": "passed"
+  },
+  "python_docker": {
+    "flag-service": 6,
+    "targeting-service": 6,
+    "analytics-service": 8,
+    "total": 20
+  },
+  "production_source_files_stable_during_final_build_test": 28,
+  "cleanup": {
+    "date": "2026-10-27T11:04:35.990988-03:00",
+    "project": "tc04-integration",
+    "containers_removed": [
+      "tc04-integration-evaluation-service-1",
+      "tc04-integration-targeting-service-1",
+      "tc04-integration-flag-service-1",
+      "tc04-integration-analytics-service-1",
+      "tc04-integration-aws-local-init-1",
+      "tc04-integration-auth-service-1",
+      "tc04-integration-otel-collector-1",
+      "tc04-integration-postgres-auth-1",
+      "tc04-integration-postgres-app-1",
+      "tc04-integration-redis-1",
+      "tc04-integration-dynamodb-local-1",
+      "tc04-integration-aws-local-1"
+    ],
+    "volumes_removed": [
+      "tc04-integration_pg_app_data",
+      "tc04-integration_pg_auth_data"
+    ],
+    "exit_code": 0,
+    "remaining_containers": [],
+    "remaining_volumes": [],
+    "trace_evidence_preserved": true
+  },
+  "external_new_relic": "pending per user choice",
+  "aws_deployment": "not executed",
+  "remote_ci": "not executed",
+  "git_commit_push_pr": "not executed"
+}

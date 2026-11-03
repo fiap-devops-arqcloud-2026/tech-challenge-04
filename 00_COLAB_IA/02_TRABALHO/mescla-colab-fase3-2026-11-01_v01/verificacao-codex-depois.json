@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-01T18:26:49.248585-03:00",
+  "mode": "depois",
+  "ok": true,
+  "checks": {
+    "originals": 39,
+    "preserved_other_files": 716,
+    "preexisting_absences": 34,
+    "decision_ids": 59,
+    "knowledge_index": 158,
+    "pending_source_records": 39,
+    "local_links": 536,
+    "source_references": 1111
+  },
+  "failures": [],
+  "warnings": [],
+  "invalid_source_files": [],
+  "invalid_source_lines": [],
+  "limits": "Hash comprova preservação, não leitura semântica integral. Varredura de dados limitada a padrões e valores derivados dos originais; arquivo morto preserva o conteúdo antigo."
+}

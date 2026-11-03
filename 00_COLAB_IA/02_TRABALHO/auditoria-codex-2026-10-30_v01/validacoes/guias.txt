@@ -1,0 +1,30 @@
+
+=== docs\aulas-fiap\00.Welcome to Observabilidade e Monitoramento\GUIA-ESTUDO-Welcome-to-Observabilidade-e-Monitoramento.html
+  info: IDs citados: 10
+  info: links externos: 0
+  info: 21 KB · 8 seções · 4 complementos · 0 blocos de código
+
+=== docs\aulas-fiap\01.Observabilidade e Monitoramento\GUIA-ESTUDO-Observabilidade-e-Monitoramento.html
+  info: IDs citados: 22
+  info: links externos: 0
+  info: 186 KB · 17 seções · 5 complementos · 1 blocos de código
+
+=== docs\aulas-fiap\02.Monitoramento Opensource\GUIA-ESTUDO-Monitoramento-Opensource.html
+  info: IDs citados: 26
+  info: links externos: 0
+  info: 74 KB · 15 seções · 10 complementos · 1 blocos de código
+
+=== docs\aulas-fiap\03.APM\GUIA-ESTUDO-APM.html
+  info: IDs citados: 31
+  info: links externos: 1
+  info: 391 KB · 19 seções · 19 complementos · 66 blocos de código
+
+=== docs\aulas-fiap\04.Automação de incidentes\GUIA-ESTUDO-Automacao-de-incidentes.html
+  info: IDs citados: 17
+  info: links externos: 2
+  info: 90 KB · 17 seções · 16 complementos · 6 blocos de código
+
+=== docs/requisitos/README.md
+  info: REQ-OBR=42 REQ-BON=2 SUG=4 âncoras=48
+
+Total de erros: 0

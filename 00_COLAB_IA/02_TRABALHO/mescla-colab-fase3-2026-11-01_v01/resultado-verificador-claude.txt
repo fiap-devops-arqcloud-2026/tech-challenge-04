@@ -1,0 +1,10 @@
+[1] originais no commit 3b21e65: 39/39 recuperaveis
+    docs/00_COLAB_IA na arvore: removida
+[2] 00_COLAB_IA/DOSSIE_CONTEXTO.md: e-mail x1 nas linhas [249] (revisar)
+[2] 00_COLAB_IA/LOG_DE_TRABALHO.md: e-mail x1 nas linhas [14] (revisar)
+[2] busca de sensiveis concluida (referencias: 1 caminho pessoal, 15 celulas da tabela de integrantes)
+[3] links relativos quebrados: 0
+[4] CLAUDE.md: mencoes a docs/00_COLAB_IA sem indicar a mescla: nenhuma
+[4] 00_COLAB_IA/LEIA-PRIMEIRO.md: mencoes a docs/00_COLAB_IA sem indicar a mescla: nenhuma
+[5] git status em docs/00_COLAB_IA: 39 entradas, 39 remocoes nao preparadas
+RESULTADO: OK

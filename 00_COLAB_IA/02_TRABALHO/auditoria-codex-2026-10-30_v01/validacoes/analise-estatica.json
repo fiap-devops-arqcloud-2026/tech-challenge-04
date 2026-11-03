@@ -1,0 +1,1774 @@
+{
+  "yaml": [
+    {
+      "path": ".github/workflows/_ci-go.yml",
+      "status": "ok"
+    },
+    {
+      "path": ".github/workflows/_ci-python.yml",
+      "status": "ok"
+    },
+    {
+      "path": ".github/workflows/analytics-service.yml",
+      "status": "ok"
+    },
+    {
+      "path": ".github/workflows/auth-service.yml",
+      "status": "ok"
+    },
+    {
+      "path": ".github/workflows/compose-integration.yml",
+      "status": "ok"
+    },
+    {
+      "path": ".github/workflows/evaluation-service.yml",
+      "status": "ok"
+    },
+    {
+      "path": ".github/workflows/flag-service.yml",
+      "status": "ok"
+    },
+    {
+      "path": ".github/workflows/targeting-service.yml",
+      "status": "ok"
+    },
+    {
+      "path": ".github/workflows/terraform-check.yml",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/docker-compose.integration.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/docker-compose.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_retomada-passos-locais/docker-compose.otel.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_retomada-passos-locais/observability/otel-collector-local.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/.github/workflows/_ci-go.yml",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/.github/workflows/_ci-python.yml",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/.github/workflows/compose-integration.yml",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/.github/workflows/terraform-check.yml",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/gitops/overlays/prod/kustomization.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/gitops/overlays/prod/patches/endpoints.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/gitops/overlays/prod/patches/irsa.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "docker-compose.integration.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "docker-compose.otel.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "docker-compose.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "gitops/base/analytics-service/configmap.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "gitops/base/analytics-service/deployment.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "gitops/base/analytics-service/hpa.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "gitops/base/analytics-service/service.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "gitops/base/analytics-service/serviceaccount.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "gitops/base/auth-service/configmap.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "gitops/base/auth-service/deployment.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "gitops/base/auth-service/service.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "gitops/base/evaluation-service/configmap.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "gitops/base/evaluation-service/deployment.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "gitops/base/evaluation-service/hpa.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "gitops/base/evaluation-service/service.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "gitops/base/evaluation-service/serviceaccount.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "gitops/base/flag-service/configmap.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "gitops/base/flag-service/deployment.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "gitops/base/flag-service/service.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "gitops/base/kustomization.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "gitops/base/namespace.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "gitops/base/postgres-targeting/configmap.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "gitops/base/postgres-targeting/service.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "gitops/base/postgres-targeting/statefulset.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "gitops/base/targeting-service/configmap.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "gitops/base/targeting-service/deployment.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "gitops/base/targeting-service/service.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "gitops/overlays/prod/kustomization.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "gitops/overlays/prod/patches/endpoints.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "gitops/overlays/prod/patches/irsa.yaml",
+      "status": "ok"
+    },
+    {
+      "path": "observability/otel-collector-local.yaml",
+      "status": "ok"
+    }
+  ],
+  "python": [
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/adaptar-documentacao-importacao-2026-10-20_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/aplicar-auditoria-readme-2026-09-20_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/checkpoint-importacao-2026-10-20_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/conferir-codigo-2026-09-21_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/corrigir-selecao-guias-importacao-2026-10-20_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/criar-fragmentos-incidentes-2026-09-17_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/criar-guia-opensource-2026-09-16_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/criar-guia-opensource-2026-09-17_v02.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/criar-guias-fundamentos-2026-09-16_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/criar-guias-fundamentos-2026-09-17_v02.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/criar-requisitos-2026-09-16_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/audit-github.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/aws/auditar-aws-somente-leitura.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/test-oidc-offline.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/verificar-correspondencia.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extrair-fontes-2026-09-16_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extrair-pdfium-2026-09-16_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fechar-importacao-contexto-2026-10-20_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fontes_fase4.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/gerar-espelho-requisitos-2026-09-20_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/gerar-revisao-geral-2026-10-28_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/guia_base.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/importar-fase3-preparacao-2026-10-20_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/integrar-importacao-dev-2026-10-20_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/mapear-modulos-readme-2026-09-20_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/montar-guia-2026-09-16_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/preparar-leitura-2026-09-21_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/registrar-auditoria-2026-10-13_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/registrar-importacao-proposta-2026-10-20_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/renderizar-fundamentos-2026-09-16_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/renderizar-paginas-2026-09-16_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/retomar-fundamentos-2026-09-17_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/revisar-projeto-2026-10-27_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/validar-ci04-2026-10-20_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/validar-guias-2026-09-16_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/verificar-passos-locais-2026-10-27_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/verificar-preservacao-importacao-2026-10-20_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/verificar-revisao-geral-2026-10-28_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-09-17_revisao/guia_base-2026-09-16_v02-claude.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-20_ferramentas-guias/extrair-fontes-2026-09-16_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-20_ferramentas-guias/mapear-modulos-readme-2026-09-20_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-20_ferramentas-guias/validar-guias-2026-09-16_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/scripts/integration/assert-events.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/scripts/integration/bootstrap-aws.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/scripts/integration/test-flow.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_retomada-passos-locais/scripts/integration/test-traces.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_revisao-geral/rascunho-antes-revisao-editorial/gerar-revisao-geral-2026-10-28_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/00_COLAB_IA/02_TRABALHO/extrair-fontes-2026-09-16_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/00_COLAB_IA/02_TRABALHO/mapear-modulos-readme-2026-09-20_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/00_COLAB_IA/02_TRABALHO/validar-guias-2026-09-16_v01.py",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/guia_base-2026-09-16_v01-codex.py",
+      "status": "ok"
+    },
+    {
+      "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py",
+      "status": "ok"
+    },
+    {
+      "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/gerar-relatorio-pdf_2026-09-11_v00.py",
+      "status": "ok"
+    },
+    {
+      "path": "scripts/integration/assert-events.py",
+      "status": "ok"
+    },
+    {
+      "path": "scripts/integration/bootstrap-aws.py",
+      "status": "ok"
+    },
+    {
+      "path": "scripts/integration/test-flow.py",
+      "status": "ok"
+    },
+    {
+      "path": "scripts/integration/test-traces.py",
+      "status": "ok"
+    }
+  ],
+  "json": [
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/MATRIZ_REQUISITOS_FASE4_2026-10-28_v01.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/RESULTADO_PASSOS_LOCAIS_2026-10-27_v01.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/VERIFICACAO_GUIA_CONTAS_2026-10-28_v01.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/VERIFICACAO_REVISAO_GERAL_2026-10-28_v01.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/aula05-terraform-2026-10-22_v01/extracao.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/estado-antes-readme-2026-10-22_v01.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/estado-retomada-passos-locais-2026-10-27_v01.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/aws/inventario-aws-sanitizado.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/baseline.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/correspondencia-aws-github.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/github/configuracao.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/apm/conexoes.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/apm/config.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/incidentes/conexoes.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fragmentos/incidentes/config.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/integracao-dev-2026-10-20_v01.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/inventario-fontes-2026-09-16_v01.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/otel-python-2026-10-22_v01/bandit.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/otel-python-2026-10-22_v01/preservacao-python.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/preservacao-importacao-2026-10-20_v01.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/preservacao-passos-locais-2026-10-22_v01.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/registro-requisitos-2026-09-16_v01.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/resultado-render-readme-2026-10-22_v01.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/role-github-oidc-2026-10-28_v01/ecr-permissions_TEMPLATE.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/role-github-oidc-2026-10-28_v01/trust-policy_TEMPLATE.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/role-github-oidc-2026-10-28_v01/verificacao-documental.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/role-github-oidc-2026-10-28_v01/verificacao-oidc.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/verificacao-passos-locais-2026-10-27_v01.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/verificacao-preservacao-importacao-2026-10-20_v01.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/verificacao-readme-2026-10-22_v01.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_revisao-geral/rascunho-antes-revisao-editorial/MATRIZ_REQUISITOS_FASE4_2026-10-28_v01.json",
+      "status": "ok"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_revisao-geral/rascunho-antes-revisao-editorial/VERIFICACAO_REVISAO_GERAL_2026-10-28_v01.json",
+      "status": "ok"
+    }
+  ],
+  "pdf": [
+    {
+      "path": "POSTECH - Tech Challenge - Fase 4.pdf",
+      "pages": 7,
+      "empty_pages": [
+        1,
+        7
+      ]
+    },
+    {
+      "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.pdf",
+      "pages": 9,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/00.Welcome to Observabilidade e Monitoramento/POSTECH - Capítulo de Projeto - Fase 4.pdf",
+      "pages": 4,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/01.Observabilidade e Monitoramento/POSTECH - Observabilidade e Monitoramento - Aula 1.pdf",
+      "pages": 19,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/01.Observabilidade e Monitoramento/POSTECH - Observabilidade e Monitoramento - Aula 2.pdf",
+      "pages": 17,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/01.Observabilidade e Monitoramento/POSTECH - Observabilidade e Monitoramento - Aula 3.pdf",
+      "pages": 16,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/01.Observabilidade e Monitoramento/POSTECH - Observabilidade e Monitoramento - Aula 4.pdf",
+      "pages": 17,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/01.Observabilidade e Monitoramento/POSTECH - Observabilidade e Monitoramento - Aula 5.pdf",
+      "pages": 14,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 1.pdf",
+      "pages": 15,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 2.pdf",
+      "pages": 14,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 3.pdf",
+      "pages": 13,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 4.pdf",
+      "pages": 14,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 5.pdf",
+      "pages": 16,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 6.pdf",
+      "pages": 16,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 7.pdf",
+      "pages": 15,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/02.Monitoramento Opensource/POSTECH - Monitoramento Opensource - Aula 8.pdf",
+      "pages": 15,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 1.pdf",
+      "pages": 35,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 10.pdf",
+      "pages": 29,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 2.pdf",
+      "pages": 27,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 3.pdf",
+      "pages": 43,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 4.pdf",
+      "pages": 41,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 5.pdf",
+      "pages": 45,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 6.pdf",
+      "pages": 34,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 7.pdf",
+      "pages": 29,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 8.pdf",
+      "pages": 27,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/03.APM/POSTECH - APM - Aula 9.pdf",
+      "pages": 25,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 1.pdf",
+      "pages": 17,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 2.pdf",
+      "pages": 22,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 3.pdf",
+      "pages": 23,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 4.pdf",
+      "pages": 21,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 5.pdf",
+      "pages": 21,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 6.pdf",
+      "pages": 18,
+      "empty_pages": []
+    },
+    {
+      "path": "docs/aulas-fiap/04.Automação de incidentes/POSTECH - Automacao de Incidentes - Aula 7.pdf",
+      "pages": 20,
+      "empty_pages": []
+    }
+  ],
+  "large_files": [
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/offline-test.jsonl",
+      "bytes": 156400265
+    }
+  ],
+  "helper_code_operations": [
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/adaptar-documentacao-importacao-2026-10-20_v01.py",
+      "operations": [
+        {
+          "line": 23,
+          "call": "p.write_text(t, encoding='utf8')"
+        },
+        {
+          "line": 25,
+          "call": "p.read_text(encoding='utf8').replace('tc03-integration', 'tc04-integration')"
+        },
+        {
+          "line": 25,
+          "call": "p.write_text(t, encoding='utf8', newline='\\n')"
+        },
+        {
+          "line": 27,
+          "call": "t.replace('que e a conta ATUAL do projeto', 'que era a conta da Fase 3')"
+        },
+        {
+          "line": 28,
+          "call": "t.replace('# A conta ATUAL, 891376952395, e propositalmente NAO verificada aqui:\\n# ela precisa aparecer no registry do ECR, na ARN da role do OIDC e no\\n# nome do bucket de estado. ID de conta nao e credencial - sem chave ou\\n# federacao, conhece-lo"
+        },
+        {
+          "line": 29,
+          "call": "p.write_text(t, encoding='utf8', newline='\\n')"
+        },
+        {
+          "line": 30,
+          "call": "p.read_text(encoding='utf8').replace('init -backend=false -input=false >/dev/null', 'init -backend=false -input=false -lockfile=readonly >/dev/null')"
+        },
+        {
+          "line": 30,
+          "call": "p.write_text(t, encoding='utf8', newline='\\n')"
+        },
+        {
+          "line": 33,
+          "call": "p.write_text('# ToggleMaster — Tech Challenge Fase 4\\n\\nO ToggleMaster é uma plataforma de feature flags composta por cinco microsserviços. A Fase 4 acrescenta observabilidade e resposta a incidentes à base de Terraform, CI/CD e GitOps construída na "
+        },
+        {
+          "line": 152,
+          "call": "(R / 'CLAUDE.md').write_text('# Tech Challenge Fase 4 — contexto para assistentes\\n\\nÚltima atualização: 2026-10-20, Codex.\\n\\n- Ler primeiro `00_COLAB_IA/LEIA-PRIMEIRO.md`, PENDENCIAS, topo do LOG e DOSSIE. Essa é a colaboração vigente; `docs/00_COL"
+        },
+        {
+          "line": 8,
+          "call": "p.rename(dest)"
+        },
+        {
+          "line": 9,
+          "call": "p.write_bytes(dest.read_bytes())"
+        },
+        {
+          "line": 150,
+          "call": "p.write_text(banner + t, encoding='utf8')"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/aplicar-auditoria-readme-2026-09-20_v01.py",
+      "operations": [
+        {
+          "line": 110,
+          "call": "p.write_text(s, encoding='utf8')"
+        },
+        {
+          "line": 21,
+          "call": "s.replace(velho, novo)"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/checkpoint-importacao-2026-10-20_v01.py",
+      "operations": [
+        {
+          "line": 14,
+          "call": "subprocess.run(['git', 'add', '--', *sorted(paths)], cwd=R, check=True)"
+        },
+        {
+          "line": 4,
+          "call": "subprocess.check_output(['git', 'branch', '--show-current'], cwd=R, text=True).strip()"
+        },
+        {
+          "line": 4,
+          "call": "subprocess.check_output(['git', 'branch', '--show-current'], cwd=R, text=True)"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/conferir-codigo-2026-09-21_v01.py",
+      "operations": []
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/corrigir-selecao-guias-importacao-2026-10-20_v01.py",
+      "operations": [
+        {
+          "line": 11,
+          "call": "p.rename(old)"
+        },
+        {
+          "line": 12,
+          "call": "p.write_text(t.replace(a, b).replace(c, d), encoding='utf8')"
+        },
+        {
+          "line": 12,
+          "call": "t.replace(a, b).replace(c, d)"
+        },
+        {
+          "line": 12,
+          "call": "t.replace(a, b)"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/criar-fragmentos-incidentes-2026-09-17_v01.py",
+      "operations": [
+        {
+          "line": 383,
+          "call": "(F / 'conexoes.json').write_text(json.dumps(connections, ensure_ascii=False, indent=2), encoding='utf8')"
+        },
+        {
+          "line": 384,
+          "call": "(F / 'config.json').write_text(json.dumps({'pasta': '04.Automação de incidentes', 'titulo': 'Automação de incidentes', 'subtitulo': 'Do sinal acionável ao Self-Healing: contexto, comunicação, execução e aprendizado.', 'nivel': 'Introdutório a avançad"
+        },
+        {
+          "line": 20,
+          "call": "(F / name).write_text(g.section(ident, title, body), encoding='utf8')"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/criar-guia-opensource-2026-09-16_v01.py",
+      "operations": []
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/criar-guia-opensource-2026-09-17_v02.py",
+      "operations": []
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/criar-guias-fundamentos-2026-09-16_v01.py",
+      "operations": [
+        {
+          "line": 99,
+          "call": "(WORK / 'cobertura-fundamentos-2026-09-16_v01.md').write_text('# Cobertura — Welcome e Observabilidade\\n\\nTL;DR: 6 PDFs, 87 páginas lidas integralmente; dois guias salvos.\\n\\nÚltima atualização: 2026-09-16, Codex.\\n\\n## Fontes e cobertura\\nCapítulo d"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/criar-guias-fundamentos-2026-09-17_v02.py",
+      "operations": [
+        {
+          "line": 114,
+          "call": "(WORK / 'cobertura-fundamentos-2026-09-17_v02.md').write_text('# Cobertura — Welcome e Observabilidade\\n\\nTL;DR: 6 PDFs, 87 páginas lidas integralmente; dois guias salvos.\\n\\nÚltima atualização: 2026-09-17, Codex; revisão com dossiê Welcome de Claude"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/criar-requisitos-2026-09-16_v01.py",
+      "operations": [
+        {
+          "line": 54,
+          "call": "(W / 'registro-requisitos-2026-09-16_v01.json').write_text(json.dumps(registry, ensure_ascii=False, indent=2), encoding='utf8')"
+        },
+        {
+          "line": 160,
+          "call": "dest.write_text(t, encoding='utf8')"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/audit-github.py",
+      "operations": [
+        {
+          "line": 39,
+          "call": "(OUT / 'configuracao.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\\n', encoding='utf-8')"
+        },
+        {
+          "line": 19,
+          "call": "subprocess.run(['gh', 'api', endpoint], capture_output=True, text=True, encoding='utf-8', timeout=60)"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/aws/auditar-aws-somente-leitura.py",
+      "operations": [
+        {
+          "line": 53,
+          "call": "subprocess.run(['aws', 'configure', 'get', 'region', '--profile', PROFILE], capture_output=True, text=True, timeout=15)"
+        },
+        {
+          "line": 115,
+          "call": "(OUT / 'inventario-aws-sanitizado.json').write_text(json.dumps(evidence, ensure_ascii=False, indent=2) + '\\n', encoding='utf-8')"
+        },
+        {
+          "line": 83,
+          "call": "(template_dir / 'trust-policy_TEMPLATE.json').read_text(encoding='utf-8').replace('SUBSTITUA_ID_AWS', account)"
+        },
+        {
+          "line": 84,
+          "call": "(template_dir / 'ecr-permissions_TEMPLATE.json').read_text(encoding='utf-8').replace('SUBSTITUA_ID_AWS', account)"
+        },
+        {
+          "line": 22,
+          "call": "subprocess.run(command, capture_output=True, text=True, encoding='utf-8', timeout=60)"
+        },
+        {
+          "line": 73,
+          "call": "requests.items()"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/test-oidc-offline.py",
+      "operations": [
+        {
+          "line": 22,
+          "call": "(HARNESS / 'offline-test.tf').write_text('terraform {\\n  required_providers {\\n    aws = {\\n      source  = \"hashicorp/aws\"\\n      version = \">= 5.46.0\"\\n    }\\n  }\\n}\\nprovider \"aws\" {\\n  region                      = \"us-east-2\"\\n  access_key      "
+        },
+        {
+          "line": 49,
+          "call": "'variables {\\n  project_name               = \"offline-test\"\\n  github_repository          = \"fiap-devops-arqcloud-2026/tech-challenge-04\"\\n  github_repository_owner_id = \"287716251\"\\n  github_repository_id       = \"1373159817\"\\n  github_deploy_branch"
+        },
+        {
+          "line": 120,
+          "call": "(HARNESS / 'tests/trust.tftest.hcl').write_text(test, encoding='utf-8')"
+        },
+        {
+          "line": 125,
+          "call": "empty.write_text('', encoding='utf-8')"
+        },
+        {
+          "line": 132,
+          "call": "subprocess.run([tf, f'-chdir={HARNESS}', *args], env=env, text=True, encoding='utf-8', errors='replace', capture_output=True)"
+        },
+        {
+          "line": 133,
+          "call": "(QA / logfile).write_text(cp.stdout + cp.stderr, encoding='utf-8')"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/verificar-correspondencia.py",
+      "operations": [
+        {
+          "line": 50,
+          "call": "(BASE / 'correspondencia-aws-github.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\\n', encoding='utf-8')"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extrair-fontes-2026-09-16_v01.py",
+      "operations": [
+        {
+          "line": 22,
+          "call": "(WORK / 'inventario-fontes-2026-09-16_v01.json').write_text(json.dumps(inventory, ensure_ascii=False, indent=2), encoding='utf-8')"
+        },
+        {
+          "line": 19,
+          "call": "(OUT / (key + '.txt')).write_text('\\n\\n'.join((f\"===== PÁGINA {p['page']} =====\\n{p['text']}\" for p in pages)), encoding='utf-8')"
+        },
+        {
+          "line": 20,
+          "call": "(OUT / (key + '.json')).write_text(json.dumps(pages, ensure_ascii=False, indent=2), encoding='utf-8')"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/extrair-pdfium-2026-09-16_v01.py",
+      "operations": [
+        {
+          "line": 16,
+          "call": "(out / (key + '.txt')).write_text('\\n\\n'.join((f\"===== PÁGINA {p['page']} =====\\n{p['text']}\" for p in pages)), encoding='utf8')"
+        },
+        {
+          "line": 17,
+          "call": "(out / (key + '.json')).write_text(json.dumps(pages, ensure_ascii=False, indent=2), encoding='utf8')"
+        },
+        {
+          "line": 10,
+          "call": "tp.get_text_range().replace('\\r\\r\\n', '\\n').replace('\\r\\n', '\\n').replace('\\r', '\\n')"
+        },
+        {
+          "line": 10,
+          "call": "tp.get_text_range().replace('\\r\\r\\n', '\\n').replace('\\r\\n', '\\n')"
+        },
+        {
+          "line": 10,
+          "call": "tp.get_text_range().replace('\\r\\r\\n', '\\n')"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fechar-importacao-contexto-2026-10-20_v01.py",
+      "operations": [
+        {
+          "line": 16,
+          "call": "t.replace('A tarefa atual produz requisitos documentais e cinco guias; não implementa infraestrutura.', 'Código/histórico da Fase 3 importados; contexto e materiais do 04 preservados. Retomar na dev; conta AWS e instrumentação continuam pendentes.')"
+        },
+        {
+          "line": 17,
+          "call": "t.replace('Última atualização: 2026-09-16, Codex.', 'Última atualização: 2026-10-20, Codex.')"
+        },
+        {
+          "line": 20,
+          "call": "t.replace(old, new)"
+        },
+        {
+          "line": 44,
+          "call": "t.replace('- [ ] E0 — Fundação: inventário AWS somente leitura, migração do código para o 04, contas New Relic/PagerDuty/Slack, token do GitHub', '- [ ] E0 — Fundação (parcial): importação concluída; faltam conta/backend/cotas/identidades e contas de"
+        },
+        {
+          "line": 45,
+          "call": "t.replace('estratégia de estado do Terraform após a migração;', 'estados próprios da Fase4 definidos (bucket/região reais pendentes);')"
+        },
+        {
+          "line": 75,
+          "call": "t.replace('Nada foi implantado: os guias são material de estudo, não prova de infraestrutura.', 'Código-base importado e validado localmente; nada foi implantado na nova conta. Guias são material de estudo, não prova de infraestrutura.')"
+        },
+        {
+          "line": 76,
+          "call": "t.replace('preservação dos originais, sem commit/push.', 'preservação dos originais; commits e merge locais autorizados para esta importação, sem push/PR/main.')"
+        },
+        {
+          "line": 77,
+          "call": "t.replace('P-001 concluída. P-002: execução E0–E7 não iniciada.', 'P-001 e P-004 concluídas. P-002: E0 parcialmente concluída com a importação; E1–E7 pendentes.')"
+        },
+        {
+          "line": 78,
+          "call": "t.replace('P-004: importação Git com histórico proposta e ainda não executada.', 'P-005: teste integrado aguarda Docker Linux engine funcional.')"
+        },
+        {
+          "line": 79,
+          "call": "t.replace('Retomar P-003 e a etapa E0 de P-002; V já concluída em 2026-09-21.', 'Retomar na dev: P-003 para conta/backend e P-005 para Docker; depois E1. V e importaçãoP-004 já concluídas.')"
+        },
+        {
+          "line": 80,
+          "call": "t.replace('Não comitar nem publicar sem autorização.', 'A importação recebeu autorização de commits/merge locais; publicação/push/PR/main continuam aguardando pedido.')"
+        },
+        {
+          "line": 81,
+          "call": "t.replace('Memória global não foi alterada.', 'Memória global receberá nota durável na pasta extensions/ad_hoc/notes por pedido explícito do usuário em2026-10-20, com escopo e validações da importação; sem dados sensíveis.')"
+        },
+        {
+          "line": 114,
+          "call": "t.replace('Integração local à dev será registrada no fechamento; sem push, PR, main ou implantação.', 'Integração local à dev concluída (merge cb81b00); main intacta. Sem push, PR ou implantação.')"
+        },
+        {
+          "line": 119,
+          "call": "p.write_text(t, encoding='utf8')"
+        },
+        {
+          "line": 121,
+          "call": "p.write_text(json.dumps(j, ensure_ascii=False, indent=2), encoding='utf8')"
+        },
+        {
+          "line": 6,
+          "call": "subprocess.check_output(['git', *args], cwd=R, text=True, encoding='utf8').strip()"
+        },
+        {
+          "line": 13,
+          "call": "p.rename(old)"
+        },
+        {
+          "line": 13,
+          "call": "p.write_text(t, encoding='utf8')"
+        },
+        {
+          "line": 6,
+          "call": "subprocess.check_output(['git', *args], cwd=R, text=True, encoding='utf8')"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/fontes_fase4.py",
+      "operations": []
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/gerar-espelho-requisitos-2026-09-20_v01.py",
+      "operations": [
+        {
+          "line": 112,
+          "call": "OUT.write_text(pagina, encoding='utf8')"
+        },
+        {
+          "line": 101,
+          "call": "corpo.replace('</section>', '', 1)"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/gerar-revisao-geral-2026-10-28_v01.py",
+      "operations": [
+        {
+          "line": 229,
+          "call": "OUT.write_text(text, encoding='utf-8')"
+        },
+        {
+          "line": 230,
+          "call": "JSON_OUT.write_text(json.dumps({'updated': '2026-10-28', 'agent': 'Codex', 'source': 'POSTECH - Tech Challenge - Fase 4.pdf', 'source_pages': 7, 'scope': 'revisão local e evidências preservadas; sem consulta externa', 'counts': counts, 'requirements'"
+        },
+        {
+          "line": 202,
+          "call": "s.replace('|', '\\\\|').replace('\\n', ' ')"
+        },
+        {
+          "line": 210,
+          "call": "s.replace('Fase4', 'Fase 4').replace('Fase3', 'Fase 3')"
+        },
+        {
+          "line": 211,
+          "call": "s.replace('auth2/flag1/targeting1', 'auth: 2 / flag: 1 / targeting: 1')"
+        },
+        {
+          "line": 212,
+          "call": "s.replace('principais+8', 'principais + 8').replace('aulas+enunciado', 'aulas + enunciado')"
+        },
+        {
+          "line": 213,
+          "call": "s.replace('arquivos.tf', 'arquivos `.tf`').replace('em 8Markdown', 'em 8 Markdown')"
+        },
+        {
+          "line": 214,
+          "call": "s.replace('preservação:205', 'preservação: 205').replace('conferida:dev', 'conferida: dev').replace('HEAD`', 'HEAD `')"
+        },
+        {
+          "line": 215,
+          "call": "s.replace('catálogo/espelho:39', 'catálogo/espelho: 39').replace('remoto.40', 'remoto. 40').replace('prático.123', 'prático. 123')"
+        },
+        {
+          "line": 218,
+          "call": "s.replace('de27', 'de 27').replace('baseline22', 'baseline 22')"
+        },
+        {
+          "line": 202,
+          "call": "s.replace('|', '\\\\|')"
+        },
+        {
+          "line": 210,
+          "call": "s.replace('Fase4', 'Fase 4')"
+        },
+        {
+          "line": 212,
+          "call": "s.replace('principais+8', 'principais + 8')"
+        },
+        {
+          "line": 213,
+          "call": "s.replace('arquivos.tf', 'arquivos `.tf`')"
+        },
+        {
+          "line": 214,
+          "call": "s.replace('preservação:205', 'preservação: 205').replace('conferida:dev', 'conferida: dev')"
+        },
+        {
+          "line": 215,
+          "call": "s.replace('catálogo/espelho:39', 'catálogo/espelho: 39').replace('remoto.40', 'remoto. 40')"
+        },
+        {
+          "line": 218,
+          "call": "s.replace('de27', 'de 27')"
+        },
+        {
+          "line": 214,
+          "call": "s.replace('preservação:205', 'preservação: 205')"
+        },
+        {
+          "line": 215,
+          "call": "s.replace('catálogo/espelho:39', 'catálogo/espelho: 39')"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/guia_base.py",
+      "operations": [
+        {
+          "line": 51,
+          "call": "output.write_text(page, encoding='utf8')"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/importar-fase3-preparacao-2026-10-20_v01.py",
+      "operations": [
+        {
+          "line": 15,
+          "call": "dest.write_text(json.dumps(baseline, ensure_ascii=False, indent=2), encoding='utf8')"
+        },
+        {
+          "line": 7,
+          "call": "subprocess.check_output(['git', *args], cwd=cwd, text=True, encoding='utf8').strip()"
+        },
+        {
+          "line": 19,
+          "call": "p.rename(archive / name)"
+        },
+        {
+          "line": 42,
+          "call": "p.write_text(t, encoding='utf8')"
+        },
+        {
+          "line": 7,
+          "call": "subprocess.check_output(['git', *args], cwd=cwd, text=True, encoding='utf8')"
+        },
+        {
+          "line": 40,
+          "call": "t.replace('- [ ] Preparar checkpoint revisável dos arquivos atuais do 04 e confirmar autorização para commits antes de executá-los.', '- [x] Autorização recebida em 2026-10-20: branch import-fase3, commits e merge local na dev; sem push/PR/main.\\n- ["
+        },
+        {
+          "line": 41,
+          "call": "t.replace('Método ainda proposto; não há branch/importação/commit/push novos.', 'Método autorizado nesta sessão; execução e validação em andamento.')"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/integrar-importacao-dev-2026-10-20_v01.py",
+      "operations": [
+        {
+          "line": 28,
+          "call": "(W / 'integracao-dev-2026-10-20_v01.json').write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding='utf8')"
+        },
+        {
+          "line": 5,
+          "call": "subprocess.run(['git', *args], cwd=R, capture_output=True, check=True)"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/mapear-modulos-readme-2026-09-20_v01.py",
+      "operations": [
+        {
+          "line": 80,
+          "call": "README.write_text(s, encoding='utf8')"
+        },
+        {
+          "line": 66,
+          "call": "s.replace(m.group(0), f'{m.group(1)} {valor} |', 1)"
+        },
+        {
+          "line": 73,
+          "call": "p.replace(' ', '%20')"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/montar-guia-2026-09-16_v01.py",
+      "operations": []
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/preparar-leitura-2026-09-21_v01.py",
+      "operations": []
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/registrar-auditoria-2026-10-13_v01.py",
+      "operations": [
+        {
+          "line": 33,
+          "call": "t.replace('Última atualização: 2026-09-24, Claude (Opus 5.5).', 'Última atualização: 2026-10-13, Codex.')"
+        },
+        {
+          "line": 34,
+          "call": "t.replace(line, 'TL;DR: requisitos e cinco guias concluídos. Plano v02 entregue; implementação E0–E7 ainda pendente. Crédito AWS acabou segundo o usuário (2026-10-13); avaliar provedor em P-003. Prazo registrado: 2026-11-17.')"
+        },
+        {
+          "line": 46,
+          "call": "t.replace('## P-002 —', intro + '## P-002 —', 1)"
+        },
+        {
+          "line": 47,
+          "call": "t.replace('crédito AWS restante; estratégia', 'crédito AWS esgotado declarado em 2026-10-13 (Billing não consultado); estratégia')"
+        },
+        {
+          "line": 60,
+          "call": "t.replace('Em 2026-09-23 começou a implementação:', 'Em 2026-09-23 foi elaborado o plano de implementação:')"
+        },
+        {
+          "line": 61,
+          "call": "t.replace('Última atualização: 2026-09-24, Claude (Opus 5.5).', 'Última atualização: 2026-10-13, Codex.')"
+        },
+        {
+          "line": 62,
+          "call": "t.replace('P-001 concluída. P-002: implementação em oito etapas (E0–E7), ainda não iniciada, com sete perguntas em aberto. Detalhes em PENDENCIAS e no plano v02.', 'P-001 concluída. P-002: execução E0–E7 não iniciada. P-003: escolha de nuvem após cré"
+        },
+        {
+          "line": 63,
+          "call": "t.replace('Retomar pelo item V.', 'Retomar P-003 e a etapa E0 de P-002; V já concluída em 2026-09-21.')"
+        },
+        {
+          "line": 76,
+          "call": "t.replace('Última atualização: 2026-09-24, Claude (Opus 5.5).', 'Última atualização: 2026-10-13, Codex.')"
+        },
+        {
+          "line": 90,
+          "call": "t.replace('2026-10-13 16:30', stamp)"
+        },
+        {
+          "line": 90,
+          "call": "p.write_text(t, encoding='utf8')"
+        },
+        {
+          "line": 11,
+          "call": "src.rename(dst)"
+        },
+        {
+          "line": 11,
+          "call": "src.write_text(content, encoding='utf8')"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/registrar-importacao-proposta-2026-10-20_v01.py",
+      "operations": [
+        {
+          "line": 29,
+          "call": "t.replace('Última atualização: 2026-10-13, Codex.', 'Última atualização: 2026-10-20, Codex.')"
+        },
+        {
+          "line": 59,
+          "call": "p.read_text(encoding='utf8').replace('Última atualização: 2026-10-13, Codex.', 'Última atualização: 2026-10-20, Codex.')"
+        },
+        {
+          "line": 81,
+          "call": "p.read_text(encoding='utf8').replace('Última atualização: 2026-10-13, Codex.', 'Última atualização: 2026-10-20, Codex.')"
+        },
+        {
+          "line": 82,
+          "call": "t.replace('P-003: escolha de nuvem após crédito AWS esgotado declarado pelo usuário em 2026-10-13; analisar ofertas, cotas, custo e Q-01.', 'P-003: AWS escolhida em 2026-10-20, conta/cotas/orçamento pendentes; não presumir crédito por criar outra con"
+        },
+        {
+          "line": 9,
+          "call": "p.rename(old)"
+        },
+        {
+          "line": 9,
+          "call": "p.write_text(text, encoding='utf8')"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/renderizar-fundamentos-2026-09-16_v01.py",
+      "operations": []
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/renderizar-paginas-2026-09-16_v01.py",
+      "operations": []
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/retomar-fundamentos-2026-09-17_v01.py",
+      "operations": [
+        {
+          "line": 14,
+          "call": "txt.replace('href=\"../../requisitos/README.md#', 'href=\"../../requisitos/REQUISITOS.html#')"
+        },
+        {
+          "line": 15,
+          "call": "txt.replace('<a href=\"../../requisitos/README.md\">Consultar requisitos e índice dos cinco guias</a>', '<a href=\"../../requisitos/REQUISITOS.html\">Consultar requisitos e índice dos cinco guias</a> · <a href=\"../../requisitos/README.md\">Fonte Markdown<"
+        },
+        {
+          "line": 16,
+          "call": "base.write_text(txt, encoding='utf8')"
+        },
+        {
+          "line": 19,
+          "call": "script.replace('from guia_base import *', 'import guia_base\\nguia_base.DATA=\"2026-09-17\"\\nguia_base.REVISAO=\"Revisão: Codex, com auditoria documental de Claude (2026-09-16)\"\\nfrom guia_base import *')"
+        },
+        {
+          "line": 39,
+          "call": "script.replace(old, new)"
+        },
+        {
+          "line": 40,
+          "call": "script.replace('Transcrição do trecho final legível — Aula 4, p. 10; indentação relativa preservada', 'Código Fonte 1 completo — Aula 4, p. 10; quebras de diagramação normalizadas, tokens e indentação lógica preservados')"
+        },
+        {
+          "line": 41,
+          "call": "script.replace('Copia metadados de namespace e nome do Service para os rótulos', 'Descobre Services, mantém os marcados pela annotation de scrape, define o caminho de métricas e copia metadados de namespace e nome do Service para os rótulos')"
+        },
+        {
+          "line": 42,
+          "call": "script.replace('O guia preserva a figura, não oferece uma configuração “corrigida” atribuída à FIAP.', 'O guia preserva a figura e todos os tokens; a transcrição apenas reconstitui as quebras e a hierarquia visual inequívocas. Nenhum filtro ausente f"
+        },
+        {
+          "line": 45,
+          "call": "script.replace(needle, 'welcome+=section(\\'glossario\\',\\'Termos para começar\\',complement(\\'<div class=\"glossary\">\\'')"
+        },
+        {
+          "line": 46,
+          "call": "script.replace(\"+'</div>'+complement('<p>As definições breves\", \"+'</div>'+'<p>As definições breves\")"
+        },
+        {
+          "line": 47,
+          "call": "script.replace(\"welcome+=section('revisao','Revisão rápida'\", \"welcome+=section('leitura-critica','Como interpretar a abertura',complement('<p><strong>WEL-01 · [INCERTO]</strong>: o capítulo usa “rotas de acionamento (call rotation)” (p. 2–3). No glo"
+        },
+        {
+          "line": 49,
+          "call": "script.replace('cobertura-fundamentos-2026-09-16_v01.md', 'cobertura-fundamentos-2026-09-17_v02.md')"
+        },
+        {
+          "line": 50,
+          "call": "script.replace('Última atualização: 2026-09-16, Codex.', 'Última atualização: 2026-09-17, Codex; revisão com dossiê Welcome de Claude.')"
+        },
+        {
+          "line": 51,
+          "call": "script.replace('com fragmento final legível transcrito e explicado', 'com transcrição integral dos tokens e indentação lógica, normalizando quebras da diagramação')"
+        },
+        {
+          "line": 52,
+          "call": "script.replace('## Incertezas distintas', '## Incertezas distintas\\n- WEL-01: Capítulo p. 2–3, tradução de call rotation mistura rota e escala; distinção em Complemento.')"
+        },
+        {
+          "line": 53,
+          "call": "(W / 'criar-guias-fundamentos-2026-09-17_v02.py').write_text(script, encoding='utf8')"
+        },
+        {
+          "line": 73,
+          "call": "log.write_text(t[:pos] + entry + t[pos:], encoding='utf8')"
+        },
+        {
+          "line": 9,
+          "call": "path.rename(dest)"
+        },
+        {
+          "line": 56,
+          "call": "path.name.replace('.html', '-2026-09-16_v01.html')"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/revisar-projeto-2026-10-27_v01.py",
+      "operations": [
+        {
+          "line": 14,
+          "call": "subprocess.check_output(['rg', '--files', '--hidden', '-g', '!.git/**', '-g', '!00_COLAB_IA/**', '-g', '!docs/00_COLAB_IA/**'], cwd=ROOT).decode('utf-8').splitlines()"
+        },
+        {
+          "line": 30,
+          "call": "(QA / 'enunciado.json').write_text(json.dumps({'sha256': sha(pdf), 'pages': pages}, ensure_ascii=False, indent=2), encoding='utf-8')"
+        },
+        {
+          "line": 31,
+          "call": "(QA / 'enunciado.txt').write_text('\\n\\n'.join((f\"--- PÁGINA {p['page']} ---\\n{p['text']}\" for p in pages)), encoding='utf-8')"
+        },
+        {
+          "line": 11,
+          "call": "subprocess.check_output(['git', *args], cwd=ROOT).decode('utf-8', errors='replace').strip()"
+        },
+        {
+          "line": 22,
+          "call": "(QA / 'preservacao-final.json').write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding='utf-8')"
+        },
+        {
+          "line": 26,
+          "call": "target.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding='utf-8')"
+        },
+        {
+          "line": 14,
+          "call": "subprocess.check_output(['rg', '--files', '--hidden', '-g', '!.git/**', '-g', '!00_COLAB_IA/**', '-g', '!docs/00_COLAB_IA/**'], cwd=ROOT).decode('utf-8')"
+        },
+        {
+          "line": 11,
+          "call": "subprocess.check_output(['git', *args], cwd=ROOT).decode('utf-8', errors='replace')"
+        },
+        {
+          "line": 14,
+          "call": "subprocess.check_output(['rg', '--files', '--hidden', '-g', '!.git/**', '-g', '!00_COLAB_IA/**', '-g', '!docs/00_COLAB_IA/**'], cwd=ROOT)"
+        },
+        {
+          "line": 11,
+          "call": "subprocess.check_output(['git', *args], cwd=ROOT)"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/validar-ci04-2026-10-20_v01.py",
+      "operations": [
+        {
+          "line": 55,
+          "call": "gate.write_text(image['steps'][0]['run'], encoding='utf-8', newline='\\n')"
+        },
+        {
+          "line": 56,
+          "call": "subprocess.run([str(bash), '-n', str(gate)], check=True, cwd=ROOT)"
+        },
+        {
+          "line": 70,
+          "call": "subprocess.run([str(bash), str(gate)], cwd=ROOT, env={**os.environ, **config}, text=True, capture_output=True, check=False)"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/validar-guias-2026-09-16_v01.py",
+      "operations": []
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/verificar-passos-locais-2026-10-27_v01.py",
+      "operations": [
+        {
+          "line": 15,
+          "call": "subprocess.check_output(['git', *args], cwd=cwd, encoding='utf-8')"
+        },
+        {
+          "line": 67,
+          "call": "(WORK / 'verificacao-passos-locais-2026-10-27_v01.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\\n', encoding='utf-8')"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/verificar-preservacao-importacao-2026-10-20_v01.py",
+      "operations": [
+        {
+          "line": 26,
+          "call": "subprocess.run(['git', 'merge-base', '--is-ancestor', baseline['source_commit'], 'HEAD'], cwd=R, check=True)"
+        },
+        {
+          "line": 27,
+          "call": "subprocess.run(['git', 'merge-base', '--is-ancestor', baseline['phase4_dev'], 'HEAD'], cwd=R, check=True)"
+        },
+        {
+          "line": 48,
+          "call": "(W / 'verificacao-preservacao-importacao-2026-10-20_v01.json').write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding='utf8')"
+        },
+        {
+          "line": 5,
+          "call": "subprocess.check_output(['git', *args], cwd=cwd, text=True, encoding='utf8').strip()"
+        },
+        {
+          "line": 45,
+          "call": "p.write_bytes(original)"
+        },
+        {
+          "line": 19,
+          "call": "subprocess.check_output(['git', 'show', f\"{baseline['source_commit']}:{rel}\"], cwd=R)"
+        },
+        {
+          "line": 22,
+          "call": "p.read_bytes().replace(b'\\r\\n', b'\\n')"
+        },
+        {
+          "line": 22,
+          "call": "original.replace(b'\\r\\n', b'\\n')"
+        },
+        {
+          "line": 43,
+          "call": "subprocess.check_output(['git', 'show', f'491cd2b:{rel}'], cwd=R, stderr=subprocess.DEVNULL)"
+        },
+        {
+          "line": 5,
+          "call": "subprocess.check_output(['git', *args], cwd=cwd, text=True, encoding='utf8')"
+        }
+      ]
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/verificar-revisao-geral-2026-10-28_v01.py",
+      "operations": [
+        {
+          "line": 87,
+          "call": "OUT.write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\\n', encoding='utf-8')"
+        },
+        {
+          "line": 13,
+          "call": "subprocess.check_output(['git', *args], cwd=cwd).decode('utf-8')"
+        },
+        {
+          "line": 84,
+          "call": "subprocess.run(['git', 'diff', '--check', '--', rel], cwd=ROOT, capture_output=True, text=True)"
+        },
+        {
+          "line": 13,
+          "call": "subprocess.check_output(['git', *args], cwd=cwd)"
+        }
+      ]
+    }
+  ],
+  "kubernetes": {
+    "objects": 23,
+    "kinds": {
+      "Namespace": 1,
+      "ServiceAccount": 2,
+      "ConfigMap": 6,
+      "Service": 6,
+      "Deployment": 5,
+      "StatefulSet": 1,
+      "HorizontalPodAutoscaler": 2
+    },
+    "hpa_conflicts": [
+      {
+        "name": "analytics-service",
+        "git_replicas": 1,
+        "hpa_max": 2
+      },
+      {
+        "name": "evaluation-service",
+        "git_replicas": 1,
+        "hpa_max": 2
+      }
+    ]
+  },
+  "compose": {
+    "exit_code": 0,
+    "stderr": "",
+    "ports": {
+      "analytics-service": [
+        {
+          "mode": "ingress",
+          "target": 8005,
+          "published": "8005",
+          "protocol": "tcp"
+        }
+      ],
+      "auth-service": [
+        {
+          "mode": "ingress",
+          "target": 8001,
+          "published": "8001",
+          "protocol": "tcp"
+        }
+      ],
+      "dynamodb-local": [
+        {
+          "mode": "ingress",
+          "target": 8000,
+          "published": "8000",
+          "protocol": "tcp"
+        }
+      ],
+      "evaluation-service": [
+        {
+          "mode": "ingress",
+          "target": 8004,
+          "published": "8004",
+          "protocol": "tcp"
+        }
+      ],
+      "flag-service": [
+        {
+          "mode": "ingress",
+          "target": 8002,
+          "published": "8002",
+          "protocol": "tcp"
+        }
+      ],
+      "otel-collector": [
+        {
+          "mode": "ingress",
+          "host_ip": "127.0.0.1",
+          "target": 4318,
+          "published": "4318",
+          "protocol": "tcp"
+        },
+        {
+          "mode": "ingress",
+          "host_ip": "127.0.0.1",
+          "target": 13133,
+          "published": "13133",
+          "protocol": "tcp"
+        }
+      ],
+      "postgres-app": [
+        {
+          "mode": "ingress",
+          "target": 5432,
+          "published": "5434",
+          "protocol": "tcp"
+        }
+      ],
+      "postgres-auth": [
+        {
+          "mode": "ingress",
+          "target": 5432,
+          "published": "5433",
+          "protocol": "tcp"
+        }
+      ],
+      "redis": [
+        {
+          "mode": "ingress",
+          "target": 6379,
+          "published": "6379",
+          "protocol": "tcp"
+        }
+      ],
+      "targeting-service": [
+        {
+          "mode": "ingress",
+          "target": 8003,
+          "published": "8003",
+          "protocol": "tcp"
+        }
+      ]
+    },
+    "services": [
+      "analytics-service",
+      "auth-service",
+      "aws-local",
+      "aws-local-init",
+      "dynamodb-local",
+      "evaluation-service",
+      "flag-service",
+      "otel-collector",
+      "postgres-app",
+      "postgres-auth",
+      "redis",
+      "targeting-service"
+    ]
+  },
+  "bash": [
+    {
+      "path": "scripts/security-check.sh",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "path": "scripts/test-compose.sh",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "path": "scripts/test-observability.sh",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "path": "scripts/validate-all.sh",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "path": "infra/postgres-app/01-init-multi-db.sh",
+      "exit_code": 0,
+      "stderr": ""
+    }
+  ]
+}
