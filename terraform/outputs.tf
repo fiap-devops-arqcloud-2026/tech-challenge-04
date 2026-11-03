@@ -73,3 +73,12 @@ output "github_actions_role_arn" {
   description = "ARN a ser usado em role-to-assume no workflow do GitHub Actions. Este e o valor que substitui a antiga dupla AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY nos secrets do repositorio."
   value       = module.iam_ci.role_arn
 }
+
+# ------------------------------------------------------------
+# SELF-HEALING (Fase 4)
+# ------------------------------------------------------------
+
+output "self_healing_role_arn" {
+  description = "ARN da role do self-healing. Lido pela camada cluster (access entry do EKS) e cadastrado na Variable AWS_SELF_HEALING_ROLE_ARN do GitHub. Nao e segredo: sem token OIDC do repositorio, o ARN nao da acesso."
+  value       = module.iam_ci.self_healing_role_arn
+}

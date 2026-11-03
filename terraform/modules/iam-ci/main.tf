@@ -229,3 +229,54 @@ resource "aws_iam_role_policy_attachment" "ecr_push" {
   role       = aws_iam_role.github_actions.name
   policy_arn = aws_iam_policy.ecr_push.arn
 }
+
+# ------------------------------------------------------------
+# ROLE DO SELF-HEALING (Fase 4)
+# ------------------------------------------------------------
+# Quando o alerta do Grafana dispara, o workflow self-healing.yml roda
+# no GitHub Actions e reinicia o Deployment com problema. Para falar com
+# o EKS ele precisa de uma identidade AWS - e ela e esta role, separada
+# da role de publicacao de imagens.
+#
+# POR QUE OUTRA ROLE, se a confianca e a mesma: cada role carrega so o
+# que o seu trabalho exige. A do CI publica imagens e nao enxerga o
+# cluster; esta enxerga o cluster e nao publica nada. Um vazamento de
+# uma nao da os poderes da outra.
+#
+# CONFIANCA: o mesmo documento `trust` acima (OIDC do GitHub, subject
+# imutavel da branch main). O repository_dispatch so dispara workflows
+# da branch padrao, entao o token do self-healing sempre tem esse
+# subject.
+#
+# PERMISSAO AWS: somente eks:DescribeCluster no cluster do projeto - o
+# minimo para o `aws eks update-kubeconfig` montar o acesso. O que a
+# role pode fazer DENTRO do Kubernetes nao vem do IAM: vem do access
+# entry (camada cluster) e do Role/RoleBinding do namespace (gitops).
+# ------------------------------------------------------------
+
+resource "aws_iam_role" "self_healing" {
+  name        = "${var.project_name}-self-healing"
+  description = "Role assumida pelo workflow self-healing.yml via OIDC para reiniciar Deployments no EKS."
+
+  assume_role_policy = data.aws_iam_policy_document.trust.json
+}
+
+data "aws_iam_policy_document" "self_healing" {
+  statement {
+    sid     = "DescribeProjectCluster"
+    effect  = "Allow"
+    actions = ["eks:DescribeCluster"]
+
+    # ARN montado na raiz a partir do nome previsivel do cluster: a base
+    # nasce antes do cluster e nao pode ler o estado dele.
+    resources = [var.eks_cluster_arn]
+  }
+}
+
+# Policy inline, e nao gerenciada: so existe para esta role, nasce e
+# morre com ela e nao precisa de import nem de anexo separado.
+resource "aws_iam_role_policy" "self_healing" {
+  name   = "${var.project_name}-self-healing-eks"
+  role   = aws_iam_role.self_healing.id
+  policy = data.aws_iam_policy_document.self_healing.json
+}

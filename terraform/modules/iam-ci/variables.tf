@@ -68,3 +68,8 @@ variable "create_oidc_provider" {
   # numa conta nova, sem nenhum outro uso de OIDC do GitHub.
   default = true
 }
+
+variable "eks_cluster_arn" {
+  description = "ARN do cluster EKS do projeto. Unico recurso em que a role do self-healing pode chamar eks:DescribeCluster."
+  type        = string
+}

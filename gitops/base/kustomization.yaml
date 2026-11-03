@@ -69,6 +69,9 @@ resources:
   - postgres-targeting/service.yaml
   - postgres-targeting/configmap.yaml
 
+  # --- self-healing (Fase 4): o que o workflow pode fazer aqui ---
+  - self-healing-rbac.yaml
+
 # ------------------------------------------------------------
 # OPENTELEMETRY - configuracao comum aos 5 servicos (Fase 4)
 # ------------------------------------------------------------

@@ -147,4 +147,8 @@ module "iam_ci" {
   # Criar o provedor OIDC do GitHub ou reaproveitar o que ja existe na
   # conta. A explicacao dos dois modos esta em modules/iam-ci/main.tf.
   create_oidc_provider = var.create_github_oidc_provider
+
+  # Fase 4: o self-healing so pode descrever ESTE cluster. O nome segue
+  # o padrao do modulo eks da camada cluster ("<projeto>-eks-cluster").
+  eks_cluster_arn = "arn:aws:eks:${var.aws_region}:${var.expected_aws_account_id}:cluster/${local.name}-eks-cluster"
 }

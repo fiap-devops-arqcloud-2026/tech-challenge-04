@@ -17,3 +17,8 @@ output "oidc_provider_arn" {
   # Vem do local que escolhe entre o recurso e a consulta (ver main.tf).
   value = local.github_oidc_provider_arn
 }
+
+output "self_healing_role_arn" {
+  description = "ARN da role do workflow self-healing.yml. A camada cluster cria o access entry do EKS para ela, e o valor vai na Variable AWS_SELF_HEALING_ROLE_ARN do GitHub."
+  value       = aws_iam_role.self_healing.arn
+}
