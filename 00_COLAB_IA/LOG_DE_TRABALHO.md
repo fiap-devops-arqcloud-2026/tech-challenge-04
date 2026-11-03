@@ -4,6 +4,29 @@ TL;DR: B0 e B1 concluídos em 2026-11-03; New Relic conferido pelo usuário. B2 
 
 Última atualização: 2026-11-03, Claude (Opus 5.5).
 
+## 2026-11-03 14:50 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — Teste do PagerDuty disparado daqui: incidente e e-mail funcionam
+
+Pedido do usuário: "Pode disparar o teste". Também autorizou usar o `/mcp` do PagerDuty e as demais ferramentas da sessão.
+
+Feito:
+- Trigger pela Events API v2, com a chave do `.env` lida por script sem exibi-la (`02_TRABALHO`, fora do Git): `HTTP 202`, "Event processed", 2026-11-03 14:40:27, `dedup_key` `togglemaster-teste-20261103-174027`.
+- Resolve automático 3 minutos depois: `HTTP 202` às 14:43:36, com o mesmo `dedup_key`.
+- O usuário confirmou que **o e-mail do incidente chegou**. Logo, o evento vira incidente e a regra de notificação por e-mail funciona.
+- Conclusão sobre o 4.4 anterior: o Comando 2 provavelmente não rodou, porque o usuário não viu nenhuma saída. A chave sempre esteve certa.
+- Gmail pessoal conectado na sessão: nenhum e-mail do PagerDuty, do New Relic, do Slack ou do GitHub em 30 dias. A conta do PagerDuty usa outro endereço, um alias informado pelo usuário e não registrado aqui.
+- Navegador do app: sem login no PagerDuty, parado na tela de login.
+- MCP do PagerDuty e do Slack: `needs_auth`. Só o usuário pode entrar, digitando `/mcp` sozinho na mensagem.
+- Pesquisa em fontes oficiais (workflow `wf_4ad553c7-79c`) iniciada sobre notificações, push e cartão no Slack.
+
+Segurança: o usuário colou no chat o e-mail e a senha da conta do PagerDuty para uso dos agentes. **Não foram usados nem gravados.** Agentes não entram em sites com senha, mesmo com autorização. Recomendado trocar a senha, porque ela ficou no histórico da conversa. Caminhos seguros:
+- o `/mcp`, com OAuth feito pelo próprio usuário;
+- o login feito pelo usuário no painel do navegador;
+- para o Codex, uma chave de API somente leitura, criada pelo usuário.
+
+Falta conferir:
+- se o cartão apareceu no `#incidentes-tech-challenge` (14:40) e mudou para Resolved (14:43);
+- o push, que depende do app no celular (o usuário ainda não instalou).
+
 ## 2026-11-03 14:30 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — Respostas do usuário, início do B2 e 4.4 sem notificação
 
 Relato e decisões do usuário em 2026-11-03:

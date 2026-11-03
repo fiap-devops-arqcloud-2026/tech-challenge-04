@@ -27,13 +27,10 @@ Atualização 2026-11-03 11:31:
 
 Atualização 2026-11-03 14:30:
 - New Relic conferido pelo usuário ("NR ok"). As 4 recomendações do B2 foram aceitas (D-019).
-- 4.4 sem notificação em nenhum canal. Diagnóstico pendente com o usuário:
-  - O Comando 2 deu HTTP 202?
-  - O incidente aparece em Incidents?
-  - O push e o e-mail do 2.8 chegaram?
-  - A conexão do canal aparece em Extensions > Slack (pendente? preset)?
-  - Formato da chave no `.env` conferido: 32 caracteres hexadecimais.
-  - Disparar o teste daqui só com autorização explícita.
+- 4.4: teste disparado daqui às 14:40, com autorização. Trigger e resolve deram `HTTP 202`, e o e-mail do incidente chegou (confirmado pelo usuário). Falta confirmar:
+  - se o cartão apareceu no Slack e mudou para Resolved;
+  - o push, que depende do app no celular.
+  Não usar a senha que o usuário colou no chat; recomendar a troca (LOG 14:50).
 - B2 feito, com commits na dev:
   - 5bd0588: `OTEL_*` nos manifestos;
   - 528154d: ignoreDifferences do HPA;
