@@ -1,5 +1,6 @@
 import os
 import sys
+from datetime import datetime, timezone
 import psycopg2
 import requests
 from psycopg2.extras import RealDictCursor
@@ -65,6 +66,46 @@ def require_auth(f):
         # Se a chave for válida, continua para a rota
         return f(*args, **kwargs)
     return decorated
+
+# --- Falha proposital (Fase 4) ---
+# Simula um defeito que só um processo novo cura, para o ensaio da cadeia
+# alerta -> PagerDuty -> Slack -> self-healing. O estado vive SÓ na memória
+# deste processo: não vai para o banco nem para variável de ambiente. Por
+# isso o `kubectl rollout restart` do self-healing resolve: o pod novo nasce
+# com a falha desligada. O Gunicorn roda com 1 worker e o Deployment com 1
+# réplica, então um único estado vale para todo o tráfego do serviço.
+fault_state = {"enabled": False, "since": None}
+
+@app.before_request
+def inject_fault():
+    """ Com a falha ligada, responde erro antes de a rota executar """
+    if not fault_state["enabled"]:
+        return None
+    # Preserva /health e o controle autenticado para o ensaio de recuperacao.
+    if request.path == "/flags" or request.path.startswith("/flags/"):
+        return jsonify({"error": "Falha controlada do flag-service"}), 503
+    return None
+
+@app.route('/admin/fault', methods=['GET'])
+@require_auth
+def get_fault():
+    """ Mostra se a falha proposital está ligada e desde quando """
+    return jsonify(fault_state)
+
+@app.route('/admin/fault', methods=['POST'])
+@require_auth
+def set_fault():
+    """ Liga ou desliga a falha proposital: {"enabled": true|false} """
+    data = request.get_json(silent=True)
+    if not isinstance(data, dict) or not isinstance(data.get('enabled'), bool):
+        return jsonify({"error": "'enabled' (true ou false) é obrigatório"}), 400
+
+    fault_state["enabled"] = data['enabled']
+    fault_state["since"] = datetime.now(timezone.utc).isoformat() if data['enabled'] else None
+    # warning e não info: ligar a falha é um evento operacional que precisa
+    # aparecer na busca de logs do Loki durante o ensaio.
+    log.warning("fault.enabled" if data['enabled'] else "fault.disabled")
+    return jsonify(fault_state)
 
 # --- Endpoints da API ---
 
