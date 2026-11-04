@@ -1,10 +1,10 @@
 # Tech Challenge Fase 4 — contexto para assistentes
 
-TL;DR: trabalhar na dev e retomar pelo "Checkpoint vigente" de PENDENCIAS (2026-11-03 20:52). B0/B1 concluídos e 4.4 confirmado. B2 técnico concluído (stack GitOps, alerta, self-healing e Terraform, validados localmente; commits até 9ea8891), faltando o TODO(human) do flag-service, que é do usuário. Próximo: B3 (custo, AWS Budgets, tokens do GitHub e aprovação). Commits e push na dev autorizados; main, apply e destroy exigem autorização específica.
+TL;DR: trabalhar na dev e retomar pela "Execução vigente" de PENDENCIAS (2026-11-04). B0/B1/B2 concluídos e preparação do B3 concluída: notificações reais, testes, plano da base (0 destroy) e custo de US$ 9,82/dia em 02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md. O cluster EKS se chama `togglemaster`. Faltam do usuário os tokens do GitHub, o AWS Budgets e a autorização dos tópicos 5 e 6. Commits e push na dev autorizados; main, apply e destroy exigem autorização específica.
 
-Última atualização: 2026-11-03, Claude (Opus 5.5).
+Última atualização: 2026-11-04, Claude (Opus 5.5).
 
-- SaaS (2026-11-03): New Relic conferido pelo usuário; PagerDuty → Slack até Resolved confirmado no LOG Claude 14:50. Integração atual PRTG usa Events API v2; adição da genérica pendente. Webhook direto do Slack ainda sem teste confirmado. D5 autorizou segredos no .env local ignorado; não gravar em arquivo versionado, LOG ou chat. Guia: `00_COLAB_IA/02_TRABALHO/PAGERDUTY_OAUTH_EVENTS_API_2026-11-03_v01.md`.
+- SaaS (atualização 2026-11-04): New Relic conferido pelo usuário; teste anterior PagerDuty → Slack até Resolved confirmado no LOG Claude. Usuário informou Events API V2 criada e nova chave no .env, mantendo PRTG. Falta testar a nova chave e o webhook direto Slack. D5 autorizou segredos no .env local ignorado; não gravar valores em arquivos versionados, LOG ou chat. Guia: `00_COLAB_IA/02_TRABALHO/PAGERDUTY_OAUTH_EVENTS_API_2026-11-03_v01.md`.
 
 - Ler `00_COLAB_IA/LEIA-PRIMEIRO.md` → PENDENCIAS → topo do LOG → DOSSIE/DECISOES. `docs/00_COLAB_IA` foi mesclada e removida do caminho ativo; acervo em `00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA` (D-017).
 - Português do Brasil, explicação simples antes da técnica, datas ISO e fonte. Distinguir relato, configuração, teste local, execução externa e evidência de entrega.

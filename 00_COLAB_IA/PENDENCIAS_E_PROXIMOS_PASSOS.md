@@ -1,10 +1,50 @@
 # Pendências e progresso
 
-TL;DR: B0/B1 concluídos e 4.4 confirmado. **B2 técnico concluído em 2026-11-03 20:52** (stack GitOps, alerta, contact points, self-healing e Terraform, validados localmente; commits até 9ea8891), faltando o TODO(human) do flag-service. Próximo: B3, com estimativa de custo, AWS Budgets, tokens do GitHub e aprovação explícita. Trial até 2026-11-11 por relato; meta de gravação 2026-11-10.
+TL;DR: Preparação do B3 concluída em 2026-11-04 (validações, planos e custos; ver 02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md). Faltam do usuário: tokens do GitHub no .env, AWS Budgets, troca da senha do PagerDuty e autorização dos tópicos 5 (implantação) e 6 (demonstração e entrega). Trial até 2026-11-11 por relato; meta de gravação 2026-11-10.
 
-Última atualização: 2026-11-03, Claude (Opus 5.5).
+Última atualização: 2026-11-04, Claude (Opus 5.5).
 
-## Checkpoint vigente — 2026-11-03 20:52, Claude
+## Execução vigente — 2026-11-04, validação e preparação autorizadas
+
+Pedido novo: validar PagerDuty e Slack, executar todos os testes com Docker, orientar tokens GitHub e preparar implantação/custos/variáveis/planos considerando US$ 100 de créditos informados. Usuário reservou implantação (tópico 5) e demonstração/entrega (tópico 6) para depois. Esta autorização cobre os testes reais de notificações e supera a pendência anterior de autorização do webhook Slack; não abrange apply, PR/main ou destroy de recursos AWS.
+
+- [x] Retomada e inventário inicial; Docker Linux disponível. Laboratório tc04-integration preexistente preservado.
+- [x] Guia de [tokens GitHub](02_TRABALHO/TOKENS_GITHUB_PREIMPLANTACAO_2026-11-04_v01.md) preparado; aguardar salvamento local pelo usuário para validar credenciais reais.
+- [x] PagerDuty: trigger/resolve com a nova chave e conferência do resultado; Slack: webhook direto e cartão PagerDuty (Codex, LOG 16:19).
+- [x] Testes de serviços, integração, OTel/New Relic, Helm/Grafana/Collector e self-healing. Unitários dos 5 serviços, ensaio integrado (aprovado na repetição), New Relic sem falhas e ensaio da falha 11/11 (LOG 17:05).
+- [x] Conferência autenticada AWS/GitHub e revisão das variáveis/backends/imports. Inventário do Codex e `gh` (LOG 17:05).
+- [x] Terraform: fmt/validate e plano real possível sem implantação; documentar dependências das camadas seguintes. Base: 8 import, 29 add, 7 change, 0 destroy; cluster e k8s dependem do apply da base.
+- [x] Estimativa oficial em us-east-2, cenários de duração e margem dentro dos US$ 100: US$ 9,82/dia; B3–B5 ≈ US$ 45,35.
+- [x] Preparação reproduzível e relatório de pendências para implantação posterior: [PREPARACAO_B3](02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md).
+- [x] VERIFICAÇÃO final, relatório, contexto e handoff (Claude, 2026-11-04 17:05).
+- [ ] Usuário: tokens `GITHUB_ARGOCD_TOKEN` e `GITHUB_DISPATCH_TOKEN` no `.env`; AWS Budgets (US$ 80, alertas 25/50/75% e previsão 100%); senha do PagerDuty; autorizar os tópicos 5 e 6.
+
+Pergunta em andamento: confirmar se o usuário delega também a implementação do TODO(human) anteriormente reservado a ele. Não impedir as outras verificações enquanto aguarda. Evidências/scripts/planos brutos em `02_TRABALHO/validacao-local-preimplantacao-2026-11-04/` (ignorado pelo Git); relatório sanitizado fora dessa pasta. Conector GitHub retornou 404; usar CLI autenticada para o repositório.
+
+## Checkpoint vigente — 2026-11-04, Codex
+
+Pedido: usuário informou criação da integração genérica Events API V2 e atualização da chave no .env, mantendo a PRTG para contingência; solicitou próximos passos. A configuração está concluída por relato, mas o funcionamento da nova chave ainda não foi testado. O sucesso do 4.4 anterior continua válido para a integração antiga.
+
+Conferência local em 2026-11-04: dev em 64d3af9; B2 técnico concluído e validado localmente conforme LOG Claude de 2026-11-03 20:52. inject_fault() ainda contém TODO(human) e retorna None mesmo com a falha ligada. Preservar esse exercício do usuário. .env continua ignorado; nomes PAGERDUTY_INTEGRATION_KEY, SLACK_WEBHOOK_URL e NEW_RELIC_LICENSE_KEY presentes. Não foram exibidos valores. GITHUB_DISPATCH_TOKEN, GITHUB_TOKEN, TF_VAR_github_dispatch_token e TF_VAR_github_token ausentes nesse arquivo; isso não prova que tokens não existam na conta ou em outro local.
+
+Checklist desta orientação:
+- [x] Ler handoff, verificar estado Git e pontos de código relevantes.
+- [x] Registrar nova integração/chave por relato, sem marcar teste externo como concluído.
+- [x] Consolidar ordem de avanço e responsabilidades abaixo.
+- [x] VERIFICAÇÃO em 2026-11-04: dois hashes do exercício preservados, nenhuma escrita no .env, histórico integral do LOG intacto e git diff --check aprovado. Handoff identifica configuração por relato e testes externos pendentes.
+
+Ordem de continuidade:
+1. **Fechar pré-requisitos locais e SaaS:** usuário concluir TODO(human); agente executar testes depois. Validar nova chave PagerDuty (trigger → cartão Slack → resolve), manter PRTG até sucesso e guardar prints. Testar também o Incoming Webhook direto do Slack; sua autorização específica continua pendente, conforme LOG Claude. Não enviar eventos/mensagens nesta consulta de próximos passos.
+2. **Disponibilizar tokens GitHub:** leitura de conteúdo do repositório 04 para ArgoCD privado; token separado fine-grained com Contents: write para repository_dispatch. Restringir ao repo04, observar aprovação da organização e manter valores locais. Mapear depois a TF_VAR_github_token e TF_VAR_github_dispatch_token. Não confundir com OAuth do PagerDuty, que não bloqueia os alertas.
+3. **Preparar B3:** estimativa com preços atuais para o desenho aprovado (incluindo EKS, nós, NAT, bancos e armazenamento), conferir créditos/cotas e AWS Budgets com alertas. Preparar tfvars/backend da conta nova, adoção dos recursos existentes e planos Terraform para revisão; conferir segredos e as Variables AWS_SELF_HEALING_ROLE_ARN/EKS_CLUSTER_NAME. Nenhum custo numérico ou saldo foi validado nesta consulta.
+4. **Implantar após aprovação específica:** base → cluster → k8s conforme bootstrap documentado; promoção dev → main e CI/CD/GitOps coordenados. Workflow de repository_dispatch precisa existir na branch padrão antes do ensaio; no desenho atual é main. Aceite: ArgoCD Synced/Healthy, pods/datasources saudáveis e aplicação funcionando.
+5. **B4–B6:** executar tráfego/falha → alerta → PagerDuty/Slack → self-healing → recuperação; guardar evidências, gravar vídeo, revisar documentação pública/matriz de requisitos e relatório. Encerramento dos recursos segue plano e autorização próprios. Meta de gravação da cadeia 2026-11-10, antes do trial até 2026-11-11 por relato; entrega prevista 2026-11-17 por informação do usuário.
+
+Fontes: LOG Claude 2026-11-03 20:52; services/flag-service/app.py; terraform/k8s/variables.tf; .github/workflows/self-healing.yml. Documentação oficial consultada em 2026-11-04: [permissão de dispatch](https://docs.github.com/en/rest/repos/repos#create-a-repository-dispatch-event), [branch padrão](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#repository_dispatch), [AWS Budgets](https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-view.html).
+
+Os checklists anteriores são históricos. O item de criar a integração genérica/atualizar .env foi concluído por relato em 2026-11-04; validação da nova chave permanece separada. Não repetir B0/B1 ou implementar novamente a stack do B2.
+
+## Checkpoint anterior — 2026-11-03 20:52, Claude
 
 Substitui o checkpoint de 15:21 (preservado abaixo) quanto ao B2. Detalhes e verificações no LOG de 20:52.
 

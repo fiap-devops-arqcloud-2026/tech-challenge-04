@@ -1,0 +1,294 @@
+import os
+import sys
+from datetime import datetime, timezone
+import psycopg2
+import requests
+from psycopg2.extras import RealDictCursor
+from psycopg2.pool import SimpleConnectionPool
+from flask import Flask, request, jsonify
+from dotenv import load_dotenv
+from functools import wraps
+from telemetry import configure_telemetry, instrument_flask
+
+# Carrega .env para desenvolvimento local
+load_dotenv()
+
+# SDK e pools nascem no worker Gunicorn; nao usar --preload.
+log = configure_telemetry("flag-service", postgres=True, requests_client=True)
+app = Flask(__name__)
+app.config["TELEMETRY_SERVICE_NAME"] = "flag-service"
+instrument_flask(app)
+
+# --- Configuração ---
+DATABASE_URL = os.getenv("DATABASE_URL")
+AUTH_SERVICE_URL = os.getenv("AUTH_SERVICE_URL")
+
+if not DATABASE_URL or not AUTH_SERVICE_URL:
+    log.critical("Erro: DATABASE_URL e AUTH_SERVICE_URL devem ser definidos.")
+    sys.exit(1)
+
+# --- Pool de Conexão com o Banco ---
+# Inicializa o pool de conexões (Mín: 1, Máx: 5 conexões)
+try:
+    # Definir a factory no connect permite ao OTel envolver RealDictCursor.
+    # Sobrescreve-la em conn.cursor(...) descartaria a factory instrumentada.
+    pool = SimpleConnectionPool(1, 5, dsn=DATABASE_URL, cursor_factory=RealDictCursor)
+    log.info("Pool de conexões com o PostgreSQL inicializado.")
+except psycopg2.OperationalError as e:
+    log.critical("database.connection.failed", extra={"error_type": type(e).__name__})
+    sys.exit(1)
+
+# --- Middleware de Autenticação ---
+def require_auth(f):
+    """ Middleware para validar a chave de API contra o auth-service """
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        auth_header = request.headers.get("Authorization")
+        if not auth_header:
+            return jsonify({"error": "Authorization header obrigatório"}), 401
+
+        try:
+            # Chama o /validate do auth-service
+            validate_url = f"{AUTH_SERVICE_URL}/validate"
+            response = requests.get(validate_url, headers={"Authorization": auth_header}, timeout=3)
+
+            if response.status_code != 200:
+                log.warning("auth.validation.rejected", extra={"http_status_code": response.status_code})
+                return jsonify({"error": "Chave de API inválida"}), 401
+
+        except requests.exceptions.Timeout:
+            log.error("Timeout ao conectar com o auth-service")
+            return jsonify({"error": "Serviço de autenticação indisponível (timeout)"}), 504 # Gateway Timeout
+        except requests.exceptions.RequestException as e:
+            log.error("auth.request.failed", extra={"error_type": type(e).__name__})
+            return jsonify({"error": "Serviço de autenticação indisponível"}), 503 # Service Unavailable
+
+        # Se a chave for válida, continua para a rota
+        return f(*args, **kwargs)
+    return decorated
+
+# --- Falha proposital (Fase 4) ---
+# Simula um defeito que só um processo novo cura, para o ensaio da cadeia
+# alerta -> PagerDuty -> Slack -> self-healing. O estado vive SÓ na memória
+# deste processo: não vai para o banco nem para variável de ambiente. Por
+# isso o `kubectl rollout restart` do self-healing resolve: o pod novo nasce
+# com a falha desligada. O Gunicorn roda com 1 worker e o Deployment com 1
+# réplica, então um único estado vale para todo o tráfego do serviço.
+fault_state = {"enabled": False, "since": None}
+
+@app.before_request
+def inject_fault():
+    """ Com a falha ligada, responde erro antes de a rota executar """
+    if not fault_state["enabled"]:
+        return None
+    # TODO(human): decidir quais requisições falham e com qual resposta.
+    return None
+
+@app.route('/admin/fault', methods=['GET'])
+@require_auth
+def get_fault():
+    """ Mostra se a falha proposital está ligada e desde quando """
+    return jsonify(fault_state)
+
+@app.route('/admin/fault', methods=['POST'])
+@require_auth
+def set_fault():
+    """ Liga ou desliga a falha proposital: {"enabled": true|false} """
+    data = request.get_json(silent=True)
+    if not isinstance(data, dict) or not isinstance(data.get('enabled'), bool):
+        return jsonify({"error": "'enabled' (true ou false) é obrigatório"}), 400
+
+    fault_state["enabled"] = data['enabled']
+    fault_state["since"] = datetime.now(timezone.utc).isoformat() if data['enabled'] else None
+    # warning e não info: ligar a falha é um evento operacional que precisa
+    # aparecer na busca de logs do Loki durante o ensaio.
+    log.warning("fault.enabled" if data['enabled'] else "fault.disabled")
+    return jsonify(fault_state)
+
+# --- Endpoints da API ---
+
+@app.route('/health')
+def health():
+    """ Verificação de saúde — usada pelos probes do Kubernetes e do docker compose """
+    return jsonify({"status": "ok"})
+
+@app.route('/flags', methods=['POST'])
+@require_auth
+def create_flag():
+    """ Cria uma nova definição de feature flag """
+    data = request.get_json()
+    if not data or 'name' not in data:
+        return jsonify({"error": "'name' é obrigatório"}), 400
+
+    name = data['name']
+    description = data.get('description', '')
+    is_enabled = data.get('is_enabled', False)
+
+    conn = None
+    cur = None
+    try:
+        conn = pool.getconn()
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO flags (name, description, is_enabled, created_at, updated_at) "
+            "VALUES (%s, %s, %s, NOW(), NOW()) RETURNING *",
+            (name, description, is_enabled)
+        )
+        new_flag = cur.fetchone()
+        conn.commit()
+        log.info("flag.created")
+        return jsonify(new_flag), 201
+    except psycopg2.IntegrityError:
+        if conn: conn.rollback()
+        log.warning("flag.duplicate")
+        return jsonify({"error": f"Flag '{name}' já existe"}), 409
+    except Exception as e:
+        if conn: conn.rollback()
+        log.error("flag.create.failed", extra={"error_type": type(e).__name__})
+        return jsonify({"error": "Erro interno do servidor", "details": str(e)}), 500
+    finally:
+        if cur: cur.close()
+        if conn: pool.putconn(conn)
+
+@app.route('/flags', methods=['GET'])
+@require_auth
+def get_flags():
+    """ Lista todas as feature flags """
+    conn = None
+    cur = None
+    try:
+        conn = pool.getconn()
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM flags ORDER BY name")
+        flags = cur.fetchall()
+        return jsonify(flags)
+    except Exception as e:
+        log.error("flag.list.failed", extra={"error_type": type(e).__name__})
+        return jsonify({"error": "Erro interno do servidor", "details": str(e)}), 500
+    finally:
+        if cur: cur.close()
+        if conn: pool.putconn(conn)
+
+@app.route('/flags/<string:name>', methods=['GET'])
+@require_auth
+def get_flag(name):
+    """ Busca uma feature flag específica pelo nome """
+    conn = None
+    cur = None
+    try:
+        conn = pool.getconn()
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM flags WHERE name = %s", (name,))
+        flag = cur.fetchone()
+        if not flag:
+            return jsonify({"error": "Flag não encontrada"}), 404
+        return jsonify(flag)
+    except Exception as e:
+        log.error("flag.get.failed", extra={"error_type": type(e).__name__})
+        return jsonify({"error": "Erro interno do servidor", "details": str(e)}), 500
+    finally:
+        if cur: cur.close()
+        if conn: pool.putconn(conn)
+
+@app.route('/flags/<string:name>', methods=['PUT'])
+@require_auth
+def update_flag(name):
+    """ Atualiza uma feature flag (descrição ou status 'is_enabled') """
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "Corpo da requisição obrigatório"}), 400
+
+    fields = []
+    values = []
+
+    # Constrói a query dinamicamente
+    if 'description' in data:
+        fields.append("description = %s")
+        values.append(data['description'])
+    if 'is_enabled' in data:
+        fields.append("is_enabled = %s")
+        values.append(data['is_enabled'])
+
+    if not fields:
+        return jsonify({"error": "Pelo menos um campo ('description', 'is_enabled') é obrigatório"}), 400
+
+    values.append(name) # Adiciona o 'name' para a cláusula WHERE
+
+    # nosec B608 - o bandit alerta sobre montagem de query por string.
+    # Analisado em 2026-09-09 e classificado como FALSO POSITIVO:
+    #
+    #   A f-string interpola apenas `fields`, que contem exclusivamente
+    #   literais escritos acima neste mesmo arquivo - "description = %%s"
+    #   e "is_enabled = %%s". Nenhum dado vindo do usuario entra na
+    #   STRING da query.
+    #
+    #   Os valores enviados pelo cliente vao para a lista `values` e sao
+    #   passados como PARAMETROS em cur.execute(query, tuple(values)).
+    #   Quem monta o SQL final e o driver psycopg2, que faz o escape.
+    #
+    #   O bandit sinaliza qualquer f-string em query sem rastrear se as
+    #   partes interpoladas sao constantes - por isso o alerta aqui.
+    #
+    # Se um dia alguem passar a montar `fields` a partir de entrada do
+    # usuario, esta supressao deixa de valer e o alerta volta a ser real.
+    query = f"UPDATE flags SET {', '.join(fields)} WHERE name = %s RETURNING *"  # nosec B608
+
+    conn = None
+    cur = None
+    try:
+        conn = pool.getconn()
+        cur = conn.cursor()
+        cur.execute(query, tuple(values))
+
+        if cur.rowcount == 0:
+            return jsonify({"error": "Flag não encontrada"}), 404
+
+        updated_flag = cur.fetchone()
+        conn.commit()
+        log.info("flag.updated")
+        return jsonify(updated_flag), 200
+    except Exception as e:
+        if conn: conn.rollback()
+        log.error("flag.update.failed", extra={"error_type": type(e).__name__})
+        return jsonify({"error": "Erro interno do servidor", "details": str(e)}), 500
+    finally:
+        if cur: cur.close()
+        if conn: pool.putconn(conn)
+
+@app.route('/flags/<string:name>', methods=['DELETE'])
+@require_auth
+def delete_flag(name):
+    """ Deleta uma feature flag """
+    conn = None
+    cur = None
+    try:
+        conn = pool.getconn()
+        cur = conn.cursor()
+        cur.execute("DELETE FROM flags WHERE name = %s", (name,))
+
+        if cur.rowcount == 0:
+            return jsonify({"error": "Flag não encontrada"}), 404
+
+        conn.commit()
+        log.info("flag.deleted")
+        return "", 204 # 204 No Content
+    except Exception as e:
+        if conn: conn.rollback()
+        log.error("flag.delete.failed", extra={"error_type": type(e).__name__})
+        return jsonify({"error": "Erro interno do servidor", "details": str(e)}), 500
+    finally:
+        if cur: cur.close()
+        if conn: pool.putconn(conn)
+
+if __name__ == '__main__':
+    # O default de os.getenv precisa ser str ou None: a funcao devolve
+    # sempre uma string quando a variavel existe, e misturar os tipos
+    # confunde quem le. O int() externo continua fazendo a conversao.
+    port = int(os.getenv("PORT", "8002"))
+    # nosec B104 - o bandit alerta sobre ligar em todas as interfaces.
+    # Aqui e o comportamento CORRETO e necessario: o processo roda dentro
+    # de um container, e ligar apenas em 127.0.0.1 o tornaria inalcancavel
+    # pelo kubelet e pelo Service do Kubernetes. Quem restringe o acesso
+    # nao e o bind, e o Service ClusterIP (sem Ingress, ver D-012) somado
+    # aos security groups da VPC.
+    app.run(host='0.0.0.0', port=port, debug=False)  # nosec B104

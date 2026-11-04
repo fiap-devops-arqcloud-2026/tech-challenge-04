@@ -1,8 +1,8 @@
 # Colaboração entre agentes
 
-TL;DR: Colaboração vigente nesta pasta. Retomar pelo "Checkpoint vigente" de PENDENCIAS (2026-11-03 20:52): B0/B1 concluídos, 4.4 confirmado e B2 técnico concluído e validado localmente. O TODO(human) do flag-service é do usuário: não completar por ele. Próximo: B3, com custo, orçamento e aprovação explícita. Segredos só no `.env` local ignorado; nunca em arquivo versionado nem no chat.
+TL;DR: Colaboração vigente nesta pasta. Retomar pela "Execução vigente" de PENDENCIAS: preparação do B3 concluída em 2026-11-04 (validações, planos e custos em 02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md). Faltam do usuário os tokens do GitHub, o AWS Budgets e a autorização dos tópicos 5 e 6. Segredos só no `.env` local ignorado; nunca em arquivo versionado nem no chat.
 
-Última atualização: 2026-11-03, Codex.
+Última atualização: 2026-11-04, Codex.
 
 ## Atualização de escopo — 2026-11-03
 

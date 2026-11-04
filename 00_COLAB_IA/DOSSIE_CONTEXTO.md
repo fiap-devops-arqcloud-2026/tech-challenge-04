@@ -1,8 +1,8 @@
 # Dossiê de contexto
 
-TL;DR: B0/B1 concluídos, New Relic conferido e 4.4 confirmado até Resolved no Slack. **B2 técnico concluído e validado localmente em 2026-11-03 (seção 23)**, faltando o TODO(human) do flag-service. Próximo: B3 com custo, orçamento e aprovação. OAuth do assistente é separado da Events API V2 (seção 22).
+TL;DR: B0/B1 e B2 concluídos; preparação do B3 concluída em 2026-11-04 (seção 24): notificações reais validadas, testes e ensaio da falha aprovados, plano da base com 0 destroy e custo oficial de US$ 9,82/dia. Faltam tokens do GitHub, AWS Budgets e a autorização dos tópicos 5 e 6.
 
-Última atualização: 2026-11-03, Codex.
+Última atualização: 2026-11-04, Codex.
 
 Atualização 2026-10-28 14:47: usuário informou conclusão do guia IAM/OIDC até passo7. Provedor, policy, role, Variables e consultas IAM são concluídos por relato; nenhuma prova de CI remoto/cluster decorre disso. Prosseguir com inventário, correção F-023 na dev, backend próprio, adoção de recursos manuais e plan revisado. Não recriar role nem reutilizar state antigo. PR/main/apply permanecem fora do pedido de orientação. Registros seguintes sobre ausência da role refletem momentos anteriores.
 
@@ -500,3 +500,27 @@ Desenho D-019 implementado e validado localmente, sem AWS:
 - **Self-healing:** o workflow tem lista de serviços permitidos, intervalo mínimo de 600 s, kubectl 1.34.13 e uma role cuja única permissão AWS é `eks:DescribeCluster`. O RBAC só permite `patch` nos 5 Deployments.
 - **Fatos e fontes:** `02_TRABALHO/b2-fatos-stack-2026-11-03_v01/FICHA.md`. Verificações e achados no LOG de 20:52.
 - **Para o B3:** o NAT é obrigatório, porque é a única saída da stack para a internet. Faltam também as Variables do GitHub, os 2 tokens do GitHub e os `TF_VAR_*` dos segredos.
+
+## 24. Integração genérica configurada e sequência de avanço — 2026-11-04, Codex
+
+Fonte: relato do usuário nesta data e conferência local da dev em 64d3af9. Usuário criou Events API V2, atualizou PAGERDUTY_INTEGRATION_KEY no .env e manteve PRTG. Considerar configuração concluída por relato, mas validação da nova chave pendente. O teste bem-sucedido de 2026-11-03 pertence à integração anterior. Não pedir que repita a criação.
+
+O .env está ignorado pelo Git; foram conferidos apenas nomes de variáveis, sem exposição de valores. Chaves SaaS esperadas presentes. GITHUB_DISPATCH_TOKEN/GITHUB_TOKEN e equivalentes TF_VAR_github_dispatch_token/TF_VAR_github_token não aparecem nesse arquivo; nada foi concluído sobre existência dos tokens fora dele. TODO(human) de inject_fault() ainda existe; exercício do usuário preservado. Testes anteriores do B2 não foram reexecutados nesta orientação.
+
+Próximo: concluir exercício e seus testes; validar nova integração e webhook Slack; disponibilizar tokens; preparar estimativa, orçamento e planos B3; após aprovação específica, implantar e promover dev → main; então demonstrar cadeia completa, registrar evidências e finalizar entrega. O teste direto do webhook Slack continua dependendo da autorização específica já pendente; nenhum evento ou mensagem foi enviado nesta consulta. OAuth do assistente não é pré-requisito de alertas. Sequência e fontes oficiais consultadas em 2026-11-04 no checkpoint de PENDENCIAS. Sem nova decisão de arquitetura, publicação ou operação AWS.
+
+## 24. Preparação do B3 — 2026-11-04, Codex e Claude
+
+- **Notificações reais com a nova Events API V2:** trigger e resolve `202`, webhook do Slack `200`, cartão até Resolved (Codex).
+- **Testes:**
+  - unitários dos 5 serviços;
+  - ensaio integrado: 19 spans e 5 serviços na repetição;
+  - New Relic sem falhas;
+  - ensaio da falha proposital 11/11. O reinício limpa a falha, e o evaluation responde 502 em cascata.
+- **Conta AWS:** plano FREE com US$ 100 até 2027-04-20, cota de 5 vCPUs (2 nós de 2 vCPU no máximo), nenhum Budget criado e 5 atividades de US$ 20.
+- **Terraform:**
+  - base com 8 import, 29 add, 7 change e 0 destroy;
+  - o cluster se chama `togglemaster`, e `togglemaster-eks-cluster` é a role;
+  - cluster e k8s dependem do apply da base.
+- **Custo:** US$ 0,409/h = US$ 9,82/dia; B3–B5 ≈ US$ 45. Base parada com NAT: US$ 1,20/dia.
+- **Roteiro:** `02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md`.

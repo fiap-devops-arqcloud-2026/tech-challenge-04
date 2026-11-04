@@ -1,8 +1,88 @@
 # Log de trabalho
 
-TL;DR: B0/B1 concluídos e 4.4 confirmado. B2 técnico concluído em 2026-11-03 20:52 (stack GitOps, alerta, contact points e self-healing, validados localmente; commits até 9ea8891). Falta o TODO(human) do flag-service, que é do usuário. Próximo: B3 (custo, orçamento e aprovação). Webhook direto do Slack ainda sem teste; troca da integração PRTG pendente.
+TL;DR: Preparação do B3 concluída em 2026-11-04: notificações reais validadas (nova chave PagerDuty, Slack e cartão), testes e ensaio da falha aprovados, plano da base com 0 destroy e custo de US$ 9,82/dia (B3–B5 ≈ US$ 45 de US$ 100). Faltam do usuário os tokens do GitHub, o AWS Budgets e a autorização dos tópicos 5 e 6. Roteiro em 02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md.
 
-Última atualização: 2026-11-03, Claude (Opus 5.5).
+Última atualização: 2026-11-04, Claude (Opus 5.5).
+
+## 2026-11-04 17:05 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — Continuação da sessão Codex: testes, planos e custos concluídos
+
+Pedido do usuário: continuar o trabalho que o Codex deixou ao acabarem os créditos. O pedido original ao Codex (2026-11-04) foi:
+- validar PagerDuty e Slack;
+- rodar todos os testes com o Docker;
+- orientar os tokens do GitHub;
+- preparar a implantação, revisar variáveis e planos do Terraform e estimar o custo com US$ 100 de créditos;
+- deixar os tópicos 5 (implantação) e 6 (demonstração e entrega) com o usuário;
+- trazer um resumo no fim.
+
+Encontrado do Codex (16:13–16:31), parte ainda fora do LOG:
+- inventário AWS somente leitura;
+- teste real de PagerDuty e Slack (LOG 16:19);
+- ensaio integrado em um projeto isolado, `tc04-predeploy`;
+- 3 `terraform.tfvars` locais ignorados, com NAT ligado e 2 nós com máximo 2 (cota de vCPU = 5);
+- `init`/`validate`/`plan` reais nas 3 camadas;
+- 2 correções no Terraform;
+- o trecho do `inject_fault()` preenchido às 16:23, durante a sessão do Codex. O LOG não registra a resposta do usuário à pergunta sobre essa delegação.
+
+Feito nesta continuação:
+- **Commit 446adfa**, com as correções do Codex:
+  - o cluster se chama `togglemaster`, não `togglemaster-eks-cluster`, que é a role IAM. **Corrige o LOG de 2026-11-03 20:52: `EKS_CLUSTER_NAME` = `togglemaster`**;
+  - `nonsensitive()` no `count` do Secret do ArgoCD.
+- **Commit 57d43e5:** falha proposital do flag-service.
+  - Testes na imagem: 13 testes e 6 subtestes.
+  - Lint: `flake8` 0, `pylint` 9,42 e `bandit` limpo.
+  - Ensaio no Compose com 11/11 etapas: 503 em JSON, `/health` 200, reinício limpa a falha e 13 spans SERVER com erro. O evaluation responde 502 com o flag-service em falha.
+- **Plano da base analisado:** 8 import, 29 add, 7 change e 0 destroy, sem replace. A trust da role do CI muda só o rótulo `Sid`, com condições idênticas. A permissão do self-healing aponta para `cluster/togglemaster`. Cluster e k8s só fecham depois do apply da base, por dependência de estado e de `TF_VAR_*`.
+- **Ensaio integrado do Codex:** `test-traces` falhou na 1ª execução e passou na repetição das 16:30 (19 spans, 5 serviços). Exportação ao New Relic sem falhas.
+- **Testes Go e Python:** auth e evaluation (`vet` e `test`), targeting (6) e analytics (8), todos aprovados.
+- **Custos** pela AWS Price List API em us-east-2: US$ 0,409/h = US$ 9,82/dia com tudo ligado. O período B3–B5 (110 h) sai por cerca de US$ 45,35.
+- **Créditos:** a conta tem 5 atividades de US$ 20, entre elas AWS Budgets, EC2 e RDS.
+- **GitHub:** repositório privado, main padrão, subject OIDC imutável conferido, 3 Variables. Os 2 tokens estão ausentes do `.env`.
+- **Documento** `02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md`, com validações, conta, planos, custos, pré-requisitos e roteiro do tópico 5.
+- **Laboratório isolado `tc04-predeploy` removido** (`down -v`); o `tc04-integration` continua no ar.
+
+Verificações: `terraform fmt -check -recursive` e security-check. As evidências brutas novas (`ensaio-falha-resultado.json`, `precos-aws-us-east-2.json`) estão na pasta ignorada da validação.
+
+Limitações: nada aplicado e nenhum PR. O Grafana real enviando a PagerDuty, Slack e GitHub só se prova com o cluster. Não se sabe se recursos criados pelo Terraform contam nas atividades de crédito.
+
+Estado p/ o próximo agente: preparação concluída. Com o usuário ficam:
+- os tokens no `.env`;
+- o AWS Budgets;
+- a troca da senha do PagerDuty;
+- a autorização dos tópicos 5 e 6.
+
+Seguir o roteiro da seção 6 do documento de preparação.
+
+## 2026-11-04 16:19 (America/Sao_Paulo, UTC-03:00) — Codex — Nova Events API V2 e webhook Slack validados
+
+Feito: teste real autorizado, identificador tc04-validacao-20261104T191823Z. Trigger HTTP 202 às 16:18:25; webhook direto HTTP 200/ok e mensagem visível às 16:18:26; cartão PagerDuty às 16:18:30. Resolve HTTP 202 às 16:19:26 e thread confirmada na interface autenticada do Slack às 16:19:33: Resolved by Events API V2. Incidente de teste encerrado; integração antiga preservada.
+
+Arquivos: notifications-result.json e notificacoes-conferencia-ui.md em 02_TRABALHO/validacao-local-preimplantacao-2026-11-04 (ignorados), com horários e links da evidência, sem chaves. Inventário AWS somente leitura também salvo nessa pasta.
+
+Estado p/ o próximo agente: credenciais/caminhos PagerDuty e Slack comprovados nesta sessão. Seguem testes locais, revisão Terraform/custos e preparação; não considerar a cadeia automática completa no EKS comprovada. Sem apply/PR/main. Respeitar pergunta pendente sobre TODO(human).
+
+## 2026-11-04 16:13 (America/Sao_Paulo, UTC-03:00) — Codex — Início da validação completa e preparação sem implantação
+
+Feito: usuário autorizou testes reais PagerDuty/Slack, todos os testes locais e preparação Terraform/custos com US$ 100 de créditos por relato. Retomada dev 64d3af9; mudanças documentais anteriores e exercício flag-service preservados. Docker Linux disponível, com laboratório tc04-integration já em execução. Conector GitHub sem acesso (404); fallback CLI. Guia dos dois tokens criado.
+
+Decisões/Por quê: preparar e revisar sem executar tópicos 5 e 6 reservados pelo usuário. Não aplicar Terraform, promover main ou destruir AWS. Teste do webhook Slack agora expressamente autorizado. Pergunta assíncrona sobre delegação do TODO(human), anteriormente reservado ao usuário; demais tarefas seguem independentes.
+
+Arquivos: guia TOKENS_GITHUB_PREIMPLANTACAO_2026-11-04_v01.md; checklist no topo de PENDENCIAS; evidências auxiliares em validacao-local-preimplantacao-2026-11-04 (ignorado). Nenhuma credencial registrada no LOG ou no guia.
+
+Estado p/ o próximo agente: seguir checklist de execução de 2026-11-04. A tarefa ainda está em andamento; não confundir testes anteriores do Claude com esta validação. Priorizar tokens/segredos locais, testes controlados e inventário AWS antes de gerar planos.
+
+## 2026-11-04 15:59 (America/Sao_Paulo, UTC-03:00) — Codex — Nova integração informada e próximos passos para B3
+
+Feito: retomada do handoff Claude 20:52; dev em 64d3af9. Registro do relato do usuário: Events API V2 criada, chave atualizada no .env e PRTG preservada. Conferidos TODO(human), workflow, variáveis Terraform e apenas presença dos nomes esperados no .env, sem exibir credenciais. Pesquisa oficial GitHub/AWS para orientar permissões, branch padrão e orçamento.
+
+Decisões/Por quê: manter D-019 e distinguir configuração de teste. Não repetir B2 concluído nem preencher o exercício do usuário. Sequência: pré-requisitos locais/SaaS → tokens → custo/planos B3 → implantação autorizada → ensaio/evidências/entrega. OAuth do assistente é independente do caminho de alertas.
+
+Arquivos: atualização de PENDENCIAS, LOG e ponteiros CLAUDE/LEIA/DOSSIE. De-para dos cinco arquivos anteriores preservado sob 00_COLAB_IA/_ARQUIVO_MORTO/2026-11-04_pagerduty-proximos-passos_v01/, com mesmos caminhos relativos. Nenhuma nova decisão arquitetural nem alteração na memória global.
+
+Descobertas: tokens GitHub ausentes do .env nos nomes consultados, sem concluir ausência na conta; ensaio real com chave nova ainda não comprovado. Integração anterior foi validada em 2026-11-03. B2 tem verificações anteriores registradas; não reexecutadas nesta consulta de orientação.
+
+Verificação: histórico integral das entradas anteriores do LOG preservado após normalização CRLF/LF; hashes SHA-256 de app.py e tests/test_fault.py iguais ao início; nenhuma escrita no .env; git diff --check aprovado. Ponteiros CLAUDE/LEIA/DOSSIE e PENDENCIAS alinhados ao relato de 2026-11-04. LOG + checkpoint permitem retomar sem pedir novamente criação da integração.
+
+Estado p/ o próximo agente: usar checkpoint de 2026-11-04 em PENDENCIAS; não pedir para criar novamente Events API V2. Preservar TODO(human). Teste do webhook Slack aguarda autorização específica já registrada. Preparar custo e plano concretos antes da aprovação de B3. Nenhum evento, mensagem, alteração SaaS/AWS, commit/push ou mudança de código nesta consulta.
 
 ## 2026-11-03 20:52 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — B2 técnico concluído, exceto o TODO(human)
 
