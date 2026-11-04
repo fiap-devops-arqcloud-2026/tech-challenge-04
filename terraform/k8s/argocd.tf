@@ -51,7 +51,8 @@ resource "kubernetes_namespace_v1" "argocd" {
 
 resource "kubernetes_secret_v1" "argocd_repo" {
   # Cria apenas se um token foi informado.
-  count = var.github_token != "" ? 1 : 0
+  # O token continua sensivel; somente a decisao booleana pode indexar count.
+  count = nonsensitive(var.github_token != "") ? 1 : 0
 
   metadata {
     name      = "repo-tech-challenge-04"

@@ -149,6 +149,7 @@ module "iam_ci" {
   create_oidc_provider = var.create_github_oidc_provider
 
   # Fase 4: o self-healing so pode descrever ESTE cluster. O nome segue
-  # o padrao do modulo eks da camada cluster ("<projeto>-eks-cluster").
-  eks_cluster_arn = "arn:aws:eks:${var.aws_region}:${var.expected_aws_account_id}:cluster/${local.name}-eks-cluster"
+  # o padrao do recurso aws_eks_cluster.this: name = var.name = <projeto>.
+  # O sufixo -eks-cluster pertence a role IAM, nao ao nome do cluster.
+  eks_cluster_arn = "arn:aws:eks:${var.aws_region}:${var.expected_aws_account_id}:cluster/${local.name}"
 }
