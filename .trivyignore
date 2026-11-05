@@ -29,9 +29,9 @@
 # ------------------------------------------------------------
 # perl-base 5.40.1-6, vindo do Debian 13 dentro de `python:3.12-slim`
 # ------------------------------------------------------------
-# Afeta apenas os 3 servicos Python (flag, targeting e analytics). Os 2
-# servicos Go usam `alpine:3.20`, que foi medida em 2026-09-09 com ZERO
-# CRITICAL - por isso nao ha excecao nenhuma para eles.
+# As tres excecoes abaixo foram justificadas para os servicos Python.
+# Em 2026-11-05, os runtimes Go passaram para alpine:3.24; a verificacao
+# das duas imagens com esta politica nao exigiu nova excecao.
 #
 # Contexto comum aos tres CVEs abaixo:
 #

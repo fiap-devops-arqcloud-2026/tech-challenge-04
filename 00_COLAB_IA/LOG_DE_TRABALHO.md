@@ -1,8 +1,28 @@
 # Log de trabalho
 
-TL;DR: Pré-requisitos do B3 completos em 2026-11-05: tokens do GitHub validados (o do ArgoCD também tem escrita; risco aceito), orçamento `togglemaster-creditos` criado com 5 alertas, créditos em US$ 120 depois da atividade do Budgets e senha do PagerDuty mantida pelo usuário (D-020). Teste da confiança OIDC no Terraform Check desde o commit b2c5bdf (10/10 no CI). Dashboard com CPU e memória por nó desde 46d0a18 (9 painéis). GitOps Check e scan da imagem no PR desde 793384e, verdes no CI. Compose Integration pula commits só de documentação desde 199fe01. Falta só a autorização dos tópicos 5 e 6. Roteiro em 02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md.
+TL;DR: revisão de 2026-11-05 na dev: troca do runtime Go para Alpine 3.24 autorizada (D-021), commit df766b2 com 4 workflows verdes. Roteiro B3 v02 inclui IRSA, ordem da promoção e inicialização dos bancos; verificador manual passou em 7 testes. Tópicos 5/6 continuam reservados. AWS: US$ 120 em créditos; nenhum EKS em us-east-2.
 
-Última atualização: 2026-11-05, Claude (Opus 5.5).
+Última atualização: 2026-11-05, Codex.
+
+## 2026-11-05 16:50 (America/Sao_Paulo, UTC-03:00) — Codex — Alpine aprovado, roteiro B3 corrigido e verificado
+
+Feito: após aprovação explícita, alterados somente os runtimes finais dos dois serviços Go para alpine:3.24 (D-021); commit df766b2 enviado à dev. Os Dockerfiles coincidem com os candidatos ensaiados em 3.24.3; Trivy 0.70.0, política CRITICAL do CI: zero achados nas duas imagens. Auth com PostgreSQL e evaluation com Redis reais em rede isolada; os contêineres preexistentes do usuário foram preservados. Os 4 runs do push ficaram verdes: [auth](https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04/actions/runs/42096894029), [evaluation](https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04/actions/runs/42096893952), [Compose integrado](https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04/actions/runs/42096893672), [GitOps](https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04/actions/runs/42096893785). O scan das imagens desta alteração foi local; em push da dev os jobs de publicação no ECR não rodam.
+
+Roteiro: [PREPARACAO_B3 v02](02_TRABALHO/PREPARACAO_B3_2026-11-05_v02.md) substitui a seção 6 da v01. Antes do PR, conferir cinco bindings (1 Redis, 2 SQS, 2 IRSA); depois do merge e dos cinco jobs de publicação, conferir tags na main atual e no ECR antes das Applications; depois, schemas dos 2 RDS, chave real do evaluation e avaliação autenticada com evento consumido. Não aplicar o plano parcial do cluster. Antes da remoção, distinguir a base e os oito objetos adotados; não autorizar sua exclusão por inferência.
+
+Verificação: [verificador](02_TRABALHO/preflight-b3-2026-11-05/README.md), 7/7 testes locais com o render real e saídas fictícias; execução contra o cluster/estado real depende do tópico 5. Os 16 destinos relativos da v02 existem; o carregador PowerShell exportou os 5 nomes necessários em processo temporário, sem imprimir valores. AWS CLI somente leitura: US$ 120, plano FREE ativo, orçamento acumulado US$ 80 com 5 alertas, zero clusters em us-east-2. O código de falha já havia sido delegado e está em 57d43e5, com ensaio 11/11 de 2026-11-04. Não repetir notificação real para encerrar esta revisão.
+
+Arquivos: Dockerfiles auth/evaluation, comentário da política .trivyignore, docs/ARQUITETURA.md (filtros do CI e versões), roteiro v01 → seção 6 apontando para v02, verificador/manual/testes, CLAUDE, LEIA, DOSSIE §28, DECISOES D-021, PENDENCIAS e LOG. Originais dos arquivos substituídos em _ARQUIVO_MORTO/2026-11-05_retomada-pre-b3_v01/ com os mesmos caminhos relativos; o LOG mantém as entradas anteriores. Evidência detalhada local: 02_TRABALHO/validacao-local-alpine-2026-11-05/RESULTADO.md (ignorada pelo Git).
+
+Estado para o próximo agente: consultar o primeiro checklist em PENDENCIAS e a v02. Preparação local concluída; próxima intervenção é o tópico 5, reservado ao usuário; depois tópico 6 e decisão explícita sobre a desmontagem. Não foram abertos PR, alterada main nem feitos apply/destroy. A configuração e os testes locais/SaaS anteriores não provam a cadeia no EKS.
+
+## 2026-11-05 16:40 (America/Sao_Paulo, UTC-03:00) — Codex — Retomada após o filtro do Compose
+
+Feito: sessão retomada na dev em 50446a6. O commit de documentação rodou só o GitOps Check, aprovado (run 42091008851). As entradas de 2026-11-04 e 2026-11-05 documentam testes, tokens e orçamento concluídos. A autorização explícita do usuário para implementar e testar inject_fault encerra a pergunta que o Claude deixou no backlog; o código já está no commit 57d43e5 e o ensaio tem 11 etapas aprovadas.
+
+Descobertas: o roteiro do primeiro deploy omite as duas roles IRSA, os schemas RDS e a chave de serviço real; também prevê criar Applications antes de a main conter os manifestos. A implantação permanece reservada ao usuário.
+
+Estado para o próximo agente: em andamento, conferir os gates antes do merge/sync, preparar roteiro corrigido, testar apenas localmente o candidato Alpine e revisar o handoff. Nenhuma publicação ou ação de implantação nesta retomada.
 
 ## 2026-11-05 16:03 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — Filtro de documentação no Compose Integration
 

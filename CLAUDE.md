@@ -1,8 +1,8 @@
 # Tech Challenge Fase 4 — contexto para assistentes
 
-TL;DR: trabalhar na dev e retomar pela "Execução vigente" de PENDENCIAS (2026-11-05). B0/B1/B2 e a preparação do B3 concluídos (notificações reais, testes, plano da base com 0 destroy e US$ 9,82/dia em 02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md). Pré-requisitos fechados em 2026-11-05: tokens validados, orçamento `togglemaster-creditos` e créditos em US$ 120; teste da confiança OIDC no Terraform Check (b2c5bdf); painel dos nós no dashboard (46d0a18); GitOps Check e scan da imagem no PR (793384e). O cluster EKS se chama `togglemaster`. Falta só a autorização dos tópicos 5 e 6. Commits e push na dev autorizados; main, apply e destroy exigem autorização específica.
+TL;DR: Na dev: B0/B1/B2 e preparação de B3 concluídos; Alpine 3.24 nos runtimes Go (D-021). Ler o primeiro checklist em 00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md e o [roteiro de implantação](00_COLAB_IA/02_TRABALHO/PREPARACAO_B3_2026-11-05_v02.md). A AWS tem US$ 120 em créditos na conferência de 2026-11-05. O primeiro deploy (tópico 5), a demonstração (6) e qualquer remoção continuam reservados.
 
-Última atualização: 2026-11-05, Claude (Opus 5.5).
+Última atualização: 2026-11-05, Codex.
 
 - SaaS (atualização 2026-11-05): New Relic conferido; nova chave Events API V2 e webhook direto do Slack testados em 2026-11-04 (LOG 16:19), com PRTG mantido. Senha do PagerDuty mantida pelo usuário, risco aceito (D-020); agentes não a usam. D5 autorizou segredos no .env local ignorado; não gravar valores em arquivos versionados, LOG ou chat. Guia: `00_COLAB_IA/02_TRABALHO/PAGERDUTY_OAUTH_EVENTS_API_2026-11-03_v01.md`.
 

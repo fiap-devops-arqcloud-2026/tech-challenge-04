@@ -1,8 +1,8 @@
 # Decisões
 
-TL;DR: D-001–D-016 preservadas; D-017 registra a mescla e D-018 a regra pública aprovada em 2026-11-01. D-019 (2026-11-03) fixa o desenho do B2: falha em memória, 2 × m7i-flex.large, Secrets pelo Terraform e Slack pelos dois caminhos. D-020 (2026-11-05) registra dois riscos aceitos pelo usuário: senha do PagerDuty mantida e token do ArgoCD com escrita. Herança F3 abaixo é histórica e não concede novas permissões.
+TL;DR: D-001 a D-020 preservadas. D-021 registra a autorização para atualizar o runtime Alpine dos dois serviços Go; PR/main, implantação e encerramento permanecem separados. A herança F3 é histórica.
 
-Última atualização: 2026-11-05, Claude (Opus 5.5).
+Última atualização: 2026-11-05, Codex.
 
 ## D-001 — Caminhos e organização (aceita, 2026-09-16)
 
@@ -195,6 +195,14 @@ Decisão:
 Alternativas recomendadas e não escolhidas: trocar a senha; reduzir o token a Read-only ou gerar outro só de leitura.
 
 Status: riscos aceitos. Não reabrir como pendência; reavaliar só a pedido do usuário ou com indício de vazamento. Esta decisão não autoriza login com a senha nem amplia permissões.
+
+## D-021 — Atualizar o runtime dos dois serviços Go para Alpine 3.24 (aceita, 2026-11-05)
+
+**Contexto:** o CI do Claude reportou que a base 3.20 dos serviços auth/evaluation perdeu suporte regular. Um scan sem CVE crítico em uma distribuição sem suporte não cobre a falta de novos avisos.
+
+**Decisão do usuário:** “Sim, atualizar os dois Dockerfiles na dev”. Alterar somente a imagem da etapa final dos dois serviços para `alpine:3.24`; conservar o builder e as políticas de scan. A tag acompanha patches do ramo em builds futuros. Alternativa considerada: manter 3.20 até depois da gravação.
+
+**Aplicação e evidência:** commit `df766b2`. As cópias testadas foram comparadas com os Dockerfiles efetivos. Resolveram para 3.24.3; ambos os processos rodaram sem root com CA presente; auth criou/validou chave em PostgreSQL e evaluation fez leituras de Redis. O Trivy 0.70.0 reportou zero achados CRITICAL nas duas imagens sob o filtro e as exceções do CI. Ver [evidência local](02_TRABALHO/validacao-local-alpine-2026-11-05/RESULTADO.md) e [política oficial de suporte do Alpine](https://alpinelinux.org/releases/). Nenhuma publicação no ECR foi feita para esse teste.
 
 ## Decisões herdadas da Fase 3 — registro histórico revisado em 2026-11-01
 

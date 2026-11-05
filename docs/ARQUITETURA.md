@@ -10,6 +10,8 @@ Seções: [1. Serviços](#1-serviços) · [2. Terraform](#2-recursos-por-camada-
 
 ## 1. Serviços
 
+**Atualização da Fase 4 (2026-11-05):** o runtime final dos serviços [auth](../services/auth-service/Dockerfile) e [evaluation](../services/evaluation-service/Dockerfile) passou para `alpine:3.24`. A tabela e a medição com 3.20 abaixo são o histórico da Fase 3. No teste da nova base, o Trivy não reportou vulnerabilidades críticas nas duas imagens com a política do CI.
+
 São cinco microsserviços herdados da Fase 2, sem mudança de lógica. Dois são escritos em Go e três em Python. Eles conversam entre si pelo nome do Service do Kubernetes, por exemplo `http://auth-service:8001`.
 
 | Serviço | Linguagem | Porta | O que faz | Depende de | Rotas |
@@ -249,7 +251,7 @@ Consequências diretas:
 - Qualquer arquivo dentro de `services/<svc>/`, inclusive `README.md`, dispara o pipeline do serviço.
 - Pull request e `workflow_dispatch` rodam as verificações e o `image-scan`, que constrói e escaneia a imagem sem publicar. Imagem no ECR e GitOps exigem push na `main`.
 - No primeiro merge da `dev` na `main` a diferença passa de 300 arquivos, o limite que o GitHub avalia no filtro de caminho. Todos os workflows rodam mesmo assim, porque cada filtro inclui o próprio arquivo do workflow, e esses arquivos ficam no começo da lista. O Compose Integration filtra ao contrário, por `paths-ignore`, e roda pelo mesmo motivo: esses arquivos não estão entre os ignorados.
-- Um commit só de documentação (`00_COLAB_IA/`, `docs/` ou `.md`) roda apenas o GitOps Check, que mantém a varredura de segredos em todo commit.
+- O Compose Integration pula o ensaio quando **todos** os arquivos alterados estão em `00_COLAB_IA/`, em `docs/` ou terminam em `.md`. Em um push comum na `dev`, alterar apenas `docs/ARQUITETURA.md` aciona só o GitOps Check, que inclui a varredura de segredos. Se o único arquivo alterado for `services/flag-service/README.md`, também roda o CI do flag-service. Se for `terraform/README.md`, também roda o Terraform Check. Um mesmo push com documentação e `docker-compose.yaml` aciona o Compose Integration e o GitOps Check.
 
 ### Jobs por linguagem
 

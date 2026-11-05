@@ -1,8 +1,8 @@
 # Dossiê de contexto
 
-TL;DR: B0/B1 e B2 concluídos; preparação do B3 concluída em 2026-11-04 (seção 24): notificações reais validadas, testes e ensaio da falha aprovados, plano da base com 0 destroy e custo oficial de US$ 9,82/dia. Pré-requisitos fechados em 2026-11-05 (seção 25): tokens validados, orçamento criado e créditos em US$ 120. Teste da confiança OIDC no CI (seção 26) , painel dos nós e cobertura do CI (seção 27). Falta só a autorização dos tópicos 5 e 6.
+TL;DR: Preparação do B3 revisada: B0/B1/B2, tokens, notificações e orçamento validados. Em 2026-11-05 há US$ 120 de créditos, nenhum EKS em us-east-2 e Alpine 3.24 aprovado. Seção 28 e [roteiro vigente do B3](02_TRABALHO/PREPARACAO_B3_2026-11-05_v02.md) indicam como executar o primeiro deploy sem antecipar sync; autorizações dos tópicos 5/6 continuam separadas.
 
-Última atualização: 2026-11-05, Claude (Opus 5.5).
+Última atualização: 2026-11-05, Codex.
 
 Atualização 2026-10-28 14:47: usuário informou conclusão do guia IAM/OIDC até passo7. Provedor, policy, role, Variables e consultas IAM são concluídos por relato; nenhuma prova de CI remoto/cluster decorre disso. Prosseguir com inventário, correção F-023 na dev, backend próprio, adoção de recursos manuais e plan revisado. Não recriar role nem reutilizar state antigo. PR/main/apply permanecem fora do pedido de orientação. Registros seguintes sobre ausência da role refletem momentos anteriores.
 
@@ -557,3 +557,14 @@ Próximo: concluir exercício e seus testes; validar nova integração e webhook
 - Os 3 eventos (push na dev, PR para a main e merge) rodam as mesmas verificações, filtradas por caminho. Imagem, OIDC, ECR e GitOps rodam só no merge.
 - `gitops/**` e os scripts `test-restart.sh` e `security-check.sh` não têm verificação no CI (LOG 15:19).
 - Atualização 15:54: lacuna fechada pelo GitOps Check (commit 793384e), que renderiza o Kustomize, confere dashboards e alertas e roda o `test-restart.sh` e o `security-check.sh` em todo push e PR. Os pipelines de serviço ganharam o `image-scan` em PR e no disparo manual, sem push. Continua sem proteção de branch: verificação vermelha não impede o merge.
+
+
+## 28. Retomada e primeira promoção da Fase 4 — 2026-11-05, Codex
+
+O registro do Claude de 16:03 foi conferido contra a dev e o GitHub: no commit só documental `50446a6` passou apenas o GitOps Check; um README de serviço pode acionar seu próprio CI e um README de Terraform pode acionar o Terraform Check. Desde `793384e` já há verificação GitOps e scan de imagem no PR; a nota anterior da seção 27 sobre ausência desses testes é histórica.
+
+A pergunta antiga sobre a falha proposital foi respondida: o usuário delegou implementá-la e testá-la. `57d43e5` já contém o comportamento, e a evidência do ensaio tem 11 etapas aprovadas. Não repetir notificações ou pedir tokens de novo. Em 2026-11-05 o usuário também aceitou a troca de Alpine (D-021); runtime em `df766b2`. Os testes do candidato não substituem CI remoto nem implantação no EKS.
+
+Estado da conta conferido por AWS CLI em 2026-11-05: FREE ativo, US$ 120; orçamento acumulado de US$ 80, 5 alertas; 0 clusters em us-east-2. Plano base de referência (2026-11-04): 8 importações, 29 criações, 7 alterações, 0 destruições; gerar novo na janela.
+
+Usar [preparação v02](02_TRABALHO/PREPARACAO_B3_2026-11-05_v02.md): conferir primeiro Redis, SQS e as duas roles; bootstrap apenas do controlador; após PR e publicação real dos cinco serviços, conferir as tags do merge em main/ECR; só então criar as Applications. Inicializar os dois RDS, corrigir a chave provisória e validar a aplicação antes da demonstração. Os oito objetos ECR/IAM importados não são automaticamente preservados num destroy total. Próximo operador lê o LOG e PENDENCIAS; nenhuma aprovação para PR/main ou apply/destroy decorre desta revisão.

@@ -1,10 +1,19 @@
 # Pendências e progresso
 
-TL;DR: Pré-requisitos do B3 completos em 2026-11-05: tokens validados, orçamento `togglemaster-creditos` criado (créditos em US$ 120) e senha do PagerDuty mantida por decisão do usuário (D-020). Teste OIDC no CI desde b2c5bdf; painel dos nós desde 46d0a18; GitOps Check e scan da imagem no PR desde 793384e; Compose pula commits só de documentação desde 199fe01. Falta só a autorização dos tópicos 5 (implantação) e 6 (demonstração e entrega); roteiro em 02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md. Trial até 2026-11-11 por relato; meta de gravação 2026-11-10.
+TL;DR: Dev: Alpine atualizado para 3.24 nos dois serviços Go após aprovação; validações anteriores do Claude preservadas. AWS em 2026-11-05: US$ 120, orçamento US$ 80 com cinco alertas, nenhum EKS em us-east-2. Próximo trabalho operacional reservado ao usuário: tópico 5, conforme o [roteiro vigente do B3](02_TRABALHO/PREPARACAO_B3_2026-11-05_v02.md); tópico 6 e encerramento têm momentos próprios.
 
-Última atualização: 2026-11-05, Claude (Opus 5.5).
+Última atualização: 2026-11-05, Codex.
 
-## Execução vigente — 2026-11-04, validação e preparação autorizadas
+## Retomada vigente — 2026-11-05, Codex
+
+- [x] Confirmar o ponto de parada do Claude, fechar a previsão do filtro de documentação no GitHub e resolver a pergunta sobre o hook: usuário delegou, código em `57d43e5`, ensaio 11/11. Não refazer nem pedir credenciais.
+- [x] Atualizar os runtimes Go após teste do candidato e resposta explícita do usuário: Alpine 3.24 nos Dockerfiles de auth e evaluation. D-021; commit `df766b2` na dev.
+- [x] Corrigir a explicação pública dos filtros de CI e o roteiro do primeiro deploy: endpoints, duas roles IRSA, ordem ArgoCD/PR/imagens, bancos e chave do evaluation. Preparar verificação manual de leitura pré-PR/pré-sync com ensaio local sintético.
+- [ ] **Tópico 5 — reservado ao usuário.** Quando abrir a janela: [roteiro vigente](02_TRABALHO/PREPARACAO_B3_2026-11-05_v02.md). Regenerar planos salvos; depois da base/cluster, usar os outputs reais e rodar os verificadores na ordem indicada. Não aplicar o arquivo parcial de plano do cluster. A etapa termina só com uma avaliação funcional e evidência de consumo.
+- [ ] **Tópico 6 — reservado ao usuário:** provar Grafana → PagerDuty/Slack e GitHub → restart/recuperação no EKS; guardar evidências e concluir entrega. Na desmobilização, decidir destino dos 5 ECR e do IAM antes de aprovar qualquer plano de remoção.
+- [x] VERIFICAÇÃO da revisão: testes da imagem, testes locais do verificador, conferência de links e revisão de escopo; consultar o topo do LOG para o resultado dos runs da dev.
+
+## Execução anterior — 2026-11-04, validação e preparação autorizadas
 
 Pedido novo: validar PagerDuty e Slack, executar todos os testes com Docker, orientar tokens GitHub e preparar implantação/custos/variáveis/planos considerando US$ 100 de créditos informados. Usuário reservou implantação (tópico 5) e demonstração/entrega (tópico 6) para depois. Esta autorização cobre os testes reais de notificações e supera a pendência anterior de autorização do webhook Slack; não abrange apply, PR/main ou destroy de recursos AWS.
 
@@ -29,10 +38,10 @@ Pedido novo: validar PagerDuty e Slack, executar todos os testes com Docker, ori
 - [x] Painel dos nós no dashboard, a pedido do usuário (commit 46d0a18, LOG 15:19): CPU e memória por nó (node-exporter), testados com Prometheus e Grafana locais nas versões da stack.
 - [x] GitOps Check e scan da imagem no PR, a pedido do usuário (commit 793384e, LOG 15:54). Verdes no CI: GitOps Check em 25 s e `image-scan` no auth-service e no flag-service.
 - [x] Compose Integration pula commits só de documentação, a pedido do usuário (commit 199fe01, LOG 16:03).
-- [ ] Usuário: decidir sobre o alpine 3.20 sem atualizações de segurança na base dos serviços Go (aviso do Trivy, LOG 15:54).
+- [x] Decisão em 2026-11-05: usuário autorizou Alpine 3.24 nos dois serviços Go (D-021).
 - [ ] Usuário: autorizar os tópicos 5 (implantação) e 6 (demonstração e entrega).
 
-Pergunta em andamento: confirmar se o usuário delega também a implementação do TODO(human) anteriormente reservado a ele. Não impedir as outras verificações enquanto aguarda. Nota 2026-11-05 (Claude): sem resposta até agora; o trecho segue no commit 57d43e5. Evidências/scripts/planos brutos em `02_TRABALHO/validacao-local-preimplantacao-2026-11-04/` (ignorado pelo Git); relatório sanitizado fora dessa pasta. Conector GitHub retornou 404; usar CLI autenticada para o repositório.
+Retificação de 2026-11-05: o registro anterior dizia que o Claude ainda não tinha a resposta. Neste chat o usuário autorizou expressamente concluir e testar o hook. A implementação está em 57d43e5, com ensaio 11/11. Pendência encerrada. Evidências/scripts/planos brutos em `02_TRABALHO/validacao-local-preimplantacao-2026-11-04/` (ignorado pelo Git); relatório sanitizado fora dessa pasta. Conector GitHub retornou 404; usar CLI autenticada para o repositório.
 
 ## Checkpoint vigente — 2026-11-04, Codex
 

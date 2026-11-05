@@ -2,7 +2,9 @@
 
 TL;DR: tudo o que dá para validar sem implantar foi validado. As notificações reais funcionam com a nova chave: PagerDuty, Slack e o cartão até Resolved. Os testes dos 5 serviços, o ensaio integrado e o ensaio da falha proposital passaram. O plano real da base mostra **8 imports, 29 criações, 7 alterações no lugar e 0 destruições**. A estimativa oficial é de **US$ 9,82 por dia com tudo ligado**; o período B3–B5 sai por cerca de US$ 45 dos US$ 100. **Atualização 2026-11-05:** os tokens foram validados, o orçamento foi criado e os créditos subiram para US$ 120. Antes de implantar, falta só a autorização dos tópicos 5 (implantação) e 6 (demonstração e entrega).
 
-Última atualização: 2026-11-05, Claude (Opus 5.5): seção 5 com os pré-requisitos fechados e notas datadas nas seções 1, 2, 4, 6 e 7. Versão inicial em 2026-11-04, Claude, continuando a sessão do Codex do mesmo dia. O ID da conta aparece como `<CONTA>`. As evidências brutas ficam em `validacao-local-preimplantacao-2026-11-04/`, ignorada pelo Git.
+Revisão da seção 6: 2026-11-05, Codex. Evidências e cálculos originais preservados.
+
+Última atualização da análise original: 2026-11-05, Claude (Opus 5.5): seção 5 com os pré-requisitos fechados e notas datadas nas seções 1, 2, 4, 6 e 7. Versão inicial em 2026-11-04, Claude, continuando a sessão do Codex do mesmo dia. O ID da conta aparece como `<CONTA>`. As evidências brutas ficam em `validacao-local-preimplantacao-2026-11-04/`, ignorada pelo Git.
 
 ## 1. Validações feitas (2026-11-04)
 
@@ -120,33 +122,9 @@ Os 3 `terraform.tfvars` locais vêm dos exemplos, com conta, bucket, NAT ligado 
 3. **Senha do PagerDuty:** não será trocada, por decisão do usuário em 2026-11-05 (D-020).
 4. **Integração PRTG:** foi preservada como contingência. Removê-la depois do ensaio é opcional.
 
-## 6. Roteiro do tópico 5 (só com autorização específica)
+## 6. Roteiro do tópico 5 — substituído em 2026-11-05
 
-1. **Variáveis de ambiente** a partir do `.env`, no Git Bash:
-   ```bash
-   set -a; . ./.env; set +a
-   export TF_VAR_new_relic_license_key="$NEW_RELIC_LICENSE_KEY"
-   export TF_VAR_pagerduty_integration_key="$PAGERDUTY_INTEGRATION_KEY"
-   export TF_VAR_slack_webhook_url="$SLACK_WEBHOOK_URL"
-   export TF_VAR_github_dispatch_token="$GITHUB_DISPATCH_TOKEN"
-   export TF_VAR_github_token="$GITHUB_ARGOCD_TOKEN"
-   ```
-2. **Base:** `terraform -chdir=terraform plan -out=base.tfplan`. Conferir de novo **8 import, 0 destroy, sem replace**, e só então `apply base.tfplan`.
-3. **Variables do GitHub:**
-   - `AWS_SELF_HEALING_ROLE_ARN` com o output `self_healing_role_arn`;
-   - `EKS_CLUSTER_NAME` = `togglemaster`.
-4. **Cluster:** `plan` e `apply`, em cerca de 15–20 min. Depois:
-   - `aws eks update-kubeconfig --name togglemaster --region us-east-2`;
-   - trocar as sentinelas do overlay (`REDIS_URL`, `AWS_SQS_URL`) pelos outputs reais.
-5. **k8s:** primeiro `apply -target=helm_release.argocd`, depois `apply` completo. Isso cria os Secrets, o namespace `observability` e as Applications.
-6. **PR dev → main:** o CI publica as 5 imagens e grava as tags no overlay, e o ArgoCD sincroniza. O `self-healing.yml` precisa estar na `main` antes do ensaio. *Em 2026-11-05:* o job `image` faz o primeiro login OIDC real nesta conta; conferir a etapa "Autenticar na AWS via OIDC" antes de seguir.
-7. **Aceite:**
-   - Applications Synced/Healthy;
-   - pods prontos;
-   - Grafana com as datasources;
-   - traces do cluster no New Relic.
-
-O ensaio da cadeia (tópico 6) vem depois, com gerador de tráfego e a falha ligada por `POST /admin/fault`.
+O [roteiro vigente (v02)](PREPARACAO_B3_2026-11-05_v02.md) substitui integralmente esta seção. Inclui IRSA, publicação das cinco imagens antes da primeira sincronização, criação das tabelas dos RDS e emissão da chave real do evaluation. O plano parcial do cluster não é aplicável. A seção original foi preservada no arquivo morto da retomada.
 
 ## 7. Limitações
 

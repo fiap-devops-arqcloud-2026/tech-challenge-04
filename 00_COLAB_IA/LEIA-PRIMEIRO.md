@@ -1,8 +1,8 @@
 # Colaboração entre agentes
 
-TL;DR: Colaboração vigente nesta pasta. Retomar pela "Execução vigente" de PENDENCIAS: pré-requisitos do B3 completos em 2026-11-05 (tokens validados, orçamento criado, créditos em US$ 120 e teste OIDC no CI; roteiro em 02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md). Falta só a autorização dos tópicos 5 e 6. Segredos só no `.env` local ignorado; nunca em arquivo versionado nem no chat.
+TL;DR: Retomar pelo checklist de 2026-11-05 em PENDENCIAS e pelo [roteiro vigente do B3](02_TRABALHO/PREPARACAO_B3_2026-11-05_v02.md). Credenciais, orçamento e ensaios já foram validados. Alpine 3.24 aprovado e aplicado na dev. Próximo: janela de implantação reservada ao usuário. Nenhum apply, PR/main ou destroy autorizado nesta retomada.
 
-Última atualização: 2026-11-05, Claude (Opus 5.5).
+Última atualização: 2026-11-05, Codex.
 
 ## Atualização de escopo — 2026-11-03
 
