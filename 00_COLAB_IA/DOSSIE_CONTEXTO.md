@@ -1,6 +1,6 @@
 # Dossiê de contexto
 
-TL;DR: B0/B1 e B2 concluídos; preparação do B3 concluída em 2026-11-04 (seção 24): notificações reais validadas, testes e ensaio da falha aprovados, plano da base com 0 destroy e custo oficial de US$ 9,82/dia. Pré-requisitos fechados em 2026-11-05 (seção 25): tokens validados, orçamento criado e créditos em US$ 120. Teste da confiança OIDC no CI (seção 26) e painel dos nós (seção 27). Falta só a autorização dos tópicos 5 e 6.
+TL;DR: B0/B1 e B2 concluídos; preparação do B3 concluída em 2026-11-04 (seção 24): notificações reais validadas, testes e ensaio da falha aprovados, plano da base com 0 destroy e custo oficial de US$ 9,82/dia. Pré-requisitos fechados em 2026-11-05 (seção 25): tokens validados, orçamento criado e créditos em US$ 120. Teste da confiança OIDC no CI (seção 26) , painel dos nós e cobertura do CI (seção 27). Falta só a autorização dos tópicos 5 e 6.
 
 Última atualização: 2026-11-05, Claude (Opus 5.5).
 
@@ -556,3 +556,4 @@ Próximo: concluir exercício e seus testes; validar nova integração e webhook
 - A CPU usa tempo ocupado sobre tempo total medido. Assim o número continua certo mesmo onde os contadores do kernel não somam 1 por núcleo, como no Docker sobre WSL2.
 - Os 3 eventos (push na dev, PR para a main e merge) rodam as mesmas verificações, filtradas por caminho. Imagem, OIDC, ECR e GitOps rodam só no merge.
 - `gitops/**` e os scripts `test-restart.sh` e `security-check.sh` não têm verificação no CI (LOG 15:19).
+- Atualização 15:54: lacuna fechada pelo GitOps Check (commit 793384e), que renderiza o Kustomize, confere dashboards e alertas e roda o `test-restart.sh` e o `security-check.sh` em todo push e PR. Os pipelines de serviço ganharam o `image-scan` em PR e no disparo manual, sem push. Continua sem proteção de branch: verificação vermelha não impede o merge.

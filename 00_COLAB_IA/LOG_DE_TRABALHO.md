@@ -1,8 +1,44 @@
 # Log de trabalho
 
-TL;DR: Pré-requisitos do B3 completos em 2026-11-05: tokens do GitHub validados (o do ArgoCD também tem escrita; risco aceito), orçamento `togglemaster-creditos` criado com 5 alertas, créditos em US$ 120 depois da atividade do Budgets e senha do PagerDuty mantida pelo usuário (D-020). Teste da confiança OIDC no Terraform Check desde o commit b2c5bdf (10/10 no CI). Dashboard com CPU e memória por nó desde 46d0a18 (9 painéis). Falta só a autorização dos tópicos 5 e 6. Roteiro em 02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md.
+TL;DR: Pré-requisitos do B3 completos em 2026-11-05: tokens do GitHub validados (o do ArgoCD também tem escrita; risco aceito), orçamento `togglemaster-creditos` criado com 5 alertas, créditos em US$ 120 depois da atividade do Budgets e senha do PagerDuty mantida pelo usuário (D-020). Teste da confiança OIDC no Terraform Check desde o commit b2c5bdf (10/10 no CI). Dashboard com CPU e memória por nó desde 46d0a18 (9 painéis). GitOps Check e scan da imagem no PR desde 793384e, verdes no CI. Falta só a autorização dos tópicos 5 e 6. Roteiro em 02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md.
 
 Última atualização: 2026-11-05, Claude (Opus 5.5).
+
+## 2026-11-05 15:54 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — GitOps Check e scan da imagem no PR
+
+Pedido do usuário: "Sim, crie o GitOps Check com o Trivy da imagem no PR. Você acha bom todos esses testes no commit, pr e merge?"
+
+Feito, no **commit 793384e** (push na dev):
+- `.github/workflows/gitops-check.yml`: sem filtro de caminho e sem AWS; um job só, para gastar 1 minuto cobrado em vez de 3.
+  - Kustomize 5.4.3 com SHA-256 conferido.
+  - `scripts/gitops/validate.sh`: renderiza as 3 pastas e confere o Grafana.
+  - Testes do verificador, `test-restart.sh` e `security-check.sh`; os dois últimos rodam mesmo se um passo anterior falhar.
+- `scripts/gitops/check-grafana.py`, além de validar JSON e YAML, cruza as referências entre os arquivos:
+  - dashboard: uid, ids, grade, datasources do values e consultas;
+  - dashboard listado no `configMapGenerator`;
+  - regra apontando para dashboard e painel que existem;
+  - receiver da policy e `alertname` da rota do self-healing.
+- `scripts/gitops/test-check-grafana.py`: 11 casos, a pasta real e 10 defeitos.
+- `_ci-go.yml` e `_ci-python.yml`: job `image-scan`, com build e Trivy da imagem só em PR e `workflow_dispatch`. Sem `id-token`, login ou push. O `image` continua escaneando na main.
+- `validate-all.sh` chama os mesmos scripts. Corrige a frase "render do Kustomize será feito no CI", que não era verdade.
+- Documentação pública ajustada: ARQUITETURA seção 5, GUIA, SECURITY, README e `gitops/README.md`. A tabela de gatilhos tinha push só na main para Terraform e Compose; o real é main e dev.
+
+Verificação (detalhes na evidência):
+- Local: 11/11 do verificador; ensaio do job em contêiner Linux verde; kustomization quebrada reprovou; `validate-all.sh` verde; actionlint sem achados novos.
+- **CI:**
+  - GitOps Check (run 42087881338) verde em 25 s.
+  - Os disparos manuais do auth-service (42087921250) e do flag-service (42087928124) tiveram o `image-scan` verde, com `image` e `gitops` skipped.
+  - Os runs de push desses 2 serviços foram cancelados pelo grupo de concorrência quando os disparos começaram; os disparos cobriram o mesmo commit.
+- **Achado fora do escopo:** o Trivy avisa que o alpine 3.20, base dos serviços Go, não recebe mais atualizações de segurança. Levado ao usuário; nada alterado.
+
+Opinião dada ao usuário sobre rodar tudo em push, PR e merge:
+- Manter tudo no PR e no merge. Sem proteção de branch, o run do merge é o único portão que bloqueia de fato.
+- Imagem fica só em PR e merge.
+- Candidato a corte: o Compose em commits só de documentação, cerca de 4–5 min cada.
+
+DECISOES sem alteração. Evidência: `02_TRABALHO/validacao-local-preimplantacao-2026-11-04/gitops-check-2026-11-05.txt`, em pasta ignorada pelo Git.
+
+Estado p/ o próximo agente: lacunas de CI fechadas, exceto a proteção de branch (indisponível no plano). Falta a autorização dos tópicos 5 e 6. No PR do tópico 5, todos os workflows rodam; conferir antes de clicar em merge.
 
 ## 2026-11-05 15:19 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — Painel dos nós e cobertura do CI por evento
 
