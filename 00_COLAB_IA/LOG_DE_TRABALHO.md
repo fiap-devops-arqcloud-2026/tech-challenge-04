@@ -1,8 +1,27 @@
 # Log de trabalho
 
-TL;DR: Pré-requisitos do B3 completos em 2026-11-05: tokens do GitHub validados (o do ArgoCD também tem escrita; risco aceito), orçamento `togglemaster-creditos` criado com 5 alertas, créditos em US$ 120 depois da atividade do Budgets e senha do PagerDuty mantida pelo usuário (D-020). Teste da confiança OIDC no Terraform Check desde o commit b2c5bdf (10/10 no CI). Dashboard com CPU e memória por nó desde 46d0a18 (9 painéis). GitOps Check e scan da imagem no PR desde 793384e, verdes no CI. Falta só a autorização dos tópicos 5 e 6. Roteiro em 02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md.
+TL;DR: Pré-requisitos do B3 completos em 2026-11-05: tokens do GitHub validados (o do ArgoCD também tem escrita; risco aceito), orçamento `togglemaster-creditos` criado com 5 alertas, créditos em US$ 120 depois da atividade do Budgets e senha do PagerDuty mantida pelo usuário (D-020). Teste da confiança OIDC no Terraform Check desde o commit b2c5bdf (10/10 no CI). Dashboard com CPU e memória por nó desde 46d0a18 (9 painéis). GitOps Check e scan da imagem no PR desde 793384e, verdes no CI. Compose Integration pula commits só de documentação desde 199fe01. Falta só a autorização dos tópicos 5 e 6. Roteiro em 02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md.
 
 Última atualização: 2026-11-05, Claude (Opus 5.5).
+
+## 2026-11-05 16:03 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — Filtro de documentação no Compose Integration
+
+Pedido do usuário: "Sim, adicione o filtro de docs no Compose mas antes me explique para o que serve".
+
+Feito, no **commit 199fe01** (push na dev):
+- `compose-integration.yml` ganhou `paths-ignore` com `00_COLAB_IA/**`, `docs/**` e `**.md`, no PR e no push.
+  - Pula só quando TODOS os arquivos do commit são documentação.
+  - O ensaio do CI não lê nada dessas pastas. O `qa-otel` dentro de `00_COLAB_IA` é só destino do ensaio local de OTel, fora do Compose do CI.
+- `docs/ARQUITETURA.md`: tabela de gatilhos, regra do primeiro merge e efeito em commit só de documentação.
+
+Verificação:
+- actionlint ok; a simulação da regra pulou o commit só de documentação e rodou o misto e o de workflow.
+- No GitHub, o próprio 199fe01 mudou o workflow, então o Compose (run 42090153749) e o GitOps Check (42090153880) rodaram, ambos verdes.
+- Este commit, só de documentação, é o teste real do filtro: o esperado é rodar só o GitOps Check.
+
+Medida: dos 34 commits na dev desde 2026-10-28, 13 eram só de documentação. Cada um gastava cerca de 4–5 min do Compose.
+
+DECISOES sem alteração. Estado p/ o próximo agente: falta a autorização dos tópicos 5 e 6; o alpine 3.20 dos serviços Go segue como decisão do usuário.
 
 ## 2026-11-05 15:54 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — GitOps Check e scan da imagem no PR
 

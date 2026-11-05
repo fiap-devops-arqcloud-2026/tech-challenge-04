@@ -1,6 +1,6 @@
 # Pendências e progresso
 
-TL;DR: Pré-requisitos do B3 completos em 2026-11-05: tokens validados, orçamento `togglemaster-creditos` criado (créditos em US$ 120) e senha do PagerDuty mantida por decisão do usuário (D-020). Teste OIDC no CI desde b2c5bdf; painel dos nós desde 46d0a18; GitOps Check e scan da imagem no PR desde 793384e. Falta só a autorização dos tópicos 5 (implantação) e 6 (demonstração e entrega); roteiro em 02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md. Trial até 2026-11-11 por relato; meta de gravação 2026-11-10.
+TL;DR: Pré-requisitos do B3 completos em 2026-11-05: tokens validados, orçamento `togglemaster-creditos` criado (créditos em US$ 120) e senha do PagerDuty mantida por decisão do usuário (D-020). Teste OIDC no CI desde b2c5bdf; painel dos nós desde 46d0a18; GitOps Check e scan da imagem no PR desde 793384e; Compose pula commits só de documentação desde 199fe01. Falta só a autorização dos tópicos 5 (implantação) e 6 (demonstração e entrega); roteiro em 02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md. Trial até 2026-11-11 por relato; meta de gravação 2026-11-10.
 
 Última atualização: 2026-11-05, Claude (Opus 5.5).
 
@@ -28,7 +28,8 @@ Pedido novo: validar PagerDuty e Slack, executar todos os testes com Docker, ori
 - [x] Teste da confiança OIDC no Terraform Check, a pedido do usuário (commit b2c5bdf, LOG 13:52): 10 casos no módulo `iam-ci`, verdes no CI. O OIDC da conta nova já está configurado; falta só o que nasce no apply da base.
 - [x] Painel dos nós no dashboard, a pedido do usuário (commit 46d0a18, LOG 15:19): CPU e memória por nó (node-exporter), testados com Prometheus e Grafana locais nas versões da stack.
 - [x] GitOps Check e scan da imagem no PR, a pedido do usuário (commit 793384e, LOG 15:54). Verdes no CI: GitOps Check em 25 s e `image-scan` no auth-service e no flag-service.
-- [ ] Usuário: decidir sobre o alpine 3.20 sem atualizações de segurança na base dos serviços Go (aviso do Trivy, LOG 15:54) e sobre cortar o Compose em commits só de documentação.
+- [x] Compose Integration pula commits só de documentação, a pedido do usuário (commit 199fe01, LOG 16:03).
+- [ ] Usuário: decidir sobre o alpine 3.20 sem atualizações de segurança na base dos serviços Go (aviso do Trivy, LOG 15:54).
 - [ ] Usuário: autorizar os tópicos 5 (implantação) e 6 (demonstração e entrega).
 
 Pergunta em andamento: confirmar se o usuário delega também a implementação do TODO(human) anteriormente reservado a ele. Não impedir as outras verificações enquanto aguarda. Nota 2026-11-05 (Claude): sem resposta até agora; o trecho segue no commit 57d43e5. Evidências/scripts/planos brutos em `02_TRABALHO/validacao-local-preimplantacao-2026-11-04/` (ignorado pelo Git); relatório sanitizado fora dessa pasta. Conector GitHub retornou 404; usar CLI autenticada para o repositório.
