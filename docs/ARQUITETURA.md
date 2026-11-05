@@ -241,14 +241,15 @@ A esteira está em `.github/workflows/`: 5 chamadores (um por serviço), 2 reuti
 | `_ci-go.yml`, `_ci-python.yml` | — | — | só `workflow_call` | não |
 | `terraform-check.yml` | `main`, `dev` | qualquer | `terraform/**` e o próprio arquivo | sim |
 | `gitops-check.yml` | `main`, `dev` | qualquer | nenhum | sim |
-| `compose-integration.yml` | `main`, `dev` | qualquer | nenhum | sim |
+| `compose-integration.yml` | `main`, `dev` | qualquer | ignora `00_COLAB_IA/**`, `docs/**` e `**.md` | sim |
 
 Consequências diretas:
 
 - `gitops/**` não está no filtro dos pipelines de serviço, então o commit do robô não os acorda. Esse commit também não acorda o GitOps Check: é feito com o `GITHUB_TOKEN` e leva `[skip ci]`.
 - Qualquer arquivo dentro de `services/<svc>/`, inclusive `README.md`, dispara o pipeline do serviço.
 - Pull request e `workflow_dispatch` rodam as verificações e o `image-scan`, que constrói e escaneia a imagem sem publicar. Imagem no ECR e GitOps exigem push na `main`.
-- No primeiro merge da `dev` na `main` a diferença passa de 300 arquivos, o limite que o GitHub avalia no filtro de caminho. Todos os workflows rodam mesmo assim, porque cada filtro inclui o próprio arquivo do workflow, e esses arquivos ficam no começo da lista.
+- No primeiro merge da `dev` na `main` a diferença passa de 300 arquivos, o limite que o GitHub avalia no filtro de caminho. Todos os workflows rodam mesmo assim, porque cada filtro inclui o próprio arquivo do workflow, e esses arquivos ficam no começo da lista. O Compose Integration filtra ao contrário, por `paths-ignore`, e roda pelo mesmo motivo: esses arquivos não estão entre os ignorados.
+- Um commit só de documentação (`00_COLAB_IA/`, `docs/` ou `.md`) roda apenas o GitOps Check, que mantém a varredura de segredos em todo commit.
 
 ### Jobs por linguagem
 
@@ -297,7 +298,7 @@ O [`.trivyignore`](../.trivyignore) tem três exceções nominais: `CVE-2026-132
 
 ### Laço do job `gitops`
 
-O job instala o kustomize 5.4.3 autônomo (o `kubectl` do runner não tem `edit`) e configura o git como `github-actions[bot]`. Em até 5 tentativas, cada volta faz `git fetch origin main` e `git reset --hard origin/main`, roda `kustomize edit set image "<svc>=<registro>/<svc>:<tag>"` em `gitops/overlays/prod`, termina com sucesso se não houver diferença, comita `chore(gitops): <svc> para <tag> [skip ci]` e faz `git push origin HEAD:main`. Se o push for rejeitado, espera 3 s vezes o número da tentativa. Esgotadas as tentativas, o job falha. Como cada volta parte do remoto e não faz merge, cinco pipelines podem gravar no mesmo arquivo sem conflito. Duas proteções evitam laço infinito: o filtro de caminho sem `gitops/**` e o `[skip ci]`, que segura o Compose Integration (ele não tem filtro).
+O job instala o kustomize 5.4.3 autônomo (o `kubectl` do runner não tem `edit`) e configura o git como `github-actions[bot]`. Em até 5 tentativas, cada volta faz `git fetch origin main` e `git reset --hard origin/main`, roda `kustomize edit set image "<svc>=<registro>/<svc>:<tag>"` em `gitops/overlays/prod`, termina com sucesso se não houver diferença, comita `chore(gitops): <svc> para <tag> [skip ci]` e faz `git push origin HEAD:main`. Se o push for rejeitado, espera 3 s vezes o número da tentativa. Esgotadas as tentativas, o job falha. Como cada volta parte do remoto e não faz merge, cinco pipelines podem gravar no mesmo arquivo sem conflito. Duas proteções evitam laço infinito: o filtro de caminho sem `gitops/**` e o `[skip ci]`, que segura o Compose Integration e o GitOps Check (os dois rodariam para uma mudança em `gitops/`).
 
 ### Workflows auxiliares
 
