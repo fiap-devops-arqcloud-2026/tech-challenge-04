@@ -40,7 +40,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" -o /out/service
 # STAGE 2: runtime
 # Objetivo: imagem final mínima, contendo só o binário e certificados.
 # -------------------------
-FROM alpine:3.20
+FROM alpine:3.24
 
 # Instala certificados para chamadas HTTPS (caso o serviço faça requests HTTPS),
 # e cria um usuário não-root (boa prática de segurança).
