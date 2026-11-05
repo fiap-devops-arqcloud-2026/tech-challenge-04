@@ -197,7 +197,7 @@ docker compose --env-file .env.example -f docker-compose.yaml -f docker-compose.
 Para checagens locais de sintaxe, build e composição:
 
 ```bash
-# Verifica padrões de segredos, Terraform sem backend, manifests e build/sintaxe dos serviços.
+# Verifica padrões de segredos, Terraform sem backend, manifests e Grafana, testes do self-healing e build/sintaxe dos serviços.
 bash scripts/validate-all.sh
 ```
 
@@ -205,7 +205,7 @@ Leia a saída: a ausência de ferramenta é informada pelo script e limita a ver
 
 ## CI/CD e a nova conta AWS
 
-Os cinco workflows de serviços usam dois workflows reutilizáveis. Build, lint, SAST e SCA não dependem de conta AWS. Validação Terraform e Compose também estão configurados para push na dev. Os scans mantêm a política importada de bloquear vulnerabilidades CRITICAL.
+Os cinco workflows de serviços usam dois workflows reutilizáveis. Build, lint, SAST e SCA não dependem de conta AWS. Terraform Check, GitOps Check e Compose Integration também rodam em push na dev. Em pull request, cada serviço alterado também tem a imagem construída e escaneada pelo Trivy, sem publicar. Os scans mantêm a política importada de bloquear vulnerabilidades CRITICAL.
 
 Quando a conta estiver pronta, configurar estas **repository variables** no repo 04:
 

@@ -46,16 +46,15 @@ else
 fi
 
 # ------------------------------------------------------------
-# 3. Kustomize - a area GitOps renderiza?
+# 3. GitOps - Kustomize, Grafana e self-healing
 # ------------------------------------------------------------
 # Erro de indentacao ou referencia quebrada aparece aqui, antes de o
-# ArgoCD tentar aplicar no cluster.
-if command -v kubectl >/dev/null 2>&1; then
-  echo "[kustomize] renderizando gitops/overlays/prod"
-  kubectl kustomize gitops/overlays/prod >/dev/null
-else
-  echo "[AVISO] kubectl nao instalado; render do Kustomize sera feito no CI."
-fi
+# ArgoCD tentar aplicar no cluster. O mesmo script roda no workflow
+# GitOps Check; ferramenta ausente vira aviso aqui e erro no CI.
+bash scripts/gitops/validate.sh
+
+# Os 11 cenarios do restart.sh, com um kubectl falso (sem cluster).
+bash scripts/self-healing/test-restart.sh
 
 # ------------------------------------------------------------
 # 4. Python - sintaxe dos tres servicos

@@ -48,8 +48,14 @@ git diff --cached
 ```
 
 A verificação completa — que inclui a varredura acima, mais formatação e
-validação do Terraform, renderização dos manifestos e compilação dos serviços —
-está em `scripts/validate-all.sh`.
+validação do Terraform, renderização dos manifestos, conferência do Grafana,
+testes do self-healing e compilação dos serviços — está em
+`scripts/validate-all.sh`.
+
+A mesma varredura também roda no workflow GitOps Check, em todo push na `dev`
+e na `main` e em todo pull request. O CI é a segunda linha de defesa: quando
+ele acusa, o segredo já está num commit enviado ao GitHub e precisa ser
+revogado. Por isso a varredura local vem antes do push.
 
 ## Se uma credencial vazar
 

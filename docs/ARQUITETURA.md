@@ -230,7 +230,7 @@ O ArgoCD lê o overlay na branch `main` e aplica no cluster o que mudou. O CI nu
 
 ## 5. Pipeline em detalhe
 
-A esteira está em `.github/workflows/`: 5 chamadores (um por serviço), 2 reutilizáveis (Go e Python), o Terraform Check e o Compose Integration.
+A esteira está em `.github/workflows/`: 5 chamadores (um por serviço), 2 reutilizáveis (Go e Python), o Terraform Check, o GitOps Check e o Compose Integration. O `self-healing.yml` não é CI: dispara pelo alerta do Grafana ou pelo botão manual.
 
 ### Workflows e gatilhos
 
@@ -239,14 +239,16 @@ A esteira está em `.github/workflows/`: 5 chamadores (um por serviço), 2 reuti
 | `auth-service.yml`, `evaluation-service.yml` | `main`, `dev` | `main`, `dev` | `services/<svc>/**`, o próprio arquivo e `_ci-go.yml` | sim |
 | `flag-service.yml`, `targeting-service.yml`, `analytics-service.yml` | `main`, `dev` | `main`, `dev` | `services/<svc>/**`, o próprio arquivo e `_ci-python.yml` | sim |
 | `_ci-go.yml`, `_ci-python.yml` | — | — | só `workflow_call` | não |
-| `terraform-check.yml` | `main` | qualquer | `terraform/**` e o próprio arquivo | sim |
-| `compose-integration.yml` | `main` | qualquer | nenhum | sim |
+| `terraform-check.yml` | `main`, `dev` | qualquer | `terraform/**` e o próprio arquivo | sim |
+| `gitops-check.yml` | `main`, `dev` | qualquer | nenhum | sim |
+| `compose-integration.yml` | `main`, `dev` | qualquer | nenhum | sim |
 
 Consequências diretas:
 
-- `gitops/**` não está em nenhum filtro. O commit do robô não acorda os pipelines de serviço.
+- `gitops/**` não está no filtro dos pipelines de serviço, então o commit do robô não os acorda. Esse commit também não acorda o GitOps Check: é feito com o `GITHUB_TOKEN` e leva `[skip ci]`.
 - Qualquer arquivo dentro de `services/<svc>/`, inclusive `README.md`, dispara o pipeline do serviço.
-- `workflow_dispatch` e pull request rodam só as verificações. Imagem e GitOps exigem push na `main`.
+- Pull request e `workflow_dispatch` rodam as verificações e o `image-scan`, que constrói e escaneia a imagem sem publicar. Imagem no ECR e GitOps exigem push na `main`.
+- No primeiro merge da `dev` na `main` a diferença passa de 300 arquivos, o limite que o GitHub avalia no filtro de caminho. Todos os workflows rodam mesmo assim, porque cada filtro inclui o próprio arquivo do workflow, e esses arquivos ficam no começo da lista.
 
 ### Jobs por linguagem
 
@@ -256,10 +258,11 @@ Consequências diretas:
 | `lint` | `golangci-lint-action@v9`, versão v2.13.2 | flake8 bloqueia só `E9,F63,F7,F82` (estilo com `--exit-zero`, 120 colunas); pylint com `.pylintrc` |
 | `sast` | Go 1.25; gosec v2.29.0 com `-severity high -confidence medium` | `bandit -r . -ll` |
 | `sca` | Trivy `scan-type: fs` | Trivy `scan-type: fs` |
+| `image-scan` | `docker build` e Trivy `scan-type: image`, sem AWS e sem push; só pull request e `workflow_dispatch` | idem |
 | `image` | `needs: [build, lint, sast, sca]`; só push na `main` | idem |
 | `gitops` | `needs: [image]`; só push na `main` | idem |
 
-Os quatro primeiros rodam em paralelo. Se um falha, `image` fica *skipped* e `gitops` também.
+Os quatro primeiros rodam em paralelo, com o `image-scan` junto quando é PR. Se um dos quatro falha, `image` fica *skipped* e `gitops` também. Na `main`, o `image` escaneia de novo antes de publicar: a base de CVEs muda todo dia e a imagem publicada sai do commit do merge.
 
 ### O que está fixado e o que não está
 
@@ -274,7 +277,7 @@ Os quatro primeiros rodam em paralelo. Se um falha, `image` fica *skipped* e `gi
 
 ### Regra do Trivy
 
-Os quatro scans (fs e imagem, em Go e Python) usam `severity: CRITICAL`, `exit-code: "1"`, `ignore-unfixed: false` e `trivyignores: .trivyignore`. HIGH e abaixo aparecem no log, mas não bloqueiam.
+Os scans (fs, imagem no PR e imagem antes do push, em Go e Python) usam `severity: CRITICAL`, `exit-code: "1"`, `ignore-unfixed: false` e `trivyignores: .trivyignore`. HIGH e abaixo aparecem no log, mas não bloqueiam.
 
 O [`.trivyignore`](../.trivyignore) tem três exceções nominais: `CVE-2026-13221`, `CVE-2026-8376` e `CVE-2026-42496`. As três são do `perl-base` do Debian dentro de `python:3.12-slim`, sem versão corrigida, num pacote essencial que nenhum serviço executa. A medição foi feita em 2026-09-09 e a revisão está marcada para 2026-10-15. A base `alpine:3.20` dos serviços Go foi medida com zero CRITICAL, mas o arquivo é global e vale para todos os scans.
 
@@ -298,12 +301,18 @@ O job instala o kustomize 5.4.3 autônomo (o `kubectl` do runner não tem `edit`
 
 ### Workflows auxiliares
 
-- **Terraform Check.** `hashicorp/setup-terraform@v3` com 1.16.0; `terraform fmt -recursive -check terraform/`; `init -backend=false` e `validate` nas três camadas. Não usa AWS e tem só `contents: read`.
+- **Terraform Check.** `hashicorp/setup-terraform@v3` com 1.16.0; `terraform fmt -recursive -check terraform/`; `init -backend=false` e `validate` nas três camadas; `terraform test` do módulo `iam-ci`, com 10 casos sobre a confiança OIDC e as permissões das roles do CI e do self-healing. Não usa AWS e tem só `contents: read`.
+- **GitOps Check.** Um job, sem AWS e com `contents: read`:
+  - instala o kustomize 5.4.3 com SHA-256 conferido e o PyYAML 6.0.3;
+  - roda `scripts/gitops/validate.sh`, que renderiza as 3 pastas com `kustomization.yaml` e confere dashboards e alertas do Grafana com `scripts/gitops/check-grafana.py`;
+  - roda os 11 testes desse verificador, os 11 cenários de `scripts/self-healing/test-restart.sh` e `scripts/security-check.sh`.
+
+  Os dois últimos passos rodam mesmo se um anterior falhar, para uma rodada mostrar todos os problemas.
 - **Compose Integration.** Roda `bash scripts/test-compose.sh`, que sobe os cinco serviços com `docker-compose.yaml` e `docker-compose.integration.yaml` e usa o Moto 5.2.2 (fixado por digest) no lugar de SQS e DynamoDB. O roteiro em `scripts/integration/` cobre saúde, chave inválida e válida, flag ligada e desligada, segmentação em 0% e 100%, flag inexistente, cache Redis, alteração visível após o cache e eventos gravados. Não bloqueia o job `image`: é um workflow separado.
 
 **Scripts e configuração.**
-- Só `scripts/test-compose.sh` e `scripts/integration/` rodam no CI.
-- `scripts/validate-all.sh` e `scripts/security-check.sh` são locais. O primeiro junta fmt e validate do Terraform, `kubectl kustomize`, `compileall` e `go build`/`go test`. O segundo procura chaves e tokens com `git grep`.
+- No CI rodam `scripts/test-compose.sh` e `scripts/integration/` (Compose Integration), além de `scripts/gitops/`, `scripts/self-healing/test-restart.sh` e `scripts/security-check.sh` (GitOps Check). O `security-check.sh` procura chaves e tokens com `git grep`.
+- `scripts/validate-all.sh` é local. Ele junta o `security-check.sh`, fmt e validate do Terraform, `scripts/gitops/validate.sh`, os testes do self-healing, `compileall` e `go build`/`go test`.
 - O `.pylintrc` é usado pelo CI: `fail-under=7.0`, 120 colunas e regras desligadas com justificativa.
 - O `pyproject.toml` configura só o ruff, que nenhum workflow executa.
 

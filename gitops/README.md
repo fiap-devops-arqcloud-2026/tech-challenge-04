@@ -44,6 +44,13 @@ Depois de publicado, o job GitOps do CI atualiza tags na `main`, e o ArgoCD acom
 kubectl kustomize gitops/overlays/prod
 ```
 
+```bash
+# Renderiza as 3 pastas do Kustomize e confere dashboards e alertas do Grafana (precisa de Python com PyYAML)
+bash scripts/gitops/validate.sh
+```
+
+O segundo comando é o mesmo que o workflow GitOps Check roda em todo push na `dev` e na `main` e em todo PR. O Kustomize só embute os arquivos do Grafana como texto. Por isso o script também abre cada JSON e YAML e cruza as referências: painel citado pela regra de alerta, contact point citado pela policy, `alertname` da rota do self-healing e datasources do values.
+
 Em 2026-10-20, a renderização produziu 23 objetos. O `kubectl` não fornece `kustomize edit`; o pipeline instala a ferramenta Kustomize separada para atualizar imagens. A renderização verifica a composição dos manifests; não comprova existência de imagens, autorização IRSA, conectividade com AWS, disponibilidade de banco ou funcionamento da aplicação.
 
 ## Referências

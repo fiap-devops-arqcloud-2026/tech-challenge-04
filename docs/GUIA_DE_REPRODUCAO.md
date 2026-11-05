@@ -147,7 +147,7 @@ git clone "https://github.com/$REPO.git"
 Depois entre na pasta clonada e rode de novo o bloco de variáveis da [seção 0](#0-antes-de-começar).
 
 ```bash
-# Lista os workflows da sua cópia: 5 serviços, Terraform Check e Compose Integration
+# Lista os workflows da sua cópia: 5 serviços, Terraform Check, GitOps Check, Compose Integration e Self-healing
 gh workflow list --repo "$REPO"
 ```
 

@@ -311,6 +311,53 @@ jobs:
           format: table
 
   # ==========================================================
+  # JOB 4b - IMAGEM NO PR: build e Trivy, sem push
+  # ==========================================================
+  # Antecipa para o Pull Request o scan que o job image faz antes de
+  # publicar. Sem ele, um CRITICAL na imagem (por exemplo, nos pacotes
+  # da imagem base) so aparecia depois do merge, com o codigo ja na
+  # main. Aqui nao ha AWS: o job nem pede a permissao id-token.
+  #
+  # O job image continua escaneando de novo na main, de proposito: a
+  # base de CVEs muda todo dia e a imagem publicada e construida do
+  # commit do merge. O scan do PR avisa cedo; o da main e o portao final.
+  # ==========================================================
+  image-scan:
+    name: Imagem Docker e Trivy (sem push)
+    runs-on: ubuntu-latest
+
+    # PR e o botao "Run workflow". Em push na dev nao roda: o PR para a
+    # main ja cobre, e cada build de imagem custa minutos de runner.
+    # Sem "needs": roda junto com os outros quatro e da a resposta mais
+    # cedo; o proprio docker build ja compila o codigo.
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
+
+    # So leitura do repositorio. Nada e publicado.
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout do codigo
+        uses: actions/checkout@v4
+
+      # Mesmo build do job image: mesma pasta e mesmo Dockerfile.
+      - name: Build da imagem Docker
+        working-directory: services/${{ inputs.service }}
+        run: docker build -t "${{ inputs.service }}:scan" .
+
+      # Mesma action, mesmo pin e mesma regra do job image (O-18).
+      - name: Scan da imagem com Trivy
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          scan-type: image
+          image-ref: ${{ inputs.service }}:scan
+          severity: CRITICAL
+          exit-code: "1"
+          ignore-unfixed: false
+          trivyignores: .trivyignore
+          format: table
+
+  # ==========================================================
   # JOB 5 - IMAGEM: build, scan, login e push (O-17 a O-20)
   # ==========================================================
   image:
@@ -326,8 +373,9 @@ jobs:
     needs: [build, lint, sast, sca]
 
     # Publica somente a partir da main. Em Pull Request os quatro jobs
-    # de verificacao rodam (O-11), mas nada e publicado: PR vindo de
-    # fork nao recebe token OIDC, e tag de PR poluiria o registro.
+    # de verificacao rodam (O-11) e o image-scan constroi e escaneia a
+    # imagem, mas nada e publicado: PR vindo de fork nao recebe token
+    # OIDC, e tag de PR poluiria o registro.
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     # Permissoes do GITHUB_TOKEN neste job. Declarar aqui SUBSTITUI o
