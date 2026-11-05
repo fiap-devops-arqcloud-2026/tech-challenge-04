@@ -1,8 +1,41 @@
 # Log de trabalho
 
-TL;DR: Pré-requisitos do B3 completos em 2026-11-05: tokens do GitHub validados (o do ArgoCD também tem escrita; risco aceito), orçamento `togglemaster-creditos` criado com 5 alertas, créditos em US$ 120 depois da atividade do Budgets e senha do PagerDuty mantida pelo usuário (D-020). Teste da confiança OIDC no Terraform Check desde o commit b2c5bdf (10/10 no CI). Falta só a autorização dos tópicos 5 e 6. Roteiro em 02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md.
+TL;DR: Pré-requisitos do B3 completos em 2026-11-05: tokens do GitHub validados (o do ArgoCD também tem escrita; risco aceito), orçamento `togglemaster-creditos` criado com 5 alertas, créditos em US$ 120 depois da atividade do Budgets e senha do PagerDuty mantida pelo usuário (D-020). Teste da confiança OIDC no Terraform Check desde o commit b2c5bdf (10/10 no CI). Dashboard com CPU e memória por nó desde 46d0a18 (9 painéis). Falta só a autorização dos tópicos 5 e 6. Roteiro em 02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md.
 
 Última atualização: 2026-11-05, Claude (Opus 5.5).
+
+## 2026-11-05 15:19 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — Painel dos nós e cobertura do CI por evento
+
+Pedido do usuário: "Acrescente o painel dos nós no dashboard. Sobre todos os testes e tudo do actions do github, fazemos todos os testes e validações em push para branch dev, pr para a main e no merge?"
+
+Feito, no **commit 46d0a18** (push na dev):
+- `togglemaster-overview.json` ganhou 2 painéis do node-exporter: "CPU por no do cluster" e "Memoria por no do cluster".
+  - Ficam entre os de serviço e os de pod. O dashboard passou a ter 9 painéis.
+  - Escala de 0 a 100%, com linha em 80%.
+  - O nome do nó vem de `node_uname_info`.
+- Fórmula da CPU: tempo ocupado dividido pelo tempo total medido. Ocioso, iowait e steal contam como não usado, como nos dashboards do chart.
+
+Verificação (teste local, sem AWS):
+- JSON válido, sem sobreposição na grade; `kubectl kustomize` das pastas observability e prod ok.
+- Ambiente descartável: 2 node-exporter v1.10.2, Prometheus v3.15.1 e Grafana 13.3.0, as mesmas versões da stack. Os 2 painéis devolveram 2 séries cada pelo `/api/ds/query`.
+- **Achado:** no Docker sobre WSL2 os contadores de CPU somam ~0,39 s/s por núcleo. A fórmula "1 - idle médio" mostrou 85% com a máquina quase parada; a proporcional mostrou ~2–3%, coerente com o `docker stats`. Numa EC2 as duas dão o mesmo número.
+- Rede e contêineres de teste removidos; o laboratório tc04-integration preexistente não foi tocado.
+- **Não provado:** o painel dentro do EKS; aparece no tópico 5.
+
+Cobertura do CI por evento, lida dos 10 workflows (resposta ao usuário):
+- Push na dev, PR para a main e merge rodam as mesmas verificações, sempre limitadas pelo filtro de caminho.
+- Só o merge (push na main) roda build da imagem, Trivy da imagem, login OIDC, push no ECR e atualização da tag no GitOps.
+- No primeiro merge a diferença é de 785 arquivos. O GitHub só olha os 300 primeiros no filtro de caminho, mas cada workflow lista o próprio arquivo, e os 10 estão nas posições 3 a 12. Então todos rodam.
+- Lacunas encontradas:
+  - `gitops/**` não é validado por nenhum workflow; o `validate-all.sh` diz que o render do Kustomize é feito no CI, o que não é verdade;
+  - `scripts/self-healing/test-restart.sh` e `scripts/security-check.sh` rodam só localmente;
+  - o Trivy da imagem roda só depois do merge;
+  - sem proteção de branch no plano gratuito, uma verificação vermelha não impede o merge.
+- Nada alterado nos workflows; oferecido ao usuário.
+
+DECISOES sem alteração. Evidência: `02_TRABALHO/validacao-local-preimplantacao-2026-11-04/painel-nos-2026-11-05.txt` e a captura `painel-nos-grafana-local-2026-11-05.jpg`, em pasta ignorada pelo Git.
+
+Estado p/ o próximo agente: dashboard com 9 painéis; aguardando o usuário decidir sobre um check de GitOps e scripts no CI. Falta a autorização dos tópicos 5 e 6.
 
 ## 2026-11-05 13:52 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — Teste da confiança OIDC no CI e requisitos da Fase 4
 

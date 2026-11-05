@@ -1,6 +1,6 @@
 # Tech Challenge Fase 4 — contexto para assistentes
 
-TL;DR: trabalhar na dev e retomar pela "Execução vigente" de PENDENCIAS (2026-11-05). B0/B1/B2 e a preparação do B3 concluídos (notificações reais, testes, plano da base com 0 destroy e US$ 9,82/dia em 02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md). Pré-requisitos fechados em 2026-11-05: tokens validados, orçamento `togglemaster-creditos` e créditos em US$ 120; teste da confiança OIDC no Terraform Check (b2c5bdf). O cluster EKS se chama `togglemaster`. Falta só a autorização dos tópicos 5 e 6. Commits e push na dev autorizados; main, apply e destroy exigem autorização específica.
+TL;DR: trabalhar na dev e retomar pela "Execução vigente" de PENDENCIAS (2026-11-05). B0/B1/B2 e a preparação do B3 concluídos (notificações reais, testes, plano da base com 0 destroy e US$ 9,82/dia em 02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md). Pré-requisitos fechados em 2026-11-05: tokens validados, orçamento `togglemaster-creditos` e créditos em US$ 120; teste da confiança OIDC no Terraform Check (b2c5bdf); painel dos nós no dashboard (46d0a18). O cluster EKS se chama `togglemaster`. Falta só a autorização dos tópicos 5 e 6. Commits e push na dev autorizados; main, apply e destroy exigem autorização específica.
 
 Última atualização: 2026-11-05, Claude (Opus 5.5).
 

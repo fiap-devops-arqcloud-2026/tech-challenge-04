@@ -1,6 +1,6 @@
 # Dossiê de contexto
 
-TL;DR: B0/B1 e B2 concluídos; preparação do B3 concluída em 2026-11-04 (seção 24): notificações reais validadas, testes e ensaio da falha aprovados, plano da base com 0 destroy e custo oficial de US$ 9,82/dia. Pré-requisitos fechados em 2026-11-05 (seção 25): tokens validados, orçamento criado e créditos em US$ 120. Teste da confiança OIDC no CI (seção 26). Falta só a autorização dos tópicos 5 e 6.
+TL;DR: B0/B1 e B2 concluídos; preparação do B3 concluída em 2026-11-04 (seção 24): notificações reais validadas, testes e ensaio da falha aprovados, plano da base com 0 destroy e custo oficial de US$ 9,82/dia. Pré-requisitos fechados em 2026-11-05 (seção 25): tokens validados, orçamento criado e créditos em US$ 120. Teste da confiança OIDC no CI (seção 26) e painel dos nós (seção 27). Falta só a autorização dos tópicos 5 e 6.
 
 Última atualização: 2026-11-05, Claude (Opus 5.5).
 
@@ -549,3 +549,10 @@ Próximo: concluir exercício e seus testes; validar nova integração e webhook
 - O lock do módulo fixa o aws 6.62.0, o mesmo da camada base.
 - O OIDC da conta nova já está configurado: provedor, role do CI com a trust exata, policy anexada e 3 Variables. O apply da base cria a role do self-healing; as Variables `AWS_SELF_HEALING_ROLE_ARN` e `EKS_CLUSTER_NAME` entram na etapa 2 do roteiro.
 - O primeiro login OIDC real nesta conta acontece no job `image`, depois do merge na main.
+
+## 27. Painel dos nós e cobertura do CI — 2026-11-05, Claude
+
+- O dashboard `togglemaster-overview` tem 9 painéis desde o commit 46d0a18. Os novos mostram CPU e memória por nó, vindas do node-exporter, e atendem ao "uso de recursos do cluster" do enunciado (p. 3).
+- A CPU usa tempo ocupado sobre tempo total medido. Assim o número continua certo mesmo onde os contadores do kernel não somam 1 por núcleo, como no Docker sobre WSL2.
+- Os 3 eventos (push na dev, PR para a main e merge) rodam as mesmas verificações, filtradas por caminho. Imagem, OIDC, ECR e GitOps rodam só no merge.
+- `gitops/**` e os scripts `test-restart.sh` e `security-check.sh` não têm verificação no CI (LOG 15:19).
