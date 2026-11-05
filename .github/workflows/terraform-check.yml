@@ -12,6 +12,11 @@
 # E barato - nao toca na AWS e nao custa nada - e pega o erro de sintaxe
 # ANTES da sessao com o cluster no ar, quando o tempo e caro.
 #
+# Depois roda o `terraform test` do modulo iam-ci, que prova a regra de
+# seguranca mais sensivel do projeto: so a branch main deste repositorio
+# assume as roles da AWS via OIDC. O teste tambem roda sem AWS (ver o
+# cabecalho de terraform/modules/iam-ci/tests/trust.tftest.hcl).
+#
 # POR QUE `-backend=false`
 # O init normal tentaria conectar no bucket S3 do estado, o que exigiria
 # credencial da AWS no CI. Aqui so queremos checar sintaxe e referencias
@@ -49,7 +54,7 @@ permissions:
 
 jobs:
   validate:
-    name: fmt e validate nas tres camadas
+    name: fmt, validate e teste do OIDC
     runs-on: ubuntu-latest
 
     steps:
@@ -95,3 +100,18 @@ jobs:
         run: |
           terraform -chdir=terraform/k8s init -backend=false -input=false
           terraform -chdir=terraform/k8s validate
+
+      # --------------------------------------------------------
+      # Teste do modulo iam-ci: 10 casos sobre a confianca OIDC e as
+      # permissoes das roles do CI e do self-healing. Todos usam
+      # `command = plan` com um provider sem acesso a AWS, entao o job
+      # continua sem credencial nenhuma - nem a permissao id-token, que
+      # pediria um token OIDC, existe neste workflow.
+      #
+      # O lock do modulo fixa o mesmo provider AWS da camada base, para o
+      # teste avaliar as policies com a versao que fara o apply.
+      # --------------------------------------------------------
+      - name: test - confianca OIDC (modulo iam-ci)
+        run: |
+          terraform -chdir=terraform/modules/iam-ci init -backend=false -input=false
+          terraform -chdir=terraform/modules/iam-ci test

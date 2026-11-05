@@ -53,8 +53,12 @@ terraform -chdir=terraform/cluster init -backend=false -input=false -lockfile=re
 terraform -chdir=terraform/cluster validate
 terraform -chdir=terraform/k8s init -backend=false -input=false -lockfile=readonly
 terraform -chdir=terraform/k8s validate
+terraform -chdir=terraform/modules/iam-ci init -backend=false -input=false -lockfile=readonly
+terraform -chdir=terraform/modules/iam-ci test
 kubectl kustomize gitops/overlays/prod
 ```
+
+O `terraform test` do módulo `iam-ci` tem 10 casos e também roda no workflow `Terraform Check`. Ele prova que só a branch `main` deste repositório assume as roles do CI e do self-healing via OIDC, que entradas com curinga são recusadas e que cada role recebe só a permissão do seu trabalho. Os casos usam `command = plan` e um provider sem acesso à AWS; o lock do módulo fixa a mesma versão do provider da camada base.
 
 A inicialização baixa módulos/providers do registro, sem conectar ao backend e sem executar `plan`/`apply`. Os lockfiles originais foram preservados: não atualizar providers apenas para importar o projeto. Validação sintática e renderização local não demonstram acesso à conta, pull de imagens, funcionamento do cluster ou implantação.
 
