@@ -1,6 +1,6 @@
 # Dossiê de contexto
 
-TL;DR: B0/B1 e B2 concluídos; preparação do B3 concluída em 2026-11-04 (seção 24): notificações reais validadas, testes e ensaio da falha aprovados, plano da base com 0 destroy e custo oficial de US$ 9,82/dia. Pré-requisitos fechados em 2026-11-05 (seção 25): tokens validados, orçamento criado e créditos em US$ 120. Falta só a autorização dos tópicos 5 e 6.
+TL;DR: B0/B1 e B2 concluídos; preparação do B3 concluída em 2026-11-04 (seção 24): notificações reais validadas, testes e ensaio da falha aprovados, plano da base com 0 destroy e custo oficial de US$ 9,82/dia. Pré-requisitos fechados em 2026-11-05 (seção 25): tokens validados, orçamento criado e créditos em US$ 120. Teste da confiança OIDC no CI (seção 26). Falta só a autorização dos tópicos 5 e 6.
 
 Última atualização: 2026-11-05, Claude (Opus 5.5).
 
@@ -538,3 +538,14 @@ Próximo: concluir exercício e seus testes; validar nova integração e webhook
 - **Créditos:** US$ 120 depois da atividade do Budgets. As atividades de EC2 e RDS ainda podem render US$ 20 cada, se a AWS reconhecer os recursos do B3.
 - **Senha do PagerDuty:** mantida por decisão do usuário (D-020).
 - **Próximo passo:** autorização dos tópicos 5 e 6.
+
+## 26. Teste da confiança OIDC no CI — 2026-11-05, Claude
+
+- `terraform/modules/iam-ci/tests/trust.tftest.hcl`, com 10 casos (commit b2c5bdf), roda no Terraform Check sem credencial. Cobre:
+  - o subject exato da main;
+  - a recusa de curingas;
+  - a trust compartilhada pelas roles do CI e do self-healing;
+  - as permissões mínimas das duas roles.
+- O lock do módulo fixa o aws 6.62.0, o mesmo da camada base.
+- O OIDC da conta nova já está configurado: provedor, role do CI com a trust exata, policy anexada e 3 Variables. O apply da base cria a role do self-healing; as Variables `AWS_SELF_HEALING_ROLE_ARN` e `EKS_CLUSTER_NAME` entram na etapa 2 do roteiro.
+- O primeiro login OIDC real nesta conta acontece no job `image`, depois do merge na main.

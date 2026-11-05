@@ -1,8 +1,43 @@
 # Log de trabalho
 
-TL;DR: Pré-requisitos do B3 completos em 2026-11-05: tokens do GitHub validados (o do ArgoCD também tem escrita; risco aceito), orçamento `togglemaster-creditos` criado com 5 alertas, créditos em US$ 120 depois da atividade do Budgets e senha do PagerDuty mantida pelo usuário (D-020). Falta só a autorização dos tópicos 5 e 6. Roteiro em 02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md.
+TL;DR: Pré-requisitos do B3 completos em 2026-11-05: tokens do GitHub validados (o do ArgoCD também tem escrita; risco aceito), orçamento `togglemaster-creditos` criado com 5 alertas, créditos em US$ 120 depois da atividade do Budgets e senha do PagerDuty mantida pelo usuário (D-020). Teste da confiança OIDC no Terraform Check desde o commit b2c5bdf (10/10 no CI). Falta só a autorização dos tópicos 5 e 6. Roteiro em 02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md.
 
 Última atualização: 2026-11-05, Claude (Opus 5.5).
+
+## 2026-11-05 13:52 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — Teste da confiança OIDC no CI e requisitos da Fase 4
+
+Pedido do usuário: "Leve o teste OIDC para o CI antes da implantação e me explique como funciona e o que é OIDC e se ele já está configurado ou se vamos ter que configurar novamente devido a conta nova. Segundo o documento da fiap da fase4 quais os requisitos obrigatórios que eles querem ver".
+
+Feito, no **commit b2c5bdf** (push na dev):
+- `terraform/modules/iam-ci/tests/trust.tftest.hcl` com 10 casos:
+  - os 8 do harness de 2026-10-28 (subject exato da main, audience, reaproveitamento do provedor, parametrização e 5 recusas de curinga ou injeção);
+  - 2 novos: a role do self-healing usa a mesma trust e só pode chamar `eks:DescribeCluster` no cluster do projeto; a policy do CI só publica nos ECR recebidos, sem ação com curinga.
+- O teste fica no próprio módulo. A cópia do harness em `02_TRABALHO/etapas8-9-2026-10-28_v01/` estava desatualizada (sem a role do self-healing) e foi preservada como histórico.
+- `terraform/modules/iam-ci/.terraform.lock.hcl` versionado, com o aws 6.62.0 da camada base. Sem ele, o `init` escolhia o 6.72.0.
+- `terraform-check.yml`: nova etapa `test - confianca OIDC (modulo iam-ci)`, depois dos 3 validates. O job continua sem credencial e sem `id-token`.
+- `terraform/README.md`: comandos e uma frase sobre o teste.
+
+Verificação:
+- Local, com AWS isolada (perfil e chaves removidos, arquivos de config vazios): 10/10. A 1ª tentativa reprovou 1 caso porque o provider normaliza o JSON da role; a comparação passou a usar `jsondecode`.
+- Teste do teste, em cópias do módulo: os 6 defeitos introduzidos foram reprovados (StringLike no `sub`, `sub` com curinga, `ecr:*`, recurso `*` no push, ação extra no self-healing e validação de branch frouxa).
+- `terraform fmt -recursive -check terraform/` ok; `actionlint` 1.7.12 ok.
+- **CI no GitHub:** run 42068652174 do Terraform Check com sucesso; na etapa de teste, aws 6.62.0 e "10 passed, 0 failed".
+
+Estado do OIDC, por consulta somente leitura nesta sessão:
+- Na conta nova já existem o provedor OIDC do GitHub (criado fora do Terraform; `create_github_oidc_provider = false`) e a role `togglemaster-github-actions`, criada em 2026-10-28.
+- A trust da role exige `aud` = STS e o `sub` exato da main com os IDs imutáveis. O Sid real é `GithubOidcMain`; o plano da base só troca esse rótulo.
+- A policy `togglemaster-ci-ecr-push` está anexada. As Variables `AWS_REGION`, `AWS_ROLE_ARN` e `ECR_REGISTRY` são de 2026-10-28.
+- O repositório usa o subject imutável (`use_immutable_subject: true`).
+- Faltam a role `togglemaster-self-healing` (nasce no apply da base) e as Variables `AWS_SELF_HEALING_ROLE_ARN` e `EKS_CLUSTER_NAME` (etapa 2 do roteiro).
+- **Não provado:** login OIDC real de um workflow nesta conta. Ele acontece no job `image`, no primeiro push na main.
+
+Requisitos: respondidos ao usuário direto do PDF `POSTECH - Tech Challenge - Fase 4.pdf` (p. 2–6). A matriz de 42 obrigatórios do P-014 continua a referência detalhada; nenhum documento novo.
+
+Pendência menor percebida: `terraform/README.md:42` ainda diz que não houve push, PR ou integração na main. Fica para a revisão pública B6/P-017.
+
+DECISOES sem alteração. Evidência sanitizada: `02_TRABALHO/validacao-local-preimplantacao-2026-11-04/teste-oidc-ci-2026-11-05.txt`, em pasta ignorada pelo Git.
+
+Estado p/ o próximo agente: teste OIDC no CI e verde. Falta só a autorização dos tópicos 5 e 6. Na etapa 5 do roteiro, conferir o job `image`: é a primeira autenticação OIDC real nesta conta.
 
 ## 2026-11-05 10:20 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — Tokens validados, orçamento criado e riscos aceitos
 

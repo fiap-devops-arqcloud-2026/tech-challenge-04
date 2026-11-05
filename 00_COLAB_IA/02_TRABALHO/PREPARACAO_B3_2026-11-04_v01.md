@@ -2,7 +2,7 @@
 
 TL;DR: tudo o que dá para validar sem implantar foi validado. As notificações reais funcionam com a nova chave: PagerDuty, Slack e o cartão até Resolved. Os testes dos 5 serviços, o ensaio integrado e o ensaio da falha proposital passaram. O plano real da base mostra **8 imports, 29 criações, 7 alterações no lugar e 0 destruições**. A estimativa oficial é de **US$ 9,82 por dia com tudo ligado**; o período B3–B5 sai por cerca de US$ 45 dos US$ 100. **Atualização 2026-11-05:** os tokens foram validados, o orçamento foi criado e os créditos subiram para US$ 120. Antes de implantar, falta só a autorização dos tópicos 5 (implantação) e 6 (demonstração e entrega).
 
-Última atualização: 2026-11-05, Claude (Opus 5.5): seção 5 com os pré-requisitos fechados e notas datadas nas seções 2, 4 e 7. Versão inicial em 2026-11-04, Claude, continuando a sessão do Codex do mesmo dia. O ID da conta aparece como `<CONTA>`. As evidências brutas ficam em `validacao-local-preimplantacao-2026-11-04/`, ignorada pelo Git.
+Última atualização: 2026-11-05, Claude (Opus 5.5): seção 5 com os pré-requisitos fechados e notas datadas nas seções 1, 2, 4, 6 e 7. Versão inicial em 2026-11-04, Claude, continuando a sessão do Codex do mesmo dia. O ID da conta aparece como `<CONTA>`. As evidências brutas ficam em `validacao-local-preimplantacao-2026-11-04/`, ignorada pelo Git.
 
 ## 1. Validações feitas (2026-11-04)
 
@@ -17,6 +17,7 @@ TL;DR: tudo o que dá para validar sem implantar foi validado. As notificações
 | Lint do CI no flag-service | `flake8` estrito 0; `pylint` 9,42 (corte 7,0); `bandit` sem achados | Claude | idem |
 | Self-healing | `test-restart.sh` 11 cenários; `actionlint` e `shellcheck` limpos | Claude | LOG 2026-11-03 20:52 |
 | Charts, Collector e Grafana | `helm template`, `otelcol validate` e Grafana 13.3.0 sem rede | Claude | LOG 2026-11-03 20:52 |
+| *Em 2026-11-05:* confiança OIDC no CI | `terraform test` do módulo `iam-ci`, 10/10 local e no Terraform Check; 6 de 6 defeitos introduzidos reprovados | Claude | LOG 2026-11-05 13:52 |
 
 Com o cluster ligado, a notificação do PagerDuty passa a vir do contact point do Grafana. O que se provou aqui é a chave e o caminho; o envio pelo Grafana só é provado no B4.
 
@@ -138,7 +139,7 @@ Os 3 `terraform.tfvars` locais vêm dos exemplos, com conta, bucket, NAT ligado 
    - `aws eks update-kubeconfig --name togglemaster --region us-east-2`;
    - trocar as sentinelas do overlay (`REDIS_URL`, `AWS_SQS_URL`) pelos outputs reais.
 5. **k8s:** primeiro `apply -target=helm_release.argocd`, depois `apply` completo. Isso cria os Secrets, o namespace `observability` e as Applications.
-6. **PR dev → main:** o CI publica as 5 imagens e grava as tags no overlay, e o ArgoCD sincroniza. O `self-healing.yml` precisa estar na `main` antes do ensaio.
+6. **PR dev → main:** o CI publica as 5 imagens e grava as tags no overlay, e o ArgoCD sincroniza. O `self-healing.yml` precisa estar na `main` antes do ensaio. *Em 2026-11-05:* o job `image` faz o primeiro login OIDC real nesta conta; conferir a etapa "Autenticar na AWS via OIDC" antes de seguir.
 7. **Aceite:**
    - Applications Synced/Healthy;
    - pods prontos;
