@@ -1,7 +1,7 @@
 {
   "uid": "togglemaster-overview",
   "title": "ToggleMaster - Visao geral",
-  "description": "Saude dos 5 servicos: requisicoes, erros e latencia (metricas geradas dos traces pelo Collector gateway), CPU e memoria dos pods (kubelet/cAdvisor) e logs (Loki).",
+  "description": "Saude dos 5 servicos: requisicoes, erros e latencia (metricas geradas dos traces pelo Collector gateway), CPU e memoria dos nos do cluster (node-exporter), CPU e memoria dos pods (kubelet/cAdvisor) e logs (Loki).",
   "tags": ["togglemaster", "fase4"],
   "timezone": "browser",
   "editable": true,
@@ -109,11 +109,75 @@
       "fieldConfig": { "defaults": { "unit": "ms", "min": 0 }, "overrides": [] }
     },
     {
+      "id": 8,
+      "type": "timeseries",
+      "title": "CPU por no do cluster",
+      "description": "Fracao da CPU de cada no (EC2) em uso, de 0 a 100% (node-exporter): tempo ocupado dividido pelo tempo total medido de todos os nucleos. Ocioso, espera de disco (iowait) e tempo tomado pelo hipervisor (steal) contam como nao usado, como nos dashboards Node Exporter do chart. Inclui tudo o que roda no no: aplicacao, observabilidade, ArgoCD e sistema. A linha marca 80%.",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 14 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "expr": "(1 - sum by (instance) (rate(node_cpu_seconds_total{mode=~\"idle|iowait|steal\"}[5m])) / sum by (instance) (rate(node_cpu_seconds_total[5m]))) * on (instance) group_left (nodename) node_uname_info",
+          "legendFormat": "{{nodename}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "min": 0,
+          "max": 1,
+          "custom": { "thresholdsStyle": { "mode": "line" } },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "red", "value": 0.8 }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 9,
+      "type": "timeseries",
+      "title": "Memoria por no do cluster",
+      "description": "Fracao da memoria de cada no (EC2) em uso, de 0 a 100%: 1 menos a memoria disponivel (MemAvailable) sobre o total (node-exporter). Cache que o sistema pode liberar conta como livre. A linha marca 80%.",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 14 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "expr": "(1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) * on (instance) group_left (nodename) node_uname_info",
+          "legendFormat": "{{nodename}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "min": 0,
+          "max": 1,
+          "custom": { "thresholdsStyle": { "mode": "line" } },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "red", "value": 0.8 }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
       "id": 5,
       "type": "timeseries",
       "title": "CPU por pod (namespace togglemaster)",
       "description": "Uso de CPU de cada pod da aplicacao, em nucleos (kubelet/cAdvisor).",
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 14 },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 22 },
       "datasource": { "type": "prometheus", "uid": "prometheus" },
       "targets": [
         {
@@ -130,7 +194,7 @@
       "type": "timeseries",
       "title": "Memoria por pod (namespace togglemaster)",
       "description": "Memoria em uso (working set) de cada pod da aplicacao. E o numero que o Kubernetes compara com o limit.",
-      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 14 },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 22 },
       "datasource": { "type": "prometheus", "uid": "prometheus" },
       "targets": [
         {
@@ -147,7 +211,7 @@
       "type": "logs",
       "title": "Logs da aplicacao (Loki)",
       "description": "Logs de todos os pods do namespace togglemaster, coletados pelo agente DaemonSet e enviados ao Loki pelo gateway. Os servicos escrevem JSON com trace_id, que liga o log ao trace no New Relic.",
-      "gridPos": { "h": 10, "w": 24, "x": 0, "y": 22 },
+      "gridPos": { "h": 10, "w": 24, "x": 0, "y": 30 },
       "datasource": { "type": "loki", "uid": "loki" },
       "targets": [
         {
