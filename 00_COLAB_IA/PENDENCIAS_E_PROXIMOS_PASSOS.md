@@ -1,8 +1,8 @@
 # Pendências e progresso
 
-TL;DR: Preparação do B3 concluída em 2026-11-04 (validações, planos e custos; ver 02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md). Faltam do usuário: tokens do GitHub no .env, AWS Budgets, troca da senha do PagerDuty e autorização dos tópicos 5 (implantação) e 6 (demonstração e entrega). Trial até 2026-11-11 por relato; meta de gravação 2026-11-10.
+TL;DR: Pré-requisitos do B3 completos em 2026-11-05: tokens validados, orçamento `togglemaster-creditos` criado (créditos em US$ 120) e senha do PagerDuty mantida por decisão do usuário (D-020). Falta só a autorização dos tópicos 5 (implantação) e 6 (demonstração e entrega); roteiro em 02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md. Trial até 2026-11-11 por relato; meta de gravação 2026-11-10.
 
-Última atualização: 2026-11-04, Claude (Opus 5.5).
+Última atualização: 2026-11-05, Claude (Opus 5.5).
 
 ## Execução vigente — 2026-11-04, validação e preparação autorizadas
 
@@ -17,9 +17,17 @@ Pedido novo: validar PagerDuty e Slack, executar todos os testes com Docker, ori
 - [x] Estimativa oficial em us-east-2, cenários de duração e margem dentro dos US$ 100: US$ 9,82/dia; B3–B5 ≈ US$ 45,35.
 - [x] Preparação reproduzível e relatório de pendências para implantação posterior: [PREPARACAO_B3](02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md).
 - [x] VERIFICAÇÃO final, relatório, contexto e handoff (Claude, 2026-11-04 17:05).
-- [ ] Usuário: tokens `GITHUB_ARGOCD_TOKEN` e `GITHUB_DISPATCH_TOKEN` no `.env`; AWS Budgets (US$ 80, alertas 25/50/75% e previsão 100%); senha do PagerDuty; autorizar os tópicos 5 e 6.
+- [x] Usuário: tokens `GITHUB_ARGOCD_TOKEN` e `GITHUB_DISPATCH_TOKEN` no `.env`, validados em 2026-11-05. O do ArgoCD também tem escrita, e o usuário manteve assim (D-020).
+- [x] AWS Budgets: `togglemaster-creditos` criado pelo Claude em 2026-11-05, a pedido do usuário (LOG 10:20):
+  - US$ 80 acumulados até 2027-04-30;
+  - sem contar os créditos;
+  - 5 alertas para 2 e-mails.
 
-Pergunta em andamento: confirmar se o usuário delega também a implementação do TODO(human) anteriormente reservado a ele. Não impedir as outras verificações enquanto aguarda. Evidências/scripts/planos brutos em `02_TRABALHO/validacao-local-preimplantacao-2026-11-04/` (ignorado pelo Git); relatório sanitizado fora dessa pasta. Conector GitHub retornou 404; usar CLI autenticada para o repositório.
+  A atividade de crédito foi concluída, e os créditos passaram a US$ 120.
+- [x] Senha do PagerDuty: não será trocada, por decisão do usuário (D-020). Os agentes não a usam.
+- [ ] Usuário: autorizar os tópicos 5 (implantação) e 6 (demonstração e entrega).
+
+Pergunta em andamento: confirmar se o usuário delega também a implementação do TODO(human) anteriormente reservado a ele. Não impedir as outras verificações enquanto aguarda. Nota 2026-11-05 (Claude): sem resposta até agora; o trecho segue no commit 57d43e5. Evidências/scripts/planos brutos em `02_TRABALHO/validacao-local-preimplantacao-2026-11-04/` (ignorado pelo Git); relatório sanitizado fora dessa pasta. Conector GitHub retornou 404; usar CLI autenticada para o repositório.
 
 ## Checkpoint vigente — 2026-11-04, Codex
 

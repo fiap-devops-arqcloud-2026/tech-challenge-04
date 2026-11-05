@@ -1,8 +1,8 @@
 # Preparação da implantação (B3) — 2026-11-04
 
-TL;DR: tudo o que dá para validar sem implantar foi validado. As notificações reais funcionam com a nova chave: PagerDuty, Slack e o cartão até Resolved. Os testes dos 5 serviços, o ensaio integrado e o ensaio da falha proposital passaram. O plano real da base mostra **8 imports, 29 criações, 7 alterações no lugar e 0 destruições**. A estimativa oficial é de **US$ 9,82 por dia com tudo ligado**; o período B3–B5 sai por cerca de US$ 45 dos US$ 100. Antes de implantar, faltam do usuário: os 2 tokens do GitHub no `.env`, o orçamento no AWS Budgets e a autorização dos tópicos 5 (implantação) e 6 (demonstração e entrega).
+TL;DR: tudo o que dá para validar sem implantar foi validado. As notificações reais funcionam com a nova chave: PagerDuty, Slack e o cartão até Resolved. Os testes dos 5 serviços, o ensaio integrado e o ensaio da falha proposital passaram. O plano real da base mostra **8 imports, 29 criações, 7 alterações no lugar e 0 destruições**. A estimativa oficial é de **US$ 9,82 por dia com tudo ligado**; o período B3–B5 sai por cerca de US$ 45 dos US$ 100. **Atualização 2026-11-05:** os tokens foram validados, o orçamento foi criado e os créditos subiram para US$ 120. Antes de implantar, falta só a autorização dos tópicos 5 (implantação) e 6 (demonstração e entrega).
 
-Última atualização: 2026-11-04, Claude (Opus 5.5), continuando a sessão do Codex do mesmo dia. O ID da conta aparece como `<CONTA>`. As evidências brutas ficam em `validacao-local-preimplantacao-2026-11-04/`, ignorada pelo Git.
+Última atualização: 2026-11-05, Claude (Opus 5.5): seção 5 com os pré-requisitos fechados e notas datadas nas seções 2, 4 e 7. Versão inicial em 2026-11-04, Claude, continuando a sessão do Codex do mesmo dia. O ID da conta aparece como `<CONTA>`. As evidências brutas ficam em `validacao-local-preimplantacao-2026-11-04/`, ignorada pelo Git.
 
 ## 1. Validações feitas (2026-11-04)
 
@@ -22,11 +22,11 @@ Com o cluster ligado, a notificação do PagerDuty passa a vir do contact point 
 
 ## 2. Conta AWS e GitHub (consulta somente leitura, 2026-11-04 16:18)
 
-- **Plano:** `FREE`, ativo, **US$ 100,00 de crédito** e validade até 2027-04-20.
+- **Plano:** `FREE`, ativo, **US$ 100,00 de crédito** e validade até 2027-04-20. *Em 2026-11-05: US$ 120, depois da atividade do Budgets.*
 - **Atividades de crédito:** 5 de US$ 20, todas não iniciadas:
   - EC2;
   - Bedrock playground;
-  - **AWS Budgets**;
+  - **AWS Budgets** (concluída em 2026-11-05);
   - Lambda;
   - **RDS**.
 
@@ -34,7 +34,7 @@ Com o cluster ligado, a notificação do PagerDuty passa a vir do contact point 
 - **Cota de vCPU (On-Demand Standard): 5.** Os 2 nós m7i-flex.large usam 4. Por isso o tfvars local tem `node_group_max_size = 2`: um 3º nó estouraria a cota.
 - **Região:** m7i-flex.large é `FreeTierEligible` e existe em us-east-2. O EKS 1.34 tem suporte padrão até 2026-12-01, depois da entrega.
 - **Recursos:** nenhum cluster, instância, RDS, Redis ou NAT existente. Existem os 5 ECR, a role do CI com a policy e o provedor OIDC.
-- **AWS Budgets: nenhum orçamento criado.**
+- **AWS Budgets:** nenhum orçamento em 2026-11-04. *Em 2026-11-05: `togglemaster-creditos` criado; ver a seção 5.*
 - **Bucket de estado:** versionado, criptografado (AES256), acesso público bloqueado, sem estado em `phase4/prod/`.
 - **GitHub:**
   - repositório privado, branch padrão `main`;
@@ -87,6 +87,11 @@ Os 3 `terraform.tfvars` locais vêm dos exemplos, com conta, bucket, NAT ligado 
 | Base sem cluster, NAT ligado | US$ 1,20/dia | — |
 | Base sem cluster, NAT desligado | quase zero | — |
 
+*Em 2026-11-05, com US$ 120 de crédito:*
+- o B3–B5 deixa cerca de US$ 74,65;
+- os 7 dias deixam US$ 50,92;
+- o limite teórico passa a 293 h (12,2 dias).
+
 **Fora da conta por serem desprezíveis:** SQS, DynamoDB sob demanda, ECR, S3 do estado, tráfego entre zonas e saída para a internet, que tem os primeiros 100 GB/mês gratuitos. Não há CloudWatch Logs do control plane ligado.
 
 **Riscos de custo:**
@@ -96,12 +101,22 @@ Os 3 `terraform.tfvars` locais vêm dos exemplos, com conta, bucket, NAT ligado 
 
 ## 5. Pré-requisitos do usuário (antes do tópico 5)
 
-1. **Orçamento no AWS Budgets.** Billing → Budgets → Create budget → Cost budget, de US$ 80, com alertas em 25%, 50% e 75% do valor real e 100% da previsão, no seu e-mail. Também é uma atividade que rende US$ 20.
-2. **Tokens do GitHub**, conforme [o guia](TOKENS_GITHUB_PREIMPLANTACAO_2026-11-04_v01.md):
-   - `GITHUB_ARGOCD_TOKEN`: Contents Read-only;
-   - `GITHUB_DISPATCH_TOKEN`: Contents Read and write;
-   - os dois fine-grained, só no `tech-challenge-04`, gravados no `.env`. Hoje os dois **estão ausentes**.
-3. **Senha do PagerDuty:** trocar, porque foi exposta no chat em 2026-11-03.
+*Atualização 2026-11-05: os itens 1 a 3 estão resolvidos. Falta só a autorização dos tópicos 5 e 6.*
+
+1. **Orçamento no AWS Budgets: criado em 2026-11-05** pelo Claude, a pedido do usuário.
+   - Chama-se `togglemaster-creditos`. É um orçamento de custo que soma o gasto de 2026-10-01 a 2027-04-30, o período dos créditos, em vez de recomeçar a cada mês.
+   - O limite é de US$ 80, e os créditos ficam fora da conta (filtro `RECORD_TYPE` diferente de `Credit`, métrica `UnblendedCost`). Com eles dentro, o gasto líquido ficaria em zero e nenhum alerta dispararia.
+   - São 5 alertas, enviados aos 2 e-mails indicados pelo usuário:
+     - gasto real acima de 25%, 50%, 75% e 100% (US$ 20, 40, 60 e 80);
+     - previsão acima de 100%.
+   - Fica fora do Terraform de propósito, para o `destroy` não apagar o aviso de recursos esquecidos.
+   - A atividade de crédito foi concluída às 13:12 UTC: os créditos passaram de US$ 100 para US$ 120.
+2. **Tokens do GitHub: salvos e validados em 2026-11-05**, conforme [o guia](TOKENS_GITHUB_PREIMPLANTACAO_2026-11-04_v01.md).
+   - Os dois são fine-grained, diferentes e valem até 2027-01-04.
+   - Os dois leem o repositório pela API e pelo git via HTTPS, com o usuário `git`, como o ArgoCD.
+   - O `GITHUB_DISPATCH_TOKEN` faz `repository_dispatch` (HTTP 204).
+   - ⚠️ O `GITHUB_ARGOCD_TOKEN` também tem escrita: o dispatch respondeu 204, e não 403. O usuário decidiu manter assim (D-020).
+3. **Senha do PagerDuty:** não será trocada, por decisão do usuário em 2026-11-05 (D-020).
 4. **Integração PRTG:** foi preservada como contingência. Removê-la depois do ensaio é opcional.
 
 ## 6. Roteiro do tópico 5 (só com autorização específica)
@@ -139,5 +154,9 @@ O ensaio da cadeia (tópico 6) vem depois, com gerador de tráfego e a falha lig
 - O envio de alertas pelo Grafana a PagerDuty, Slack e GitHub só é provado com o cluster no ar.
 - Os preços são sob demanda e não contam créditos extras.
 - As atividades de crédito podem não reconhecer recursos criados pelo Terraform.
+- *Em 2026-11-05:* o AWS Budgets atualiza os números até 3 vezes por dia, em geral a cada 8–12 h, e a previsão depende do histórico de uma conta nova.
+  - No B3–B5, o controle de custo é o roteiro, com o destroy no fim.
+  - Também conta a conferência dos créditos com `aws freetier get-account-plan-state`.
+  - Os alertas são a rede de segurança.
 
-Fontes: AWS Price List API (`aws pricing get-products`, região us-east-2, consultada em 2026-11-04, resposta bruta em `precos-aws-us-east-2.json`); inventário somente leitura da conta (`aws-inventory.json`); planos do Terraform 1.16 (`base-plan.json`, `cluster-plan.log`, `k8s-plan.log`); `gh` (repositório, Variables e customização do subject OIDC).
+Fontes: AWS Price List API (`aws pricing get-products`, região us-east-2, consultada em 2026-11-04, resposta bruta em `precos-aws-us-east-2.json`); inventário somente leitura da conta (`aws-inventory.json`); planos do Terraform 1.16 (`base-plan.json`, `cluster-plan.log`, `k8s-plan.log`); `gh` (repositório, Variables e customização do subject OIDC). Em 2026-11-05: `aws budgets` e `aws freetier` (`prerequisitos-2026-11-05.txt`) e a documentação do AWS Budgets sobre a frequência de atualização.

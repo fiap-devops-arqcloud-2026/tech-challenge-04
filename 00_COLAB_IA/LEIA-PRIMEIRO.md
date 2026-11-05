@@ -1,8 +1,8 @@
 # Colaboração entre agentes
 
-TL;DR: Colaboração vigente nesta pasta. Retomar pela "Execução vigente" de PENDENCIAS: preparação do B3 concluída em 2026-11-04 (validações, planos e custos em 02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md). Faltam do usuário os tokens do GitHub, o AWS Budgets e a autorização dos tópicos 5 e 6. Segredos só no `.env` local ignorado; nunca em arquivo versionado nem no chat.
+TL;DR: Colaboração vigente nesta pasta. Retomar pela "Execução vigente" de PENDENCIAS: pré-requisitos do B3 completos em 2026-11-05 (tokens validados, orçamento criado e créditos em US$ 120; roteiro em 02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md). Falta só a autorização dos tópicos 5 e 6. Segredos só no `.env` local ignorado; nunca em arquivo versionado nem no chat.
 
-Última atualização: 2026-11-04, Codex.
+Última atualização: 2026-11-05, Claude (Opus 5.5).
 
 ## Atualização de escopo — 2026-11-03
 

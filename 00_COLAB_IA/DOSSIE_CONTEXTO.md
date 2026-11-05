@@ -1,8 +1,8 @@
 # Dossiê de contexto
 
-TL;DR: B0/B1 e B2 concluídos; preparação do B3 concluída em 2026-11-04 (seção 24): notificações reais validadas, testes e ensaio da falha aprovados, plano da base com 0 destroy e custo oficial de US$ 9,82/dia. Faltam tokens do GitHub, AWS Budgets e a autorização dos tópicos 5 e 6.
+TL;DR: B0/B1 e B2 concluídos; preparação do B3 concluída em 2026-11-04 (seção 24): notificações reais validadas, testes e ensaio da falha aprovados, plano da base com 0 destroy e custo oficial de US$ 9,82/dia. Pré-requisitos fechados em 2026-11-05 (seção 25): tokens validados, orçamento criado e créditos em US$ 120. Falta só a autorização dos tópicos 5 e 6.
 
-Última atualização: 2026-11-04, Codex.
+Última atualização: 2026-11-05, Claude (Opus 5.5).
 
 Atualização 2026-10-28 14:47: usuário informou conclusão do guia IAM/OIDC até passo7. Provedor, policy, role, Variables e consultas IAM são concluídos por relato; nenhuma prova de CI remoto/cluster decorre disso. Prosseguir com inventário, correção F-023 na dev, backend próprio, adoção de recursos manuais e plan revisado. Não recriar role nem reutilizar state antigo. PR/main/apply permanecem fora do pedido de orientação. Registros seguintes sobre ausência da role refletem momentos anteriores.
 
@@ -524,3 +524,17 @@ Próximo: concluir exercício e seus testes; validar nova integração e webhook
   - cluster e k8s dependem do apply da base.
 - **Custo:** US$ 0,409/h = US$ 9,82/dia; B3–B5 ≈ US$ 45. Base parada com NAT: US$ 1,20/dia.
 - **Roteiro:** `02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md`.
+
+## 25. Pré-requisitos do B3 fechados — 2026-11-05, Claude
+
+- **Tokens do GitHub:** os 2 são fine-grained e valem até 2027-01-04.
+  - Os dois leem o repositório pela API e pelo git via HTTPS, como o ArgoCD.
+  - O de disparo faz `repository_dispatch` (204).
+  - O do ArgoCD também tem escrita; o usuário aceitou o risco (D-020).
+- **Orçamento `togglemaster-creditos`:**
+  - US$ 80 de custo acumulado de 2026-10-01 a 2027-04-30, sem contar créditos;
+  - 5 alertas para 2 e-mails: gasto real em 25/50/75/100% e previsão em 100%;
+  - fora do Terraform, para sobreviver ao `destroy`.
+- **Créditos:** US$ 120 depois da atividade do Budgets. As atividades de EC2 e RDS ainda podem render US$ 20 cada, se a AWS reconhecer os recursos do B3.
+- **Senha do PagerDuty:** mantida por decisão do usuário (D-020).
+- **Próximo passo:** autorização dos tópicos 5 e 6.

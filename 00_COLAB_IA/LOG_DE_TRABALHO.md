@@ -1,8 +1,47 @@
 # Log de trabalho
 
-TL;DR: Preparação do B3 concluída em 2026-11-04: notificações reais validadas (nova chave PagerDuty, Slack e cartão), testes e ensaio da falha aprovados, plano da base com 0 destroy e custo de US$ 9,82/dia (B3–B5 ≈ US$ 45 de US$ 100). Faltam do usuário os tokens do GitHub, o AWS Budgets e a autorização dos tópicos 5 e 6. Roteiro em 02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md.
+TL;DR: Pré-requisitos do B3 completos em 2026-11-05: tokens do GitHub validados (o do ArgoCD também tem escrita; risco aceito), orçamento `togglemaster-creditos` criado com 5 alertas, créditos em US$ 120 depois da atividade do Budgets e senha do PagerDuty mantida pelo usuário (D-020). Falta só a autorização dos tópicos 5 e 6. Roteiro em 02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md.
 
-Última atualização: 2026-11-04, Claude (Opus 5.5).
+Última atualização: 2026-11-05, Claude (Opus 5.5).
+
+## 2026-11-05 10:20 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — Tokens validados, orçamento criado e riscos aceitos
+
+Pedido do usuário: "Tokens salvos no .env; crie o orçamento na aws e alertas na aws. Não irei trocar a senha do PD, vamos continuar com essa já estou ciente do risco."
+
+Tokens do GitHub, validados sem exibir valores:
+- O `.env` usa fim de linha LF e é ignorado pelo Git (`.gitignore:28`).
+- Os 2 tokens estão presentes. Os dois são fine-grained, têm 93 caracteres, são diferentes e expiram em 2027-01-04.
+- Os dois passaram nas 3 leituras, todas com resposta 200:
+  - API do repositório (privado, padrão `main`);
+  - Contents de `gitops/overlays/prod` na dev;
+  - `info/refs` do git por HTTPS, com o usuário `git`, como o ArgoCD faz.
+- `repository_dispatch` com `event_type` `validacao-token`:
+  - token de disparo: 204, como esperado;
+  - token do ArgoCD: **também 204**, quando deveria receber 403. Ou seja, ele tem Contents: write.
+
+  A `main` (003a707) não tem workflows, então os 2 eventos não dispararam nada.
+- Perguntado, o usuário escolheu manter o token do ArgoCD com escrita (D-020).
+
+Orçamento na AWS, com a identidade IAM `fase4` e a autorização do pedido acima:
+- **Antes:** nenhum orçamento; plano FREE ativo com US$ 100,00 até 2027-04-20; 5 atividades de crédito não iniciadas.
+- **Criado `togglemaster-creditos`:**
+  - custo acumulado de 2026-10-01 a 2027-04-30 UTC (`TimeUnit` CUSTOM), que é o período dos créditos, em vez de recomeçar todo mês;
+  - limite de US$ 80;
+  - filtro `Not RECORD_TYPE = Credit` com métrica `UnblendedCost`. Com os créditos incluídos, o gasto líquido ficaria em US$ 0 e nenhum alerta dispararia;
+  - tags `project=fiap` e `phase=4`;
+  - fica fora do Terraform de propósito: o `destroy` não pode levar junto o aviso de recursos esquecidos.
+- **5 alertas:** gasto real acima de 25%, 50%, 75% e 100%, e previsão acima de 100%.
+  - Cada alerta vai para os 2 e-mails indicados pelo usuário, o pessoal e o da conta AWS. Os endereços não ficam em arquivo versionado.
+  - Conferido depois da criação: estado OK, saúde HEALTHY e gasto real de US$ 0,0.
+- **Atividade "Set up a cost budget using AWS Budgets" concluída às 13:12 UTC:** os créditos passaram de US$ 100 para **US$ 120**. EC2 e RDS seguem não iniciadas.
+
+Senha do PagerDuty: o usuário decidiu não trocar, ciente do risco (D-020). Os agentes continuam sem usá-la.
+
+Limitação: pela documentação da AWS, o Budgets atualiza até 3 vezes por dia, em geral a cada 8–12 h. A conta é nova, e a previsão tem pouco histórico. No B3–B5 valem os alertas de gasto real e a conferência por `aws freetier get-account-plan-state`.
+
+Evidências e os 3 scripts: `02_TRABALHO/validacao-local-preimplantacao-2026-11-04/prerequisitos-2026-11-05.txt`, em pasta ignorada pelo Git.
+
+Estado p/ o próximo agente: pré-requisitos do B3 completos. Falta só a autorização dos tópicos 5 e 6; depois, seguir a seção 6 do documento de preparação.
 
 ## 2026-11-04 17:05 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — Continuação da sessão Codex: testes, planos e custos concluídos
 

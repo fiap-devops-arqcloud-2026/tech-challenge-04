@@ -1,8 +1,8 @@
 # Decisões
 
-TL;DR: D-001–D-016 preservadas; D-017 registra a mescla e D-018 a regra pública aprovada em 2026-11-01. D-019 (2026-11-03) fixa o desenho do B2: falha em memória, 2 × m7i-flex.large, Secrets pelo Terraform e Slack pelos dois caminhos. Herança F3 abaixo é histórica e não concede novas permissões.
+TL;DR: D-001–D-016 preservadas; D-017 registra a mescla e D-018 a regra pública aprovada em 2026-11-01. D-019 (2026-11-03) fixa o desenho do B2: falha em memória, 2 × m7i-flex.large, Secrets pelo Terraform e Slack pelos dois caminhos. D-020 (2026-11-05) registra dois riscos aceitos pelo usuário: senha do PagerDuty mantida e token do ArgoCD com escrita. Herança F3 abaixo é histórica e não concede novas permissões.
 
-Última atualização: 2026-11-03, Claude (Opus 5.5).
+Última atualização: 2026-11-05, Claude (Opus 5.5).
 
 ## D-001 — Caminhos e organização (aceita, 2026-09-16)
 
@@ -181,6 +181,20 @@ Alternativas descartadas: 3 × c7i-flex.large; Secrets criados à mão; um só c
 Motivos: memória suficiente para a stack, reprodutibilidade e redundância caso o cartão do PagerDuty falhe. O 4.4 não notificou em 2026-11-03 (ver LOG).
 
 Status: itens 1 e 2 no código em 2026-11-03; o hook da falha aguarda o TODO(human). Itens 3 e 4 ficam no restante do B2. Esta decisão não autoriza apply, envio de eventos reais nem merge na main.
+
+## D-020 — Riscos aceitos antes do B3: senha do PagerDuty e token do ArgoCD (decisão do usuário, 2026-11-05)
+
+Contexto: no fechamento dos pré-requisitos do B3, faltava trocar a senha do PagerDuty, exposta no chat em 2026-11-03. A validação de 2026-11-05 também mostrou que o `GITHUB_ARGOCD_TOKEN` tem Contents: write, quando o guia pedia Read-only.
+
+Decisão:
+1. **Senha do PagerDuty mantida.** Resposta do usuário: "Não irei trocar a senha do PD, vamos continuar com essa já estou ciente do risco." Os agentes continuam sem usar a senha e sem registrá-la.
+2. **Token do ArgoCD mantido com escrita.** A pergunta recomendava reduzir o token a Read-only, e o usuário respondeu "Manter com escrita".
+   - O ArgoCD funciona do mesmo jeito.
+   - O token vira Secret no namespace do ArgoCD. Se vazar, permite alterar o repositório.
+
+Alternativas recomendadas e não escolhidas: trocar a senha; reduzir o token a Read-only ou gerar outro só de leitura.
+
+Status: riscos aceitos. Não reabrir como pendência; reavaliar só a pedido do usuário ou com indício de vazamento. Esta decisão não autoriza login com a senha nem amplia permissões.
 
 ## Decisões herdadas da Fase 3 — registro histórico revisado em 2026-11-01
 
