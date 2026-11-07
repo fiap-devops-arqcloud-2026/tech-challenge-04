@@ -1,8 +1,8 @@
 # Colaboração entre agentes
 
-TL;DR: Retomar pelo checklist de 2026-11-05 em PENDENCIAS e pelo [roteiro vigente do B3](02_TRABALHO/PREPARACAO_B3_2026-11-05_v02.md). Credenciais, orçamento e ensaios já foram validados. Alpine 3.24 aprovado e aplicado na dev. Próximo: janela de implantação reservada ao usuário. Nenhum apply, PR/main ou destroy autorizado nesta retomada.
+TL;DR: Retomar pelo checklist de 2026-11-07 em PENDENCIAS, pelo [roteiro vigente do B3](02_TRABALHO/PREPARACAO_B3_2026-11-05_v02.md) e pelo [relatório da auditoria de organização](02_TRABALHO/auditoria-organizacao-2026-11-06_v01/RELATORIO.md). Credenciais, orçamento e ensaios já foram validados; Alpine 3.24 está na dev. Antes do tópico 5 faltam duas decisões do usuário: o ArgoCD e o que a main mostra. Nenhum apply, PR/main, remoção ou destroy está autorizado.
 
-Última atualização: 2026-11-05, Codex.
+Última atualização: 2026-11-07, Claude (Opus 5.5).
 
 ## Atualização de escopo — 2026-11-03
 

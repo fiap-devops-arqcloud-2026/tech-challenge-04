@@ -1,8 +1,8 @@
 # Dossiê de contexto
 
-TL;DR: Preparação do B3 revisada: B0/B1/B2, tokens, notificações e orçamento validados. Em 2026-11-05 há US$ 120 de créditos, nenhum EKS em us-east-2 e Alpine 3.24 aprovado. Seção 28 e [roteiro vigente do B3](02_TRABALHO/PREPARACAO_B3_2026-11-05_v02.md) indicam como executar o primeiro deploy sem antecipar sync; autorizações dos tópicos 5/6 continuam separadas.
+TL;DR: Preparação do B3 revisada: B0/B1/B2, tokens, notificações e orçamento validados. Em 2026-11-05 há US$ 120 de créditos, nenhum EKS em us-east-2 e Alpine 3.24 aprovado. Seção 28 e [roteiro vigente do B3](02_TRABALHO/PREPARACAO_B3_2026-11-05_v02.md) indicam como executar o primeiro deploy sem antecipar sync; autorizações dos tópicos 5/6 continuam separadas. Seção 29 (2026-11-07): auditoria de organização sem remoção e duas decisões antes do tópico 5, o ArgoCD e o que a main mostra.
 
-Última atualização: 2026-11-05, Codex.
+Última atualização: 2026-11-07, Claude (Opus 5.5).
 
 Atualização 2026-10-28 14:47: usuário informou conclusão do guia IAM/OIDC até passo7. Provedor, policy, role, Variables e consultas IAM são concluídos por relato; nenhuma prova de CI remoto/cluster decorre disso. Prosseguir com inventário, correção F-023 na dev, backend próprio, adoção de recursos manuais e plan revisado. Não recriar role nem reutilizar state antigo. PR/main/apply permanecem fora do pedido de orientação. Registros seguintes sobre ausência da role refletem momentos anteriores.
 
@@ -568,3 +568,18 @@ A pergunta antiga sobre a falha proposital foi respondida: o usuário delegou im
 Estado da conta conferido por AWS CLI em 2026-11-05: FREE ativo, US$ 120; orçamento acumulado de US$ 80, 5 alertas; 0 clusters em us-east-2. Plano base de referência (2026-11-04): 8 importações, 29 criações, 7 alterações, 0 destruições; gerar novo na janela.
 
 Usar [preparação v02](02_TRABALHO/PREPARACAO_B3_2026-11-05_v02.md): conferir primeiro Redis, SQS e as duas roles; bootstrap apenas do controlador; após PR e publicação real dos cinco serviços, conferir as tags do merge em main/ECR; só então criar as Applications. Inicializar os dois RDS, corrigir a chave provisória e validar a aplicação antes da demonstração. Os oito objetos ECR/IAM importados não são automaticamente preservados num destroy total. Próximo operador lê o LOG e PENDENCIAS; nenhuma aprovação para PR/main ou apply/destroy decorre desta revisão.
+
+## 29. Revisão do trabalho do Codex e auditoria de organização — 2026-11-07, Claude
+
+- O trabalho de 2026-11-05 (`df766b2`, `fe7464b`) foi conferido:
+  - 6 runs verdes;
+  - verificador 7/7;
+  - nomes e caminhos do roteiro v02 existem no código.
+
+  A versão do ArgoCD ficou de fora do roteiro.
+- A auditoria somente leitura está no [relatório](02_TRABALHO/auditoria-organizacao-2026-11-06_v01/RELATORIO.md):
+  - código e infraestrutura organizados;
+  - o peso está no diário (569 dos 804 arquivos), no material da FIAP (19,5 MiB) e no disco (4,91 GiB ignorados);
+  - os pacotes P1 a P6 aguardam aprovação.
+- ArgoCD: o chart 7.7.11 instala a v2.13.2, com a CVE-2025-55190 crítica. Nenhum chart 7.7 traz a correção, que veio na v2.13.9. A decisão fica com o usuário, antes do apply da k8s.
+- `SECURITY.md` passou a descrever a trust OIDC real, e `gitops/SECRETS-CONTRATO.md` ganhou os Secrets da observabilidade.

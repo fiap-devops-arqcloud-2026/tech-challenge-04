@@ -1,10 +1,34 @@
 # Pendências e progresso
 
-TL;DR: Dev: Alpine atualizado para 3.24 nos dois serviços Go após aprovação; validações anteriores do Claude preservadas. AWS em 2026-11-05: US$ 120, orçamento US$ 80 com cinco alertas, nenhum EKS em us-east-2. Próximo trabalho operacional reservado ao usuário: tópico 5, conforme o [roteiro vigente do B3](02_TRABALHO/PREPARACAO_B3_2026-11-05_v02.md); tópico 6 e encerramento têm momentos próprios.
+TL;DR: 2026-11-07: o trabalho do Codex foi conferido e a auditoria de organização concluiu sem remoção ([relatório](02_TRABALHO/auditoria-organizacao-2026-11-06_v01/RELATORIO.md)). Antes do tópico 5, o usuário decide a versão do ArgoCD e o que a main mostra, e aprova os pacotes de limpeza. O roteiro vigente segue o [B3 v02](02_TRABALHO/PREPARACAO_B3_2026-11-05_v02.md). O B3, previsto para 06/11, não começou; o trial do PagerDuty vai até 11/11.
 
-Última atualização: 2026-11-05, Codex.
+Última atualização: 2026-11-07, Claude (Opus 5.5).
 
-## Retomada vigente — 2026-11-05, Codex
+## Retomada vigente — 2026-11-07, Claude
+
+- [x] Conferir o trabalho do Codex (`df766b2`, `fe7464b`):
+  - 6 runs verdes;
+  - verificador 7/7;
+  - nomes, outputs e caminhos do roteiro v02 existem.
+  Lacuna encontrada: o roteiro não trata o ArgoCD (LOG 2026-11-07 10:55).
+- [x] Auditoria de organização somente leitura, com [relatório](02_TRABALHO/auditoria-organizacao-2026-11-06_v01/RELATORIO.md) e anexo. Nada removido.
+- [x] Correções sem remoção: a regra OIDC em `SECURITY.md` e os 3 Secrets da observabilidade em `gitops/SECRETS-CONTRATO.md`.
+- [ ] **Usuário, antes do apply da k8s:** ArgoCD no chart 7.7.11 (v2.13.2) com a CVE-2025-55190 crítica. Opções:
+  - (a) aceitar o risco;
+  - (b) chart 7.7.23 com a imagem v2.13.9;
+  - (c) linha suportada 3.x, com novo ensaio.
+  Detalhe na seção 6 do relatório; P-017 abaixo.
+- [ ] **Usuário, antes do PR:** decidir o P3, o que a main mostra (relatório, seção 4), e aprovar P1, P2, P4 e P5. Remoções só em commit próprio e com de-para no LOG.
+- [ ] Antes do tópico 6: gerador de tráfego contínuo direto no flag-service, para o alerta de 5xx disparar. Pode ser preparado e testado localmente na dev.
+- [ ] Tópicos 5 e 6: continuam reservados ao usuário, conforme o checklist de 2026-11-05 abaixo e o roteiro v02.
+- [ ] B6, itens que estavam enterrados em blocos antigos:
+  - Q-03, Q-05 e Q-06: entrega individual ou em grupo, horário e canal;
+  - acesso do avaliador ao repositório privado;
+  - gerador do relatório PDF;
+  - F-022: a revisão do `.trivyignore` venceu;
+  - F-017 e F-018: comportamento de falha do evaluation e do auth.
+
+## Retomada de 2026-11-05, Codex (itens abertos repetidos acima)
 
 - [x] Confirmar o ponto de parada do Claude, fechar a previsão do filtro de documentação no GitHub e resolver a pergunta sobre o hook: usuário delegou, código em `57d43e5`, ensaio 11/11. Não refazer nem pedir credenciais.
 - [x] Atualizar os runtimes Go após teste do candidato e resposta explícita do usuário: Alpine 3.24 nos Dockerfiles de auth e evaluation. D-021; commit `df766b2` na dev.

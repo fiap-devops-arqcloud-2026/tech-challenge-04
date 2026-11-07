@@ -1,8 +1,42 @@
 # Log de trabalho
 
-TL;DR: revisão de 2026-11-05 na dev: troca do runtime Go para Alpine 3.24 autorizada (D-021), commit df766b2 com 4 workflows verdes. Roteiro B3 v02 inclui IRSA, ordem da promoção e inicialização dos bancos; verificador manual passou em 7 testes. Tópicos 5/6 continuam reservados. AWS: US$ 120 em créditos; nenhum EKS em us-east-2.
+TL;DR: 2026-11-07: trabalho do Codex de 2026-11-05 conferido (Alpine 3.24, roteiro B3 v02 e verificador 7/7, CI verde). Auditoria de organização concluída, sem remoção: pacotes aguardam aprovação em 02_TRABALHO/auditoria-organizacao-2026-11-06_v01/RELATORIO.md. Antes do tópico 5 o usuário decide o ArgoCD (chart 7.7.11 com CVE crítica) e o que a main mostra. O B3 previsto para 06/11 não começou. Tópicos 5/6 seguem reservados.
 
-Última atualização: 2026-11-05, Codex.
+Última atualização: 2026-11-07, Claude (Opus 5.5).
+
+## 2026-11-07 10:55 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — Revisão do trabalho do Codex e auditoria de organização
+
+Pedidos do usuário:
+- em 2026-11-05: "Qual o proximo passo para darmos andamento no projeto? Tem como organizarmos melhor nosso projeto [...] excluir arquivos que não mais utilizados";
+- depois do limite de uso: "analise o trabalho que ele fez e retome. Ao finalizar me digas quais os proximos passos".
+
+Revisão do trabalho do Codex (`df766b2`, `fe7464b`):
+- Os 6 runs dos dois commits estão verdes no GitHub.
+- O verificador `preflight-b3-2026-11-05` passou 7/7 com `py -3.14`, o único Python local com PyYAML. Sem state real, o `pre-pr` falha com segurança.
+- As chaves que ele consulta batem com o Terraform: IRSA `evaluation`/`analytics` e ECR `auth`, `flag`, etc.
+- Os recursos e caminhos do roteiro v02 existem: `helm_release.argocd`, os SQL, `/admin/keys`, `evaluation-service-secret` com `ignore_changes` e a seção 8 do guia.
+- Lacuna: o roteiro não trata a versão do ArgoCD (PENDENCIAS P-017).
+
+Auditoria, somente leitura e em três rodadas de agentes:
+- Duas rodadas pararam no limite de uso e uma por falha de DNS. A crítica final foi feita na conversa.
+- Resultado em [relatório](02_TRABALHO/auditoria-organizacao-2026-11-06_v01/RELATORIO.md), com anexo item a item e JSON bruto.
+- Código e infraestrutura organizados; único órfão fora do diário: `pyproject.toml`.
+- Disco: 1,98 GiB confirmados para apagar agora pelo verificador cético. Nunca apagar uma pasta `qa-*` inteira, porque elas têm evidência que só existe no disco.
+- 99 dos 289 arquivos do arquivo morto podem sair da árvore, 69 deles antes do merge, entre eles `FASE3_BASE_6100879`, com o ID da conta da Fase 3 e RMs.
+- Material da FIAP: 19,5 MiB, cerca de 60% do repositório.
+
+Feito sem remoção:
+- `SECURITY.md` descrevia a trust OIDC antiga ("qualquer branch ou pull request"); agora traz a regra do `sub` exato da main com IDs, provada pelos 10 testes.
+- `gitops/SECRETS-CONTRATO.md` ganhou os 3 Secrets da observabilidade.
+
+Verificações fora da auditoria:
+- O ArgoCD está no chart 7.7.11 (v2.13.2), sem override no tfvars (só contagem). A CVE-2025-55190, crítica, foi corrigida em v2.13.9, v2.14.16, v3.0.14 e v3.1.2.
+- Nenhum chart 7.7 traz a correção: o 7.7.23 instala v2.13.4. O chart atual é o 10.14.0 (v3.6.1). Consulta à API pública do GitHub.
+- O ensaio local da falha validou 503 e spans com erro, mas não existe gerador de tráfego contínuo para disparar o alerta no EKS.
+- O git pela rede trava no gerenciador de credenciais. Funciona com `git -c credential.helper= -c "credential.helper=!gh auth git-credential"` só no comando, sem mudar a configuração.
+- Duas listas temporárias que um agente gravou em AppData\Local\Temp foram conferidas e removidas.
+
+DECISOES sem alteração. Estado p/ o próximo agente: ler o relatório da auditoria e o checklist de 2026-11-07 em PENDENCIAS. Nada foi removido; P1 a P6 aguardam aprovação do usuário. Tópicos 5 e 6 seguem reservados.
 
 ## 2026-11-05 16:50 (America/Sao_Paulo, UTC-03:00) — Codex — Alpine aprovado, roteiro B3 corrigido e verificado
 

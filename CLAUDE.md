@@ -1,8 +1,8 @@
 # Tech Challenge Fase 4 — contexto para assistentes
 
-TL;DR: Na dev: B0/B1/B2 e preparação de B3 concluídos; Alpine 3.24 nos runtimes Go (D-021). Ler o primeiro checklist em 00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md e o [roteiro de implantação](00_COLAB_IA/02_TRABALHO/PREPARACAO_B3_2026-11-05_v02.md). A AWS tem US$ 120 em créditos na conferência de 2026-11-05. O primeiro deploy (tópico 5), a demonstração (6) e qualquer remoção continuam reservados.
+TL;DR: Na dev: B0/B1/B2 e preparação de B3 concluídos; Alpine 3.24 nos runtimes Go (D-021). Ler o primeiro checklist em 00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md (2026-11-07), o [roteiro de implantação](00_COLAB_IA/02_TRABALHO/PREPARACAO_B3_2026-11-05_v02.md) e o [relatório da auditoria de organização](00_COLAB_IA/02_TRABALHO/auditoria-organizacao-2026-11-06_v01/RELATORIO.md). Pendentes do usuário antes do tópico 5: versão do ArgoCD (chart 7.7.11 com CVE crítica) e o que a main mostra. A AWS tinha US$ 120 em créditos em 2026-11-05. O primeiro deploy (tópico 5), a demonstração (6) e qualquer remoção continuam reservados.
 
-Última atualização: 2026-11-05, Codex.
+Última atualização: 2026-11-07, Claude (Opus 5.5).
 
 - SaaS (atualização 2026-11-05): New Relic conferido; nova chave Events API V2 e webhook direto do Slack testados em 2026-11-04 (LOG 16:19), com PRTG mantido. Senha do PagerDuty mantida pelo usuário, risco aceito (D-020); agentes não a usam. D5 autorizou segredos no .env local ignorado; não gravar valores em arquivos versionados, LOG ou chat. Guia: `00_COLAB_IA/02_TRABALHO/PAGERDUTY_OAUTH_EVENTS_API_2026-11-03_v01.md`.
 
