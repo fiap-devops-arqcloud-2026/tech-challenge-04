@@ -17,10 +17,14 @@ Kubernetes e ficam guardados no estado do Terraform. Nunca vão para o Git.
 | Os pods, para usar a fila e a tabela | Identidade de conta de serviço (IRSA): cada pod recebe credencial temporária ligada à sua própria conta de serviço | Chave de acesso dentro de um Secret do Kubernetes |
 | As aplicações, para falar com os bancos | Senhas geradas pelo Terraform, entregues por Secret do Kubernetes | Senha escrita à mão em arquivo |
 
-A política de confiança da role do CI aceita apenas tokens deste repositório:
-um token vindo de qualquer outro repositório do GitHub é recusado. Dentro do
-repositório, ela aceita qualquer branch ou pull request. Quem limita a
-publicação de imagens à `main` é a condição dos jobs no workflow, não a AWS.
+A política de confiança das roles do CI e do self-healing aceita apenas tokens
+da branch `main` deste repositório. A AWS compara o `sub` do token, por
+igualdade exata, com o dono e o repositório identificados pelos IDs numéricos
+do GitHub, que mudam se o repositório for apagado e recriado. Token de outro
+repositório, de outra branch ou de pull request é recusado. Os 10 casos do
+`terraform test` do módulo `iam-ci`, que rodam no workflow Terraform Check,
+provam essa regra. Nos workflows, a condição dos jobs é uma segunda barreira:
+o job que publica imagens só roda no push da `main`.
 
 ## Nunca versionar
 
