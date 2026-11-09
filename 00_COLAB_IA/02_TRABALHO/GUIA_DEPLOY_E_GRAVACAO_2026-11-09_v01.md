@@ -50,7 +50,8 @@ gh variable list
 ```
 
 Esperado: 5 Variables, somando `AWS_REGION`, `AWS_ROLE_ARN` e `ECR_REGISTRY`, que já existem.
-nSe o `gh` perguntar `Paste your variable`, o valor veio vazio porque a base não foi aplicada. Não cole nada: aperte `Ctrl+C`, rode o `apply` do passo 2 e repita.
+
+Se o `gh` perguntar `Paste your variable`, o valor veio vazio porque a base não foi aplicada. Não cole nada: aperte `Ctrl+C`, rode o `apply` do passo 2 e repita.
 
 ### 4. Camada cluster (15–20 min)
 
