@@ -20,7 +20,7 @@ Ele funciona da seguinte forma:
 * [Go](https://go.dev/doc/install) (versão 1.25.0 ou superior)
 * [Redis](https://redis.io/docs/getting-started/installation/) (rodando localmente ou em Docker)
 * Os serviços `auth-service`, `flag-service` e `targeting-service` devem estar rodando.
-* **Credenciais da AWS:** Para o SQS funcionar, seu terminal deve estar autenticado na AWS (ex: via `aws configure` ou variáveis de ambiente).
+* **Credenciais da AWS:** no cluster, o pod recebe credencial temporária pela IRSA, ligada à conta de serviço `evaluation-service`; não existe chave estática no projeto. Fora do cluster, o caminho suportado é o ensaio integrado (`bash scripts/test-compose.sh`), com simulador de SQS e credenciais fictícias.
 
 ## 🚀 Rodando Localmente
 
@@ -52,12 +52,12 @@ Ele funciona da seguinte forma:
     # Chave de API que você criou no passo 2
     SERVICE_API_KEY="SUA_CHAVE_DE_SERVICO"
     
-    # --- Configuração da AWS (Obrigatório para o desafio) ---
-    # Cole a URL da fila SQS que você criou no console da AWS
-    AWS_SQS_URL="[https://sqs.us-east-1.amazonaws.com/123456789012/sua-fila](https://sqs.us-east-1.amazonaws.com/123456789012/sua-fila)"
+    # --- Configuração da AWS ---
+    # URL da fila: output sqs_queue_url da camada base do Terraform
+    AWS_SQS_URL="https://sqs.us-east-2.amazonaws.com/<CONTA>/togglemaster-events"
     
-    # Região da sua fila SQS
-    AWS_REGION="us-east-1" 
+    # Região dos recursos do projeto
+    AWS_REGION="us-east-2"
     ```
 
 4.  **Instale as Dependências:**

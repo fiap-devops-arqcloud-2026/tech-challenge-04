@@ -1,6 +1,6 @@
 # flag-service (Python)
 
-> Fase 4 — atualização em 2026-10-22, Codex: este serviço agora possui tracing local e logs JSON. A execução integrada atual usa simuladores locais e credenciais fictícias do laboratório; não exige nova conta AWS. As instruções AWS herdadas abaixo descrevem a integração real e não comprovam implantação. Código e comandos de negócio foram preservados; veja a seção de observabilidade ao final.
+> Fase 4 (2026-10-22): este serviço agora possui tracing local e logs JSON. A execução integrada atual usa simuladores locais e credenciais fictícias do laboratório; não exige nova conta AWS. As instruções AWS herdadas abaixo descrevem a integração real e não comprovam implantação. Código e comandos de negócio foram preservados; veja a seção de observabilidade ao final.
 
 Este é o serviço de CRUD (Create, Read, Update, Delete) do projeto ToggleMaster. Ele é responsável por gerenciar as *definições* das feature flags.
 
@@ -8,7 +8,7 @@ Este é o serviço de CRUD (Create, Read, Update, Delete) do projeto ToggleMaste
 
 ## 📦 Pré-requisitos (Local)
 
-* [Python](https://www.python.org/) (versão 3.9 ou superior)
+* [Python](https://www.python.org/) (versão 3.12, a mesma da imagem `python:3.12-slim` e do CI)
 * [PostgreSQL](https://www.postgresql.org/download/) (rodando localmente ou em um contêiner Docker)
 * O `auth-service` deve estar rodando (localmente na porta `8001`).
 
@@ -107,10 +107,27 @@ curl -X PUT http://localhost:8002/flags/enable-new-dashboard \
 ```
 Saída esperada: (O JSON da flag atualizada, com `"is_enabled": false`).
 
+## Falha controlada (demonstração do self-healing)
+
+Para o ensaio da cadeia alerta → PagerDuty → Slack → self-healing, o serviço tem uma falha que existe só na memória do processo:
+
+```bash
+# Liga a falha: GET /flags e /flags/<nome> passam a responder 503; /health continua 200
+curl -X POST http://localhost:8002/admin/fault \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer SUA_CHAVE_API" \
+-d '{"enabled": true}'
+
+# Mostra se a falha está ligada e desde quando
+curl http://localhost:8002/admin/fault -H "Authorization: Bearer SUA_CHAVE_API"
+```
+
+O estado não vai para o banco nem para variável de ambiente. Por isso um processo novo nasce com a falha desligada, e é isso que o `kubectl rollout restart` do self-healing aproveita. Para desligar sem reiniciar, envie `{"enabled": false}`. O `/health` continua respondendo 200 durante a falha, então o Kubernetes não reinicia o pod sozinho: quem age é a cadeia de alerta.
+
 
 ## Observabilidade local — Fase 4
 
-Última atualização: 2026-10-22, Codex. Fonte operacional: `app.py`, `telemetry.py`, `requirements.txt`, `Dockerfile` e `tests/test_telemetry.py` deste serviço; [overlay local](../../docker-compose.otel.yaml).
+Última atualização: 2026-10-22. Fonte operacional: `app.py`, `telemetry.py`, `requirements.txt`, `Dockerfile` e `tests/test_telemetry.py` deste serviço; [overlay local](../../docker-compose.otel.yaml).
 
 O serviço cria spans OpenTelemetry somente quando `OTEL_EXPORTER_OTLP_ENDPOINT` ou `OTEL_EXPORTER_OTLP_TRACES_ENDPOINT` é informado. `OTEL_SDK_DISABLED=true` tem precedência e desliga a instrumentação/exportação. Sem endpoint, a aplicação continua com seus contratos anteriores e logs JSON, sem tentar contactar um Collector. O código usa o exporter **OTLP HTTP/protobuf**; não foi acrescentado SDK de métricas nem exportação de logs neste passo.
 
