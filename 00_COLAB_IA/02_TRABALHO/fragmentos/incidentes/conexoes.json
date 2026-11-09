@@ -1,0 +1,70 @@
+[
+  [
+    "REQ-OBR-05",
+    "Aula 7 relaciona rollback ao estado desejado e à reconciliação GitOps."
+  ],
+  [
+    "REQ-OBR-16",
+    "Aulas 1–2 ligam condição, impacto, contexto e ação ao alerta inteligente."
+  ],
+  [
+    "REQ-OBR-17",
+    "Aulas 3–4 estudam abertura/roteamento de incidentes; conferir restrição atual do OpsGenie."
+  ],
+  [
+    "REQ-OBR-18",
+    "Aula 5 organiza conteúdo e recebimento da notificação detalhada."
+  ],
+  [
+    "REQ-OBR-19",
+    "Aulas 6–7 explicam reação automática, tentativa corretiva e verificação; simulações devem virar integração real."
+  ],
+  [
+    "REQ-OBR-22",
+    "Runbooks versionados sustentam a entrega dos scripts/automações."
+  ],
+  [
+    "REQ-OBR-23",
+    "A cadeia de resposta gera evidência de operação, distinta de configuração."
+  ],
+  [
+    "REQ-OBR-28",
+    "Engenharia de Caos ajuda a planejar a falha proposital e observar seu efeito."
+  ],
+  [
+    "REQ-OBR-29",
+    "Qualidade do alerta ajuda a demonstrar a condição Firing no cenário escolhido."
+  ],
+  [
+    "REQ-OBR-30",
+    "Gestão de incidentes e ChatOps permitem mostrar abertura e notificação chegando."
+  ],
+  [
+    "REQ-OBR-31",
+    "O runbook precisa mostrar acionamento automático e ação corretiva executada."
+  ],
+  [
+    "REQ-OBR-37",
+    "A notificação detalhada fornece a evidência visual de ChatOps para o relatório."
+  ],
+  [
+    "REQ-OBR-38",
+    "Registro da execução oferece log/print da automação de Self-Healing."
+  ],
+  [
+    "REQ-OBR-40",
+    "Comparar papéis e disponibilidade sustenta a justificativa PagerDuty versus OpsGenie; a parte APM é estudada no módulo APM."
+  ],
+  [
+    "SUG-01",
+    "Organizar timeline e evidências por requisito e ensaiar a demonstração completa."
+  ],
+  [
+    "SUG-02",
+    "Escolher contexto/janela, agrupamento e deduplicação para reduzir ruído."
+  ],
+  [
+    "SUG-04",
+    "Limitar escopo/repetições e verificar recuperação da automação."
+  ]
+]

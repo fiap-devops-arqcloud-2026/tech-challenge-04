@@ -1,0 +1,74 @@
+package main
+
+import (
+	"encoding/json"
+	"log/slog"
+	"net/http"
+)
+
+// EvaluationResponse é o JSON devolvido ao cliente em GET /evaluate
+type EvaluationResponse struct {
+	FlagName string `json:"flag_name"` // nome da flag avaliada
+	UserID   string `json:"user_id"`   // usuário para quem foi avaliada
+	Result   bool   `json:"result"`    // o veredito: true (liberado) ou false (negado)
+}
+
+// healthHandler responde ao GET /health — usado pelos probes do Kubernetes
+// e pelo healthcheck do docker compose para saber se o serviço está vivo.
+func (a *App) healthHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	// errcheck: o retorno de Encode precisa ser verificado. Aqui o
+	// cabecalho ja foi enviado, entao nao da para trocar o status HTTP -
+	// o que resta e registrar a falha no log para nao perder o sinal.
+	if err := json.NewEncoder(w).Encode(map[string]string{"status": "ok"}); err != nil {
+		slog.WarnContext(r.Context(), "http.response.write.failed")
+	}
+}
+
+// evaluationHandler atende ao GET /evaluate?user_id=...&flag_name=... — o
+// endpoint mais importante do sistema (hot path). Fluxo: valida parâmetros →
+// decide (cache/serviços) → publica o evento no SQS SEM bloquear → responde.
+func (a *App) evaluationHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	// 1. Parsear os query parameters
+	userID := r.URL.Query().Get("user_id")
+	flagName := r.URL.Query().Get("flag_name")
+
+	if userID == "" || flagName == "" {
+		http.Error(w, `{"error": "user_id e flag_name são obrigatórios"}`, http.StatusBadRequest)
+		return
+	}
+
+	// 2. Obter a decisão (lógica de cache/serviço está em evaluator.go)
+	result, err := a.getDecision(r.Context(), userID, flagName)
+	if err != nil {
+		// Se o erro for "não encontrado", retornamos 'false' (comportamento seguro)
+		if _, ok := err.(*NotFoundError); ok {
+			result = false
+		} else {
+			// Outros erros (serviços offline, etc)
+			slog.ErrorContext(r.Context(), "evaluation.failed")
+			http.Error(w, `{"error": "Erro interno ao avaliar a flag"}`, http.StatusBadGateway)
+			return
+		}
+	}
+
+	// 3. Enviar evento para SQS (assincronamente)
+	// Isso não bloqueia a resposta para o cliente.
+	a.publishEvaluationEvent(r.Context(), userID, flagName, result)
+
+	// 4. Retornar a resposta
+	w.WriteHeader(http.StatusOK)
+	// errcheck: o retorno de Encode precisa ser verificado. Aqui o
+	// cabecalho ja foi enviado, entao nao da para trocar o status HTTP -
+	// o que resta e registrar a falha no log para nao perder o sinal.
+	if err := json.NewEncoder(w).Encode(EvaluationResponse{
+		FlagName: flagName,
+		UserID:   userID,
+		Result:   result,
+	}); err != nil {
+		slog.WarnContext(r.Context(), "http.response.write.failed")
+	}
+}

@@ -1,0 +1,99 @@
+# ============================================================
+# EXEMPLO DE terraform.tfvars
+# ============================================================
+# Copie para terraform.tfvars e ajuste se precisar:
+#   cp terraform.tfvars.example terraform.tfvars
+#
+# O .gitignore versiona apenas este .example - o terraform.tfvars real
+# fica de fora, porque no futuro ele pode conter valor sensivel.
+#
+# Valores herdados ilustram a base importada. A conta e obrigatoria e
+# ainda nao foi informada. Confirmar regiao, tipos, cotas e orcamento
+# antes de qualquer implantacao; nao presumir beneficio Free Tier.
+# ============================================================
+
+# Regiao proposta para a infraestrutura; confirmar na nova conta.
+aws_region = "us-east-2"
+
+# Obrigatorio: substituir somente quando o usuario confirmar a nova conta.
+# O provider rejeita credenciais que nao correspondam a este ID.
+expected_aws_account_id = "CONTA_AWS_PENDENTE"
+
+# Prefixo dos nomes. Mudar aqui obriga a mudar os manifestos em gitops/.
+project_name = "togglemaster"
+
+# Tags da Fase 4; nao sao confirmacao de bucket/recurso ja criado.
+default_tags = {
+  project = "fiap"
+  phase   = "4"
+}
+
+# ------------------------------------------------------------
+# ATENCAO - controle de custo durante a Etapa 1
+# ------------------------------------------------------------
+# Na Etapa 1 nao existe nada rodando em subnet privada, entao o NAT
+# Gateway ficaria ocioso cobrando cerca de US$ 33/mes.
+#
+# Deixe false ate comecar a Etapa 2 (EKS, RDS, ElastiCache). Nesse
+# momento troque para true, ou os nos do cluster nao conseguirao baixar
+# imagem nenhuma do ECR e os pods ficarao presos em ImagePullBackOff.
+#
+# Fase 4: com o cluster no ar, o NAT tambem e a UNICA saida da stack de
+# observabilidade para a internet: o Collector envia traces ao New
+# Relic, e o Grafana chama PagerDuty, Slack e a API do GitHub (dispatch
+# do self-healing). Sem NAT, os alertas disparam e ninguem e avisado.
+# ------------------------------------------------------------
+enable_nat_gateway = false
+
+# Faixa de IPs da VPC inteira.
+vpc_cidr = "10.0.0.0/16"
+
+# Duas zonas: exigencia do EKS e do DB subnet group do RDS.
+availability_zones = ["us-east-2a", "us-east-2b"]
+
+# Uma subnet privada por zona, na mesma ordem da lista acima.
+private_subnet_cidrs = ["10.0.1.0/24", "10.0.2.0/24"]
+
+# Uma subnet publica por zona.
+public_subnet_cidrs = ["10.0.101.0/24", "10.0.102.0/24"]
+
+# Os 5 microsservicos. Cada um vira um repositorio <servico>-service no ECR.
+services = ["auth", "flag", "targeting", "evaluation", "analytics"]
+
+# Nome fixado pelo enunciado. Nao alterar.
+dynamodb_table_name = "ToggleMasterAnalytics"
+
+# MUTABLE permite re-executar o workflow sobre o mesmo commit - util durante
+# a gravacao do video. IMMUTABLE e mais seguro, mas quebra re-execucoes.
+ecr_image_tag_mutability = "MUTABLE"
+
+# Imagens mantidas por repositorio antes de as antigas expirarem.
+ecr_images_to_keep = 10
+
+# Identidade OIDC confirmada em 2026-10-28; somente main publica no CI.
+github_repository          = "fiap-devops-arqcloud-2026/tech-challenge-04"
+github_repository_owner_id = "287716251"
+github_repository_id       = "1373159817"
+github_deploy_branch       = "main"
+
+# ------------------------------------------------------------
+# Provedor OIDC do GitHub
+# ------------------------------------------------------------
+# A AWS permite um unico provedor OIDC por endereco em cada conta.
+#   true  = esta camada cria o provedor (conta sem OIDC do GitHub).
+#   false = reaproveita um provedor que outro projeto ja criou.
+# Descubra o seu caso com:
+#   aws iam list-open-id-connect-providers
+# Se a lista mostrar token.actions.githubusercontent.com, use false.
+#
+# Conta da Fase 4: o provedor foi criado no console na preparacao da
+# conta (junto com a role do CI), entao o valor aqui e false.
+create_github_oidc_provider = false
+
+# ------------------------------------------------------------
+# Recursos criados no console antes do primeiro apply
+# ------------------------------------------------------------
+# true adota no estado os 5 ECR, a role e a policy do CI (imports.tf).
+# Depois do primeiro apply pode ficar true (o import nao se repete);
+# depois de um destroy, volte para false.
+import_manual_resources = true

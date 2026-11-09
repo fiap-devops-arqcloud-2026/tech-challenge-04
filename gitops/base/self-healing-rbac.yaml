@@ -1,0 +1,70 @@
+# ============================================================
+# RBAC - o que o self-healing pode fazer no cluster (Fase 4)
+# ============================================================
+# O workflow self-healing.yml chega ao cluster com a role IAM
+# togglemaster-self-healing. O access entry da camada terraform/cluster
+# coloca essa role no grupo Kubernetes `togglemaster-self-healing`, e
+# este arquivo diz o que o grupo pode fazer - SO neste namespace, porque
+# e um Role (e nao um ClusterRole).
+#
+# MENOR PRIVILEGIO, EM DUAS CAMADAS:
+#   - ler Deployments, ReplicaSets e Pods do namespace: necessario para
+#     o `kubectl rollout status` acompanhar a troca de pods e para o log
+#     do workflow mostrar o resultado;
+#   - alterar (patch) SO os 5 Deployments da aplicacao, listados por
+#     nome. O `kubectl rollout restart` e um patch que grava a anotacao
+#     kubectl.kubernetes.io/restartedAt no template do pod.
+# Nao ha create, delete nem acesso a Secrets: mesmo com o token do
+# workflow nas maos, ninguem apaga nem le credenciais por aqui.
+#
+# A lista de nomes repete a allowlist do script de self-healing de
+# proposito: se um dos dois for afrouxado por engano, o outro segura.
+# ============================================================
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+
+metadata:
+  name: self-healing
+
+rules:
+  # Leitura para acompanhar o reinicio e mostrar os pods no log do
+  # workflow. Fica no namespace inteiro, e nao por nome: list/watch so
+  # respeitam resourceNames quando o cliente filtra por metadata.name, e
+  # o `kubectl get pods -l app=...` do workflow lista por label.
+  - apiGroups: ["apps"]
+    resources: ["deployments", "replicasets"]
+    verbs: ["get", "list", "watch"]
+
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "watch"]
+
+  # A unica escrita: reiniciar um dos 5 servicos.
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    resourceNames:
+      - auth-service
+      - flag-service
+      - targeting-service
+      - evaluation-service
+      - analytics-service
+    verbs: ["patch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+
+metadata:
+  name: self-healing
+
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: self-healing
+
+subjects:
+  # Mesmo nome de kubernetes_groups em terraform/cluster/self-healing.tf.
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: togglemaster-self-healing

@@ -1,0 +1,1145 @@
+{
+ "temas": [
+  {
+   "tema": "Ordem de subida, bootstrap e destruição das camadas Terraform",
+   "itens": [
+    {
+     "titulo": "Ordem obrigatória: base, imagens no ECR, cluster, kubeconfig, k8s; destroy na ordem inversa",
+     "texto_final": "Ordem de subida validada na Fase 3 (2026-09-15): base → publicação das 5 imagens no ECR → cluster → aws eks update-kubeconfig → k8s em duas etapas → schemas e seed; destruição na ordem inversa (k8s → cluster → base). Cada camada lê o estado da anterior, e fora de ordem o plan falha. Aplicar a k8s antes de haver imagens deixou os pods em ImagePullBackOff, e destruir a base apaga o ECR com as imagens (force_delete). A base vem primeiro também porque cria o OIDC/role que destrava o CI (plano de 2026-08-27).",
+     "data": "2026-08-27 a 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/DECISOES.md:29-43",
+      "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:13",
+      "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:122-123",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_EXECUCAO.md:35-38",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:23-31",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:425",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:363",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:192-197"
+     ],
+     "ja_coberto_em": "terraform/README.md:15 (seção 'Camadas e estados separados'); docs/GUIA_DE_REPRODUCAO.md 'Caminho rápido' (l.16-34) e seção 10 (histórico da Fase 3)",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "terraform/README.md:15 declara base → publicação das imagens → cluster → k8s; cluster e k8s leem remote state (terraform/README.md tabela l.9-13). Chaves de estado agora são phase4/prod/*.tfstate, não prod/*.tfstate da Fase 3.",
+     "relacao_fase4": "P-015 B3 (apply base → merge main → cluster → k8s); GIT-03 (overlay em sentinelas e bootstrap das imagens sem procedimento); DOC-02 (sem roteiro vigente); TFK-03 (Application observa main sem gitops/); F-021 (runbook).",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Camada k8s em duas etapas por causa do CRD Application",
+     "texto_final": "Em cluster novo, o plan da camada k8s falha com 'no matches for kind \"Application\"', porque o kubernetes_manifest valida o CRD já no plan e o CRD só existe depois que o Helm instala o ArgoCD; depends_on não resolve (F-043 da Fase 3, observado em 2026-09-11). Procedimento: etapa A com plan/apply -target=helm_release.argocd e etapa B com o restante (Secrets, StorageClass, Application); o aviso sobre -target é esperado. O mesmo cuidado vale para qualquer CRD novo (ServiceMonitor, PrometheusRule, operadores) criado pela camada k8s.",
+     "data": "2026-09-09 a 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_EXECUCAO.md:35-38",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:113-114",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:42-48",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:111",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:50",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:63",
+      "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:127",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:428-457",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:759-777",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:211-222"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md seção 7 (l.446-452) e seção 11; comentário em terraform/k8s/argocd.tf:228-252",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "terraform/k8s/argocd.tf:270 (kubernetes_manifest.app_togglemaster) e :352 (depends_on = [helm_release.argocd]); comentário :241 já diz que depends_on NÃO resolve, mas :350-351 ainda afirma que sem o depends_on o apply falharia, o que pode confundir.",
+     "relacao_fase4": "TFK-01 (camada k8s sem nada de E2/E3); TFK-05 (Application sem dependência explícita de namespace/Secrets/StorageClass); DOC-02; P-015 B3.",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "ECR vazio e republicação das imagens",
+     "texto_final": "O ECR nasce vazio em conta nova e é apagado no destroy da base. Imagens só são publicadas por push na main: os jobs image e gitops exigem github.event_name == 'push' e ref main, então dev, PR e workflow_dispatch só verificam. Em 2026-09-15 a republicação foi por gh run rerun (sem --failed) do último run de push na main de cada serviço; o rerun usa o workflow e o .trivyignore do commit antigo e só vale para runs recentes (cerca de 30 dias [INCERTO]). Na conta nova o caminho é um commit na main que toque services/<svc>/** ou os _ci-*.yml, depois de a base e a role do CI existirem; conferir com gh run list e aws ecr list-images.",
+     "data": "2026-09-14 / 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:52",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:77",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:618-736",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1537-1541",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:219-244",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:288-331",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:1028-1037",
+      "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:87"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md seção 5 (l.310-352) e seção 11; docs/ARQUITETURA.md seção 5 (l.247-249)",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": ".github/workflows/_ci-go.yml:331 e :494; .github/workflows/_ci-python.yml:364 e :524 (if push && refs/heads/main); workflow_dispatch presente em .github/workflows/flag-service.yml e auth-service.yml.",
+     "relacao_fase4": "CIC-13 (workflow_dispatch não publica); GIT-03 (bootstrap das 5 imagens); XCL-08 e TFB-05 (role/identidade do CI); P-015 B3.",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "kubeconfig após recriação e principal IAM único",
+     "texto_final": "Depois de recriar o EKS é preciso rodar aws eks update-kubeconfig; sem isso o kubectl fala com o endpoint antigo (observado em 2026-09-15). Só o principal IAM que criou o cluster recebe admin automático (bootstrap_cluster_creator_admin_permissions = true); outro usuário recebe Unauthorized. Usar o mesmo perfil AWS nas três camadas e no kubectl.",
+     "data": "2026-09-11 / 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:125-126",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:53",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:749-757"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md seção 0 (l.54), seção 6 (l.418-422) e seção 11",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "terraform/modules/eks/main.tf:102 (bootstrap_cluster_creator_admin_permissions = true); terraform/k8s/providers.tf:44.",
+     "relacao_fase4": "TFC-02 (sem access entry para a role do self-healing nem admin explícito); XCL-08 (pré-requisitos do self-healing).",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Nunca usar terraform apply interativo",
+     "texto_final": "Sempre usar terraform plan -out=<camada>.tfplan seguido de terraform apply <camada>.tfplan; no destroy, plan -destroy -out e apply do plano. Em 2026-09-15, colar um bloco com apply interativo fez a linha seguinte virar a resposta do 'yes'.",
+     "data": "2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/DECISOES.md:33",
+      "docs/00_COLAB_IA/DECISOES.md:38"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md seção 4 (l.292-294) e seção 11 (segunda linha da tabela)",
+     "vale_no_codigo_atual": "nao_se_aplica",
+     "evidencia_atual": "Regra operacional; não há código a conferir.",
+     "relacao_fase4": "P-015 B3/B5 (applies e destroy na conta nova).",
+     "relevancia": "alta",
+     "destino": "LEIA-PRIMEIRO"
+    }
+   ]
+  },
+  {
+   "tema": "NAT Gateway",
+   "itens": [
+    {
+     "titulo": "Ligar o NAT antes do cluster e desligar ao fim; tfvars.example vem com NAT desligado",
+     "texto_final": "O NAT Gateway fica na camada base, que não é destruída nas pausas (D-017 da Fase 3); ligá-lo antes do cluster e desligá-lo ao fim é um passo próprio e o mais esquecido. Sem NAT, os nós em subnet privada não baixam imagens do ECR nem falam com o control plane, e todos os pods ficam em ImagePullBackOff. O terraform.tfvars.example traz enable_nat_gateway = false, contra o padrão true da variável; copiá-lo sem trocar deixa o cluster sem saída.",
+     "data": "2026-09-09 a 2026-09-15; conferido em 2026-11-01",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:179-201",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:613-627",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:657",
+      "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:129",
+      "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:35",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:28",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:296-298"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md:235 e seção 11",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "terraform/terraform.tfvars.example:41 (enable_nat_gateway = false); terraform/variables.tf:100-111 (default = true).",
+     "relacao_fase4": "TFK-10 (tfvars.example desalinhado); TFC-12 (cluster não verifica se a base criou o NAT); P-015 B2 (tfvars).",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    }
+   ]
+  },
+  {
+   "tema": "Destruição, discos órfãos e encerramento da conta",
+   "itens": [
+    {
+     "titulo": "Ordem de encerramento completo",
+     "texto_final": "Ordem documentada em 2026-09-11 (P-053 da Fase 3): encerrar a Application do ArgoCD → destroy da k8s → confirmar PV/EBS apagado → destroy do cluster → destroy da base → conferir sobras → bucket de estado versionado por último. A Application não tem finalizer e tem selfHeal ligado; encerrá-la antes evita disputa entre o selfHeal e a remoção do namespace. Antes de aplicar o destroy da base, procurar o provedor OIDC na lista de destruição; se for reaproveitado ou de outro projeto, parar.",
+     "data": "2026-09-11 a 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:7",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:8",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:9",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:71",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:148",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:157",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:161",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:749-811",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:897-915"
+     ],
+     "ja_coberto_em": "terraform/README.md:65 (PVC antes do cluster, bucket por último); docs/GUIA_DE_REPRODUCAO.md seção 10 (l.598-618)",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "terraform/k8s/argocd.tf:325 (selfHeal = true); nenhum finalizer declarado em terraform/k8s/argocd.tf (grep em 2026-11-01).",
+     "relacao_fase4": "TFK-05 (ordem de criação e destruição); GIT-04/TFK-06 (selfHeal); TFC-05; P-015 B5 (destroy depois da gravação).",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "EBS do PVC fica órfão se o cluster sair antes da camada k8s",
+     "texto_final": "O PVC do PostgreSQL do targeting usa um EBS gp3 de 5 GiB criado pelo EBS CSI, fora dos três estados Terraform; a StorageClass usa reclaim_policy Delete, e o driver só apaga o disco se EKS, nós e CSI estiverem vivos. Em 2026-09-15 o destroy da k8s antes do cluster apagou o disco como esperado; se o cluster cair antes, o disco fica cobrando. Conferir com kubectl wait --for=delete pv/... (300 s) e aws ec2 describe-volumes vazio, sem avançar com volume in-use, available ou deleting. Na Fase 4, PVCs de Prometheus/Loki/Grafana em namespace criado pelo ArgoCD não são apagados pelo destroy da k8s.",
+     "data": "2026-09-11 / 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/DECISOES.md:37",
+      "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:128",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:8-9",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:7",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:77-89",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:118-131",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:193"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md:629 e :642; terraform/README.md:65",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "terraform/k8s/storageclass.tf:61 (reclaim_policy = \"Delete\") e :66 (gp3); gitops/base/postgres-targeting/statefulset.yaml:164 (storage: 5Gi). A tag ebs.csi.aws.com/cluster-name=togglemaster foi observada em 2026-09-11, sem garantia para outras versões do CSI.",
+     "relacao_fase4": "TFC-05 (EBS órfãos dos PVCs da stack de observabilidade); GIT-13 (descartado na P-015 como já tratado para o targeting).",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Conferência de sobras depois do destroy",
+     "texto_final": "Checklist pós-destroy em us-east-2 (2026-09-11/15), todas as saídas vazias: eks list-clusters, rds describe-db-instances, elasticache describe-replication-groups, NAT em 'available', describe-addresses, describe-volumes (EBS soltos), load balancers, log groups de RDS/EKS, Secrets Manager e get-resources por tags project/phase. Tags e estados vazios não provam conta vazia: APIs regionais não cobrem IAM nem outras regiões; na Fase 3 varreram-se us-east-1, us-east-2 e sa-east-1 e o Cost Explorer. O destroy do cluster apaga os RDS sem snapshot.",
+     "data": "2026-09-11 / 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:167-193",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:629-649",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1416-1524",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:749-811",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:992-996",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:161"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md seção 10 (l.631-658)",
+     "vale_no_codigo_atual": "parcial",
+     "evidencia_atual": "Divergência: docs/GUIA_DE_REPRODUCAO.md:655 filtra Key=phase,Values=3, mas as três raízes da Fase 4 usam phase=4 (terraform/README.md:44).",
+     "relacao_fase4": "TFC-05; DOC-02 (guia histórico com comandos incompatíveis); CIC-16 (resquícios da Fase 3); P-015 B5.",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Bucket de estado: fora do Terraform, apagado por último",
+     "texto_final": "O bucket S3 de estado é criado fora do Terraform antes do primeiro init e nenhum destroy o apaga; o backend usa use_lockfile = true, que exige Terraform ≥ 1.11. Com versionamento, aws s3 rb --force não remove versões antigas: só após a conferência final e sem processo Terraform ativo, usar no console 'Empty' (objetos, versões e marcadores de exclusão) e depois 'Delete'. Estados antigos contêm segredos; cópia para auditoria só protegida e fora do Git.",
+     "data": "2026-08-27 / 2026-09-11",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:35",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:98",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:130",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:195-206"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md:660; terraform/README.md:65 (bucket por último)",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "terraform/backend.tf:17 e :45 (use_lockfile = true, Terraform >= 1.11); terraform/cluster/backend.tf:15. Bucket da Fase 4 criado pelo usuário em 2026-10-30 (PENDENCIAS P-003).",
+     "relacao_fase4": "P-003 (bucket e backend próprios); DOC-13; encerramento da conta nova após a entrega.",
+     "relevancia": "media",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Erros comuns no bootstrap do bucket e do backend",
+     "texto_final": "Diagnóstico registrado em 2026-08-27: 'BucketAlreadyOwnedByYou' = bucket já criado; 'Bucket with the same name already exists' = nome usado em outra conta; 'IllegalLocationConstraintException' = faltou LocationConstraint=us-east-2; bucket na região errada não se move, é preciso apagar e refazer. 'Error acquiring the state lock' = apply em andamento ou travado; terraform force-unlock <ID> só com certeza. Reclamação de use_lockfile indica Terraform < 1.11, e 'region ... does not match' indica backend em região diferente da do bucket.",
+     "data": "2026-08-27",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/BOOTSTRAP-BACKEND-S3_2026-08-27.md:328-339"
+     ],
+     "ja_coberto_em": "Não está nos documentos vigentes; docs/GUIA_DE_REPRODUCAO.md seção 3 traz só a criação do bucket.",
+     "vale_no_codigo_atual": "nao_verificavel",
+     "evidencia_atual": "Comportamento da AWS/Terraform; não verificável no código.",
+     "relacao_fase4": "P-003 (init da base pendente, com autorização); bucket já criado em 2026-10-30, então pesam mais os erros de lock e região.",
+     "relevancia": "media",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "DependencyViolation em VPC ou subnet no destroy",
+     "texto_final": "Se o destroy travar em VPC ou subnet, identificar ENIs, interfaces ou Load Balancers remanescentes e seus donos antes de excluir, e depois retomar o destroy da camada que falhou; nunca apagar state ou lock para esconder recursos (2026-09-11). O caso típico é Load Balancer criado pelo Kubernetes; a base atual não tem Ingress nem Service LoadBalancer, mas expor Grafana ou outro endpoint assim reintroduz o risco.",
+     "data": "2026-09-09 / 2026-09-11",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:165",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:608-611",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1416-1524"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md:644 (checagem de Load Balancers)",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "gitops/README.md:22 (Services ClusterIP, sem Ingress).",
+     "relacao_fase4": "Decisão de acesso ao Grafana/Prometheus (port-forward x LoadBalancer) na E3; TFC-05.",
+     "relevancia": "media",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Pipelines e identidade do CI durante o encerramento",
+     "texto_final": "Antes de destruir, combinar a janela, aguardar ou cancelar pipelines de publicação em andamento e desabilitar temporariamente os cinco workflows de serviço; eles publicam no ECR, mas não fazem terraform apply (2026-09-11). Destruir a identidade do CI interrompe as publicações até recriar a base. O provedor OIDC do GitHub é único por conta e pode ser compartilhado com outros projetos; conferir antes de excluir.",
+     "data": "2026-09-11",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:23",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:36"
+     ],
+     "ja_coberto_em": "Parcial: docs/GUIA_DE_REPRODUCAO.md seção 10 (l.613-617, OIDC fora do destroy quando reaproveitado).",
+     "vale_no_codigo_atual": "nao_verificavel",
+     "evidencia_atual": "Procedimento operacional; terraform/variables.tf:237-241 confirma o modo de reaproveitar o provedor.",
+     "relacao_fase4": "XCL-08 e TFB-05 (o self-healing via Actions também depende dessa identidade); P-015 B5.",
+     "relevancia": "media",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Retenção de log groups e sobras de fases anteriores",
+     "texto_final": "Em 2026-09-15 foram limpos, na conta da Fase 3, log groups de RDS da Fase 2 sem expiração, a VPC da Fase 1 e roles IAM da Fase 2; o bucket de estado da Fase 3 e uma VPC da Fase 2 ficaram, bloqueados por permissão. Lição para a Fase 4: definir retenção em todo log group, inclusive os da stack de observabilidade, e prever a exclusão do bucket de estado no fim.",
+     "data": "2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:14-17",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:161"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md:648-651 (checagem de log groups de RDS/EKS)",
+     "vale_no_codigo_atual": "parcial",
+     "evidencia_atual": "terraform/modules/rds/main.tf e terraform/modules/messaging/main.tf contêm retenção (grep por retention, 2026-11-01); log groups de outros componentes não conferidos.",
+     "relacao_fase4": "TFC-07 (EKS sem logs do control plane); conta nova não tem as sobras da conta da Fase 3.",
+     "relevancia": "baixa",
+     "destino": "DOSSIE"
+    }
+   ]
+  },
+  {
+   "tema": "Bancos, schemas, seed e chave de serviço",
+   "itens": [
+    {
+     "titulo": "Schemas do RDS não são aplicados no caminho AWS; health verde não prova banco pronto",
+     "texto_final": "O Terraform cria RDS e bancos vazios; os init.sql de auth (api_keys) e flag (flags) só rodam automaticamente no Docker Compose. Na AWS, aplicá-los com pod descartável postgres:16-alpine rodando psql dentro do cluster (RDS em subnet privada), lendo a DATABASE_URL do Secret <svc>-secret; os scripts usam CREATE TABLE IF NOT EXISTS e conferem-se com \\dt. Sem isso, auth e flag respondem /health 200 e falham no primeiro INSERT com 'relation \"api_keys\" does not exist'; o targeting é exceção (schema por ConfigMap). Probes, alertas e demonstrações da Fase 4 não devem usar só o /health como prova de funcionamento.",
+     "data": "2026-09-09 a 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:331-345",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:432-445",
+      "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:130",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:50-56",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:40",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:29",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:62",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:92",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1001-1153",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:491-594"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md seção 8 (l.482-501) e seção 11; PENDENCIAS F-021 (schemas/seed no runbook)",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "services/auth-service/db/init.sql e services/flag-service/db/init.sql com CREATE TABLE IF NOT EXISTS; nenhum Job/hook de schema em gitops/ ou terraform/ (DOC-02 confirma que só o guia histórico tem esse passo).",
+     "relacao_fase4": "GIT-15 (probes rasas e idênticas); F-018 (auth transforma erro SQL em 401); F-021; DOC-02; candidato a cenário de incidente.",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Seed na AWS e dono único da SERVICE_API_KEY",
+     "texto_final": "Seed na AWS (2026-09-09/15): port-forward auth 8001, flag 8002, targeting 8003 e evaluation 8004; ler MASTER_KEY do auth-service-secret; POST /admin/keys gera chave tm_key_... mostrada uma única vez; substituir SERVICE_API_KEY no evaluation-service-secret (kubectl create secret ... --dry-run=client -o yaml | kubectl apply -f -) e fazer rollout restart do evaluation; criar flag (POST /flags) e regra PERCENTAGE 100 (POST /rules); conferir o DynamoDB ToggleMasterAnalytics com scan --select COUNT. O SERVICE_API_KEY do Terraform é provisório; o ignore_changes = [data] no Secret (F-046 da Fase 3) evita que novo apply restaure o valor, mas a regra é ter um único dono para a chave válida. /evaluate 502 com 401 no log significa chave que não confere com o banco.",
+     "data": "2026-09-09 a 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:465-557",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1205-1412",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:491-594",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:1008-1011",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:865-867",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:64-70",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:51",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:113-115",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:30-31",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:46"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md seção 8 (l.505-552), seção 9 e seção 11",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "terraform/k8s/secrets.tf:83 (random_password.service_api_key), :223 (SERVICE_API_KEY) e :256 (ignore_changes = [data]).",
+     "relacao_fase4": "Self-healing que reinicia pods não pode restaurar a chave provisória (E5); XCL-09 (contrato de segredos); gera tráfego para traces e alertas (E1/E3/E4).",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Parâmetros do /evaluate e única regra implementada",
+     "texto_final": "O /evaluate exige flag_name e user_id (outros nomes devolvem 400), e a única regra implementada é PERCENTAGE; user_ids não existe (auditoria de 2026-09-09). Para resultados determinísticos, usar PERCENTAGE 100 e 0, considerando o TTL do cache Redis. Reaproveitar os casos de scripts/integration/test-flow.py para gerar tráfego e cenários de erro.",
+     "data": "2026-09-09",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:58-62",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:39",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:93",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:134-135",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:22"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md seção 9 (l.578-582) e seção 11 ('/evaluate responde 400')",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "services/evaluation-service/handlers.go:36-37 (user_id, flag_name); services/evaluation-service/evaluator.go:262-264 (só PERCENTAGE); scripts/integration/test-flow.py existe.",
+     "relacao_fase4": "F-017 (targeting indisponível vira result=true); geração de carga para dashboard, alerta e falha proposital (E4/E5).",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Armadilhas do ambiente local (Compose)",
+     "texto_final": "No Compose local (2026-09-15): /evaluate 502 com 401 no log indica que a SERVICE_API_KEY do .env não existe no banco atual (chave copiada de outra máquina não funciona); depois de down -v é preciso recriar a chave e o evaluation. Só as portas 8001-8005 são ajustáveis no .env, e HTTP 400 indica parâmetros diferentes de flag_name e user_id.",
+     "data": "2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:205-209",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1559-1563"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md Apêndice A (l.701-740); observability/README.md (laboratório local)",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": ".env.example:14-18 (AUTH_PORT a ANALYTICS_PORT 8001-8005).",
+     "relacao_fase4": "Laboratório local de observabilidade (P-005/P-008; B1 E1 externa via Compose).",
+     "relevancia": "media",
+     "destino": "DOSSIE"
+    }
+   ]
+  },
+  {
+   "tema": "Valores por conta no overlay GitOps",
+   "itens": [
+    {
+     "titulo": "REDIS_URL, fila, ARNs IRSA e imagens fixos no overlay",
+     "texto_final": "REDIS_URL, AWS_SQS_URL, ARNs IRSA e imagens ficam fixos em gitops/overlays/prod (patches/endpoints.yaml, patches/irsa.yaml e kustomization.yaml). Na Fase 3, o placeholder PREENCHER no Redis impediu o evaluation de conectar (2026-09-09); a correção foi um comando que lê terraform output redis_url e substitui o valor, comparando também irsa_role_arns após cada apply do cluster. A mudança vai à main por branch temporária ou PR (para não levar a dev junto), e o ArgoCD aplica em até 30 s. O esquema deve casar com o TLS: redis:// sem TLS, rediss:// com TLS (variável redis_transit_encryption).",
+     "data": "2026-09-09 / 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:72-76",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:52",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:463-476",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:977-1006",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:250",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:320",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:363",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:30-31",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:653-664"
+     ],
+     "ja_coberto_em": "gitops/README.md seção 'Conta nova: o que preencher' (l.24-36); docs/GUIA_DE_REPRODUCAO.md seção 6 (l.370-412)",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "gitops/overlays/prod/patches/endpoints.yaml:31 (REDIS_URL sentinela conta-pendente), :39 e :49 (AWS_SQS_URL); gitops/overlays/prod/kustomization.yaml:63-80 (imagens e tags conta-pendente); terraform/modules/elasticache/outputs.tf:24 (rediss/redis conforme TLS); terraform/cluster/variables.tf:151-156 (redis_transit_encryption padrão false).",
+     "relacao_fase4": "GIT-03 (overlay inteiro em sentinelas); TFC-08 (Redis sem TLS e sem AUTH); GIT-06 (ConfigMap sem hash não reinicia pods); P-015 B3.",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    }
+   ]
+  },
+  {
+   "tema": "CI/CD: estrutura, gatilhos e publicação",
+   "itens": [
+    {
+     "titulo": "Estrutura dos nove workflows e dos jobs",
+     "texto_final": "São nove workflows: 5 chamadores (um por serviço), 2 reutilizáveis (_ci-go.yml para auth e evaluation; _ci-python.yml para flag, targeting e analytics), Terraform Check e Compose Integration. Jobs: build/testes, lint (golangci-lint v2.13.2; flake8 e pylint), SAST (gosec v2.29.0; bandit), SCA (Trivy fs), image (scan da imagem antes do login e do push no ECR, tag v1.0.0-<sha7>) e gitops (kustomize edit set image e commit 'chore(gitops): <svc> para v1.0.0-<hash> [skip ci]'). O job image tem needs: [build, lint, sast, sca]: se um falha, image e gitops ficam skipped, ou seja, é portão antes e não checagem depois. Nenhum kubectl apply nos workflows (Fase 3, conferido por grep).",
+     "data": "2026-09-09 a 2026-09-15; conferido em 2026-11-01",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:194-230",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:299-338",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:678-693",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:91-105",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:118-119",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:47-57",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:145-157",
+      "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:30",
+      "docs/00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md:13"
+     ],
+     "ja_coberto_em": "docs/ARQUITETURA.md seção 5 (l.231-300); README.md seção 'CI/CD e a nova conta AWS' (l.206-218)",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "9 arquivos em .github/workflows/; _ci-go.yml:326 (needs), :388 (tag v1.0.0-<sha7>), :602 (commit [skip ci]). A dúvida da Fase 3 entre 7 e 9 workflows se resolve: 7 de serviço + Terraform Check + Compose Integration.",
+     "relacao_fase4": "CIC-01 (workflow de self-healing inexistente); CIC-03 (jobs herdam id-token/contents write); CIC-04 (actions por tag móvel); base do E5.",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Gatilhos por caminho e efeito de levar mudanças à main",
+     "texto_final": "Os pipelines de serviço disparam em push e PR para main e dev quando mudam services/<svc>/** (inclusive README), o workflow do serviço ou o _ci-*.yml da linguagem; gitops/** não está em filtro e o commit do robô leva [skip ci], então não há laço. Em dev e PR só rodam verificações; no push na main, image e gitops tentam OIDC e falham se a role não existir. Regra da Fase 3 (2026-09-15): só levar à main mudanças em services/** ou .github/workflows/** depois que a role do CI existir na conta. Diferença atual: Terraform Check e Compose Integration hoje também rodam em push na dev, o que a Fase 3 não fazia.",
+     "data": "2026-09-15; conferido em 2026-11-01",
+     "fontes": [
+      "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:72-89",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:14",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:107",
+      "docs/00_COLAB_IA/DECISOES.md:12",
+      "docs/00_COLAB_IA/DECISOES.md:24",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:618-736"
+     ],
+     "ja_coberto_em": "docs/ARQUITETURA.md seção 5 'Workflows e gatilhos' (l.235-249, desatualizada para terraform-check e compose); README.md:208",
+     "vale_no_codigo_atual": "parcial",
+     "evidencia_atual": ".github/workflows/flag-service.yml (push/PR em [main, dev], paths services/flag-service/**, flag-service.yml, _ci-python.yml); .github/workflows/terraform-check.yml e compose-integration.yml com push em [main, dev], enquanto docs/ARQUITETURA.md:242-243 mostra só main.",
+     "relacao_fase4": "XCL-08 e TFB-05 (role e pré-requisitos do self-healing); CIC-12 (Compose sem paths/concurrency); instrumentação OTel em services/** e self-healing em workflows exigem role antes do merge (P-015 B3).",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Filtros paths não incluem .pylintrc nem .trivyignore; checks obrigatórios",
+     "texto_final": "Mudanças só em .pylintrc não disparam os workflows Python, porque os filtros paths não incluem esse arquivo, embora o pylint o use (auditoria de 2026-09-09; continua igual, e o mesmo vale para .trivyignore). Se a main passar a exigir checks obrigatórios, workflows pulados por filtro de caminho podem deixar o check pendente e bloquear o PR (documentação do GitHub consultada em 2026-09-09).",
+     "data": "2026-09-09; conferido em 2026-11-01",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:115",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:130"
+     ],
+     "ja_coberto_em": "Não está nos documentos vigentes; só na P-015 (CIC-14).",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": ".github/workflows/flag-service.yml (paths sem .pylintrc/.trivyignore); .github/workflows/_ci-python.yml:229 (pylint --rcfile=.pylintrc); .pylintrc:37 (fail-under=7.0).",
+     "relacao_fase4": "CIC-14; CIC-02 (lint Python vai reprovar código OTel, correção prevista no B0).",
+     "relevancia": "media",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Robô do CI comita na main; sincronizar a dev",
+     "texto_final": "O job gitops faz git push origin HEAD:main, então a main anda sozinha e a dev fica atrás (19 commits em 2026-09-08). Antes de trabalhar: git switch dev, git fetch origin e git merge --ff-only origin/main (se falhar, git pull --no-rebase --no-edit origin main); push na main é recusado enquanto os bots gravam. No PR os jobs de imagem ficam 'skipping', e o scan da imagem só é exercitado no merge: no PR #6 (2026-09-10) os 7 workflows ficaram success, as 5 imagens saíram com tag v1.0.0-7ab0602 e houve 5 commits chore(gitops).",
+     "data": "2026-09-08 a 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/DECISOES.md:61-77",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:215-219",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:1028-1037"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md seção 5 (l.319-323, 343) e seção 11 ('git merge --ff-only ou git push recusados')",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": ".github/workflows/_ci-go.yml:578 (git reset --hard origin/main) e :602-608 (commit e git push origin HEAD:main).",
+     "relacao_fase4": "CIC-07 (force-push ou merge errado volta tags ao placeholder; selfHeal aplicaria); P-015 B3 e B6 (merge para a main).",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Laço idempotente do job gitops em vez de concurrency e rebase",
+     "texto_final": "Com 5 pipelines na main, concurrency de grupo compartilhado mantinha 1 execução rodando + 1 pendente e cancelava as anteriores, e git pull --rebase conflitava no kustomization.yaml, deixando o repositório no meio do rebase (2026-09-09). A correção é um laço de até 5 tentativas com fetch, reset --hard origin/main, kustomize edit set image, commit e push, com espera crescente; é idempotente e encerra com 'A tag ja esta correta' quando nada muda. Workflows de self-healing que gravem no repositório devem seguir o mesmo padrão.",
+     "data": "2026-09-09",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:283-292"
+     ],
+     "ja_coberto_em": "docs/ARQUITETURA.md seção 5 'Laço do job gitops' (l.295-297)",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": ".github/workflows/_ci-go.yml:502 (sem concurrency de propósito) e :569-614 (laço de 5 tentativas).",
+     "relacao_fase4": "CIC-01 (self-healing.yml a criar); CIC-07.",
+     "relevancia": "media",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Run cancelado por novo push e fila parada",
+     "texto_final": "Um novo push na mesma branch fora da main cancela o run anterior, e a tela mostra 'cancelled' em vez da falha; corrigir com gh run rerun do run cancelado e acompanhar com gh run watch. Fila parada (queued por mais de 5 min): cancelar runs não concluídos da dev, que não publicam nada. O plano gratuito do GitHub permitia até 20 jobs simultâneos por organização (registro de 2026-09-15), e um merge pela dev gera três ondas de runs (push na dev, PR e merge).",
+     "data": "2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:378-379",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:945-952",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:1017-1026",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:642-646",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:618-736"
+     ],
+     "ja_coberto_em": "docs/ARQUITETURA.md seção 5 'Permissões e concorrência' (l.290-293)",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": ".github/workflows/flag-service.yml: concurrency group ci-flag-service-${{ github.ref }}, cancel-in-progress só fora da main.",
+     "relacao_fase4": "CIC-12 (Compose sem concurrency); demonstração de pipeline e self-healing na gravação (B4).",
+     "relevancia": "media",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Falha de OIDC no CI e escopo da trust da role",
+     "texto_final": "'Could not assume role with OIDC' após cerca de 1 min indica role inexistente (base destruída ou apply em andamento), AWS_ROLE_ARN de outra conta ou github_repository diferente; terminar o apply e reexecutar. Na Fase 3 a role confiava em repo:<owner>/<repo>:* (qualquer branch ou PR) e só o if do workflow restringia a publicação à main. Na Fase 4, o HEAD da dev ainda tem StringLike com curinga, mas a árvore de trabalho já usa StringEquals com o subject imutável da branch (F-023), ainda sem commit.",
+     "data": "2026-09-15; conferido em 2026-11-01",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:642-646",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:705-706",
+      "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:148",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:23-31"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md seção 11 ('Could not assume role with OIDC'); PENDENCIAS P-010 F-023 e P-013",
+     "vale_no_codigo_atual": "parcial",
+     "evidencia_atual": "git show 3b21e65:terraform/modules/iam-ci/main.tf:136 e :144 (StringLike, repo:${var.github_repository}:*); árvore de trabalho terraform/modules/iam-ci/main.tf:81 e :141-147 (StringEquals com subject de branch).",
+     "relacao_fase4": "TFB-04 (correção só na árvore de trabalho); CMP-03 (SECURITY.md descreve trust antiga); XCL-08; F-023.",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    }
+   ]
+  },
+  {
+   "tema": "CI/CD: DevSecOps, versões e verificações locais",
+   "itens": [
+    {
+     "titulo": "Regra do Trivy, exceções nominais e rerun",
+     "texto_final": "Só CRITICAL bloqueia: os quatro scans usam severity CRITICAL, exit-code 1, ignore-unfixed false e .trivyignore com exceções nominais, datadas e justificadas. Em 2026-09-09 havia três CVEs de perl-base em python:3.12-slim (revisão marcada para 2026-10-15), e alpine:3.20 dos serviços Go tinha zero CRITICAL. Um CVE crítico novo sem mudança de código não se resolve com gh run rerun, que usa o .trivyignore do commit original: registrar a exceção (data, motivo, revisão) e publicar por commit na main, o que gera tags novas e cinco commits do robô.",
+     "data": "2026-09-09 a 2026-09-15; conferido em 2026-11-01",
+     "fontes": [
+      "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:30",
+      "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:87",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:910-943",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:184-187"
+     ],
+     "ja_coberto_em": "docs/ARQUITETURA.md seção 5 'Regra do Trivy' (l.275-279); docs/GUIA_DE_REPRODUCAO.md seção 11",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": ".github/workflows/_ci-go.yml:274-309 e :415-434 (CRITICAL, exit-code 1, ignore-unfixed false, trivyignores); .trivyignore com CVE-2026-13221, CVE-2026-8376 e CVE-2026-42496 e 'Revisar em: 2026-10-15'.",
+     "relacao_fase4": "CIC-08 (revisão vencida); F-022 (reexecutar DevSecOps); CIC-10 (relatório omite HIGH); CIC-14.",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Pipeline verde com continue-on-error escondia CVE crítico",
+     "texto_final": "Na Fase 3, passos de scan com continue-on-error imprimiam o achado e devolviam sucesso; assim o CVE-2026-56854 (crítico, golang.org/x/crypto v0.20.0) passou despercebido até a regra de bloqueio entrar (relatório de 2026-09-11). Lição: pipeline verde não prova código seguro. Em 2026-11-01 não há continue-on-error em .github/workflows; revisar todo job novo, inclusive o de self-healing.",
+     "data": "2026-09-11; conferido em 2026-11-01",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:176-190",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:105-109"
+     ],
+     "ja_coberto_em": "Não está nos documentos vigentes.",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "grep -rn continue-on-error .github/workflows sem resultado (2026-11-01); services/auth-service/go.mod:48 (golang.org/x/crypto v0.55.0).",
+     "relacao_fase4": "CIC-01 (self-healing.yml a criar); CIC-10.",
+     "relevancia": "media",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Versões de actions e ferramentas que quebraram e foram fixadas",
+     "texto_final": "Em 2026-09-08, aquasecurity/trivy-action@0.28.0 nunca existiu ('Unable to resolve action') e foi trocada pelo SHA da v0.36.0, conferido na API do GitHub; gosec v2.21.4 não compilava com o toolchain atual e passou a v2.29.0. golangci-lint v1.61 recusava go.mod mais novo; usa-se a action v9 com a ferramenta v2.13.2. kubectl kustomize não tem 'edit', por isso o job gitops instala o kustomize standalone 5.4.3 (F-027/P-036 da Fase 3). Regra: conferir que a versão existe antes de fixar e preferir SHA.",
+     "data": "2026-08-27 / 2026-09-08; conferido em 2026-11-01",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:381-389",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:238-239",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:425",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:387"
+     ],
+     "ja_coberto_em": "docs/ARQUITETURA.md seção 5 'O que está fixado e o que não está' (l.264-273); docs/GUIA_DE_REPRODUCAO.md seção 11 (kustomize edit)",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": ".github/workflows/_ci-go.yml:66 (KUSTOMIZE_VERSION 5.4.3), :161 (golangci-lint-action@v9), :217 (Go 1.25 no SAST; a fonte de 2026-09-08 citava Go 1.23, depois elevado), :230 (gosec v2.29.0), :274 (trivy-action por SHA, v0.36.0).",
+     "relacao_fase4": "CIC-04 (só o Trivy está por SHA); CIC-11 (ferramentas Python sem versão e kustomize sem checksum).",
+     "relevancia": "media",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Versões e imagens base herdadas",
+     "texto_final": "Base herdada registrada em 2026-09-11 e ainda igual no código: Go 1.25 (exigido por golang.org/x/crypto v0.55.0), golangci-lint 2.x, alpine:3.20 nos serviços Go, python:3.12-slim nos serviços Python, EKS 1.34, RDS db.t3.micro e Redis cache.t3.micro. Conferir antes do primeiro build na conta nova se as versões seguem válidas e se os CVEs do .trivyignore ganharam correção.",
+     "data": "2026-09-11; conferido em 2026-11-01",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:184-187",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:194-209",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:255-261",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:663-665"
+     ],
+     "ja_coberto_em": "docs/ARQUITETURA.md seções 2 e 5",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "services/*/Dockerfile (FROM alpine:3.20 nos Go; python:3.12-slim nos Python); services/auth-service/go.mod:3 e :48; terraform/cluster/variables.tf:76 (1.34), :118 (db.t3.micro), :148 (cache.t3.micro).",
+     "relacao_fase4": "CIC-08; TFC-03; F-022.",
+     "relevancia": "media",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Riscos esperados na primeira execução do CI",
+     "texto_final": "Riscos registrados em 2026-09-09, em ordem de probabilidade: Trivy fs nos serviços Python com pins antigos (Flask==2.2.2, requests==2.28.1, gunicorn==20.1.0, Werkzeug<3); pylint abaixo de --fail-under=7.0; gosec/bandit só em severidade alta, com achado real corrigido e não afrouxado; CVE de sistema nas imagens base, resolvido reconstruindo. Recomendação: rodar primeiro na dev, onde nada é publicado. Os mesmos pins continuam em flag-service e targeting-service.",
+     "data": "2026-09-09; conferido em 2026-11-01",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:167-188"
+     ],
+     "ja_coberto_em": "Não está nos documentos vigentes.",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "services/flag-service/requirements.txt e services/targeting-service/requirements.txt (Flask==2.2.2, gunicorn==20.1.0, requests==2.28.1, Werkzeug<3); .pylintrc:37 (fail-under=7.0). A duplicidade de Flask no flag-service citada na fonte não aparece mais.",
+     "relacao_fase4": "CIC-02 (pylint sem dependências reprovaria o código OTel); CIC-08; P-015 B0.",
+     "relevancia": "media",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Trivy local diverge do CI; dependência vulnerável na primeira linha",
+     "texto_final": "Em 2026-09-15, o Trivy 0.74 local não leu pacotes listados depois de setuptools<81 e Werkzeug<3, enquanto o CI (Trivy v0.70.0, instalado pelo trivy-action fixado por SHA) detectou normalmente; não confiar no Trivy local. Na demo de SCA, PyYAML==5.3.1 na primeira linha do requirements.txt do flag-service falhou com CVE-2020-14343 CRITICAL e PyYAML==6.0.1 passou; na última linha, versões novas do Trivy não enxergavam o pacote, por isso inserir no topo (sed -i '1i ...').",
+     "data": "2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:131",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:66",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:337-345",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:243-251",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:642-645"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md seção 11 ('Trivy local não acusa o que o CI acusa') e Apêndice B (l.759-786); docs/ARQUITETURA.md:268 (Trivy v0.70.0)",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "services/flag-service/requirements.txt:8 (PyYAML==6.0.1); .github/workflows/_ci-python.yml:308 e :446 (trivy-action por SHA v0.36.0).",
+     "relacao_fase4": "F-022; eventual nova demonstração de SCA no vídeo da Fase 4.",
+     "relevancia": "media",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Compose Integration como teste integrado",
+     "texto_final": "O Compose Integration executa scripts/test-compose.sh com Moto no lugar da AWS e limite de 20 min: health dos 5 serviços, credencial inválida, criação e validação de chave, persistência no PostgreSQL, flags e regras 0%/100%, cache Redis com TTL e SQS → DynamoDB simulado com remoção das mensagens. A chave do teste vai por variável de ambiente e não é impressa nem gravada. Hoje o projeto Compose chama-se tc04-integration, mas o guia histórico ainda manda limpar tc03-integration.",
+     "data": "2026-09-15; conferido em 2026-11-01",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:345-400"
+     ],
+     "ja_coberto_em": "README.md seção 'Executar e validar localmente' (l.166-204); docs/GUIA_DE_REPRODUCAO.md Apêndice A (l.736-741)",
+     "vale_no_codigo_atual": "parcial",
+     "evidencia_atual": ".github/workflows/compose-integration.yml (timeout-minutes: 20; COMPOSE_PROJECT_NAME tc04-integration); scripts/test-compose.sh:6 (tc04-integration); docs/GUIA_DE_REPRODUCAO.md:741 ainda usa -p tc03-integration.",
+     "relacao_fase4": "CMP-07; CIC-15 e F-020 (prova OTel fora do CI); CIC-12.",
+     "relevancia": "media",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Verificações locais mínimas e validate-all.sh no Windows",
+     "texto_final": "Conjunto usado como evidência em 2026-09-09: terraform fmt -check e validate nas 3 camadas, kubectl kustomize do overlay prod, YAML dos workflows validado, Trivy revalidado contra a imagem real com .trivyignore (saída 0) e os workflows verdes no GitHub. O scripts/validate-all.sh roda security-check, fmt/validate, render do Kustomize, compileall Python e build/test Go; no Git Bash do Windows detecta python3/python/py e o Go em C:/Program Files/Go/bin, e rodou inteiro e verde pela primeira vez em 2026-09-09.",
+     "data": "2026-09-09",
+     "fontes": [
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:252",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:269",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:303",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:320"
+     ],
+     "ja_coberto_em": "README.md:198-204; terraform/README.md seção 'Validação local, sem acesso à AWS' (l.46-59)",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "scripts/validate-all.sh:27 (chama security-check.sh), :69 (python3/python/py), :93-94 (Go em /c/Program Files/Go/bin).",
+     "relacao_fase4": "GIT-14 e CIC-09 (manifests GitOps não validados em workflow); CIC-05 (nenhum workflow chama validate-all.sh).",
+     "relevancia": "media",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "security-check.sh e IDs de conta proibidos",
+     "texto_final": "Em 2026-09-09, scripts/security-check.sh tratava o ID da conta vigente da Fase 3 como 'legado', reprovava 100% das execuções e derrubava o validate-all.sh; foi corrigido para bloquear o ID da conta AWS Academy da Fase 2. Em 2026-11-01 o script ainda só bloqueia o ID da Fase 2, não o da Fase 3 (<CONTA_FASE3>), e um comentário versionado cita o ID da Fase 3 em texto claro. Ajustar para bloquear o ID da Fase 3 sem falso positivo com a conta nova, e nunca citar IDs proibidos em documentos.",
+     "data": "2026-09-09; conferido em 2026-11-01",
+     "fontes": [
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:251",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:301",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:89-90",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:42",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:53"
+     ],
+     "ja_coberto_em": "Não está nos documentos vigentes; só na P-015 (CIC-16, XCL-14, CIC-05).",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "scripts/security-check.sh:11 (comentário com o ID da Fase 3, aqui mascarado) e :78 (regra só para o ID da Fase 2); scripts/validate-all.sh:27.",
+     "relacao_fase4": "XCL-14 (varredura não protege contra a volta da conta da Fase 3); CIC-16 (resquícios no verificador); CIC-05; DOC-12.",
+     "relevancia": "media",
+     "destino": "DOSSIE"
+    }
+   ]
+  },
+  {
+   "tema": "Custos",
+   "itens": [
+    {
+     "titulo": "Estimativa oficial da Fase 3 no AWS Pricing Calculator (2026-09-11)",
+     "texto_final": "Estimativa de 2026-09-11 (us-east-2, 730 h, tudo ligado): EKS 1.34 suporte padrão US$ 73,00; EC2 2 x c7i-flex.large com 20 GB por nó US$ 126,99; RDS 2 x db.t3.micro Single-AZ 20 GB gp3 US$ 30,88; ElastiCache 1 x cache.t3.micro US$ 12,41; VPC (1 NAT, 1 IPv4 público, 1 GB processado) US$ 36,54; EBS gp3 5 GB US$ 0,40; Secrets Manager 2 segredos US$ 0,81. Total US$ 281,03/mês (US$ 3.372,36 em 12 meses, sem desconto), cerca de US$ 0,385/h; sessão de 2 h cerca de US$ 0,77 e de 3 h cerca de US$ 1,15. Ficam fora S3, ECR, SQS, DynamoDB e transferência; preços, impostos e câmbio podem mudar. Ressalva: outras fontes citam US$ 0,37/h para a camada cluster e uma conta anterior, menos completa, dava US$ 0,368/h e cerca de US$ 269/mês, sem explicação da diferença.",
+     "data": "2026-09-11 (estimativa); relatos de 2026-09-09 a 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/ESTIMATIVA_CUSTOS_AWS.md:1-35",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:245-298",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:66",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:369-415",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1567-1581",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1611-1612",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:440-444",
+      "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:33",
+      "docs/00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md:23",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:135",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:148",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:200",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:90",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:426"
+     ],
+     "ja_coberto_em": "docs/RELATORIO_DE_ENTREGA.md seção 7 (l.70-86); docs/GUIA_DE_REPRODUCAO.md:10 (US$ 0,39/h); captura em docs/evidencias/estimativa-custos-aws-2026-09-11.png",
+     "vale_no_codigo_atual": "parcial",
+     "evidencia_atual": "A composição ainda bate com os defaults: terraform/cluster/variables.tf:76 (1.34), :86 (c7i-flex.large), :95-101 (2 nós), :118 (db.t3.micro), :148 (cache.t3.micro). A Fase 4 acrescenta a stack de observabilidade e talvez um terceiro nó, ainda não estimados. O link do GUIA para '../README.md#8-custo' não existe mais no README atual.",
+     "relacao_fase4": "XCL-10 (2 nós no IaC x 3 workers na documentação x custo); TFC-01 (3 nós somariam cerca de US$ 0,47/h); P-003 (orçamento); estimativa de custo obrigatória no relatório PDF (P-015 B6).",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "NAT Gateway é o principal custo parado",
+     "texto_final": "O NAT Gateway sozinho custa US$ 0,045/h (cerca de US$ 33/mês); com IPv4 público e tráfego, US$ 0,050/h (US$ 36,54/mês na estimativa de 2026-09-11). Uma semana esquecida custa cerca de US$ 7,50 a 8, com nada rodando. A afirmação 'base parada cerca de US$ 0,00' só vale com o NAT desligado, e um IPv4 público solto também cobra.",
+     "data": "2026-09-11 a 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:51-56",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:614-616",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1478-1480",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1583-1587",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1622-1624",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:296-298",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:411",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:200-201",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:625-627"
+     ],
+     "ja_coberto_em": "docs/RELATORIO_DE_ENTREGA.md:81 (linha VPC); docs/GUIA_DE_REPRODUCAO.md:646 (IPv4 público cobra)",
+     "vale_no_codigo_atual": "parcial",
+     "evidencia_atual": "terraform/variables.tf:102 cita só 'cerca de US$ 33/mes', sem o IPv4 público e o processamento por GB.",
+     "relacao_fase4": "TFB-10 (custo do NAT subestimado nos comentários); checklist de encerramento de sessão (P-015 B3-B5).",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Suporte estendido do EKS custa 6x",
+     "texto_final": "O control plane do EKS custa US$ 0,10/h em suporte padrão e US$ 0,60/h em suporte estendido (+US$ 0,50/h, 6x), segundo a página de preços da AWS consultada em 2026-09-09. A auditoria daquela data achou o default 1.31, já fora do suporte padrão desde 2025-11-26, e o default passou a 1.34. Conferir antes do apply se a versão está em suporte padrão e se o cluster ficará ligado depois do fim desse suporte.",
+     "data": "2026-09-09",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:89",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:101-103",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:295",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:301",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:312",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:318",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:511-514",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/ARQUITETURA.md:48-51"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md:101-106 (com comando describe-cluster-versions)",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "terraform/cluster/variables.tf:68-77 (default 1.34). Datas divergentes do fim do suporte padrão da 1.34: docs/GUIA_DE_REPRODUCAO.md:101 diz 2026-12-01; a P-015 (TFC-03) diz 2026-12-02.",
+     "relacao_fase4": "TFC-03 (sem upgrade_policy STANDARD; comentários ainda citam 1.31); entrega em 2026-11-17 fica antes do fim do suporte.",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Referências de custo por componente e crédito da conta anterior",
+     "texto_final": "Valores citados na Fase 3 entre 2026-08-27 e 2026-09-11, sem fonte de preço indicada: ALB/Ingress cerca de US$ 16-20/mês (motivo de não usar Ingress); nó c7i-flex.large cerca de US$ 0,085/h, cerca do dobro da t3.medium; sair do plano gratuito economizaria cerca de US$ 48/mês em EC2, mas exigiria método de pagamento e tiraria a proteção contra gasto acidental; bucket de estado custa centavos por mês. O crédito de US$ 70,33 (cerca de 190 h de uptime, em 2026-08-27) era da conta da Fase 3 e não vale para a nova.",
+     "data": "2026-08-27 a 2026-09-11",
+     "fontes": [
+      "docs/00_COLAB_IA/DECISOES.md:144",
+      "docs/00_COLAB_IA/DECISOES.md:164",
+      "docs/00_COLAB_IA/DECISOES.md:176",
+      "docs/00_COLAB_IA/DECISOES.md:210",
+      "docs/00_COLAB_IA/DECISOES.md:216",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/ARQUITETURA.md:33-35",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_EXECUCAO.md:39-42",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:120-122",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:21-26",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:522-524",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:13-19",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/BOOTSTRAP-BACKEND-S3_2026-08-27.md:324-326",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:97"
+     ],
+     "ja_coberto_em": "Não está nos documentos vigentes (comentários do código citam custos históricos).",
+     "vale_no_codigo_atual": "nao_verificavel",
+     "evidencia_atual": "Preços não verificáveis no código; terraform/README.md:63 avisa para não assumir Free Tier nem preços pelos comentários históricos.",
+     "relacao_fase4": "TFC-06 (comentários com custos e créditos da Fase 3); F-026 (créditos da conta nova não verificados); P-003; decisão de acesso ao Grafana sem ALB.",
+     "relevancia": "media",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "O que continua cobrando depois do destroy",
+     "texto_final": "Opção A (base mantida, NAT desligado): VPC, subnets, ECR (só armazenamento, centavos), SQS, DynamoDB por requisição e IAM praticamente não cobram. Opção B (tudo destruído): sobra só o bucket de estado; em 2026-09-11 ele tinha 687 bytes e o Cost Explorer mostrava frações de centavo. Ressalva: o guia de destruição de 2026-09-11 dizia que preservar a base 'pode manter custos de armazenamento/uso'.",
+     "data": "2026-09-11 / 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1614-1620",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1522-1524",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:200",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:647-649",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:212"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md:660 (bucket custa frações de centavo)",
+     "vale_no_codigo_atual": "nao_verificavel",
+     "evidencia_atual": "Depende de cobrança real; não verificável no código.",
+     "relacao_fase4": "Escolha entre manter a base ou destruir tudo entre sessões até 2026-11-17 (P-015 B3-B5).",
+     "relevancia": "media",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Disciplina de sessões curtas e destroy ao fim",
+     "texto_final": "Estratégia de custo da Fase 3: cluster ligado só em sessões de cerca de 3 h, destroy da camada cara ao fim de cada sessão como requisito e base com NAT desligado entre sessões. Um fim de semana esquecido com tudo ligado passa de US$ 18. Reaplicar na conta nova e recalcular com a stack de observabilidade.",
+     "data": "2026-08-27 a 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:389",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:359",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:369",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:347",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:140-142",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1611-1612",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:3-4"
+     ],
+     "ja_coberto_em": "docs/RELATORIO_DE_ENTREGA.md:86 (NAT desligado e destroy após as sessões)",
+     "vale_no_codigo_atual": "nao_se_aplica",
+     "evidencia_atual": "Regra operacional.",
+     "relacao_fase4": "P-015 B3-B5 (stack no ar 05-06/11, gravação até 10/11, destroy depois); trial do PagerDuty até cerca de 2026-11-11.",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    }
+   ]
+  },
+  {
+   "tema": "Tempos medidos e contagens de recursos",
+   "itens": [
+    {
+     "titulo": "Tempos medidos na sessão de 2026-09-11",
+     "texto_final": "Medido em 2026-09-11 (versões do estado no S3 e CloudTrail): base só ligando o NAT 2m24s; cluster 15m42s; camada k8s 4m44s nas duas etapas; sessão do NAT ligado ao fim do destroy 3h17m. Sem medição: base do zero (reservar 10 min), republicar imagens 2 a 4 min em paralelo ao cluster, schemas e seed cerca de 15 min por sessão e recriar do zero 40 min a 1 h mais as imagens.",
+     "data": "2026-09-11",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1594-1612",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:588-592",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:747-749",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1418-1426",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1436",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1444",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1488"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md:368 (15m42s) e :456 (4m44s)",
+     "vale_no_codigo_atual": "nao_se_aplica",
+     "evidencia_atual": "Medição histórica; a Fase 4 terá mais recursos e precisa medir de novo.",
+     "relacao_fase4": "Planejar janelas de B3-B5 antes do fim do trial do PagerDuty (cerca de 2026-11-11) e da entrega (2026-11-17).",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Tempos de destroy medidos por camada",
+     "texto_final": "Destroy medido em 2026-09-15: camada k8s com 13 recursos em 1m04s (o driver EBS apagou o disco de 5 GB, como esperado); cluster com 35 recursos (RDS cerca de 2 min, EKS cerca de 3 min, ElastiCache 4m17s); base com 35 recursos em 1m40s.",
+     "data": "2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:67-70"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md seção 10, tabela 'Tempos medidos em 2026-09-15' (l.621-627)",
+     "vale_no_codigo_atual": "nao_se_aplica",
+     "evidencia_atual": "Medição histórica.",
+     "relacao_fase4": "P-015 B5 (destroy depois da gravação).",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Estimativas de duração (não medidas)",
+     "texto_final": "Estimativas da Fase 3, não medições: apply do cluster 15-30 min (control plane cerca de 10, node group mais cerca de 5, dois RDS cerca de 10 em paralelo); pipeline na dev cerca de 3 min e completo na main cerca de 5 min (em 2026-09-15 o flag-service levou cerca de 2 min do merge ao commit do robô); Application Synced/Healthy em 1-2 min após a k8s; ArgoCD detecta mudança em até 30 s; HPA com <unknown> por cerca de 2 min. O plano de 2026-09-15 previa cerca de 2h20, com plano C se o ambiente não subisse até cerca de T+90; o runbook de 2026-09-09 somava cerca de 2 h, apesar do alvo de 3 h, e a gravação de 2026-09-11 teve 17min58s.",
+     "data": "2026-09-09 a 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:154-181",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:264-268",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:363-364",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:481",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:674",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:754-788",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:1057-1059",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:289-291",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:732-734",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:3-5",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:177",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:203-213",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:231",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:668-681",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:148",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:140"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md:327-332 (cerca de 2 min do flag-service), :462 (1 a 2 min), :574 e :580",
+     "vale_no_codigo_atual": "nao_se_aplica",
+     "evidencia_atual": "Estimativas históricas.",
+     "relacao_fase4": "Cronograma de B3-B5 e do ensaio de gravação (vídeo de até 25 min).",
+     "relevancia": "media",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Contagens de objetos Terraform e leitura do plan como guarda",
+     "texto_final": "Contagens da Fase 3: base com 33 recursos aplicados em 2026-09-07; plan -destroy de 2026-09-11 com 14 (k8s), 35 (cluster) e 36 (base), todos com exit 0; destroy de 2026-09-15 com 13, 35 e 35 (OIDC reaproveitado); base do zero com 35 (create_github_oidc_provider=false) ou 36 (true); overlay prod com 23 recursos. Qualquer 'to destroy' no primeiro plan da base indica estado errado: parar e conferir o backend; cluster novo deve mostrar 'N to add, 0 to change, 0 to destroy'. São objetos Terraform, não serviços AWS, e vão mudar na Fase 4, que usa chaves de estado phase4/prod/*.tfstate.",
+     "data": "2026-09-07 a 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:5-15",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:212-213",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:35-43",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:83",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:5",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:9",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:7-9",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:585-592",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:751-754",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1491-1494"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md:304, :369, :457 e :603; README.md (23 objetos Kustomize citados no DOSSIE seção 15)",
+     "vale_no_codigo_atual": "parcial",
+     "evidencia_atual": "Chaves de estado agora são phase4/prod/base|cluster|k8s.tfstate (terraform/README.md:11-13). Na conta nova, ECR, OIDC, role e policy foram criados à mão, então o primeiro plan da base vai diferir de 35/36 sem imports.",
+     "relacao_fase4": "TFB-01 e XCL-03 (imports para recursos manuais); TFB-02 (policy pode ser recriada); P-015 B3 (plan sem destroy/replace).",
+     "relevancia": "media",
+     "destino": "DOSSIE"
+    }
+   ]
+  },
+  {
+   "tema": "Pré-voo, limites da conta e diagnóstico do cluster",
+   "itens": [
+    {
+     "titulo": "Pré-voo antes de sessão paga",
+     "texto_final": "Pré-voo sem custo (2026-09-10/15): aws sts get-caller-identity (a conta precisa ser a dona do bucket e do ECR do overlay), terraform ≥ 1.11, kubectl, aws, gh auth status e AWS_PROFILE na janela; aws iam list-open-id-connect-providers para decidir create_github_oidc_provider; terraform output github_actions_role_arn ('No outputs found' com código 0 não é erro e indica base inexistente). Antes do cluster: plan sem erro, versão do EKS em suporte padrão, tipo de instância disponível nas AZs, cota de Elastic IP, número de RDS na conta, chart do ArgoCD ainda publicado, nenhum NAT vivo e init.sql presentes.",
+     "data": "2026-09-10 / 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:221-230",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:234",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:446-520"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md seções 0 e 1 (l.38-115)",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "terraform/backend.tf:17 (Terraform >= 1.11); terraform/k8s/variables.tf:95 (chart argo-cd 7.7.11); terraform/README.md seção 'Parâmetros pendentes da conta'.",
+     "relacao_fase4": "P-003 (identidade, cotas, orçamento); TFK-02 (chart 7.7.11 instala ArgoCD fora de suporte); TFC-03; P-015 B3.",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Provedor OIDC do GitHub já existente na conta",
+     "texto_final": "O plan não avisa que token.actions.githubusercontent.com já existe, porque só compara com o estado; o apply falha com EntityAlreadyExists (2026-09-14). A solução da Fase 3 foi create_github_oidc_provider=false, que lê o provedor por data source e nunca o destrói; com false numa conta sem provedor, o plan falha no data source. Na conta nova o provedor foi criado à mão, mas o padrão da variável e o exemplo continuam true.",
+     "data": "2026-09-14; conferido em 2026-11-01",
+     "fontes": [
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:87",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:93",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1528-1555"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md:238-246 e seção 11; terraform/README.md tabela 'Parâmetros pendentes' (create_github_oidc_provider)",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "terraform/variables.tf:237-241 (default = true); terraform/terraform.tfvars.example:83 (true); terraform/main.tf:149.",
+     "relacao_fase4": "TFB-03 (provedor já existe, padrão e exemplo pedem criação; thumbprints diferem); XCL-03; P-015 B2 ('OIDC false').",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Limites do plano gratuito na conta da Fase 3",
+     "texto_final": "Na conta da Fase 3 (plano gratuito novo), a API recusou a terceira instância RDS ('maximum number of instances available with free plan accounts', F-023 da Fase 3) e recusou o t3.medium como não elegível; daí 2 RDS + PostgreSQL em pod e nós c7i-flex.large. Essas restrições não provam as da conta nova, que precisa ter plano, créditos e cotas conferidos antes do primeiro apply.",
+     "data": "2026-08-27 a 2026-09-11",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:152-165",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:39",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:89"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md:110-115 (com consulta à cota de vCPU)",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "terraform/cluster/variables.tf:80-86 (c7i-flex.large herdado, revalidar na conta nova); terraform/modules/eks/main.tf:194 e terraform/cluster/main.tf:59 citam 'F-023', ID da Fase 3 que colide com o F-023 da Fase 4.",
+     "relacao_fase4": "F-026 (créditos/plano da conta nova não verificados); TFC-01 (dimensionamento); XCL-04 e TFK-08 (IDs da Fase 3 colidem com os da Fase 4); P-003.",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Tabela de diagnóstico do cluster",
+     "texto_final": "Diagnóstico rápido registrado na Fase 3: ImagePullBackOff com imagem já no ECR = tag chegou depois do pod (ciclo de até 5 min), apagar o pod; ImagePullBackOff geral = NAT desligado ou tag ainda placeholder; CreateContainerConfigError = Secret ausente ou com nome divergente (gitops/SECRETS-CONTRATO.md); PVC Pending = StorageClass não chamada gp3; 'password authentication failed' só no targeting = recriar juntos os dois Secrets que usam random_password.targeting_db. ArgoCD Unknown 'authentication required' = repositório privado sem TF_VAR_github_token; QueueDeletedRecently = esperar 60 s; evaluation em CrashLoopBackOff = REDIS_URL divergente ou esquema errado; port-forward com 'pod is not running' = ArgoCD não sincronizou. Túneis caem sempre que o pod é trocado: refazer o port-forward.",
+     "data": "2026-09-09 / 2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1528-1555",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:769-772",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:917-923",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:653-664",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:227-229",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:968-975",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:1013-1015",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:719-720"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md seção 11 (tabela, l.664-699)",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "terraform/k8s/secrets.tf:61, :163 e :194 (random_password.targeting_db); terraform/k8s/variables.tf:154 (StorageClass gp3); terraform/modules/elasticache/outputs.tf:24.",
+     "relacao_fase4": "TFK-11 (repo 04 privado, token do ArgoCD opcional e vazio); GIT-03; vários sintomas servem de cenário controlado de alerta/incidente/self-healing (E4/E5).",
+     "relevancia": "alta",
+     "destino": "DOSSIE"
+    }
+   ]
+  },
+  {
+   "tema": "Shell no Windows e forma de operar",
+   "itens": [
+    {
+     "titulo": "Shell certo para cada comando no Windows",
+     "texto_final": "Blocos de operação em Git Bash, um comando por linha, sem && nem barra invertida de continuação, indicando o shell em cada bloco. No PowerShell 5.1: não há && (usar ; if ($?) {...}), continuação é crase, '<' não redireciona (usar Get-Content -Raw |), curl é alias de Invoke-WebRequest (usar curl.exe), base64 -d não existe e terraform plan -out=arquivo exige --% (senão 'Too many command line arguments'). Git Bash costuma não ter python3 (cai no atalho da Microsoft Store; confirmado de novo em 2026-11-01). Manter duas janelas e não trocar de shell no meio de uma fase.",
+     "data": "2026-09-09 a 2026-09-15; reconfirmado em 2026-11-01",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:60-81",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:356-366",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1053-1063",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1106-1115",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1556-1562",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:28-41",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:425-427",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:57",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:75",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:232",
+      "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:46",
+      "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:132"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md seção 11 (primeira linha da tabela)",
+     "vale_no_codigo_atual": "nao_se_aplica",
+     "evidencia_atual": "Nesta consolidação, 'python' no Git Bash caiu no atalho da Microsoft Store (2026-11-01).",
+     "relacao_fase4": "Todos os runbooks da Fase 4 (B2-B6); CMP-10 (CRLF no Windows).",
+     "relevancia": "alta",
+     "destino": "LEIA-PRIMEIRO"
+    }
+   ]
+  },
+  {
+   "tema": "Git, colaboração e documentação herdada",
+   "itens": [
+    {
+     "titulo": "git add só dos arquivos revisados",
+     "texto_final": "Em 2026-09-15, um git add amplo (commit 06f97c6) levou 13 arquivos não revisados até a main pelo PR #16, incluindo uma trava temporária do PowerPoint com nome de usuário. Regra: adicionar os arquivos um a um, nunca git add -A, e manter ~$*, output/ e tmp/ no .gitignore.",
+     "data": "2026-09-15",
+     "fontes": [
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:36",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:74",
+      "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:202",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1537-1541"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md:210 e seção 11 ('Arquivos não revisados entram num commit')",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": ".gitignore:88 (~$*), :90 (output/), :95 (tmp/).",
+     "relacao_fase4": "XCL-02 e CMP-01 (arquivo de 156 MB e ID real prontos para entrar num git add amplo); XCL-01; P-015 B0 (commits curados).",
+     "relevancia": "alta",
+     "destino": "ORGANIZACAO"
+    },
+    {
+     "titulo": "Proteção de branch não imposta e efeitos de ativá-la",
+     "texto_final": "Na Fase 3 a proteção de branch não estava disponível no plano/visibilidade do repositório: dev → PR → main era acordo, não trava técnica (2026-09-09). Se a main ganhar checks obrigatórios, workflows pulados por filtro de caminho podem deixar o check pendente; e proteção ou ruleset que barre o github-actions[bot] faz o job gitops falhar após 5 tentativas.",
+     "data": "2026-09-09",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:43",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:15",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:130"
+     ],
+     "ja_coberto_em": "docs/GUIA_DE_REPRODUCAO.md seção 11 ('Job de GitOps falha depois de 5 tentativas')",
+     "vale_no_codigo_atual": "nao_verificavel",
+     "evidencia_atual": "Configuração remota do GitHub não consultada; .github/workflows/_ci-go.yml:569-614 (5 tentativas).",
+     "relacao_fase4": "CIC-07; não presumir proteção remota no repo 04 (privado).",
+     "relevancia": "media",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "Documentos herdados podem contradizer o código",
+     "texto_final": "Em 2026-09-09, docs/fase-3 descrevia Academy/LabRole/Ingress/3 RDS enquanto o código usava conta pessoal/OIDC/IRSA/sem Ingress/2 RDS + pod; P-049 da Fase 3 alinhou depois os documentos. Lição: conferir se um documento herdado ainda descreve o código antes de citá-lo no relatório. Hoje docs/ARQUITETURA.md e docs/GUIA_DE_REPRODUCAO.md são históricos e já divergem do código (gatilhos de CI, tag phase, nome do projeto Compose).",
+     "data": "2026-09-09; conferido em 2026-11-01",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:80",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:22"
+     ],
+     "ja_coberto_em": "README.md seção 'Documentação histórica da base' (l.230-232); docs/GUIA_DE_REPRODUCAO.md:1 (aviso histórico)",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "docs/ARQUITETURA.md:242-243 x .github/workflows/terraform-check.yml e compose-integration.yml; docs/GUIA_DE_REPRODUCAO.md:655 (phase=3) x terraform/README.md:44 (phase=4); docs/GUIA_DE_REPRODUCAO.md:741 (tc03) x scripts/test-compose.sh:6 (tc04).",
+     "relacao_fase4": "DOC-07 (sem arquitetura vigente); DOC-02; CIC-16; CMP-07; relatório PDF da Fase 4 (P-015 B6).",
+     "relevancia": "media",
+     "destino": "DOSSIE"
+    },
+    {
+     "titulo": "READMEs dos serviços com região us-east-1",
+     "texto_final": "A região do projeto é us-east-2 (Ohio), mas os READMEs copiados em services/analytics-service e services/evaluation-service ainda trazem us-east-1 nos exemplos, herdados da Fase 2 (P-024 da Fase 3, fora do caminho crítico). Corrigir junto com outra mudança do serviço, porque editar qualquer arquivo em services/<svc>/** dispara o pipeline e, na main, tenta OIDC.",
+     "data": "2026-08-27; conferido em 2026-11-01",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:414",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:160-161",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:74"
+     ],
+     "ja_coberto_em": "Não está nos documentos vigentes.",
+     "vale_no_codigo_atual": "sim",
+     "evidencia_atual": "services/analytics-service/README.md:52 e :58; services/evaluation-service/README.md:57 e :60 (us-east-1).",
+     "relacao_fase4": "CIC-16 (resquícios de fases anteriores); filtros de caminho dos pipelines.",
+     "relevancia": "baixa",
+     "destino": "PENDENCIAS"
+    }
+   ]
+  },
+  {
+   "tema": "Histórico da Fase 3 (somente registro)",
+   "itens": [
+    {
+     "titulo": "Linha do tempo da pilha AWS da Fase 3",
+     "texto_final": "Em 2026-09-07 a base da Fase 3 foi aplicada (33 recursos); em 2026-09-11 as três camadas estavam no ar (EKS, dois RDS, Redis, PostgreSQL do targeting, EBS e ArgoCD Synced/Healthy) e foram destruídas após o ensaio; em 2026-09-14 não havia infraestrutura ativa e os três estados estavam vazios. A última publicação do flag-service falhou só no OIDC, porque role, provedor e ECR já tinham sido removidos.",
+     "data": "2026-09-07 a 2026-09-14",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:83-85",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:285",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:337-345",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:23-31"
+     ],
+     "ja_coberto_em": "Não está nos documentos vigentes.",
+     "vale_no_codigo_atual": "nao_se_aplica",
+     "evidencia_atual": "Fato histórico da conta da Fase 3.",
+     "relacao_fase4": "Nenhuma ação; mostra que a pilha completa subiu e desceu em um dia de ensaio.",
+     "relevancia": "baixa",
+     "destino": "RELATORIO_MESCLA"
+    },
+    {
+     "titulo": "Evidências de CI/CD que rodaram na Fase 3",
+     "texto_final": "Na Fase 3, os 5 pipelines ficaram verdes na main e na dev, 5 imagens foram publicadas com tag v1.0.0-<commit>, o bloqueio por CRITICAL foi testado (CVE do x/crypto derrubou o pipeline e o job de imagem ficou skipped) e o pipeline fez 5 commits chore(gitops). Em 2026-09-14, Compose Integration e Terraform Check estavam verdes. Nada disso é evidência da Fase 4.",
+     "data": "2026-09-09 a 2026-09-14",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:105-109",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:27-28",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:115-117",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:64",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:82",
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:104"
+     ],
+     "ja_coberto_em": "docs/RELATORIO_DE_ENTREGA.md seção 6 (histórico da Fase 3)",
+     "vale_no_codigo_atual": "nao_se_aplica",
+     "evidencia_atual": "Execuções no repositório da Fase 3; CI remoto da Fase 4 ainda não executado (PENDENCIAS P-005).",
+     "relacao_fase4": "Referência do que já funcionou; não marcar requisitos da Fase 4 com isso.",
+     "relevancia": "baixa",
+     "destino": "RELATORIO_MESCLA"
+    },
+    {
+     "titulo": "Implementação paralela encontrada na main da Fase 3",
+     "texto_final": "Em 2026-09-08 descobriu-se na main da Fase 3 uma implementação completa e paralela de outro integrante (PRs #1 e #2), com CI verde desde 2026-09-05, nunca aplicada, escrita para LabRole do AWS Academy e com workflows de mesmo nome; foi origem de retrabalho e de um merge arriscado. Lição: conferir main e branches remotas antes de implementar.",
+     "data": "2026-09-08",
+     "fontes": [
+      "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:354-371"
+     ],
+     "ja_coberto_em": "Não está nos documentos vigentes.",
+     "vale_no_codigo_atual": "nao_se_aplica",
+     "evidencia_atual": "Fato histórico; a Fase 4 está sendo feita individualmente (DOC-08).",
+     "relacao_fase4": "DOC-08 (trabalho individual x REQ-OBR-41); baixa aplicação atual.",
+     "relevancia": "baixa",
+     "destino": "RELATORIO_MESCLA"
+    }
+   ]
+  }
+ ],
+ "pendencias": [],
+ "conflitos": [
+  {
+   "descricao": "Data do fim do suporte padrão do EKS 1.34 diverge entre documentos.",
+   "evidencia": "docs/GUIA_DE_REPRODUCAO.md:101 diz 'suporte padrão até 2026-12-01'; 00_COLAB_IA/02_TRABALHO/ANALISE_COMPLETA_FASE4_2026-10-31_v01.md:846 (TFC-03) diz 2026-12-02.",
+   "sugestao": "Conferir com aws eks describe-cluster-versions --cluster-versions 1.34 na conta nova e registrar a data com fonte no DOSSIE; as duas datas ficam depois da entrega de 2026-11-17."
+  },
+  {
+   "descricao": "Custo por hora da Fase 3 aparece com três valores sem explicação da diferença.",
+   "evidencia": "US$ 0,385/h (281,03/730, estimativa oficial de 2026-09-11, ESTIMATIVA_CUSTOS_AWS.md e RELATORIO preliminar seção 8.2); US$ 0,37/h para a camada cluster (RUNBOOK-SESSAO.md:3-4, seção 4 do relatório preliminar); US$ 0,368/h e cerca de US$ 269/mês em conta anterior menos completa (CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:90, LOG_DE_TRABALHO.md:135).",
+   "sugestao": "Usar US$ 281,03/mês e cerca de US$ 0,385/h como valor oficial da Fase 3 e citar os outros só como aproximações; a Fase 4 precisa de estimativa nova com data."
+  },
+  {
+   "descricao": "Documentação histórica de gatilhos do CI não corresponde aos workflows atuais.",
+   "evidencia": "docs/ARQUITETURA.md:242-243 e o mapa de gatilhos da Fase 3 (docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:72-89) dizem que Terraform Check e Compose Integration rodam em push só na main; .github/workflows/terraform-check.yml e compose-integration.yml têm push em [main, dev].",
+   "sugestao": "Ao consolidar no DOSSIE, usar os workflows atuais como fonte; corrigir ou anotar docs/ARQUITETURA.md quando a P-015 tratar DOC-07."
+  }
+ ],
+ "descartados": [
+  {
+   "titulo": "Navegador bloqueia abertura de file://",
+   "motivo": "Já registrado como F-012 em 00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md (seção Achados); sem informação nova sobre CI, custo ou operação AWS."
+  }
+ ],
+ "limitacoes": "Li o arquivo de entrada inteiro (cerca de 100 itens, em três partes) e consolidei todos os itens em 12 temas; cada título de entrada foi atribuído a um item consolidado ou descartado. Não reabri os originais de docs/00_COLAB_IA/ para cada item: as fontes e citações vêm da extração anterior. Conferi no repositório atual os fatos verificáveis: workflows, variáveis Terraform, tfvars.example, argocd.tf, secrets.tf, storageclass, overlay, Dockerfiles, go.mod, requirements, .trivyignore, .gitignore, security-check.sh, validate-all.sh e handlers/evaluator do evaluation. Também comparei com README.md, terraform/README.md, gitops/README.md, docs/GUIA_DE_REPRODUCAO.md, docs/ARQUITETURA.md, docs/RELATORIO_DE_ENTREGA.md, DOSSIE, DECISOES, PENDENCIAS e a lista P-015. O Python não está disponível no Git Bash, por isso usei leitura e grep. A trust OIDC foi comparada entre o HEAD 3b21e65 e a árvore de trabalho, que tem alterações não comitadas. Não consultei AWS, GitHub remoto, preços atuais, cobrança nem a proteção de branch remota. O ID de conta citado em scripts/security-check.sh foi mascarado. Os DOSSIE e DECISOES vigentes ainda não registram nenhum destes conhecimentos operacionais da Fase 3: a cobertura atual está no guia e na arquitetura históricos e nos READMEs."
+}

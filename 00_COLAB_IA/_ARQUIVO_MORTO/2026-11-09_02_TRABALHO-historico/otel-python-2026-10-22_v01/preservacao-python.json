@@ -1,0 +1,74 @@
+[
+  {
+    "path": "services/flag-service/app.py",
+    "original_archive": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/flag-service/app.py",
+    "original_sha256": "5e027e82eac7494353c20c7ee48d5343b1ffb0297eddf97d69d86570367f4efb",
+    "current_sha256": "3b6f351365ae333b4bfd8ef167711e9360c3803280b8264da76346402337e135"
+  },
+  {
+    "path": "services/flag-service/requirements.txt",
+    "original_archive": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/flag-service/requirements.txt",
+    "original_sha256": "76b93f3d9733468eb1abd30a49ad502eae13832810b89b0376625dfe6da91374",
+    "current_sha256": "be45368ded36d07d5b70ede332db8c4e90f1545d28deb8b24852de84e04a6d09"
+  },
+  {
+    "path": "services/flag-service/README.md",
+    "original_archive": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/flag-service/README.md",
+    "original_sha256": "dc3fe2a4af8626c6cf1ddfcafa1c23eea4b253521d5b3eb82a2811235e340ab1",
+    "current_sha256": "0c8ce282e4440622196ee9a27fce367180e817972dd31ec57523e78926439d96"
+  },
+  {
+    "path": "services/flag-service/Dockerfile",
+    "original_archive": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/flag-service/Dockerfile",
+    "original_sha256": "402588037ffb0cb2a296f703bac04511857078e81b1e9c97c688921abc0e8538",
+    "current_sha256": "3c290e4446304da721afaf255c0a0d4a68e2eed75d9f31c0ab8d7dd55b15003f"
+  },
+  {
+    "path": "services/targeting-service/app.py",
+    "original_archive": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/targeting-service/app.py",
+    "original_sha256": "a5d6cc63377935cbea1f1f8f77a4f2d67d2b9c2b490c4086109c2c88e4e3fffd",
+    "current_sha256": "9a1f305390731e93b57078ac70d025f74dd77be41feb7151eaec6308a67a1874"
+  },
+  {
+    "path": "services/targeting-service/requirements.txt",
+    "original_archive": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/targeting-service/requirements.txt",
+    "original_sha256": "6225a3682e28de10fcc6c5da3c3e4e6fa950dc5ecaa8fbe2f524cf64dfdc84cf",
+    "current_sha256": "6841d6a6809c1f46a21950f6a7e5eee4eb54a32cd6261fb95247c29190af15e9"
+  },
+  {
+    "path": "services/targeting-service/README.md",
+    "original_archive": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/targeting-service/README.md",
+    "original_sha256": "bcedc94b2166ce26c386a34350e3db206f9fd39bc96ebb626a0eeb43456e2be5",
+    "current_sha256": "de3df21de97aa5cdfbb17ef819299a7425b7a678358028ad02c3c16443598964"
+  },
+  {
+    "path": "services/targeting-service/Dockerfile",
+    "original_archive": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/targeting-service/Dockerfile",
+    "original_sha256": "a47c0df280e73a302e0ab7203aa7ceb7322d47e311cefcf3f2b56c078f45ebcf",
+    "current_sha256": "ec8ec87b0847a3cb777fbe86e9905344b97e4b2665515636fc386ba618ada206"
+  },
+  {
+    "path": "services/analytics-service/app.py",
+    "original_archive": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/analytics-service/app.py",
+    "original_sha256": "18a095dc1f80fc94b234150327f4b5e46e4c34bd66724f0f333bacdfd3740aab",
+    "current_sha256": "27af5566ab1a62d6da30f9fca4b6d7c36ac33a304a333d8ec192665f551db8c6"
+  },
+  {
+    "path": "services/analytics-service/requirements.txt",
+    "original_archive": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/analytics-service/requirements.txt",
+    "original_sha256": "3af096b370740170b3caa5a2778f869b22a1ca9fbf8b88b1db06833cc1a739a7",
+    "current_sha256": "a4081d27808eef5b17bc91bd944ff572aab414d801750d12f7fe13dbe9e43456"
+  },
+  {
+    "path": "services/analytics-service/README.md",
+    "original_archive": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/analytics-service/README.md",
+    "original_sha256": "cd4c9098ae72c5459c46442e11d1dc940c8dd448d00d129f7f0a54458d92e000",
+    "current_sha256": "a8b88a3475bd6b194bde32c879e324a3bafdd3f4959d925e367e5f31d6f48d8b"
+  },
+  {
+    "path": "services/analytics-service/Dockerfile",
+    "original_archive": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/analytics-service/Dockerfile",
+    "original_sha256": "ce064576b90eb7b4c8e0c1928fd557d5fa112caf7bc5131e96e414c16c9196fa",
+    "current_sha256": "3f8f55c354dc3f988b061f0192a6322feefd2ccb97a90bca927dd47220b19ce6"
+  }
+]

@@ -1,0 +1,30 @@
+Tech Challenge  Página 2 de 7 
+ 
+ 
+TECH CHALLENGE 
+Tech Challenge é o projeto que engloba os conhecimentos obtidos em 
+todas as disciplinas da fase. Esta é uma atividade que, em princípio, deve ser 
+desenvolvida em grupo. Importante atentar-se ao prazo de entrega, pois trata-se 
+de uma ati vidade obrigatória, uma vez que vale 90% da nota de todas as 
+disciplinas da fase. 
+Importante: Projeto Evolutivo e Cumulativo 
+Este Tech Challenge é a conclusão da sua jornada com o projeto 
+ToggleMaster. Para realizar esta fase, é obrigatório que toda a base das 
+Fases 1, 2 e 3 esteja funcionando. 
+Isso significa que seu projeto deve conter: 
+• Os 5 microsserviços conteinerizados. 
+• A infraestrutura provisionada via código (Terraform). 
+• Pipelines de CI/CD (GitHub Actions ou similar) com DevSecOps. 
+• Implantação no Kubernetes (EKS, GKE, AKS) gerenciada via GitOps 
+(ArgoCD/Flux). 
+O monitoramento que você construirá agora será aplicado em cima dessa 
+arquitetura automatizada. 
+DESAFIO 
+ A DevOps Solutions Inc. atingiu o estado da arte na entrega de software. 
+O ToggleMaster é atualizado dezenas de vezes por dia através de pipelines 
+automatizados de CI/CD e GitOps. A infraestrutura é cr iada em minutos via 
+Terraform. 
+ Porém, um novo problema surgiu no último final de semana: o serviço de 
+avaliação (evaluation -service) começou a falhar silenciosamente. Como a 
+infraestrutura escalava automaticamente (HPA), o consumo de recursos 
+aumentou vertiginosamente para tentar compensar as falhas. A equipe de 

@@ -1,0 +1,105 @@
+{
+  "at": "2026-10-30T15:45:49.328962-03:00",
+  "checks": [
+    {
+      "name": "terraform-version",
+      "command": [
+        "C:\\Users\\Gabriel\\AppData\\Local\\bin\\terraform.exe",
+        "version",
+        "-json"
+      ],
+      "exit_code": 0,
+      "evidence": "00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/validacoes/terraform-version.txt"
+    },
+    {
+      "name": "terraform-fmt",
+      "command": [
+        "C:\\Users\\Gabriel\\AppData\\Local\\bin\\terraform.exe",
+        "fmt",
+        "-check",
+        "-recursive",
+        "terraform"
+      ],
+      "exit_code": 0,
+      "evidence": "00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/validacoes/terraform-fmt.txt"
+    },
+    {
+      "name": "terraform-validate",
+      "command": [
+        "C:\\Users\\Gabriel\\AppData\\Local\\bin\\terraform.exe",
+        "-chdir=terraform",
+        "validate",
+        "-json"
+      ],
+      "exit_code": 0,
+      "evidence": "00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/validacoes/terraform-validate.txt"
+    },
+    {
+      "name": "terraform-cluster-validate",
+      "command": [
+        "C:\\Users\\Gabriel\\AppData\\Local\\bin\\terraform.exe",
+        "-chdir=terraform/cluster",
+        "validate",
+        "-json"
+      ],
+      "exit_code": 0,
+      "evidence": "00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/validacoes/terraform-cluster-validate.txt"
+    },
+    {
+      "name": "terraform-k8s-validate",
+      "command": [
+        "C:\\Users\\Gabriel\\AppData\\Local\\bin\\terraform.exe",
+        "-chdir=terraform/k8s",
+        "validate",
+        "-json"
+      ],
+      "exit_code": 0,
+      "evidence": "00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/validacoes/terraform-k8s-validate.txt"
+    },
+    {
+      "name": "gitops-renderizado",
+      "command": [
+        "C:\\Program Files\\Docker\\Docker\\resources\\bin\\kubectl.exe",
+        "kustomize",
+        "gitops/overlays/prod"
+      ],
+      "exit_code": 0,
+      "evidence": "00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/validacoes/gitops-renderizado.txt"
+    },
+    {
+      "name": "python-scripts-compile-memory",
+      "exit_code": 0,
+      "files": [
+        "scripts/integration/assert-events.py",
+        "scripts/integration/bootstrap-aws.py",
+        "scripts/integration/test-flow.py",
+        "scripts/integration/test-traces.py"
+      ]
+    },
+    {
+      "name": "repro-count-init",
+      "command": [
+        "C:\\Users\\Gabriel\\AppData\\Local\\bin\\terraform.exe",
+        "init",
+        "-backend=false",
+        "-input=false",
+        "-no-color"
+      ],
+      "exit_code": 0,
+      "evidence": "00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/validacoes/repro-count-init.txt"
+    },
+    {
+      "name": "repro-count-plan",
+      "command": [
+        "C:\\Users\\Gabriel\\AppData\\Local\\bin\\terraform.exe",
+        "plan",
+        "-refresh=false",
+        "-input=false",
+        "-no-color",
+        "-var=github_token=dummy-public-value"
+      ],
+      "exit_code": 0,
+      "evidence": "00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/validacoes/repro-count-plan.txt"
+    }
+  ]
+}

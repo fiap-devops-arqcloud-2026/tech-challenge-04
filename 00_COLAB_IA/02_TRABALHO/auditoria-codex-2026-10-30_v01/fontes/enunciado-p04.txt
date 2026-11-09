@@ -1,0 +1,29 @@
+Tech Challenge  Página 4 de 7 
+ 
+2. OpenTelemetry (OTel) e Padronização 
+(Disciplinas: OpenTelemetry (OTel) e Alloy) 
+O monitoramento moderno exige padronização. 
+• OTel Collector  (Obrigatório): utilize o OpenTelemetry (via OTel 
+Collector) como a peça central para receber, processar e exportar suas 
+métricas, logs e traces. Os microsserviços devem enviar os dados de 
+telemetria para o OTel, e ele se encarregará de roteá -los para os 
+backends corretos (Prometheus, Loki e APM). 
+Nota: O uso do Grafana Alloy no lugar do OTel Collector padrão 
+é opcional. 
+ 
+3. Instrumentação e APM (Traces e Visibilidade Profunda) 
+(Disciplinas: APM, Instrumentação, Datadog ou New Relic) 
+• Ferramenta APM: escolha UMA ferramenta comercial abordada no 
+curso (Datadog OU New Relic - use as contas gratuitas for education). 
+• Instrumentação do Código: altere o código-fonte ou o Dockerfile dos 
+microsserviços para adicionar as bibliotecas de instrumentação 
+(preferencialmente utilizando as bibliotecas do OpenTelemetry para a 
+linguagem específica). 
+• Distributed Tracing: gere rastreamentos distribuídos. Ao fazer uma 
+requisição no evaluation-service, o APM deve mostrar o "caminho" da 
+requisição. 
+• Service Map: o painel do APM deve exibir o mapa de dependências 
+dos seus 5 microsserviços. 
+4. Alertas Inteligentes e Self-Healing 
+(Disciplinas: Alert Fatigue, PagerDuty/OpsGenie, ChatOps, Runbook 
+Automation, Self-Healing) 

@@ -1,0 +1,684 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/part-of: togglemaster
+  name: togglemaster
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::CONTA_AWS_PENDENTE:role/togglemaster-analytics-irsa
+  labels:
+    app: analytics-service
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/part-of: togglemaster
+  name: analytics-service
+  namespace: togglemaster
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::CONTA_AWS_PENDENTE:role/togglemaster-evaluation-irsa
+  labels:
+    app: evaluation-service
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/part-of: togglemaster
+  name: evaluation-service
+  namespace: togglemaster
+---
+apiVersion: v1
+data:
+  AWS_DYNAMODB_TABLE: ToggleMasterAnalytics
+  AWS_REGION: us-east-2
+  AWS_SQS_URL: https://sqs.conta-pendente.invalid/togglemaster-events
+  PORT: "8005"
+kind: ConfigMap
+metadata:
+  labels:
+    app: analytics-service
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/part-of: togglemaster
+  name: analytics-service-config
+  namespace: togglemaster
+---
+apiVersion: v1
+data:
+  PORT: "8001"
+kind: ConfigMap
+metadata:
+  labels:
+    app: auth-service
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/part-of: togglemaster
+  name: auth-service-config
+  namespace: togglemaster
+---
+apiVersion: v1
+data:
+  AWS_REGION: us-east-2
+  AWS_SQS_URL: https://sqs.conta-pendente.invalid/togglemaster-events
+  FLAG_SERVICE_URL: http://flag-service:8002
+  PORT: "8004"
+  REDIS_URL: redis://redis.conta-pendente.invalid:6379
+  TARGETING_SERVICE_URL: http://targeting-service:8003
+kind: ConfigMap
+metadata:
+  labels:
+    app: evaluation-service
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/part-of: togglemaster
+  name: evaluation-service-config
+  namespace: togglemaster
+---
+apiVersion: v1
+data:
+  AUTH_SERVICE_URL: http://auth-service:8001
+  PORT: "8002"
+kind: ConfigMap
+metadata:
+  labels:
+    app: flag-service
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/part-of: togglemaster
+  name: flag-service-config
+  namespace: togglemaster
+---
+apiVersion: v1
+data:
+  init.sql: |
+    -- Tabela unica deste banco: as regras de segmentacao por flag.
+    CREATE TABLE IF NOT EXISTS targeting_rules (
+        -- SERIAL cria um inteiro auto-incrementado.
+        id SERIAL PRIMARY KEY,
+
+        -- Chave de negocio. UNIQUE garante no maximo UMA regra por flag.
+        flag_name VARCHAR(100) UNIQUE NOT NULL,
+
+        -- Permite desligar a regra sem apagar o registro.
+        is_enabled BOOLEAN NOT NULL DEFAULT true,
+
+        -- JSONB guarda a logica da regra como JSON binario, indexavel.
+        -- Ex.: {"type": "PERCENTAGE", "value": 50}
+        -- Ex.: {"type": "USER_LIST", "values": ["u1", "u2"]}
+        rules JSONB NOT NULL,
+
+        -- Timestamps com fuso, preenchidos automaticamente na criacao.
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    );
+
+    -- Funcao que carimba updated_at com a hora atual.
+    CREATE OR REPLACE FUNCTION trigger_set_timestamp()
+    RETURNS TRIGGER AS $$
+    BEGIN
+      NEW.updated_at = NOW();
+      RETURN NEW;
+    END;
+    $$ LANGUAGE plpgsql;
+
+    -- Remove o gatilho antes de recriar, tornando o script re-executavel.
+    DROP TRIGGER IF EXISTS set_timestamp ON targeting_rules;
+
+    -- Dispara a funcao antes de cada UPDATE, para updated_at nunca ficar
+    -- desatualizado por esquecimento da aplicacao.
+    CREATE TRIGGER set_timestamp
+    BEFORE UPDATE ON targeting_rules
+    FOR EACH ROW
+    EXECUTE PROCEDURE trigger_set_timestamp();
+kind: ConfigMap
+metadata:
+  labels:
+    app: postgres-targeting
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/part-of: togglemaster
+  name: postgres-targeting-init
+  namespace: togglemaster
+---
+apiVersion: v1
+data:
+  AUTH_SERVICE_URL: http://auth-service:8001
+  PORT: "8003"
+kind: ConfigMap
+metadata:
+  labels:
+    app: targeting-service
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/part-of: togglemaster
+  name: targeting-service-config
+  namespace: togglemaster
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: analytics-service
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/part-of: togglemaster
+  name: analytics-service
+  namespace: togglemaster
+spec:
+  ports:
+  - name: http
+    port: 8005
+    protocol: TCP
+    targetPort: 8005
+  selector:
+    app: analytics-service
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: auth-service
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/part-of: togglemaster
+  name: auth-service
+  namespace: togglemaster
+spec:
+  ports:
+  - name: http
+    port: 8001
+    protocol: TCP
+    targetPort: 8001
+  selector:
+    app: auth-service
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: evaluation-service
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/part-of: togglemaster
+  name: evaluation-service
+  namespace: togglemaster
+spec:
+  ports:
+  - name: http
+    port: 8004
+    protocol: TCP
+    targetPort: 8004
+  selector:
+    app: evaluation-service
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: flag-service
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/part-of: togglemaster
+  name: flag-service
+  namespace: togglemaster
+spec:
+  ports:
+  - name: http
+    port: 8002
+    protocol: TCP
+    targetPort: 8002
+  selector:
+    app: flag-service
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: postgres-targeting
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/part-of: togglemaster
+  name: postgres-targeting
+  namespace: togglemaster
+spec:
+  clusterIP: None
+  ports:
+  - name: postgres
+    port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    app: postgres-targeting
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: targeting-service
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/part-of: togglemaster
+  name: targeting-service
+  namespace: togglemaster
+spec:
+  ports:
+  - name: http
+    port: 8003
+    protocol: TCP
+    targetPort: 8003
+  selector:
+    app: targeting-service
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: analytics-service
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/part-of: togglemaster
+  name: analytics-service
+  namespace: togglemaster
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: analytics-service
+  template:
+    metadata:
+      labels:
+        app: analytics-service
+    spec:
+      containers:
+      - envFrom:
+        - configMapRef:
+            name: analytics-service-config
+        image: registry.conta-pendente.invalid/analytics-service:conta-pendente
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 8005
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        name: analytics-service
+        ports:
+        - containerPort: 8005
+          name: http
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 8005
+          initialDelaySeconds: 15
+          periodSeconds: 10
+        resources:
+          limits:
+            cpu: 300m
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+      serviceAccountName: analytics-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: auth-service
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/part-of: togglemaster
+  name: auth-service
+  namespace: togglemaster
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-service
+  template:
+    metadata:
+      labels:
+        app: auth-service
+    spec:
+      containers:
+      - env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              key: DATABASE_URL
+              name: auth-service-secret
+        - name: MASTER_KEY
+          valueFrom:
+            secretKeyRef:
+              key: MASTER_KEY
+              name: auth-service-secret
+        envFrom:
+        - configMapRef:
+            name: auth-service-config
+        image: registry.conta-pendente.invalid/auth-service:conta-pendente
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 8001
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        name: auth-service
+        ports:
+        - containerPort: 8001
+          name: http
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 8001
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        resources:
+          limits:
+            cpu: 200m
+            memory: 128Mi
+          requests:
+            cpu: 50m
+            memory: 64Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: evaluation-service
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/part-of: togglemaster
+  name: evaluation-service
+  namespace: togglemaster
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: evaluation-service
+  template:
+    metadata:
+      labels:
+        app: evaluation-service
+    spec:
+      containers:
+      - env:
+        - name: SERVICE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              key: SERVICE_API_KEY
+              name: evaluation-service-secret
+        envFrom:
+        - configMapRef:
+            name: evaluation-service-config
+        image: registry.conta-pendente.invalid/evaluation-service:conta-pendente
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 8004
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        name: evaluation-service
+        ports:
+        - containerPort: 8004
+          name: http
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 8004
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        resources:
+          limits:
+            cpu: 500m
+            memory: 128Mi
+          requests:
+            cpu: 100m
+            memory: 64Mi
+      serviceAccountName: evaluation-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: flag-service
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/part-of: togglemaster
+  name: flag-service
+  namespace: togglemaster
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flag-service
+  template:
+    metadata:
+      labels:
+        app: flag-service
+    spec:
+      containers:
+      - env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              key: DATABASE_URL
+              name: flag-service-secret
+        envFrom:
+        - configMapRef:
+            name: flag-service-config
+        image: registry.conta-pendente.invalid/flag-service:conta-pendente
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 8002
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        name: flag-service
+        ports:
+        - containerPort: 8002
+          name: http
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 8002
+          initialDelaySeconds: 15
+          periodSeconds: 10
+        resources:
+          limits:
+            cpu: 300m
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: targeting-service
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/part-of: togglemaster
+  name: targeting-service
+  namespace: togglemaster
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: targeting-service
+  template:
+    metadata:
+      labels:
+        app: targeting-service
+    spec:
+      containers:
+      - env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              key: DATABASE_URL
+              name: targeting-service-secret
+        envFrom:
+        - configMapRef:
+            name: targeting-service-config
+        image: registry.conta-pendente.invalid/targeting-service:conta-pendente
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 8003
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        name: targeting-service
+        ports:
+        - containerPort: 8003
+          name: http
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 8003
+          initialDelaySeconds: 15
+          periodSeconds: 10
+        resources:
+          limits:
+            cpu: 300m
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: postgres-targeting
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/part-of: togglemaster
+  name: postgres-targeting
+  namespace: togglemaster
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-targeting
+  serviceName: postgres-targeting
+  template:
+    metadata:
+      labels:
+        app: postgres-targeting
+    spec:
+      containers:
+      - env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              key: POSTGRES_USER
+              name: postgres-targeting-secret
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: POSTGRES_PASSWORD
+              name: postgres-targeting-secret
+        - name: POSTGRES_DB
+          value: targeting_db
+        - name: PGDATA
+          value: /var/lib/postgresql/data/pgdata
+        image: postgres:16-alpine
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - pg_isready -U "$POSTGRES_USER"
+          failureThreshold: 3
+          initialDelaySeconds: 30
+          periodSeconds: 20
+        name: postgres
+        ports:
+        - containerPort: 5432
+          name: postgres
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - pg_isready -U "$POSTGRES_USER" -d targeting_db
+          failureThreshold: 6
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: data
+        - mountPath: /docker-entrypoint-initdb.d
+          name: init
+      volumes:
+      - configMap:
+          name: postgres-targeting-init
+        name: init
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 5Gi
+      storageClassName: gp3
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  labels:
+    app: analytics-service
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/part-of: togglemaster
+  name: analytics-service-hpa
+  namespace: togglemaster
+spec:
+  maxReplicas: 2
+  metrics:
+  - resource:
+      name: cpu
+      target:
+        averageUtilization: 70
+        type: Utilization
+    type: Resource
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: analytics-service
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  labels:
+    app: evaluation-service
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/part-of: togglemaster
+  name: evaluation-service-hpa
+  namespace: togglemaster
+spec:
+  maxReplicas: 2
+  metrics:
+  - resource:
+      name: cpu
+      target:
+        averageUtilization: 70
+        type: Utilization
+    type: Resource
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: evaluation-service
+
+STDERR:

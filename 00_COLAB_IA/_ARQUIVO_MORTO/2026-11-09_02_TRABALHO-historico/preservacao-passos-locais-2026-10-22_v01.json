@@ -1,0 +1,216 @@
+{
+  "files": [
+    {
+      "path": ".gitignore",
+      "sha256": "9221ba6e112ccf2df90744e2f84abc876597538d55bb13750b07deb0b4066a6d"
+    },
+    {
+      "path": "00_COLAB_IA/DECISOES.md",
+      "sha256": "6e373d248e785d486c9c06b9e3214400aed396bc4b8a3b5d90fdeaca566f7380"
+    },
+    {
+      "path": "00_COLAB_IA/DOSSIE_CONTEXTO.md",
+      "sha256": "b70fe4419494e783dadbccd6113a190f28d5b2c1b914abe9c5f2f8e4add4c6ad"
+    },
+    {
+      "path": "00_COLAB_IA/LEIA-PRIMEIRO.md",
+      "sha256": "ef920821588445d468870c9459c862453213f1c75f6d03e8f6c05e7e718642ce"
+    },
+    {
+      "path": "00_COLAB_IA/LOG_DE_TRABALHO.md",
+      "sha256": "a59e2be92877c47b5076045025df4597382a48afcded68d413e531333ebcd729"
+    },
+    {
+      "path": "00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md",
+      "sha256": "d5f86e411c48c59d56013a435dc7e8f5dfde4489ad36cd9ac6d238ba1cb0ce3c"
+    },
+    {
+      "path": "CLAUDE.md",
+      "sha256": "7cf81338d09f0f83dec7b37aa34728e432134466e98b4ddc573fb00321cda304"
+    },
+    {
+      "path": "docker-compose.integration.yaml",
+      "sha256": "9e3501ef6532420feb01b29b15415ef811dcd99b51526007516f1c7bb0687856"
+    },
+    {
+      "path": "docker-compose.yaml",
+      "sha256": "61453c31f7cd67746fb760e0146ff80e1fe37dbfec9e32cc2146d916212018e7"
+    },
+    {
+      "path": "README.md",
+      "sha256": "12dc5e7b75ca4e8ca9dd67e9ff43640ebb904c5dc7200dcdcbe7990f62df9531"
+    },
+    {
+      "path": "scripts/integration/assert-events.py",
+      "sha256": "d60cb89852a4933d0005da01e86fec6df457818164ce4222eb3523354c0a28dc"
+    },
+    {
+      "path": "scripts/integration/bootstrap-aws.py",
+      "sha256": "96983d109f0591b84d60b748f4d5af9b4ee159fb50d689df4061a864cfc4dfd2"
+    },
+    {
+      "path": "scripts/integration/test-flow.py",
+      "sha256": "1f9a26b7b93c9d500eff7b958af40755a3cde82723a628e61255e5d6be5aa4c1"
+    },
+    {
+      "path": "scripts/security-check.sh",
+      "sha256": "b1b99bf7c3782b89befd5ce632eb32c12f33bd9375a004f910ad28e0dd0493bb"
+    },
+    {
+      "path": "scripts/test-compose.sh",
+      "sha256": "cc5c9faa2be976b6ecfb6c53a4c1edc1958e5c0afc124d51d682909aa4fa21b0"
+    },
+    {
+      "path": "scripts/validate-all.sh",
+      "sha256": "ef8edf8a3b116644ed8806919b24c1c30d94b9bda971beae963879ae94404a88"
+    },
+    {
+      "path": "services/analytics-service/.dockerignore",
+      "sha256": "2808b261e347d027c15de40e4e5baf492b17e2ff2ef7c2ec437863dcf288ddcd"
+    },
+    {
+      "path": "services/analytics-service/app.py",
+      "sha256": "18a095dc1f80fc94b234150327f4b5e46e4c34bd66724f0f333bacdfd3740aab"
+    },
+    {
+      "path": "services/analytics-service/Dockerfile",
+      "sha256": "ce064576b90eb7b4c8e0c1928fd557d5fa112caf7bc5131e96e414c16c9196fa"
+    },
+    {
+      "path": "services/analytics-service/README.md",
+      "sha256": "cd4c9098ae72c5459c46442e11d1dc940c8dd448d00d129f7f0a54458d92e000"
+    },
+    {
+      "path": "services/analytics-service/requirements.txt",
+      "sha256": "3af096b370740170b3caa5a2778f869b22a1ca9fbf8b88b1db06833cc1a739a7"
+    },
+    {
+      "path": "services/auth-service/.dockerignore",
+      "sha256": "64bdfb22b742dcb4f82a60575ba80243b2d38d2b48bd3bdf17b30195be72a185"
+    },
+    {
+      "path": "services/auth-service/db/init.sql",
+      "sha256": "0f954f856465549b76f18cbbcfd96bae969283c2e0d928d6e90b3a57d91c1faf"
+    },
+    {
+      "path": "services/auth-service/Dockerfile",
+      "sha256": "6e32f16dd669dc265adb2cdc618a753105e66b32483564417380c831c5b49749"
+    },
+    {
+      "path": "services/auth-service/go.mod",
+      "sha256": "95d3610705605bd7555c6e51d107beb4a3b961712f771cb4481166a63e273cc0"
+    },
+    {
+      "path": "services/auth-service/go.sum",
+      "sha256": "37da14e8aa9df0ddfc831b379bac1a660c025bb8c7c1ef39066c99ecff4a1835"
+    },
+    {
+      "path": "services/auth-service/handlers.go",
+      "sha256": "e764c1ff8fa4069462c7c47d0b6a595133ec131a8f26bd06c19dcb5708b73d88"
+    },
+    {
+      "path": "services/auth-service/key.go",
+      "sha256": "d876d78ddb758bebef0a06010d17f784823eb06b4215d1b808da04c6fbf19ece"
+    },
+    {
+      "path": "services/auth-service/main.go",
+      "sha256": "21bfe86e853f836088732b46548424989cfbef1b42231bf79039d6e52001738c"
+    },
+    {
+      "path": "services/auth-service/README.md",
+      "sha256": "207f3a21cbf6d9b234437bb2b1d5290e1512723afdcbcef19fb2f0d7387bbf37"
+    },
+    {
+      "path": "services/evaluation-service/.dockerignore",
+      "sha256": "64bdfb22b742dcb4f82a60575ba80243b2d38d2b48bd3bdf17b30195be72a185"
+    },
+    {
+      "path": "services/evaluation-service/Dockerfile",
+      "sha256": "8fd4d0363906aa9d2d9d5db7d38d86bc12ef86775b766cf6fefa2e0a5d9f1dc0"
+    },
+    {
+      "path": "services/evaluation-service/evaluator.go",
+      "sha256": "6782bb9f476edd3a973afde4e88bec83fd63b834944eca9a1b90f47e9b4ed559"
+    },
+    {
+      "path": "services/evaluation-service/go.mod",
+      "sha256": "c261fdbb17d788caff1158e54b8baa1b76ffba02241ec703148e5701ea78e5f7"
+    },
+    {
+      "path": "services/evaluation-service/go.sum",
+      "sha256": "7a8f031365a8f06249f8e7e1f18c72c9b296b116124a86898330adee8defd917"
+    },
+    {
+      "path": "services/evaluation-service/handlers.go",
+      "sha256": "8c3db1592d05d3b6bffdaccb9ab819405291e8523326f080ecb5b16ede8cbbbc"
+    },
+    {
+      "path": "services/evaluation-service/main.go",
+      "sha256": "2d671cb883fb1f08228612bc4d31b7860c872740983926f177269da5eb1dd903"
+    },
+    {
+      "path": "services/evaluation-service/README.md",
+      "sha256": "dfd5952fcc2e68d6b6b082794aee334edb725b6c14015cbceeb376802621c5d2"
+    },
+    {
+      "path": "services/evaluation-service/sqs.go",
+      "sha256": "5b7be09cf27296c3b12ce17ca358afb3f45eb97b593edd58802cc646f4be0db5"
+    },
+    {
+      "path": "services/evaluation-service/types.go",
+      "sha256": "8a03d794357e459f2903f7b96af35df3ced25b53a6c6a7cc63c928e708a66b9b"
+    },
+    {
+      "path": "services/flag-service/.dockerignore",
+      "sha256": "2808b261e347d027c15de40e4e5baf492b17e2ff2ef7c2ec437863dcf288ddcd"
+    },
+    {
+      "path": "services/flag-service/app.py",
+      "sha256": "5e027e82eac7494353c20c7ee48d5343b1ffb0297eddf97d69d86570367f4efb"
+    },
+    {
+      "path": "services/flag-service/db/init.sql",
+      "sha256": "c9cb29a9dcc1c1a1732b51c8a634c93301f8586e30006df32baae4c3816b199f"
+    },
+    {
+      "path": "services/flag-service/Dockerfile",
+      "sha256": "402588037ffb0cb2a296f703bac04511857078e81b1e9c97c688921abc0e8538"
+    },
+    {
+      "path": "services/flag-service/README.md",
+      "sha256": "dc3fe2a4af8626c6cf1ddfcafa1c23eea4b253521d5b3eb82a2811235e340ab1"
+    },
+    {
+      "path": "services/flag-service/requirements.txt",
+      "sha256": "76b93f3d9733468eb1abd30a49ad502eae13832810b89b0376625dfe6da91374"
+    },
+    {
+      "path": "services/targeting-service/.dockerignore",
+      "sha256": "2808b261e347d027c15de40e4e5baf492b17e2ff2ef7c2ec437863dcf288ddcd"
+    },
+    {
+      "path": "services/targeting-service/app.py",
+      "sha256": "a5d6cc63377935cbea1f1f8f77a4f2d67d2b9c2b490c4086109c2c88e4e3fffd"
+    },
+    {
+      "path": "services/targeting-service/db/init.sql",
+      "sha256": "5f5ae98396aef2b0ca5f7a2f4e9a4f38776ab105013404163a34c6f98e27454d"
+    },
+    {
+      "path": "services/targeting-service/Dockerfile",
+      "sha256": "a47c0df280e73a302e0ab7203aa7ceb7322d47e311cefcf3f2b56c078f45ebcf"
+    },
+    {
+      "path": "services/targeting-service/README.md",
+      "sha256": "bcedc94b2166ce26c386a34350e3db206f9fd39bc96ebb626a0eeb43456e2be5"
+    },
+    {
+      "path": "services/targeting-service/requirements.txt",
+      "sha256": "6225a3682e28de10fcc6c5da3c3e4e6fa950dc5ecaa8fbe2f524cf64dfdc84cf"
+    }
+  ],
+  "git_status_before": " M 00_COLAB_IA/DECISOES.md\u0000 M 00_COLAB_IA/DOSSIE_CONTEXTO.md\u0000 M 00_COLAB_IA/LOG_DE_TRABALHO.md\u0000 M 00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md\u0000 M README.md\u0000 D docs/aulas-fiap/01_Welcome to Automação e Segurança na Cloud/GUIA-ESTUDO-Automacao-e-Seguranca-na-Cloud.html\u0000 D docs/aulas-fiap/01_Welcome to Automação e Segurança na Cloud/POSTECH - Capitulo de Projeto - Fase 3.pdf\u0000 D docs/aulas-fiap/02_CI-CD/GUIA-ESTUDO-CI-CD.html\u0000 D docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 1.pdf\u0000 D docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 2.pdf\u0000 D docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 3.pdf\u0000 D docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 4.pdf\u0000 D docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 5.pdf\u0000 D docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 6.pdf\u0000 D docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 7.pdf\u0000 D docs/aulas-fiap/03_Infraestrutura como código/GUIA-ESTUDO-Infraestrutura-como-Codigo.html\u0000 D docs/aulas-fiap/03_Infraestrutura como código/POSTECH - Infraestrutura como código - Aula 1.pdf\u0000 D docs/aulas-fiap/03_Infraestrutura como código/POSTECH - Infraestrutura como código - Aula 2.pdf\u0000 D docs/aulas-fiap/03_Infraestrutura como código/POSTECH - Infraestrutura como código - Aula 3.pdf\u0000 D docs/aulas-fiap/03_Infraestrutura como código/POSTECH - Infraestrutura como código - Aula 4.pdf\u0000 D docs/aulas-fiap/03_Infraestrutura como código/POSTECH - Infraestrutura como código - Aula 5.pdf\u0000 D docs/aulas-fiap/03_Infraestrutura como código/POSTECH - Infraestrutura como código - Aula 6.pdf\u0000 D docs/aulas-fiap/03_Infraestrutura como código/POSTECH - Infraestrutura como código - Aula 7.pdf\u0000 D docs/aulas-fiap/03_Infraestrutura como código/POSTECH - Infraestrutura como código - Aula 8.pdf\u0000 D docs/aulas-fiap/04_Segurança em DevOps (DevSecOps)/GUIA-ESTUDO-Seguranca-em-DevOps-DevSecOps.html\u0000 D docs/aulas-fiap/04_Segurança em DevOps (DevSecOps)/POSTECH - Segurança em DevOps (DevSecOps) - Aula 1.pdf\u0000 D docs/aulas-fiap/04_Segurança em DevOps (DevSecOps)/POSTECH - Segurança em DevOps (DevSecOps) - Aula 2.pdf\u0000 D docs/aulas-fiap/04_Segurança em DevOps (DevSecOps)/POSTECH - Segurança em DevOps (DevSecOps) - Aula 3.pdf\u0000 D docs/aulas-fiap/04_Segurança em DevOps (DevSecOps)/POSTECH - Segurança em DevOps (DevSecOps) - Aula 4.pdf\u0000 D docs/aulas-fiap/04_Segurança em DevOps (DevSecOps)/POSTECH - Segurança em DevOps (DevSecOps) - Aula 5.pdf\u0000 D docs/aulas-fiap/04_Segurança em DevOps (DevSecOps)/POSTECH - Segurança em DevOps (DevSecOps) - Aula 6.pdf\u0000 D docs/aulas-fiap/04_Segurança em DevOps (DevSecOps)/POSTECH - Segurança em DevOps (DevSecOps) - Aula 7.pdf\u0000 D docs/aulas-fiap/05_Segurança na Cloud/GUIA-ESTUDO-Seguranca-na-Cloud.html\u0000 D docs/aulas-fiap/05_Segurança na Cloud/POSTECH - Segurança na Cloud - Aula 1.pdf\u0000 D docs/aulas-fiap/05_Segurança na Cloud/POSTECH - Segurança na Cloud - Aula 2.pdf\u0000 D docs/aulas-fiap/05_Segurança na Cloud/POSTECH - Segurança na Cloud - Aula 3.pdf\u0000 D docs/aulas-fiap/05_Segurança na Cloud/POSTECH - Segurança na Cloud - Aula 4.pdf\u0000 D docs/aulas-fiap/05_Segurança na Cloud/POSTECH - Segurança na Cloud - Aula 5.pdf\u0000?? 00_COLAB_IA/02_TRABALHO/CONFERENCIA_PLANO_FASE4_2026-10-21_v01.md\u0000?? 00_COLAB_IA/02_TRABALHO/aula05-terraform-2026-10-22_v01/\u0000?? 00_COLAB_IA/02_TRABALHO/estado-antes-readme-2026-10-22_v01.json\u0000?? 00_COLAB_IA/02_TRABALHO/resultado-render-readme-2026-10-22_v01.json\u0000?? 00_COLAB_IA/02_TRABALHO/validar-readme-2026-10-22_v01.mjs\u0000?? 00_COLAB_IA/02_TRABALHO/verificacao-readme-2026-10-22_v01.json\u0000?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-21_conferencia-plano/\u0000?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-21_explicacao-observabilidade/\u0000?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-21_explicacao-pods-collector/\u0000?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_aula05-terraform/\u0000?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/\u0000?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_proximos-passos/\u0000?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_readme-observabilidade/\u0000",
+  "branch": "dev",
+  "head": "3b21e65d8b22c454e43ba7dc3b3eb3a039ea061e",
+  "main": "003a7075a8908011ece83d317d5c700ac2525b58"
+}

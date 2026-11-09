@@ -1,0 +1,49 @@
+# ============================================================
+# GRAFANA ALERTING - templates de notificacao
+# ============================================================
+# Lido pelo sidecar de alertas do Grafana (ConfigMap com o label
+# grafana_alert: "1", gerado em gitops/observability/kustomization.yaml).
+#
+# ATENCAO AO CIFRAO: o Grafana troca $NOME por variaveis de ambiente em
+# todo arquivo de provisionamento - e assim que os segredos entram nos
+# contact points. Por isso estes templates nao usam variaveis com $; um
+# $ literal precisaria ser escrito $$.
+#
+# Tres templates:
+#   togglemaster.title       titulo comum (PagerDuty e Slack)
+#   togglemaster.slack.text  corpo detalhado para o Slack
+#   togglemaster.github      corpo JSON exigido pela API repository_dispatch
+# ============================================================
+apiVersion: 1
+
+templates:
+  - orgId: 1
+    name: togglemaster
+    template: |
+      {{ define "togglemaster.title" -}}
+      [{{ .Status | toUpper }}] {{ .CommonLabels.alertname }} - {{ .CommonLabels.service }}
+      {{- end }}
+
+      {{ define "togglemaster.slack.text" -}}
+      {{ range .Alerts -}}
+      *Servico:* {{ .Labels.service }} (severidade {{ .Labels.severity }})
+      *O que aconteceu:* {{ .Annotations.summary }}
+      *Detalhe:* {{ .Annotations.description }}
+      *Valor medido:* {{ .ValueString }}
+      *Inicio:* {{ .StartsAt.Format "2006-01-02 15:04:05 MST" }}
+      {{ if eq .Status "firing" }}*Acao automatica:* self-healing via GitHub Actions (rollout restart do Deployment)
+      {{ end -}}
+      *Regra:* {{ .GeneratorURL }}
+      {{ if .DashboardURL }}*Dashboard:* {{ .DashboardURL }}
+      {{ end -}}
+      {{ if .PanelURL }}*Painel:* {{ .PanelURL }}
+      {{ end -}}
+      {{ if .Annotations.runbook_url }}*Runbook:* {{ .Annotations.runbook_url }}
+      {{ end -}}
+      *Silenciar:* {{ .SilenceURL }}
+      {{ end -}}
+      {{- end }}
+
+      {{ define "togglemaster.github" -}}
+      {{ coll.Dict "event_type" "self-healing" "client_payload" (coll.Dict "service" .CommonLabels.service "alertname" .CommonLabels.alertname "status" .Status) | data.ToJSON }}
+      {{- end }}

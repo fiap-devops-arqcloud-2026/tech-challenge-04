@@ -1,0 +1,84 @@
+# ============================================================
+# GRAFANA ALERTING - regra "flag-service com muitos erros 5xx"
+# ============================================================
+# O QUE MEDE: a PROPORCAO de requisicoes do flag-service que terminaram
+# em erro de servidor (5xx), no ultimo minuto. Uma resposta 5xx deixa o
+# span SERVER com STATUS_CODE_ERROR, e o Collector gateway transforma os
+# spans em metricas (traces_span_metrics_calls_total).
+#
+# POR QUE PROPORCAO E NAO CONTAGEM: 3 erros em 3 requisicoes e uma pane;
+# 3 erros em 30 mil e ruido. A proporcao nao depende do volume de
+# trafego, entao o mesmo limite vale de madrugada e no pico.
+#
+# QUANDO DISPARA: acima de 10% por 1 minuto seguido (for: 1m). O "for"
+# evita alarme por um pico isolado: a regra fica em Pending e so passa a
+# Firing se o problema persistir. Sem trafego nenhum, a divisao nao tem
+# dados e o estado fica OK (noDataState) - silencio nao e incidente.
+#
+# Os labels decidem o roteamento (policies.yaml): severity=critical abre
+# o incidente no PagerDuty e avisa o Slack; selfheal=true dispara o
+# self-healing; service diz ao workflow QUAL Deployment reiniciar.
+#
+# ATENCAO AO CIFRAO: nas annotations, $$values escreve $values (o
+# Grafana trocaria $values por uma variavel de ambiente).
+# ============================================================
+apiVersion: 1
+
+groups:
+  - orgId: 1
+    name: togglemaster-flag-service
+    folder: ToggleMaster
+    # Avaliacao a cada 30s: com o "for" de 1 minuto, a falha vira Firing
+    # em cerca de 1 a 2 minutos, tempo que cabe no video.
+    interval: 30s
+    rules:
+      - uid: flag-service-5xx
+        title: FlagService5xxAlto
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: prometheus
+            model:
+              refId: A
+              instant: true
+              range: false
+              expr: |-
+                (
+                  sum(rate(traces_span_metrics_calls_total{service_name="flag-service", span_kind="SPAN_KIND_SERVER", status_code="STATUS_CODE_ERROR"}[1m]))
+                  or vector(0)
+                )
+                /
+                sum(rate(traces_span_metrics_calls_total{service_name="flag-service", span_kind="SPAN_KIND_SERVER"}[1m]))
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: A
+              datasource:
+                type: __expr__
+                uid: __expr__
+              conditions:
+                - evaluator:
+                    type: gt
+                    params:
+                      - 0.1
+        # Liga o alerta ao painel de taxa de erro: as notificacoes levam o
+        # link do dashboard e do painel.
+        dashboardUid: togglemaster-overview
+        panelId: 2
+        noDataState: OK
+        execErrState: Error
+        for: 1m
+        isPaused: false
+        labels:
+          severity: critical
+          service: flag-service
+          selfheal: "true"
+        annotations:
+          summary: 'flag-service com {{ humanizePercentage $$values.A.Value }} das respostas em erro 5xx'
+          description: 'A proporcao de respostas 5xx do flag-service passou de 10% por 1 minuto. O self-healing reinicia o Deployment pelo GitHub Actions; se o alerta continuar, investigar pelo dashboard e pelos logs no Loki.'
+          runbook_url: https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04/blob/main/observability/README.md#runbook-flag-service-5xx

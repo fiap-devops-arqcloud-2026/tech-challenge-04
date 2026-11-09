@@ -1,0 +1,6 @@
+{
+  "exit_code": 0,
+  "synthetic_host_master_key_overrode_example": true,
+  "service_or_container_started": false,
+  "source": "scripts/test-compose.sh:11-13; scripts/test-observability.sh:12-18; docker-compose.yaml:82; scripts/integration/test-flow.py:51-52"
+}

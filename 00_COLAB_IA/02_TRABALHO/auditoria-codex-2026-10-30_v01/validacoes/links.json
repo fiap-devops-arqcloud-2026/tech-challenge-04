@@ -1,0 +1,758 @@
+[
+  {
+    "source": "README.md",
+    "line": 11,
+    "href": "docs/requisitos/README.md",
+    "result": "ok"
+  },
+  {
+    "source": "README.md",
+    "line": 12,
+    "href": "docs/requisitos/REQUISITOS.html",
+    "result": "ok"
+  },
+  {
+    "source": "README.md",
+    "line": 13,
+    "href": "POSTECH%20-%20Tech%20Challenge%20-%20Fase%204.pdf",
+    "result": "ok"
+  },
+  {
+    "source": "README.md",
+    "line": 14,
+    "href": "00_COLAB_IA/02_TRABALHO/PLANO_E_ARQUITETURA_FASE4_2026-09-23_v02.html",
+    "result": "ok"
+  },
+  {
+    "source": "README.md",
+    "line": 15,
+    "href": "00_COLAB_IA/02_TRABALHO/CONFERENCIA_PLANO_FASE4_2026-10-21_v01.md",
+    "result": "ok"
+  },
+  {
+    "source": "README.md",
+    "line": 16,
+    "href": "00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md",
+    "result": "ok"
+  },
+  {
+    "source": "README.md",
+    "line": 17,
+    "href": "docs/aulas-fiap/00.Welcome%20to%20Observabilidade%20e%20Monitoramento/GUIA-ESTUDO-Welcome-to-Observabilidade-e-Monitoramento.html",
+    "result": "ok"
+  },
+  {
+    "source": "README.md",
+    "line": 18,
+    "href": "docs/aulas-fiap/01.Observabilidade%20e%20Monitoramento/GUIA-ESTUDO-Observabilidade-e-Monitoramento.html",
+    "result": "ok"
+  },
+  {
+    "source": "README.md",
+    "line": 19,
+    "href": "docs/aulas-fiap/02.Monitoramento%20Opensource/GUIA-ESTUDO-Monitoramento-Opensource.html",
+    "result": "ok"
+  },
+  {
+    "source": "README.md",
+    "line": 20,
+    "href": "docs/aulas-fiap/03.APM/GUIA-ESTUDO-APM.html",
+    "result": "ok"
+  },
+  {
+    "source": "README.md",
+    "line": 21,
+    "href": "docs/aulas-fiap/04.Automa%C3%A7%C3%A3o%20de%20incidentes/GUIA-ESTUDO-Automacao-de-incidentes.html",
+    "result": "ok"
+  },
+  {
+    "source": "README.md",
+    "line": 43,
+    "href": "00_COLAB_IA/DECISOES.md",
+    "result": "ok"
+  },
+  {
+    "source": "README.md",
+    "line": 43,
+    "href": "docs/requisitos/README.md",
+    "result": "ok"
+  },
+  {
+    "source": "README.md",
+    "line": 139,
+    "href": "00_COLAB_IA/02_TRABALHO/PLANO_E_ARQUITETURA_FASE4_2026-09-23_v02.html",
+    "result": "ok"
+  },
+  {
+    "source": "README.md",
+    "line": 139,
+    "href": "00_COLAB_IA/02_TRABALHO/CONFERENCIA_PLANO_FASE4_2026-10-21_v01.md",
+    "result": "ok"
+  },
+  {
+    "source": "README.md",
+    "line": 139,
+    "href": "00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md",
+    "result": "ok"
+  },
+  {
+    "source": "README.md",
+    "line": 183,
+    "href": "observability/README.md",
+    "result": "ok"
+  },
+  {
+    "source": "README.md",
+    "line": 184,
+    "href": "00_COLAB_IA/02_TRABALHO/RELATORIO_PASSO1_REVALIDACAO_2026-10-27_v01.md",
+    "result": "ok"
+  },
+  {
+    "source": "README.md",
+    "line": 185,
+    "href": "00_COLAB_IA/02_TRABALHO/RELATORIO_PASSO2_OBSERVABILIDADE_LOCAL_2026-10-27_v01.md",
+    "result": "ok"
+  },
+  {
+    "source": "README.md",
+    "line": 186,
+    "href": "00_COLAB_IA/02_TRABALHO/RESULTADO_PASSOS_LOCAIS_2026-10-27_v01.json",
+    "result": "ok"
+  },
+  {
+    "source": "README.md",
+    "line": 222,
+    "href": "terraform/README.md",
+    "result": "ok"
+  },
+  {
+    "source": "README.md",
+    "line": 222,
+    "href": "gitops/README.md",
+    "result": "ok"
+  },
+  {
+    "source": "README.md",
+    "line": 226,
+    "href": "00_COLAB_IA/02_TRABALHO/RELATORIO_TERRAFORM_BACKEND_2026-10-22_v01.md",
+    "result": "ok"
+  },
+  {
+    "source": "README.md",
+    "line": 226,
+    "href": "00_COLAB_IA/02_TRABALHO/REVISAO_TERRAFORM_E_OTEL_2026-10-27_v01.md",
+    "result": "ok"
+  },
+  {
+    "source": "README.md",
+    "line": 232,
+    "href": "docs/ARQUITETURA.md",
+    "result": "ok"
+  },
+  {
+    "source": "README.md",
+    "line": 232,
+    "href": "docs/GUIA_DE_REPRODUCAO.md",
+    "result": "ok"
+  },
+  {
+    "source": "README.md",
+    "line": 232,
+    "href": "docs/RELATORIO_DE_ENTREGA.md",
+    "result": "ok"
+  },
+  {
+    "source": "SECURITY.md",
+    "line": 36,
+    "href": "docs/GUIA_DE_REPRODUCAO.md#3-bucket-de-estado-do-terraform",
+    "result": "ok"
+  },
+  {
+    "source": "terraform/README.md",
+    "line": 63,
+    "href": "../00_COLAB_IA/02_TRABALHO/PLANO_E_ARQUITETURA_FASE4_2026-09-23_v02.html",
+    "result": "ok"
+  },
+  {
+    "source": "terraform/README.md",
+    "line": 65,
+    "href": "../docs/GUIA_DE_REPRODUCAO.md",
+    "result": "ok"
+  },
+  {
+    "source": "terraform/README.md",
+    "line": 65,
+    "href": "../docs/ARQUITETURA.md",
+    "result": "ok"
+  },
+  {
+    "source": "terraform/README.md",
+    "line": 67,
+    "href": "../gitops/SECRETS-CONTRATO.md",
+    "result": "ok"
+  },
+  {
+    "source": "terraform/README.md",
+    "line": 68,
+    "href": "../gitops/README.md",
+    "result": "ok"
+  },
+  {
+    "source": "terraform/README.md",
+    "line": 69,
+    "href": "../docs/requisitos/README.md",
+    "result": "ok"
+  },
+  {
+    "source": "terraform/README.md",
+    "line": 70,
+    "href": "../00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md",
+    "result": "ok"
+  },
+  {
+    "source": "gitops/README.md",
+    "line": 36,
+    "href": "../terraform/README.md",
+    "result": "ok"
+  },
+  {
+    "source": "gitops/README.md",
+    "line": 51,
+    "href": "SECRETS-CONTRATO.md",
+    "result": "ok"
+  },
+  {
+    "source": "gitops/README.md",
+    "line": 52,
+    "href": "../terraform/README.md",
+    "result": "ok"
+  },
+  {
+    "source": "gitops/README.md",
+    "line": 53,
+    "href": "../docs/requisitos/README.md",
+    "result": "ok"
+  },
+  {
+    "source": "gitops/README.md",
+    "line": 54,
+    "href": "../00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md",
+    "result": "ok"
+  },
+  {
+    "source": "gitops/README.md",
+    "line": 55,
+    "href": "../docs/ARQUITETURA.md",
+    "result": "ok"
+  },
+  {
+    "source": "gitops/README.md",
+    "line": 55,
+    "href": "../docs/GUIA_DE_REPRODUCAO.md",
+    "result": "ok"
+  },
+  {
+    "source": "gitops/SECRETS-CONTRATO.md",
+    "line": 10,
+    "href": "../README.md#5-decisões-e-o-porquê",
+    "result": "ancora inexistente"
+  },
+  {
+    "source": "gitops/SECRETS-CONTRATO.md",
+    "line": 55,
+    "href": "../docs/GUIA_DE_REPRODUCAO.md#8-schemas-chave-de-serviço-e-dados-de-exemplo",
+    "result": "ok"
+  },
+  {
+    "source": "docs/ARQUITETURA.md",
+    "line": 1,
+    "href": "../README.md",
+    "result": "ok"
+  },
+  {
+    "source": "docs/ARQUITETURA.md",
+    "line": 1,
+    "href": "../terraform/README.md",
+    "result": "ok"
+  },
+  {
+    "source": "docs/ARQUITETURA.md",
+    "line": 1,
+    "href": "../gitops/README.md",
+    "result": "ok"
+  },
+  {
+    "source": "docs/ARQUITETURA.md",
+    "line": 5,
+    "href": "../README.md",
+    "result": "ok"
+  },
+  {
+    "source": "docs/ARQUITETURA.md",
+    "line": 7,
+    "href": "../README.md#5-decisões-e-o-porquê",
+    "result": "ancora inexistente"
+  },
+  {
+    "source": "docs/ARQUITETURA.md",
+    "line": 7,
+    "href": "GUIA_DE_REPRODUCAO.md",
+    "result": "ok"
+  },
+  {
+    "source": "docs/ARQUITETURA.md",
+    "line": 7,
+    "href": "../terraform/README.md",
+    "result": "ok"
+  },
+  {
+    "source": "docs/ARQUITETURA.md",
+    "line": 7,
+    "href": "../gitops/README.md",
+    "result": "ok"
+  },
+  {
+    "source": "docs/ARQUITETURA.md",
+    "line": 7,
+    "href": "RELATORIO_DE_ENTREGA.md",
+    "result": "ok"
+  },
+  {
+    "source": "docs/ARQUITETURA.md",
+    "line": 9,
+    "href": "#1-serviços",
+    "result": "ok"
+  },
+  {
+    "source": "docs/ARQUITETURA.md",
+    "line": 9,
+    "href": "#2-recursos-por-camada-do-terraform",
+    "result": "ok"
+  },
+  {
+    "source": "docs/ARQUITETURA.md",
+    "line": 9,
+    "href": "#3-kubernetes-e-gitops",
+    "result": "ok"
+  },
+  {
+    "source": "docs/ARQUITETURA.md",
+    "line": 9,
+    "href": "#4-argocd",
+    "result": "ok"
+  },
+  {
+    "source": "docs/ARQUITETURA.md",
+    "line": 9,
+    "href": "#5-pipeline-em-detalhe",
+    "result": "ok"
+  },
+  {
+    "source": "docs/ARQUITETURA.md",
+    "line": 9,
+    "href": "#6-identidade-segredos-e-criptografia",
+    "result": "ok"
+  },
+  {
+    "source": "docs/ARQUITETURA.md",
+    "line": 9,
+    "href": "#7-limitações-conhecidas-do-código",
+    "result": "ok"
+  },
+  {
+    "source": "docs/ARQUITETURA.md",
+    "line": 39,
+    "href": "GUIA_DE_REPRODUCAO.md#apêndice-a-execução-local-com-docker-compose",
+    "result": "ok"
+  },
+  {
+    "source": "docs/ARQUITETURA.md",
+    "line": 74,
+    "href": "GUIA_DE_REPRODUCAO.md#3-bucket-de-estado-do-terraform",
+    "result": "ok"
+  },
+  {
+    "source": "docs/ARQUITETURA.md",
+    "line": 120,
+    "href": "GUIA_DE_REPRODUCAO.md#2-valores-fixos-a-trocar-em-outra-conta",
+    "result": "ok"
+  },
+  {
+    "source": "docs/ARQUITETURA.md",
+    "line": 120,
+    "href": "GUIA_DE_REPRODUCAO.md#6-camada-cluster-e-endpoints-do-overlay",
+    "result": "ok"
+  },
+  {
+    "source": "docs/ARQUITETURA.md",
+    "line": 136,
+    "href": "#6-identidade-segredos-e-criptografia",
+    "result": "ok"
+  },
+  {
+    "source": "docs/ARQUITETURA.md",
+    "line": 227,
+    "href": "GUIA_DE_REPRODUCAO.md#7-camada-k8s-e-argocd",
+    "result": "ok"
+  },
+  {
+    "source": "docs/ARQUITETURA.md",
+    "line": 279,
+    "href": "../.trivyignore",
+    "result": "ok"
+  },
+  {
+    "source": "docs/ARQUITETURA.md",
+    "line": 340,
+    "href": "../gitops/SECRETS-CONTRATO.md",
+    "result": "ok"
+  },
+  {
+    "source": "docs/ARQUITETURA.md",
+    "line": 350,
+    "href": "GUIA_DE_REPRODUCAO.md#8-schemas-chave-de-serviço-e-dados-de-exemplo",
+    "result": "ok"
+  },
+  {
+    "source": "docs/ARQUITETURA.md",
+    "line": 372,
+    "href": "../SECURITY.md",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 1,
+    "href": "../README.md",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 1,
+    "href": "../terraform/README.md",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 1,
+    "href": "../gitops/README.md",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 9,
+    "href": "../README.md#8-custo",
+    "result": "ancora inexistente"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 12,
+    "href": "../README.md",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 12,
+    "href": "ARQUITETURA.md",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 20,
+    "href": "#1-pré-requisitos-e-sua-cópia-do-repositório",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 21,
+    "href": "#0-antes-de-começar",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 22,
+    "href": "#3-bucket-de-estado-do-terraform",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 23,
+    "href": "#2-valores-fixos-a-trocar-em-outra-conta",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 24,
+    "href": "#2-valores-fixos-a-trocar-em-outra-conta",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 25,
+    "href": "#4-camada-base",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 26,
+    "href": "#5-publicação-das-imagens-no-ecr",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 27,
+    "href": "#5-publicação-das-imagens-no-ecr",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 28,
+    "href": "#6-camada-cluster-e-endpoints-do-overlay",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 29,
+    "href": "#6-camada-cluster-e-endpoints-do-overlay",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 30,
+    "href": "#6-camada-cluster-e-endpoints-do-overlay",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 31,
+    "href": "#7-camada-k8s-e-argocd",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 32,
+    "href": "#8-schemas-chave-de-serviço-e-dados-de-exemplo",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 33,
+    "href": "#9-verificação-ponta-a-ponta",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 34,
+    "href": "#10-destruição-e-checagem-de-custo",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 88,
+    "href": "#apêndice-a-execução-local-com-docker-compose",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 130,
+    "href": "#7-camada-k8s-e-argocd",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 147,
+    "href": "#0-antes-de-começar",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 191,
+    "href": "#6-camada-cluster-e-endpoints-do-overlay",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 262,
+    "href": "#0-antes-de-começar",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 262,
+    "href": "#2-valores-fixos-a-trocar-em-outra-conta",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 316,
+    "href": "#2-valores-fixos-a-trocar-em-outra-conta",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 331,
+    "href": "#6-camada-cluster-e-endpoints-do-overlay",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 406,
+    "href": "#7-camada-k8s-e-argocd",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 468,
+    "href": "#0-antes-de-começar",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 507,
+    "href": "#0-antes-de-começar",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 562,
+    "href": "#8-schemas-chave-de-serviço-e-dados-de-exemplo",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 594,
+    "href": "#7-camada-k8s-e-argocd",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 594,
+    "href": "#8-schemas-chave-de-serviço-e-dados-de-exemplo",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 670,
+    "href": "#2-valores-fixos-a-trocar-em-outra-conta",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 673,
+    "href": "#5-publicação-das-imagens-no-ecr",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 674,
+    "href": "#5-publicação-das-imagens-no-ecr",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 680,
+    "href": "#6-camada-cluster-e-endpoints-do-overlay",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 684,
+    "href": "#7-camada-k8s-e-argocd",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 685,
+    "href": "#7-camada-k8s-e-argocd",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 688,
+    "href": "#8-schemas-chave-de-serviço-e-dados-de-exemplo",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 689,
+    "href": "#8-schemas-chave-de-serviço-e-dados-de-exemplo",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 731,
+    "href": "#8-schemas-chave-de-serviço-e-dados-de-exemplo",
+    "result": "ok"
+  },
+  {
+    "source": "docs/GUIA_DE_REPRODUCAO.md",
+    "line": 845,
+    "href": "#10-destruição-e-checagem-de-custo",
+    "result": "ok"
+  },
+  {
+    "source": "docs/RELATORIO_DE_ENTREGA.md",
+    "line": 1,
+    "href": "../README.md",
+    "result": "ok"
+  },
+  {
+    "source": "docs/RELATORIO_DE_ENTREGA.md",
+    "line": 1,
+    "href": "../terraform/README.md",
+    "result": "ok"
+  },
+  {
+    "source": "docs/RELATORIO_DE_ENTREGA.md",
+    "line": 1,
+    "href": "../gitops/README.md",
+    "result": "ok"
+  },
+  {
+    "source": "docs/RELATORIO_DE_ENTREGA.md",
+    "line": 34,
+    "href": "GUIA_DE_REPRODUCAO.md#3-bucket-de-estado-do-terraform",
+    "result": "ok"
+  },
+  {
+    "source": "docs/RELATORIO_DE_ENTREGA.md",
+    "line": 86,
+    "href": "./evidencias/estimativa-custos-aws-2026-09-11.png",
+    "result": "ok"
+  },
+  {
+    "source": "docs/requisitos/README.md",
+    "line": 5,
+    "href": "../../POSTECH%20-%20Tech%20Challenge%20-%20Fase%204.pdf",
+    "result": "ok"
+  },
+  {
+    "source": "docs/requisitos/README.md",
+    "line": 205,
+    "href": "../aulas-fiap/00.Welcome%20to%20Observabilidade%20e%20Monitoramento/GUIA-ESTUDO-Welcome-to-Observabilidade-e-Monitoramento.html",
+    "result": "ok"
+  },
+  {
+    "source": "docs/requisitos/README.md",
+    "line": 205,
+    "href": "../aulas-fiap/01.Observabilidade%20e%20Monitoramento/GUIA-ESTUDO-Observabilidade-e-Monitoramento.html",
+    "result": "ok"
+  },
+  {
+    "source": "docs/requisitos/README.md",
+    "line": 205,
+    "href": "../aulas-fiap/02.Monitoramento%20Opensource/GUIA-ESTUDO-Monitoramento-Opensource.html",
+    "result": "ok"
+  },
+  {
+    "source": "docs/requisitos/README.md",
+    "line": 205,
+    "href": "../aulas-fiap/03.APM/GUIA-ESTUDO-APM.html",
+    "result": "ok"
+  },
+  {
+    "source": "docs/requisitos/README.md",
+    "line": 205,
+    "href": "../aulas-fiap/04.Automação%20de%20incidentes/GUIA-ESTUDO-Automacao-de-incidentes.html",
+    "result": "ok"
+  }
+]

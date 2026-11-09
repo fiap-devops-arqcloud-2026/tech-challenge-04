@@ -1,0 +1,140 @@
+# ---------------------------------------------------------------
+# Terraform - NUNCA versionar estado: contem senhas em texto puro
+# ---------------------------------------------------------------
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+.terraform/
+# .terraform.lock.hcl NAO entra aqui: o lock DEVE ser versionado para que
+# todo o grupo use a mesma versao de provider. Recomendacao da HashiCorp.
+crash.log
+crash.*.log
+*.tfvars
+*.tfvars.json
+!example.tfvars
+!terraform.tfvars.example
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+tfplan
+*.tfplan
+# Convencao para exportacoes de terraform show -json (podem conter segredos).
+*.tfplan.json
+tfplan.json
+plan.json
+*-plan.json
+
+# ---------------------------------------------------------------
+# Credenciais e segredos
+# ---------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+!**/key.go
+*.p12
+*.pfx
+credentials
+.aws/
+kubeconfig
+kubeconfig.*
+*.kubeconfig
+
+# ---------------------------------------------------------------
+# Python
+# ---------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.pytest_cache/
+.coverage
+htmlcov/
+*.egg-info/
+.mypy_cache/
+.ruff_cache/
+
+# ---------------------------------------------------------------
+# Go
+# ---------------------------------------------------------------
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+vendor/
+
+# ---------------------------------------------------------------
+# Kubernetes / Kustomize / Helm
+# ---------------------------------------------------------------
+charts/*.tgz
+*.orig
+
+# ---------------------------------------------------------------
+# Sistema operacional e editores
+# ---------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*~
+# Travas temporarias do Microsoft Office (ex.: ~$Apresentacao.pptx). Contem
+# o nome do usuario e nao servem para nada fora da maquina de quem abriu.
+~$*
+# Saida de geradores locais (ex.: PDFs de rascunho). Nao e fonte do projeto.
+output/
+
+# Pasta de rascunho de execucao. Apareceu em 2026-09-11 com um script de
+# captura de tela dentro; o script foi promovido para scripts/ e a pasta
+# passa a ser ignorada, para nao virar deposito de arquivo solto.
+tmp/
+
+
+# Trabalho local de leitura/QA. Ignorado NAO significa descartavel:
+# estas pastas tambem guardam evidencias unicas (logs, traces e resultados).
+# Limpar somente caches/binarios explicitamente inventariados.
+00_COLAB_IA/**/__pycache__/
+00_COLAB_IA/02_TRABALHO/extracoes*/
+00_COLAB_IA/02_TRABALHO/qa-*/
+00_COLAB_IA/02_TRABALHO/validacao-ci04-2026-10-20/
+00_COLAB_IA/02_TRABALHO/validacao-local-*/
+00_COLAB_IA/02_TRABALHO/obs-aula1-p4.png
+00_COLAB_IA/02_TRABALHO/*.log
+00_COLAB_IA/02_TRABALHO/gitops-renderizado-*.yaml
+
+# Gravacoes locais: publicar por link apos revisar, nao como binario no Git.
+*.mp4
+*.mkv
+*.mov
+*.webm
+*.avi
+*.m4v
+*.wmv
+
+# Log do terraform test -verbose de 2026-10-28 (156 MB, acima do limite de
+# 100 MB do GitHub). O resultado fica no resumo ao lado (offline-test-resumo.txt).
+00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/offline-test.jsonl
+
+# Evidencias da etapa 8 com identificadores reais da conta AWS nova: ficam so
+# na maquina local. O resultado (34/34 verificacoes) esta no LOG e no DOSSIE.
+00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/aws/PARECER_AWS_ETAPA8.md
+00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/aws/inventario-aws-sanitizado.json
+00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/correspondencia-aws-github.json
+00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/github/configuracao.json
+
+# Copia integral de docs/00_COLAB_IA (Fase 3). Os originais seguem no historico
+# (commit 3b21e65); nao versionar de novo (dados pessoais e conta da Fase 3).
+00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/
+
+# Renderizacoes das paginas do enunciado usadas na auditoria (o PDF original fica na raiz).
+00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/fontes/*.png

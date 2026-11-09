@@ -1,0 +1,25 @@
+# Copiar para terraform.tfvars local somente apos confirmar a nova conta.
+# Sentinelas intencionais: estes valores NAO permitem uma implantacao.
+aws_region              = "us-east-2"
+expected_aws_account_id = "CONTA_AWS_PENDENTE"
+state_bucket            = "NOVO_BUCKET_ESTADO_FASE4"
+state_region            = "us-east-2"
+base_state_key          = "phase4/prod/base.tfstate"
+cluster_state_key = "phase4/prod/cluster.tfstate"
+gitops_repo_url    = "https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04.git"
+# main permanece destino de publicacao FUTURA; trabalho atual somente em dev.
+gitops_repo_branch = "main"
+# github_token via TF_VAR_github_token somente se o repositorio for privado.
+
+# ------------------------------------------------------------
+# Fase 4: segredos da observabilidade - NUNCA neste arquivo
+# ------------------------------------------------------------
+# Sem default e obrigatorios no plan. Passar por variavel de ambiente,
+# lendo do .env local (ignorado pelo Git), por exemplo no Git Bash:
+#   set -a; . ./.env; set +a
+#   export TF_VAR_new_relic_license_key="$NEW_RELIC_LICENSE_KEY"
+#   export TF_VAR_pagerduty_integration_key="$PAGERDUTY_INTEGRATION_KEY"
+#   export TF_VAR_slack_webhook_url="$SLACK_WEBHOOK_URL"
+#   export TF_VAR_github_dispatch_token="$GITHUB_DISPATCH_TOKEN"
+# O token de dispatch e um fine-grained token do repositorio 04, diferente
+# do github_token de leitura do ArgoCD.

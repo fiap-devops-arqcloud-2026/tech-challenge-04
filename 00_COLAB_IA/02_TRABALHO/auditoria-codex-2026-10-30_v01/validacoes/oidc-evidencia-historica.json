@@ -1,0 +1,753 @@
+{
+  "source": "00_COLAB_IA\\02_TRABALHO\\etapas8-9-2026-10-28_v01\\terraform\\offline-test.jsonl",
+  "types": {
+    "version": 1,
+    "test_abstract": 1,
+    "test_file": 3,
+    "test_run": 35,
+    "test_plan": 8,
+    "diagnostic": 5,
+    "test_summary": 1
+  },
+  "summaries": [
+    {
+      "@level": "info",
+      "@message": "  \"create_provider_main\"... in progress",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "create_provider_main",
+      "@timestamp": "2026-10-28T15:02:15.336657-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "create_provider_main",
+        "progress": "starting",
+        "elapsed": 0
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"create_provider_main\"... in progress",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "create_provider_main",
+      "@timestamp": "2026-10-28T15:02:17.337436-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "create_provider_main",
+        "progress": "running",
+        "elapsed": 2001
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"create_provider_main\"... in progress",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "create_provider_main",
+      "@timestamp": "2026-10-28T15:02:19.337727-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "create_provider_main",
+        "progress": "running",
+        "elapsed": 4001
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"create_provider_main\"... in progress",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "create_provider_main",
+      "@timestamp": "2026-10-28T15:02:21.337936-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "create_provider_main",
+        "progress": "running",
+        "elapsed": 6001
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"create_provider_main\"... in progress",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "create_provider_main",
+      "@timestamp": "2026-10-28T15:02:23.338334-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "create_provider_main",
+        "progress": "running",
+        "elapsed": 8002
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"create_provider_main\"... in progress",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "create_provider_main",
+      "@timestamp": "2026-10-28T15:02:25.338990-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "create_provider_main",
+        "progress": "running",
+        "elapsed": 10002
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"create_provider_main\"... in progress",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "create_provider_main",
+      "@timestamp": "2026-10-28T15:02:27.339312-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "create_provider_main",
+        "progress": "running",
+        "elapsed": 12003
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"create_provider_main\"... in progress",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "create_provider_main",
+      "@timestamp": "2026-10-28T15:02:29.339916-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "create_provider_main",
+        "progress": "running",
+        "elapsed": 14003
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"create_provider_main\"... in progress",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "create_provider_main",
+      "@timestamp": "2026-10-28T15:02:31.340338-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "create_provider_main",
+        "progress": "running",
+        "elapsed": 16004
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"create_provider_main\"... in progress",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "create_provider_main",
+      "@timestamp": "2026-10-28T15:02:33.341635-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "create_provider_main",
+        "progress": "running",
+        "elapsed": 18005
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"create_provider_main\"... in progress",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "create_provider_main",
+      "@timestamp": "2026-10-28T15:02:35.342216-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "create_provider_main",
+        "progress": "running",
+        "elapsed": 20006
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"create_provider_main\"... in progress",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "create_provider_main",
+      "@timestamp": "2026-10-28T15:02:37.343107-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "create_provider_main",
+        "progress": "running",
+        "elapsed": 22007
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"create_provider_main\"... in progress",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "create_provider_main",
+      "@timestamp": "2026-10-28T15:02:39.343177-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "create_provider_main",
+        "progress": "running",
+        "elapsed": 24007
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"create_provider_main\"... pass",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "create_provider_main",
+      "@timestamp": "2026-10-28T15:02:41.333694-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "create_provider_main",
+        "progress": "complete",
+        "status": "pass"
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"reuse_provider_main\"... in progress",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "reuse_provider_main",
+      "@timestamp": "2026-10-28T15:02:41.548410-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "reuse_provider_main",
+        "progress": "starting",
+        "elapsed": 0
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"reuse_provider_main\"... in progress",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "reuse_provider_main",
+      "@timestamp": "2026-10-28T15:02:43.548754-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "reuse_provider_main",
+        "progress": "running",
+        "elapsed": 2000
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"reuse_provider_main\"... pass",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "reuse_provider_main",
+      "@timestamp": "2026-10-28T15:02:44.731319-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "reuse_provider_main",
+        "progress": "complete",
+        "status": "pass"
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"different_repository_is_parameterized\"... in progress",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "different_repository_is_parameterized",
+      "@timestamp": "2026-10-28T15:02:44.949125-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "different_repository_is_parameterized",
+        "progress": "starting",
+        "elapsed": 0
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"different_repository_is_parameterized\"... in progress",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "different_repository_is_parameterized",
+      "@timestamp": "2026-10-28T15:02:46.949348-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "different_repository_is_parameterized",
+        "progress": "running",
+        "elapsed": 2000
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"different_repository_is_parameterized\"... pass",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "different_repository_is_parameterized",
+      "@timestamp": "2026-10-28T15:02:48.020947-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "different_repository_is_parameterized",
+        "progress": "complete",
+        "status": "pass"
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"reject_owner_wildcard\"... in progress",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "reject_owner_wildcard",
+      "@timestamp": "2026-10-28T15:02:48.232899-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "reject_owner_wildcard",
+        "progress": "starting",
+        "elapsed": 0
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"reject_owner_wildcard\"... in progress",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "reject_owner_wildcard",
+      "@timestamp": "2026-10-28T15:02:50.233298-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "reject_owner_wildcard",
+        "progress": "running",
+        "elapsed": 2001
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"reject_owner_wildcard\"... pass",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "reject_owner_wildcard",
+      "@timestamp": "2026-10-28T15:02:51.395487-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "reject_owner_wildcard",
+        "progress": "complete",
+        "status": "pass"
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "error",
+      "@message": "Error: Invalid value for variable",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "reject_owner_wildcard",
+      "@timestamp": "2026-10-28T15:02:51.600220-03:00",
+      "diagnostic": {
+        "severity": "error",
+        "summary": "Invalid value for variable",
+        "detail": "github_repository_owner_id deve ser um ID numerico positivo do GitHub.\n\nThis was checked by the validation rule at variables.tf:28,3-13.",
+        "range": {
+          "filename": "tests\\trust.tftest.hcl",
+          "start": {
+            "line": 60,
+            "column": 44,
+            "byte": 2858
+          },
+          "end": {
+            "line": 60,
+            "column": 47,
+            "byte": 2861
+          }
+        },
+        "snippet": {
+          "context": "run \"reject_owner_wildcard\"",
+          "code": "  variables { github_repository_owner_id = \"*\" }",
+          "start_line": 60,
+          "highlight_start_offset": 43,
+          "highlight_end_offset": 46,
+          "values": [
+            {
+              "traversal": "var.github_repository_owner_id",
+              "statement": "is \"*\""
+            }
+          ]
+        }
+      },
+      "type": "diagnostic"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"reject_repo_id_wildcard\"... in progress",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "reject_repo_id_wildcard",
+      "@timestamp": "2026-10-28T15:02:51.600220-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "reject_repo_id_wildcard",
+        "progress": "starting",
+        "elapsed": 0
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"reject_repo_id_wildcard\"... in progress",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "reject_repo_id_wildcard",
+      "@timestamp": "2026-10-28T15:02:53.600691-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "reject_repo_id_wildcard",
+        "progress": "running",
+        "elapsed": 2000
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"reject_repo_id_wildcard\"... pass",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "reject_repo_id_wildcard",
+      "@timestamp": "2026-10-28T15:02:54.735540-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "reject_repo_id_wildcard",
+        "progress": "complete",
+        "status": "pass"
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "error",
+      "@message": "Error: Invalid value for variable",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "reject_repo_id_wildcard",
+      "@timestamp": "2026-10-28T15:02:54.955235-03:00",
+      "diagnostic": {
+        "severity": "error",
+        "summary": "Invalid value for variable",
+        "detail": "github_repository_id deve ser um ID numerico positivo do GitHub.\n\nThis was checked by the validation rule at variables.tf:39,3-13.",
+        "range": {
+          "filename": "tests\\trust.tftest.hcl",
+          "start": {
+            "line": 65,
+            "column": 38,
+            "byte": 3010
+          },
+          "end": {
+            "line": 65,
+            "column": 41,
+            "byte": 3013
+          }
+        },
+        "snippet": {
+          "context": "run \"reject_repo_id_wildcard\"",
+          "code": "  variables { github_repository_id = \"*\" }",
+          "start_line": 65,
+          "highlight_start_offset": 37,
+          "highlight_end_offset": 40,
+          "values": [
+            {
+              "traversal": "var.github_repository_id",
+              "statement": "is \"*\""
+            }
+          ]
+        }
+      },
+      "type": "diagnostic"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"reject_repo_name_wildcard\"... in progress",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "reject_repo_name_wildcard",
+      "@timestamp": "2026-10-28T15:02:54.955235-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "reject_repo_name_wildcard",
+        "progress": "starting",
+        "elapsed": 0
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"reject_repo_name_wildcard\"... in progress",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "reject_repo_name_wildcard",
+      "@timestamp": "2026-10-28T15:02:56.955654-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "reject_repo_name_wildcard",
+        "progress": "running",
+        "elapsed": 2000
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"reject_repo_name_wildcard\"... pass",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "reject_repo_name_wildcard",
+      "@timestamp": "2026-10-28T15:02:58.096093-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "reject_repo_name_wildcard",
+        "progress": "complete",
+        "status": "pass"
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "error",
+      "@message": "Error: Invalid value for variable",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "reject_repo_name_wildcard",
+      "@timestamp": "2026-10-28T15:02:58.318977-03:00",
+      "diagnostic": {
+        "severity": "error",
+        "summary": "Invalid value for variable",
+        "detail": "github_repository deve ser owner/repo, sem curingas nem contexto OIDC.\n\nThis was checked by the validation rule at variables.tf:17,3-13.",
+        "range": {
+          "filename": "tests\\trust.tftest.hcl",
+          "start": {
+            "line": 70,
+            "column": 35,
+            "byte": 3155
+          },
+          "end": {
+            "line": 70,
+            "column": 64,
+            "byte": 3184
+          }
+        },
+        "snippet": {
+          "context": "run \"reject_repo_name_wildcard\"",
+          "code": "  variables { github_repository = \"fiap-devops-arqcloud-2026/*\" }",
+          "start_line": 70,
+          "highlight_start_offset": 34,
+          "highlight_end_offset": 63,
+          "values": [
+            {
+              "traversal": "var.github_repository",
+              "statement": "is \"fiap-devops-arqcloud-2026/*\""
+            }
+          ]
+        }
+      },
+      "type": "diagnostic"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"reject_branch_wildcard\"... in progress",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "reject_branch_wildcard",
+      "@timestamp": "2026-10-28T15:02:58.318977-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "reject_branch_wildcard",
+        "progress": "starting",
+        "elapsed": 0
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"reject_branch_wildcard\"... in progress",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "reject_branch_wildcard",
+      "@timestamp": "2026-10-28T15:03:00.319333-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "reject_branch_wildcard",
+        "progress": "running",
+        "elapsed": 2001
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"reject_branch_wildcard\"... pass",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "reject_branch_wildcard",
+      "@timestamp": "2026-10-28T15:03:01.568262-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "reject_branch_wildcard",
+        "progress": "complete",
+        "status": "pass"
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "error",
+      "@message": "Error: Invalid value for variable",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "reject_branch_wildcard",
+      "@timestamp": "2026-10-28T15:03:01.765651-03:00",
+      "diagnostic": {
+        "severity": "error",
+        "summary": "Invalid value for variable",
+        "detail": "github_deploy_branch deve ser um nome de branch explicito, sem curingas, dois-pontos ou espacos.\n\nThis was checked by the validation rule at variables.tf:51,3-13.",
+        "range": {
+          "filename": "tests\\trust.tftest.hcl",
+          "start": {
+            "line": 75,
+            "column": 38,
+            "byte": 3323
+          },
+          "end": {
+            "line": 75,
+            "column": 41,
+            "byte": 3326
+          }
+        },
+        "snippet": {
+          "context": "run \"reject_branch_wildcard\"",
+          "code": "  variables { github_deploy_branch = \"*\" }",
+          "start_line": 75,
+          "highlight_start_offset": 37,
+          "highlight_end_offset": 40,
+          "values": [
+            {
+              "traversal": "var.github_deploy_branch",
+              "statement": "is \"*\""
+            }
+          ]
+        }
+      },
+      "type": "diagnostic"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"reject_context_injection\"... in progress",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "reject_context_injection",
+      "@timestamp": "2026-10-28T15:03:01.765651-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "reject_context_injection",
+        "progress": "starting",
+        "elapsed": 0
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"reject_context_injection\"... in progress",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "reject_context_injection",
+      "@timestamp": "2026-10-28T15:03:03.765959-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "reject_context_injection",
+        "progress": "running",
+        "elapsed": 2000
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "info",
+      "@message": "  \"reject_context_injection\"... pass",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "reject_context_injection",
+      "@timestamp": "2026-10-28T15:03:04.990733-03:00",
+      "test_run": {
+        "path": "tests\\trust.tftest.hcl",
+        "run": "reject_context_injection",
+        "progress": "complete",
+        "status": "pass"
+      },
+      "type": "test_run"
+    },
+    {
+      "@level": "error",
+      "@message": "Error: Invalid value for variable",
+      "@module": "terraform.ui",
+      "@testfile": "tests\\trust.tftest.hcl",
+      "@testrun": "reject_context_injection",
+      "@timestamp": "2026-10-28T15:03:05.224053-03:00",
+      "diagnostic": {
+        "severity": "error",
+        "summary": "Invalid value for variable",
+        "detail": "github_deploy_branch deve ser um nome de branch explicito, sem curingas, dois-pontos ou espacos.\n\nThis was checked by the validation rule at variables.tf:51,3-13.",
+        "range": {
+          "filename": "tests\\trust.tftest.hcl",
+          "start": {
+            "line": 80,
+            "column": 38,
+            "byte": 3470
+          },
+          "end": {
+            "line": 80,
+            "column": 61,
+            "byte": 3493
+          }
+        },
+        "snippet": {
+          "context": "run \"reject_context_injection\"",
+          "code": "  variables { github_deploy_branch = \"main:environment:prod\" }",
+          "start_line": 80,
+          "highlight_start_offset": 37,
+          "highlight_end_offset": 60,
+          "values": [
+            {
+              "traversal": "var.github_deploy_branch",
+              "statement": "is \"main:environment:prod\""
+            }
+          ]
+        }
+      },
+      "type": "diagnostic"
+    },
+    {
+      "@level": "info",
+      "@message": "Success! 8 passed, 0 failed.",
+      "@module": "terraform.ui",
+      "@timestamp": "2026-10-28T15:03:05.225599-03:00",
+      "test_summary": {
+        "status": "pass",
+        "passed": 8,
+        "failed": 0,
+        "errored": 0,
+        "skipped": 0
+      },
+      "type": "test_summary"
+    }
+  ]
+}

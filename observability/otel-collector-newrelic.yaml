@@ -1,0 +1,15 @@
+# Complemento do otel-collector-local.yaml: acrescenta a exportação dos traces ao New Relic (conta US).
+# Carregado como segundo --config. O Collector mescla os dois arquivos e as listas deste substituem
+# as do primeiro, então os traces passam pelos mesmos processadores de sanitização antes de sair.
+# A license key (tipo Ingest - License) vem de NEW_RELIC_LICENSE_KEY, definida no .env local, nunca versionado.
+exporters:
+  otlp_http/newrelic:
+    endpoint: https://otlp.nr-data.net
+    headers:
+      api-key: ${env:NEW_RELIC_LICENSE_KEY}
+    compression: gzip
+
+service:
+  pipelines:
+    traces:
+      exporters: [debug, file/traces, otlp_http/newrelic]

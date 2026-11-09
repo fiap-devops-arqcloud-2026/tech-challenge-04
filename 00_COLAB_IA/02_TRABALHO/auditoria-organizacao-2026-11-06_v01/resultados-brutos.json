@@ -1,0 +1,1567 @@
+{
+ "proximos": {
+  "estado_atual": "Em 2026-11-05 a dev está em 50446a6, igual à origin/dev e com a árvore limpa. B0, B1 e B2 estão concluídos, e a preparação do B3 também: PagerDuty com a chave nova e Slack testados de verdade, testes e ensaio da falha aprovados, plano real da base com 8 imports, 29 criações, 7 alterações e 0 destruições, e custo oficial de US$ 9,82/dia (00_COLAB_IA/02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md, seções 1, 3 e 4). Hoje foram fechados os pré-requisitos do usuário (tokens validados, orçamento togglemaster-creditos com 5 alertas, créditos em US$ 120 e riscos aceitos na D-020). O CI também ganhou o teste da confiança OIDC (b2c5bdf), o GitOps Check com scan da imagem no PR (793384e) e o filtro de documentação no Compose (199fe01) (PENDENCIAS, Execução vigente, linhas 20-31; LOG de 10:20 a 16:03). Nada foi implantado: não houve apply, PR nem merge. A main (003a707) tem só o PDF do enunciado, e a dev está 140 commits à frente, com 789 arquivos a publicar, 555 deles em 00_COLAB_IA (git rev-list --left-right --count origin/main...HEAD; git diff --name-status origin/main HEAD). A stack no EKS e a cadeia alerta → PagerDuty → Slack → self-healing ainda não foram provadas; para começar faltam a autorização dos tópicos 5 e 6 e a decisão sobre o alpine 3.20 (PENDENCIAS:32-33).",
+  "proximo_passo_imediato": "Quem age primeiro é o usuário, hoje (2026-11-05). (1) Autorizar o tópico 5 (implantação: applies, Variables do GitHub, PR e merge dev → main) e o tópico 6 (eventos reais, gravação e destroy), conforme PENDENCIAS:33 e PREPARACAO_B3 §5, linha 105. (2) Decidir, antes do primeiro merge, o que a main vai mostrar: 00_COLAB_IA, CLAUDE.md e os documentos históricos de docs/. (3) Fechar as duas escolhas que mudam o que será implantado: alpine 3.20 (PENDENCIAS:32) e versão do ArgoCD (PENDENCIAS:475). Depois, o agente (Claude ou Codex) faz na dev os commits de organização, com movimentos e remoções em commit próprio (ORGANIZACAO_DE_PASTAS.md:67). Em 2026-11-06 às 08h, o agente começa a seção 6 do roteiro: carrega os TF_VAR_* e gera o plano salvo da base, que só é aplicado se mostrar 8 import, 0 destroy e nenhum replace. Sem essa autorização não acontece nenhum apply, Variable, PR ou merge (CLAUDE.md).",
+  "passos_b3": [
+   {
+    "ordem": 1,
+    "passo": "Autorizar os tópicos 5 e 6 e fechar as decisões que precisam vir antes do merge: o que vai para a main, alpine 3.20 e versão do ArgoCD.",
+    "quem": "Usuário",
+    "fonte": "PENDENCIAS_E_PROXIMOS_PASSOS.md:32-33 (Execução vigente); PREPARACAO_B3 §5, linha 105; PENDENCIAS:475 (P-017)",
+    "exige_autorizacao": true,
+    "pre_requisito": "Pré-requisitos do usuário fechados em 2026-11-05: orçamento, tokens e D-020 (PREPARACAO_B3 §5, itens 1 a 3)."
+   },
+   {
+    "ordem": 2,
+    "passo": "Aplicar na dev as decisões de organização: movimentos e remoções em commit próprio, arquivo por arquivo, e correção dos links públicos que apontarem para o que sair. Este passo não está no roteiro, mas é necessário porque o merge publica a árvore inteira.",
+    "quem": "Agente (Claude ou Codex); commits e push na dev já autorizados pela D1",
+    "fonte": "ORGANIZACAO_DE_PASTAS.md:67-68; LEIA-PRIMEIRO.md:71; PENDENCIAS:119 (D1)",
+    "exige_autorizacao": true,
+    "pre_requisito": "Lista de remoções e movimentos aprovada pelo usuário no passo 1."
+   },
+   {
+    "ordem": 3,
+    "passo": "Carregar o .env no Git Bash e exportar os 5 TF_VAR_* (New Relic, PagerDuty, Slack, token de dispatch e token do ArgoCD) sem exibir valores.",
+    "quem": "Agente, no terminal do usuário",
+    "fonte": "PREPARACAO_B3 §6, passo 1 (linhas 125-133)",
+    "exige_autorizacao": false,
+    "pre_requisito": ".env com as 5 chaves, validado em 2026-11-05 (LOG 10:20). backend.hcl e terraform.tfvars das 3 raízes existem e são ignorados (conferidos só existência e tamanho)."
+   },
+   {
+    "ordem": 4,
+    "passo": "Base: terraform -chdir=terraform plan -out=base.tfplan. Conferir 8 import, 0 destroy e nenhum replace (a trust do CI só troca o Sid) e só então rodar apply base.tfplan. A partir daqui o NAT cobra cerca de US$ 1,20/dia.",
+    "quem": "Agente executa; usuário aprova o plano salvo",
+    "fonte": "PREPARACAO_B3 §6, passo 2 (linha 134); §3 (linhas 50-61); §4 (linha 88); LEIA-PRIMEIRO.md:56",
+    "exige_autorizacao": true,
+    "pre_requisito": "Passos 1 a 3; orçamento ativo; tfvars local com NAT ligado e no máximo 2 nós (PREPARACAO_B3 §3, linha 48)."
+   },
+   {
+    "ordem": 5,
+    "passo": "Criar no GitHub as Variables AWS_SELF_HEALING_ROLE_ARN (output self_healing_role_arn) e EKS_CLUSTER_NAME = togglemaster.",
+    "quem": "Agente com gh, ou usuário pela interface",
+    "fonte": "PREPARACAO_B3 §6, passo 3 (linhas 135-137); §2, linha 42; LOG 2026-11-04 17:05 (correção do nome do cluster)",
+    "exige_autorizacao": true,
+    "pre_requisito": "Base aplicada, porque a role do self-healing nasce no apply."
+   },
+   {
+    "ordem": 6,
+    "passo": "Cluster: plan -out e apply (15-20 min); aws eks update-kubeconfig --name togglemaster --region us-east-2; trocar as sentinelas do overlay pelos outputs reais em commit na dev. O roteiro cita só REDIS_URL e AWS_SQS_URL, mas gitops/overlays/prod/patches/irsa.yaml:31 e :43 também têm CONTA_AWS_PENDENTE.",
+    "quem": "Agente",
+    "fonte": "PREPARACAO_B3 §6, passo 4 (linhas 138-140); README.md:228; PENDENCIAS:450 (F3-P-040)",
+    "exige_autorizacao": true,
+    "pre_requisito": "Base aplicada. A cota é de 5 vCPU, então cabem no máximo 2 nós (PREPARACAO_B3 §2, linha 35)."
+   },
+   {
+    "ordem": 7,
+    "passo": "k8s em duas etapas: apply -target=helm_release.argocd e depois o apply completo (Secrets, namespace observability e Applications). As Applications observam a main (terraform/k8s/variables.tf:114-121) e só sincronizam depois do merge.",
+    "quem": "Agente",
+    "fonte": "PREPARACAO_B3 §6, passo 5 (linha 141); PENDENCIAS:452 (F3-P-046)",
+    "exige_autorizacao": true,
+    "pre_requisito": "Cluster aplicado e kubeconfig configurado; TF_VAR_* carregados; decisão sobre o chart 7.7.11 (terraform/k8s/variables.tf:95)."
+   },
+   {
+    "ordem": 8,
+    "passo": "Abrir o PR dev → main, conferir todos os checks (inclusive o image-scan dos 5 serviços) e fazer merge com --merge, nunca com --delete-branch. O merge roda o job image, que faz o primeiro login OIDC real nesta conta (conferir a etapa Autenticar na AWS via OIDC, _ci-go.yml:489). Em seguida vêm o push das 5 imagens no ECR e o commit do robô com as tags direto na main (_ci-go.yml:654; _ci-python.yml:698). Depois, sincronizar a dev com a main.",
+    "quem": "Agente abre o PR e confere; o merge só com autorização específica do usuário",
+    "fonte": "PREPARACAO_B3 §6, passo 6 (linha 142); LEIA-PRIMEIRO.md:72 e :83; LOG 2026-11-05 15:54 (linhas 54 e 60)",
+    "exige_autorizacao": true,
+    "pre_requisito": "Commits de organização e das sentinelas já na dev. O self-healing.yml precisa estar na main antes do ensaio."
+   },
+   {
+    "ordem": 9,
+    "passo": "Criar os schemas e o seed dos RDS do auth e do flag: chave de API, SERVICE_API_KEY real, flag e regra. Este passo falta no roteiro; o procedimento só existe no guia histórico, seção 8 (docs/GUIA_DE_REPRODUCAO.md:482). O Secret tem ignore_changes para o apply não desfazer o seed (terraform/k8s/secrets.tf:228-257).",
+    "quem": "Agente",
+    "fonte": "PENDENCIAS:451 e :453 (F3-P-041 e F3-P-048)",
+    "exige_autorizacao": true,
+    "pre_requisito": "Pods do auth e do flag no ar depois do sync do ArgoCD."
+   },
+   {
+    "ordem": 10,
+    "passo": "Aceite: Applications Synced/Healthy, pods prontos, Grafana com as datasources, traces do cluster no New Relic e teste funcional. Conferir os créditos com aws freetier get-account-plan-state.",
+    "quem": "Agente confere o cluster; usuário confere as telas do New Relic e do Grafana",
+    "fonte": "PREPARACAO_B3 §6, passo 7 (linhas 143-147); §7 (linhas 158-161); PENDENCIAS:164",
+    "exige_autorizacao": false,
+    "pre_requisito": "Passos 8 e 9."
+   },
+   {
+    "ordem": 11,
+    "passo": "Preparar o tópico 6: criar o gerador de tráfego que chama o flag-service direto (não existe em scripts/). A falha só é ligada no ensaio, por POST /admin/fault.",
+    "quem": "Agente cria o gerador na dev; o ensaio com eventos reais depende do tópico 6",
+    "fonte": "PREPARACAO_B3 §6, linha 149; LOG 2026-11-03 20:52, linha 287; git ls-files scripts",
+    "exige_autorizacao": true,
+    "pre_requisito": "Aceite do B3."
+   }
+  ],
+  "cronograma": [
+   {
+    "bloco": "Pré-B3: decisões e organização",
+    "datas": "2026-11-05 (hoje)",
+    "entrega": "Autorização dos tópicos 5 e 6; decisões sobre o que vai para a main, alpine 3.20 e ArgoCD; commits de organização na dev.",
+    "fonte": "PENDENCIAS:32-33; PREPARACAO_B3 §5, linha 105"
+   },
+   {
+    "bloco": "B3: implantação",
+    "datas": "2026-11-06, início previsto às 08h (a P-015 previa 05-06/11)",
+    "entrega": "Apply base → cluster → k8s, Variables, PR e merge dev → main, imagens no ECR, seed e stack no ar. Aceite: Applications Synced/Healthy e teste funcional.",
+    "fonte": "PENDENCIAS:164 e :218; PREPARACAO_B3 §4 (linha 85) e §6"
+   },
+   {
+    "bloco": "B4: cadeia de incidente gravada",
+    "datas": "2026-11-07 a 2026-11-09 (limite 2026-11-10)",
+    "entrega": "Gravação de tráfego e falha → Firing no Grafana → PagerDuty → Slack → self-healing → recuperação. Prints sem segredos para os REQ-OBR-35 a 38.",
+    "fonte": "PENDENCIAS:165; docs/requisitos/README.md:77-80 e :84-87"
+   },
+   {
+    "bloco": "B5: vídeo e destroy",
+    "datas": "2026-11-10 a 2026-11-12",
+    "entrega": "Vídeo de até 25 min revisado (áudio e segredos) e destroy logo depois da gravação, com autorização específica; conferir volumes EBS órfãos.",
+    "fonte": "PENDENCIAS:166; PREPARACAO_B3 §4, linha 101; docs/requisitos/README.md:73"
+   },
+   {
+    "bloco": "B6: relatório e revisão pública",
+    "datas": "2026-11-13 a 2026-11-16",
+    "entrega": "Relatório PDF (REQ-OBR-32 a 40), revisão D-018/P-017 dos documentos públicos, matriz dos 42, acesso do avaliador e envio.",
+    "fonte": "PENDENCIAS:167 e :470-476; DECISOES.md:165 (D-018)"
+   },
+   {
+    "bloco": "Entrega",
+    "datas": "até 2026-11-17",
+    "entrega": "Link do repositório (main), vídeo de até 25 min e relatório PDF. A data foi informada pelo usuário e não consta no PDF.",
+    "fonte": "DECISOES.md:73 (D-009); docs/requisitos/README.md:12 e :91"
+   }
+  ],
+  "prazos_criticos": [
+   "2026-11-05 (hoje): autorizar os tópicos 5 e 6 e fechar as decisões pré-merge, para o B3 começar em 2026-11-06 às 08h, que é o início do cenário de custo de 110 h (PREPARACAO_B3 §4, linha 85).",
+   "2026-11-06: o B3 inteiro cabe em um dia (3 applies, Variables, PR e merge, seed e aceite); só o cluster leva 15-20 min (PREPARACAO_B3 §6, linha 138; PENDENCIAS:164).",
+   "2026-11-10: meta de gravação da cadeia completa e limite do B4. Às 22h termina a janela de 110 h estimada em US$ 45,35 (PENDENCIAS:3 e :165; PREPARACAO_B3 §4, linha 85).",
+   "2026-11-11: fim do trial do PagerDuty, por relato. Depois dele, o plano Free mostra Events: Not included, então as cenas de incidente precisam estar gravadas antes. O B5 vai até 12/11, depois do fim do trial (PENDENCIAS:113 e :329).",
+   "Destroy logo depois da gravação, até 2026-11-12 (B5), com autorização específica. Ficar 7 dias ligado custa US$ 69,08. Com US$ 120, o limite teórico é de 293 h; pela minha conta, contando de 06/11 às 08h, isso chega a cerca de 18/11 (PENDENCIAS:166; PREPARACAO_B3 §4, linhas 86 e 91-94; CLAUDE.md).",
+   "Antes do destroy: capturar os prints dos REQ-OBR-35 a 38 (dashboard do Grafana, trace no APM, notificação no ChatOps e execução do self-healing), que só existem com o cluster ligado (docs/requisitos/README.md:84-87).",
+   "2026-11-16: fim do B6, com relatório PDF, revisão pública e acesso do avaliador ao repositório privado (PENDENCIAS:167 e :431).",
+   "2026-11-17: entrega, em data informada pelo usuário; horário e canal seguem [INCERTO] (DECISOES.md:73; REQ-OBR-42 em docs/requisitos/README.md:91).",
+   "Depois da entrega: o EKS 1.34 sai do suporte padrão em 2026-12-01, e um cluster esquecido passa a pagar US$ 0,60/h no plano de controle. Os tokens do GitHub expiram em 2027-01-04, os créditos valem até 2027-04-20 e o orçamento vai até 2027-04-30 (PREPARACAO_B3 §2 e §5; PENDENCIAS:447)."
+  ],
+  "organizacao_antes_do_merge": [
+   "Tamanho real da publicação: a main 003a707 tem 1 arquivo e a dev tem 790. O primeiro merge adiciona 789 arquivos e leva 140 commits. Os 785 do LOG de 2026-11-05 15:19 (linha 83) foram medidos em 46d0a18, antes do 793384e. Tirar arquivos da árvore antes do merge muda só o que a main mostra. O histórico continua, porque a origin/dev já tem tudo e o merge --merge leva os commits (git diff --name-status origin/main HEAD; git rev-list --left-right --count).",
+   "Destino de 00_COLAB_IA: são 555 dos 790 arquivos (70%) e 10,1 MB (02_TRABALHO com 270 arquivos e 5,4 MB; _ARQUIVO_MORTO com 279 e 4,2 MB; mais 6 documentos de topo). Opções: (a) publicar como está, como na Fase 3, cuja main tinha docs/00_COLAB_IA com 39 de 214 arquivos (tech-challenge-03, origin/main 6100879); (b) publicar só os 6 documentos de topo e os relatórios citados no README, tirando scripts, rascunhos e _ARQUIVO_MORTO; (c) tirar a pasta inteira da árvore. Em (b) e (c) a cópia local precisa continuar, porque a D-017 recusou depender só do Git (DECISOES.md:157).",
+   "Se algo de 00_COLAB_IA sair, corrigir no mesmo PR o que aponta para lá. São 9 links no README.md (linhas 14-16, 43, 139, 184-186 e 226), mais terraform/README.md:67 e :74 e gitops/README.md:61. Também mudam os caminhos padrão de saída em docker-compose.otel.yaml:18, scripts/test-observability.sh:9, scripts/test-observability-newrelic.sh:10 e scripts/integration/test-traces.py:18. Se a pasta sair inteira, o diff cai para 234 arquivos, abaixo do limite de 300 do filtro de caminho do GitHub (LOG 15:19, linha 83).",
+   "O CLAUDE.md está versionado na raiz (último commit 2a8fc7e) e cita agentes e IDs internos. A D-018 o mantém como ponteiro interno (DECISOES.md:165). Decidir se ele aparece na main.",
+   "Documentos da Fase 3 em docs/: RELATORIO_DE_ENTREGA.md tem 5 linhas com RMs do Grupo 203 (F3-P-104, PENDENCIAS:432). GUIA_DE_REPRODUCAO.md tem 10 ocorrências do ID da conta da Fase 3 (F3-F-014, PENDENCIAS:456), mas a seção 8 (linha 482) é hoje o único roteiro de schemas e seed. apresentacao/ToggleMaster_Fase3.pptx tem metadado python-pptx (F3-P-105), e evidencias/estimativa-custos-aws-2026-09-11.png é uma estimativa da Fase 3. As aulas da FIAP ocupam 36 arquivos e 19,5 MB. Decidir se cada um fica com o aviso de histórico, muda de lugar ou sai da árvore. Em qualquer caso, README.md:232 diz que os materiais da Fase 3 foram preservados, mas a D2 confirmou a remoção deles em 9b3119a (PENDENCIAS:120).",
+   "docs/ARQUITETURA.md mistura as duas fases: o cabeçalho diz que é referência histórica da Fase 3, mas em 2026-11-05 o arquivo recebeu a tabela de gatilhos do CI da Fase 4 (linhas 244-252; LOG 15:54 e 16:03). Classe ATUALIZAR: tirar o aviso ou levar a tabela para um documento vigente.",
+   "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879 (33 arquivos, 293 KB) é redundante. 30 arquivos são idênticos aos do tech-challenge-03 no commit 6100879, e os outros 3 estão nos commits 4c76a2d e 31f92e4 do próprio 04 (git rev-parse e git log --find-object). A pasta concentra 12 dos 19 arquivos versionados com o ID da conta da Fase 3. Os outros 7 são docs/GUIA_DE_REPRODUCAO.md, scripts/security-check.sh, 2 cópias de security-check.sh no _ARQUIVO_MORTO e 3 arquivos em 02_TRABALHO. Candidata a LIXO, recuperável pelo Git e pelo 03.",
+   "Mudanças que ainda se queira fazer em services/** e .github/workflows/** devem entrar antes do primeiro merge, que já roda todos os pipelines. Exemplos: alpine 3.20 (services/auth-service/Dockerfile:43 e services/evaluation-service/Dockerfile:43), READMEs da Fase 2 dos serviços (F3-P-112), permissões por job e comentários dos workflows (F3-P-110/111), versões do analytics e PyYAML do flag (F3-P-113/114). Depois do merge, cada mudança em services/<svc>/** gera imagem nova, commit do robô na main e rollout no meio do B4 (PENDENCIAS:437). Depois do destroy da base, o job image falharia no OIDC (F3-P-140, PENDENCIAS:449).",
+   "Documentos públicos que chegam desatualizados à main no B3: README.md, atualizado em 2026-10-27 e com menção ao Codex (a linha 139 diz que integrações, dashboard e automação não existem). Também terraform/README.md:3 e :42 (dizem que a conta não foi informada e que não houve push, PR ou integração na main) e gitops/README.md:3 (sentinelas porque a conta não foi fornecida). A D-018/P-017 deixa a revisão para o B6 (PENDENCIAS:473). Decidir se basta corrigir no B6, já que o avaliador vê a main de 17/11.",
+   "O commit das sentinelas (passo 6 do B3) grava o ID da conta nova no overlay versionado (IRSA e SQS), e o robô grava o registry do ECR. Na Fase 3 isso foi risco aceito porque o repositório era privado (F3-F-014). Confirmar antes do PR (README.md:228; repositório privado em PREPARACAO_B3 §2).",
+   "Regras que valem para o PR: dev → main com --merge e nunca --delete-branch (LEIA-PRIMEIRO.md:72). git add arquivo por arquivo, nunca git add . (LEIA-PRIMEIRO.md:71). Movimentos e remoções em commit próprio, sem reescrever o histórico (ORGANIZACAO_DE_PASTAS.md:67-68; PENDENCIAS:432). Depois do merge, sincronizar a dev com a main por causa dos commits do robô (LEIA-PRIMEIRO.md:83).",
+   "Os arquivos ignorados (cerca de 5,8 GB) não vão para a main. Exemplos medidos com du: 02_TRABALHO/qa-otel-go-2026-10-27, com 917 MB, e o .terraform do harness em etapas8-9-2026-10-28_v01, com 863 MB. A limpeza local pode ficar para depois do B5. Até lá, preservar 02_TRABALHO/validacao-local-preimplantacao-2026-11-04/ (evidências do B3, 4 MB) e o acervo da D-017 (2 MB), que não se regeneram."
+  ],
+  "riscos": [
+   "Custo e créditos: são US$ 120 contra US$ 9,82/dia com tudo ligado. As 110 h do B3 até o fim da gravação custam cerca de US$ 45,35, e 7 dias custam US$ 69,08. Se os créditos acabarem, a conta é suspensa, e o Budgets atualiza com 8-12 h de atraso (PREPARACAO_B3 §4, linhas 81-99, e §7, linha 158; D4 em PENDENCIAS:122).",
+   "PagerDuty: o trial vai até 2026-11-11, por relato, e o plano Free mostra Events: Not included (PENDENCIAS:113 e :329). O B5 vai até 12/11, então um atraso no B3 ou no B4 empurra as cenas de incidente para depois do trial.",
+   "O primeiro login OIDC real nesta conta só acontece no job image do merge. Se falhar, nenhuma imagem é publicada, e o overlay continua com registry.conta-pendente.invalid (gitops/overlays/prod/kustomization.yaml:76-89; LOG 13:52, linha 120).",
+   "Sem proteção de branch no plano, um check vermelho não impede o merge (LOG 15:54, linhas 54 e 60). O image-scan só rodou para auth e flag (LOG 15:54, linha 49). Evaluation, analytics e targeting fazem o primeiro scan da imagem no PR, que reprova com achado CRITICAL (exit-code 1; _ci-go.yml:349-355; no job image, :452-473, antes do OIDC). A revisão do .trivyignore marcada para 2026-10-15 venceu (.trivyignore:58; F3-P-130).",
+   "O roteiro está incompleto: o passo 4 não cita as ARNs de IRSA (irsa.yaml:31 e :43) e não há passo de schemas e seed (docs/GUIA_DE_REPRODUCAO.md:482). Sem o seed, o /evaluate responde 502 com a chave provisória (PENDENCIAS:453), e o teste funcional do aceite falha.",
+   "No código versionado, o ArgoCD está fixado no chart 7.7.11 (appVersion v2.13.2, com a CVE-2025-55190) (terraform/k8s/variables.tf:95; PENDENCIAS:475). O tfvars local não foi lido. Trocar a versão exige refazer o helm template, que foi validado com o helm do v2.13.2 (LOG 2026-11-03 20:52, linha 269).",
+   "Capacidade: a cota de 5 vCPU limita o cluster a 2 nós m7i-flex.large, sem um 3º nó de folga (PREPARACAO_B3 §2, linha 35). A stack inteira nunca rodou nesses 16 GiB: ArgoCD, kube-prometheus-stack, Loki, 2 Collectors, 5 serviços e o Postgres do targeting. A D-019 só estimou que cabe (DECISOES.md:175 e :181).",
+   "Não há gerador de tráfego no repositório (git ls-files scripts). Sem tráfego direto ao flag-service, o cache do evaluation esconde as chamadas, e a regra FlagService5xxAlto (5xx acima de 10% por 1 min) não dispara (LOG 2026-11-03 20:52, linhas 264 e 287).",
+   "Os prints exigidos no relatório só existem com o cluster ligado (REQ-OBR-35 a 38, docs/requisitos/README.md:84-87). Depois do destroy, refazê-los exige nova implantação.",
+   "Destroy: PVCs órfãos deixam volumes EBS cobrando (PREPARACAO_B3 §4, linha 101). Depois dos imports, o destroy completo da base também apaga os 5 ECR (force_delete = true em terraform/modules/ecr/main.tf:31) e a role, a policy e o anexo do CI (terraform/imports.tf:52-75). Merges posteriores em services/** ficariam vermelhos na main. Não há roteiro de destroy da Fase 4, só a seção 10 do guia histórico (docs/GUIA_DE_REPRODUCAO.md:598; F3-P-034).",
+   "Exposição: quem tem acesso ao repositório já vê a dev e todo o histórico. Os RMs da Fase 3 (docs/RELATORIO_DE_ENTREGA.md) e o ID da conta da Fase 3 (19 arquivos) continuam no histórico mesmo que saiam da árvore. Reescrever o histórico só com pedido explícito do usuário (PENDENCIAS:432).",
+   "Riscos aceitos na D-020: o token do ArgoCD tem escrita e vira Secret no cluster, e a senha do PagerDuty exposta em 2026-11-03 foi mantida (DECISOES.md:185-197). O alpine 3.20, que não recebe mais atualizações de segurança, segue sem decisão (LOG 15:54, linha 51).",
+   "Entrega: não há gerador vigente para o relatório PDF (F3-P-059, PENDENCIAS:429). Entrega individual ou em grupo segue [INCERTO] (REQ-OBR-41; F3-P-103, PENDENCIAS:431). Como o repositório é privado, é preciso dar acesso ao avaliador antes do envio.",
+   "O test-traces falhou na 1ª execução e passou na repetição (PREPARACAO_B3 §1, linha 13). A instabilidade pode voltar no ensaio do cluster."
+  ],
+  "decisoes_pendentes_usuario": [
+   "Autorizar o tópico 5: plan e apply das 3 camadas, Variables do GitHub, PR e merge dev → main (PENDENCIAS:33; PREPARACAO_B3 §6).",
+   "Autorizar o tópico 6: eventos reais no ensaio, gravação e destroy. O destroy pede autorização específica (PENDENCIAS:33 e :166; CLAUDE.md).",
+   "O que a main mostra: 00_COLAB_IA inteira, só os 6 documentos de topo e os relatórios citados, ou nada; e se o CLAUDE.md vai junto (DECISOES.md:157 e :165).",
+   "Documentos da Fase 3 e materiais em docs/: decidir se cada um fica com aviso, muda de lugar ou sai da árvore. São RELATORIO_DE_ENTREGA.md (RMs), GUIA_DE_REPRODUCAO.md (ID da conta antiga), a apresentação .pptx, a estimativa de 2026-09-11 e as aulas da FIAP (36 arquivos, 19,5 MB). Decidir também se aceita os dados pessoais que ficam no histórico (PENDENCIAS:432-433 e :456).",
+   "Alpine 3.20 na base do auth e do evaluation: trocar antes do primeiro merge ou manter como risco (PENDENCIAS:32; LOG 15:54, linha 51).",
+   "Versão do ArgoCD: manter o chart 7.7.11 (v2.13.2, com a CVE-2025-55190) como risco aceito, ou atualizar antes do apply da k8s, com nova validação (PENDENCIAS:475; terraform/k8s/variables.tf:95).",
+   "Escopo do destroy no B5: destruir tudo, incluindo os 5 ECR e a role do CI adotados no import, ou só k8s e cluster, deixando a base com NAT desligado (custo quase zero por dia) até depois de 17/11 (PREPARACAO_B3 §4, linha 89; terraform/imports.tf:52-75).",
+   "Aceitar o ID da conta nova no overlay versionado (IRSA, SQS e registry do ECR), como na Fase 3 com repositório privado (F3-F-014; README.md:228).",
+   "Confirmar a delegação do inject_fault(): o TODO(human) foi preenchido na sessão do Codex e está no commit 57d43e5, e a pergunta ao usuário segue sem resposta (PENDENCIAS:35; LOG 2026-11-04 17:05).",
+   "Entrega: confirmar com o tutor se é individual ou em grupo, os nomes, RMs e usernames do relatório, o acesso do avaliador ao repositório privado e o horário e o canal do envio (REQ-OBR-33, 41 e 42; F3-P-103, PENDENCIAS:431).",
+   "Opcionais: remover a integração PRTG depois do ensaio (PREPARACAO_B3 §5, item 4) e decidir se a demonstração de CVE do PyYAML entra no vídeo ou se a dependência sai (F3-P-114, PENDENCIAS:439)."
+  ]
+ },
+ "local_auditoria": {
+  "area": "Arquivos ignorados e não versionados no disco do repositório (git status --ignored --porcelain=v1)",
+  "resumo": "São 57 entradas ignoradas, que somam 5.148.416 KB (4,91 GiB, medidos com du -sk em 2026-11-05). Não há arquivo solto fora do .gitignore. Dá para apagar agora 2,21 GiB sem afetar B3 a B6: a cópia duplicada do provider no harness (863 MB), os caches Go da qa-otel-go (857 MB), 6 executáveis Go (150 MB), o .venv de 2026-10-22 (152 MB), as renderizações de páginas dos PDFs (235 MB, recriáveis pelos scripts versionados) e os caches .pyc (4 MB). As 3 pastas .terraform das camadas (2,69 GiB) e os .tfplan só podem sair depois do destroy do B5. Ficam cerca de 14 MB: .env, backend.hcl e tfvars (insubstituíveis), as evidências brutas que não existem no Git (validacao-local-preimplantacao, etapa 8, qa-passos-locais, qa-otel-*, qa-revisao-*) e o acervo da D-017. Nada que deveria ser ignorado está versionado. O .gitignore precisa de regras para JSON de plano e vídeos antes do B4/B5. O comentário que chama todas as qa-* de reconstruíveis está errado.",
+  "itens": [
+   {
+    "caminho": ".env",
+    "o_que_e": "Segredos SaaS locais autorizados pela D5 (New Relic, PagerDuty, Slack). Conteúdo não lido.",
+    "classe": "MANTER",
+    "motivo": "Insubstituível e necessário nas integrações do B3 ao B5. Não versionar nem copiar valores para LOG ou chat.",
+    "evidencia": "git status --ignored lista '!! .env'; 4 KB; regra .gitignore:28. Só existência e tamanho conferidos.",
+    "recuperavel": "Não. Só gerando chaves novas nos painéis dos serviços.",
+    "quando": "B6",
+    "risco": "Perder o arquivo trava B3 a B5. Depois da entrega: revogar as chaves e então apagar.",
+    "tamanho_kb": 4,
+    "qtd_arquivos": 1,
+    "versionado": false
+   },
+   {
+    "caminho": "terraform/backend.hcl; terraform/cluster/backend.hcl; terraform/k8s/backend.hcl",
+    "o_que_e": "Configuração do backend S3 (state novo) de cada camada. Conteúdo não lido.",
+    "classe": "MANTER",
+    "motivo": "Usados no terraform init do apply (B3) e do destroy (B5). Ignorados por terraform/.gitignore:2-3.",
+    "evidencia": "3 arquivos com menos de 1 KB cada; git check-ignore -v aponta terraform/.gitignore. O cache .terraform/terraform.tfstate das 3 camadas foi regravado em 2026-11-04 16:30, no init com eles.",
+    "recuperavel": "Só reescrevendo à mão a partir do backend.hcl.example e do bucket criado em 2026-10-30.",
+    "quando": "B6",
+    "risco": "Sem eles o destroy do B5 não inicializa ou aponta para o state errado.",
+    "tamanho_kb": 3,
+    "qtd_arquivos": 3,
+    "versionado": false
+   },
+   {
+    "caminho": "terraform/terraform.tfvars; terraform/cluster/terraform.tfvars; terraform/k8s/terraform.tfvars",
+    "o_que_e": "Variáveis locais das três camadas (8, 4 e 4 KB). Conteúdo não lido.",
+    "classe": "MANTER",
+    "motivo": "Necessários no plan, no apply e no destroy. Ignorados pela regra *.tfvars (.gitignore:12).",
+    "evidencia": "git status --ignored lista os 3; tamanhos medidos com du -sk.",
+    "recuperavel": "Em parte: terraform.tfvars.example versionado mais os valores do usuário.",
+    "quando": "B6",
+    "risco": "Valores diferentes no destroy podem gerar um plano diferente do apply.",
+    "tamanho_kb": 16,
+    "qtd_arquivos": 3,
+    "versionado": false
+   },
+   {
+    "caminho": "terraform/.terraform/; terraform/cluster/.terraform/; terraform/k8s/.terraform/",
+    "o_que_e": "Cache do terraform init. Base: aws 6.62.0 e módulo vpc 5.21.0. Cluster: aws 6.63.0, tls 4.4.0 e random 3.9.0. K8s: aws 6.63.0, helm 3.3.0, kubernetes 3.2.1 e random 3.9.0. Cada camada guarda também o cache do backend.",
+    "classe": "LIXO_LOCAL",
+    "motivo": "Usados no apply do B3 e no destroy do B5. Depois do destroy confirmado nas 3 camadas, viram só cache.",
+    "evidencia": "du -sk: 886.112 + 911.484 + 1.022.000 KB. Versões iguais às dos .terraform.lock.hcl versionados. O aws 6.63.0 da cluster e da k8s tem o mesmo sha256 (05ee87e0...). Não há plugin_cache_dir (sem terraform.rc).",
+    "recuperavel": "Sim: terraform -chdir=<camada> init -backend-config=backend.hcl baixa tudo de novo (cerca de 0,9 a 1 GB por camada, com internet).",
+    "quando": "depois_do_B5",
+    "risco": "Apagar antes do destroy obriga um init novo no meio da sessão. Apagar só com o state vazio nas 3 camadas.",
+    "tamanho_kb": 2819596,
+    "qtd_arquivos": 139,
+    "versionado": false
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/harness/.terraform/",
+    "o_que_e": "Cache do init do harness offline de 2026-10-28: uma cópia do provider aws 6.62.0 e um plugin_path apontando para terraform/.terraform/providers.",
+    "classe": "LIXO_LOCAL",
+    "motivo": "É uma cópia byte a byte do provider da camada base. O teste saiu do harness para terraform/modules/iam-ci/tests no commit b2c5bdf (2026-11-05) e roda no Terraform Check. Os .tf versionados do harness continuam como histórico; só o cache sai.",
+    "evidencia": "du -sk 883.649 KB, 3 arquivos. sha256sum igual nos dois binários (79d44e3c...). terraform-check.yml:114-116. LOG_DE_TRABALHO.md:103 diz que a cópia do harness estava desatualizada.",
+    "recuperavel": "Sim: terraform init na pasta do harness, que tem .terraform.lock.hcl versionado.",
+    "quando": "agora",
+    "risco": "Nenhum para B3 a B6. É o maior ganho imediato.",
+    "tamanho_kb": 883649,
+    "qtd_arquivos": 3,
+    "versionado": false
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/qa-otel-go-2026-10-27/mod-cache/; build-cache/; gopath/",
+    "o_que_e": "Caches Go isolados da verificação da instrumentação de 2026-10-27: GOMODCACHE (16.727 arquivos), GOCACHE (5.525) e GOPATH só com o sumdb.",
+    "classe": "LIXO_LOCAL",
+    "motivo": "Serviram só àquela verificação. O Go da máquina usa C:/Users/Gabriel/go/pkg/mod e AppData/Local/go-build, e as imagens Docker baixam os módulos no build.",
+    "evidencia": "du -sk: 556.321 + 321.004 + 1 KB. go env GOMODCACHE GOCACHE. O RELATORIO_GO da pasta descreve GOCACHE/GOMODCACHE/GOPATH apontando para essas subpastas.",
+    "recuperavel": "Sim: go mod download e go build com as mesmas variáveis.",
+    "quando": "agora",
+    "risco": "Nenhum. 15.984 dos 16.727 arquivos do mod-cache são somente leitura: apagar com GOMODCACHE=<pasta> go clean -modcache ou tirar o atributo antes. Os logs da pasta ficam (item próprio).",
+    "tamanho_kb": 877326,
+    "qtd_arquivos": 22253,
+    "versionado": false
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/qa-otel-go-2026-10-27/auth-service-new.exe; evaluation-service-new.exe",
+    "o_que_e": "Binários do build de verificação de 2026-10-27 10:53.",
+    "classe": "LIXO_LOCAL",
+    "motivo": "O resultado do build já está em build-vet-result.json (saída 0 nos 4 comandos). Nenhum documento versionado cita os .exe.",
+    "evidencia": "27.504 + 33.304 KB. git grep pelos nomes dos .exe não acha nada.",
+    "recuperavel": "Sim: go build -o com as fontes de 2026-10-27, recuperáveis pelo Git.",
+    "quando": "agora",
+    "risco": "Nenhum.",
+    "tamanho_kb": 60808,
+    "qtd_arquivos": 2,
+    "versionado": false
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/qa-otel-go-2026-10-27/ (9 arquivos de evidência, fora caches e .exe)",
+    "o_que_e": "Evidência bruta do Go de 2026-10-27: 4 logs de teste (initial/final), build-vet-result.json, backup-sha256.json, production-sha256.json, tracked-diff-review.patch e RELATORIO_GO_2026-10-27_v01.md.",
+    "classe": "MANTER",
+    "motivo": "É a base do teste local do Go citado em REVISAO_GERAL_APLICACOES_2026-10-28_v01.md:62 e REVISAO_TERRAFORM_E_OTEL_2026-10-27_v01.md:80.",
+    "evidencia": "git hash-object: 8 dos 9 não têm blob no histórico. O relatório é idêntico ao versionado 02_TRABALHO/RELATORIO_GO_OTEL_2026-10-27_v01.md. Cerca de 74 KB.",
+    "recuperavel": "Não para os logs (registro de execução). O relatório, sim.",
+    "quando": "B6",
+    "risco": "Apagar a pasta inteira junto com os caches perde a prova local citada.",
+    "tamanho_kb": 74,
+    "qtd_arquivos": 9,
+    "versionado": false
+   },
+   {
+    "caminho": "services/auth-service/auth-service.exe; services/evaluation-service/evaluation-service.exe",
+    "o_que_e": "Binários Go locais gerados em 2026-11-05 15:48.",
+    "classe": "LIXO_LOCAL",
+    "motivo": "Ignorados por *.exe e excluídos da imagem pelo .dockerignore:7. Não são usados pelo CI, pelo Docker nem por scripts.",
+    "evidencia": "27.452 + 33.256 KB. scripts/validate-all.sh:100 roda go build ./... num pacote main único, o que grava o .exe na pasta do serviço.",
+    "recuperavel": "Sim: go build.",
+    "quando": "agora",
+    "risco": "Voltam a cada execução do validate-all.sh. Para não voltarem, o script teria de descartar a saída do build (mudança de código, fora desta análise).",
+    "tamanho_kb": 60708,
+    "qtd_arquivos": 2,
+    "versionado": false
+   },
+   {
+    "caminho": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/auth-service.exe; .../evaluation-service/evaluation-service.exe",
+    "o_que_e": "Binários de 2026-10-20 17:18 das fontes Go anteriores à instrumentação. Vieram junto quando a pasta foi arquivada.",
+    "classe": "LIXO_LOCAL",
+    "motivo": "Nunca fizeram parte do arquivo versionado e nenhum manifesto os cita. As fontes arquivadas (go.mod, go.sum, *.go) estão versionadas na mesma pasta.",
+    "evidencia": "13.548 + 18.328 KB. git ls-files da pasta não tem .exe; backup-sha256.json não cita .exe; git grep vazio.",
+    "recuperavel": "Sim: go build nas fontes arquivadas.",
+    "quando": "agora",
+    "risco": "Nenhum. Não fere a D-017, que trata de outra pasta.",
+    "tamanho_kb": 31876,
+    "qtd_arquivos": 2,
+    "versionado": false
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/otel-python-2026-10-22_v01/.venv/",
+    "o_que_e": "Ambiente virtual Python 3.12.14 criado em 2026-10-22 sobre o runtime do Codex (Flask, boto3, bandit, flake8, OpenTelemetry).",
+    "classe": "LIXO_LOCAL",
+    "motivo": "O último uso registrado é de 2026-10-27 (REVISAO_PYTHON_OTEL_2026-10-27_v01.md:16). Hoje os testes rodam em contêiner: o run_unit.py da validação de 2026-11-04 instala as dependências no Docker. Nenhum script versionado aponta para ele.",
+    "evidencia": "du -sk 155.702 KB, 6.836 arquivos. pyvenv.cfg tem home no runtime do Codex. Não contém pypdfium2 (a renderização de PDF usa o runtime do Codex).",
+    "recuperavel": "Sim: python -m venv e pip install. Os pacotes estão no pip-install.log versionado e em qa-otel-python-2026-10-27/versions.json.",
+    "quando": "agora",
+    "risco": "Nenhum para B3 a B6.",
+    "tamanho_kb": 155702,
+    "qtd_arquivos": 6836,
+    "versionado": false
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/qa-otel-python-2026-10-27/pycache/",
+    "o_que_e": "Bytecode .pyc gerado com PYTHONPYCACHEPREFIX (biblioteca padrão do runtime do Codex e do .venv).",
+    "classe": "LIXO_LOCAL",
+    "motivo": "Cache puro, sem valor de evidência.",
+    "evidencia": "170 .pyc em pycache/Users/Gabriel/.cache/codex-runtimes/...; du -sk 3.981 KB.",
+    "recuperavel": "Sim, o Python recria sozinho.",
+    "quando": "agora",
+    "risco": "Nenhum.",
+    "tamanho_kb": 3981,
+    "qtd_arquivos": 170,
+    "versionado": false
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/qa-otel-python-2026-10-27/ (27 arquivos fora de pycache/)",
+    "o_que_e": "Logs de teste baseline/final/sql dos 3 serviços Python, bandit, flake8, probes e resultado-revisao*.json de 2026-10-27.",
+    "classe": "MANTER",
+    "motivo": "Citados em REVISAO_PYTHON_OTEL_2026-10-27_v01.md:16 e :68 e em REVISAO_TERRAFORM_E_OTEL_2026-10-27_v01.md:60.",
+    "evidencia": "git hash-object: 25 dos 27 não têm blob no Git. Cerca de 116 KB.",
+    "recuperavel": "Não (registro de execução).",
+    "quando": "B6",
+    "risco": "Perder a prova local dos testes Python.",
+    "tamanho_kb": 116,
+    "qtd_arquivos": 27,
+    "versionado": false
+   },
+   {
+    "caminho": "services/{analytics,flag,targeting}-service/__pycache__/; services/*/tests/__pycache__/; scripts/integration/__pycache__/; 00_COLAB_IA/02_TRABALHO/__pycache__/",
+    "o_que_e": "Bytecode Python das execuções locais de testes e scripts (8 pastas).",
+    "classe": "LIXO_LOCAL",
+    "motivo": "Cache puro, ignorado por __pycache__/ (.gitignore:45 e :99).",
+    "evidencia": "396 KB, 24 arquivos. Os dos serviços são de 2026-11-05; os demais, de 2026-10-27.",
+    "recuperavel": "Sim, recriado a cada execução.",
+    "quando": "agora",
+    "risco": "Nenhum; volta na próxima execução local.",
+    "tamanho_kb": 396,
+    "qtd_arquivos": 24,
+    "versionado": false
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/qa-apm/, qa-opensource/, qa-fundamentos/, qa-incidentes/ (só *.png e *.jpg)",
+    "o_que_e": "615 renderizações de páginas dos PDFs das aulas (APM, Opensource, Observabilidade e Incidentes), feitas de 2026-09-16 a 2026-09-20 para conferir a leitura.",
+    "classe": "LIXO_LOCAL",
+    "motivo": "Derivadas dos 31 PDFs versionados em docs/aulas-fiap. Os scripts que as geram também estão versionados. O texto das aulas fica nas extrações (item próprio).",
+    "evidencia": "Só imagens: 93.896 + 91.588 + 35.924 + 15.688 KB, sem nenhum blob no Git. renderizar-paginas-2026-09-16_v01.py (--id/--paginas/--saida) e renderizar-fundamentos-2026-09-16_v01.py usam pypdfium2.",
+    "recuperavel": "Sim: rodar de novo os scripts de renderização sobre os PDFs de docs/aulas-fiap.",
+    "quando": "agora",
+    "risco": "De 2 a 9 documentos versionados citam essas pastas, e os links ficam sem destino até re-renderizar. A D-017 manda preservar extrações; por isso o texto fica e só as imagens saem. Quem preferir zero retrabalho até a entrega pode adiar para o B6.",
+    "tamanho_kb": 237096,
+    "qtd_arquivos": 615,
+    "versionado": false
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/extracoes/; extracoes-pdfium/; e os .txt/.json de qa-opensource, qa-incidentes e qa-apm",
+    "o_que_e": "Texto extraído dos 32 PDFs (enunciado, capítulo e aulas) por dois métodos, mais as transcrições simples por aula e a lista de páginas revisadas.",
+    "classe": "MANTER",
+    "motivo": "Pequeno e muito citado: extracoes-pdfium aparece em 25 arquivos versionados. É a fonte de leitura rápida dos agentes e entra no que a D-017 manda preservar.",
+    "evidencia": "728 + 2.120 + 357 KB; 128 + 17 arquivos. As citações foram contadas com git grep -l.",
+    "recuperavel": "Sim: extrair-fontes-2026-09-16_v01.py e extrair-pdfium-2026-09-16_v01.py, ambos versionados.",
+    "quando": "B6",
+    "risco": "Apagar quebraria referências usadas no fechamento de P-014/P-015, sem ganho de espaço.",
+    "tamanho_kb": 3205,
+    "qtd_arquivos": 145,
+    "versionado": false
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/qa-enunciado/; qa-aula05-terraform-2026-10-22/; qa-readme-2026-10-22/; obs-aula1-p4.png",
+    "o_que_e": "Outras renderizações: 7 páginas do enunciado (2026-09-16), 6 páginas da aula 5 de CI/CD da Fase 3, a prévia do README com 3 diagramas (2026-10-22) e uma página solta da aula 1 de Observabilidade.",
+    "classe": "LIXO_LOCAL",
+    "motivo": "Todas vêm de fontes versionadas. A prévia do README está velha: o README mudou em dc7503c (2026-11-03) e em 793384e (2026-11-05). O enunciado tem outros 2 conjuntos de renderização que ficam.",
+    "evidencia": "1.208 + 1.712 + 184 + 116 KB. O PDF do enunciado está na raiz; o da aula 5 está em tech-challenge-03/docs/aulas-fiap/02_CI-CD (fonte citada no extracao.json versionado).",
+    "recuperavel": "Sim: renderizar de novo os PDFs ou o README.",
+    "quando": "agora",
+    "risco": "Baixo; cada uma é citada por 2 ou 3 documentos.",
+    "tamanho_kb": 3220,
+    "qtd_arquivos": 18,
+    "versionado": false
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/validacao-local-preimplantacao-2026-11-04/ (exceto os .tfplan)",
+    "o_que_e": "Evidências da preparação do B3 (2026-11-04 e 05): logs de init, validate e plan das 3 camadas, testes unitários e de integração, traces, preços AWS, inventário AWS, notificações e checagens do CI.",
+    "classe": "MANTER",
+    "motivo": "Pasta em uso, citada no LOG (linhas 58, 91, 126, 165, 221 e 231) e na PREPARACAO_B3:163, onde é a fonte da estimativa de US$ 9,82/dia. Tem a única captura de tela (painel-nos-grafana-local-2026-11-05.jpg) e capturas em texto que podem virar print do relatório: gitops-check, teste-oidc-ci, painel-nos, prerequisitos, notificacoes-conferencia-ui.md e traces/resultado-traces.json.",
+    "evidencia": "62 arquivos, cerca de 3.715 KB; 63 dos 64 não têm blob no Git. O aws-inventory.json (339 KB) tem dados reais da conta.",
+    "recuperavel": "Não. Preços e inventário mudam com o tempo, e os logs são registro de execução.",
+    "quando": "B6",
+    "risco": "Perder a base do custo e as provas locais citadas no relatório.",
+    "tamanho_kb": 3715,
+    "qtd_arquivos": 62,
+    "versionado": false
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/validacao-local-preimplantacao-2026-11-04/base.tfplan; cluster.tfplan",
+    "o_que_e": "Planos salvos de 2026-11-04 16:30 e 16:31 (55.894 e 34.937 bytes). Conteúdo não lido.",
+    "classe": "LIXO_LOCAL",
+    "motivo": "Já estão desatualizados: o commit 446adfa (16:45) mudou terraform/main.tf e terraform/k8s/argocd.tf depois deles, e a PREPARACAO_B3:134 gera um base.tfplan novo no B3. Um plano salvo guarda os valores das variáveis de entrada, por isso deve ser tratado como segredo.",
+    "evidencia": "Datas vistas com ls -la; git log --since='2026-11-04 16:00' -- terraform/. A leitura dos planos fica em base-plan.log/json e cluster-plan.log/json (item anterior).",
+    "recuperavel": "Sim: terraform plan -out gera outro, válido só para o state do momento.",
+    "quando": "depois_do_B5",
+    "risco": "Nenhum para o B3. Apagar junto com os terraform/*.tfplan que o B3 e o B5 vão criar.",
+    "tamanho_kb": 89,
+    "qtd_arquivos": 2,
+    "versionado": false
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/aws/PARECER_AWS_ETAPA8.md; aws/inventario-aws-sanitizado.json; correspondencia-aws-github.json; github/configuracao.json",
+    "o_que_e": "Evidência da etapa 8 (2026-10-28): parecer, inventário AWS e conferência AWS x GitHub com 34/34 verificações.",
+    "classe": "MANTER",
+    "motivo": "Ignorados de propósito porque têm IDs reais da conta (.gitignore:112-117). Sustentam o 34/34 do LOG (linha 598) e do DOSSIE.",
+    "evidencia": "4 arquivos, cerca de 40 KB, sem nenhum blob no Git.",
+    "recuperavel": "Não. Rodar a auditoria de novo daria o retrato de outra data.",
+    "quando": "B6",
+    "risco": "Perder a única prova do 34/34.",
+    "tamanho_kb": 40,
+    "qtd_arquivos": 4,
+    "versionado": false
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/qa-passos-locais-2026-10-22/; qa-passos-locais-2026-10-27/",
+    "o_que_e": "Logs do Compose, builds, testes em Docker e traces do ensaio local (P-008), com otel/traces.jsonl (346 KB) e resultado-traces-17spans.json.",
+    "classe": "MANTER",
+    "motivo": "Evidência bruta do teste local integrado, citada em RELATORIO_PASSO1 e RELATORIO_PASSO2 de 2026-10-27, em REVISAO_GERAL_APLICACOES_2026-10-28 e no LOG:756.",
+    "evidencia": "178 + 580 KB; 8 + 24 arquivos; 31 dos 32 não têm blob no Git.",
+    "recuperavel": "Não (registro de execução).",
+    "quando": "B6",
+    "risco": "O comentário da regra qa-* no .gitignore chama isso de reconstruível, mas não é.",
+    "tamanho_kb": 758,
+    "qtd_arquivos": 32,
+    "versionado": false
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/qa-otel-newrelic/",
+    "o_que_e": "Traces do teste com o New Relic de 2026-11-03 (traces.jsonl de 132 KB e resultado-traces.json).",
+    "classe": "MANTER",
+    "motivo": "Prova do B1 (New Relic) em teste local; pode apoiar o relatório.",
+    "evidencia": "2 arquivos, 140 KB, sem blob no Git; citado por 1 documento versionado.",
+    "recuperavel": "Não.",
+    "quando": "B6",
+    "risco": "Perder a evidência local do B1.",
+    "tamanho_kb": 140,
+    "qtd_arquivos": 2,
+    "versionado": false
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/qa-revisao-geral-2026-10-27/; qa-revisao-aplicacoes-2026-10-27/; qa-revisao-infra-2026-10-27/",
+    "o_que_e": "QA bruta da revisão geral de 2026-10-27/28: estado-inicial.json (205 hashes), cópia do evaluation-service do teste de falha, validates do Terraform e GitOps renderizado. Inclui 8 renderizações do enunciado (1,8 MB).",
+    "classe": "MANTER",
+    "motivo": "Citada como evidência E 09 e na linha 161 de REVISAO_GERAL_FASE4_2026-10-28_v01.md.",
+    "evidencia": "1.849 + 88 + 27 KB; 28 arquivos. 18 não têm blob no Git; 10 arquivos da cópia do Go são idênticos ao Git.",
+    "recuperavel": "Em parte: só as renderizações e a cópia do Go.",
+    "quando": "B6",
+    "risco": "Baixo; ocupa pouco espaço.",
+    "tamanho_kb": 1964,
+    "qtd_arquivos": 28,
+    "versionado": false
+   },
+   {
+    "caminho": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/",
+    "o_que_e": "Os 39 originais de docs/00_COLAB_IA da Fase 3, preservados byte a byte.",
+    "classe": "MANTER",
+    "motivo": "A D-017 recusou apagar e depender só do Git (pior recuperação local). O .gitignore:119-121 impede versionar de novo (dados pessoais e conta da Fase 3).",
+    "evidencia": "39 arquivos, 1.756 KB. Os 39 blobs são idênticos aos de docs/00_COLAB_IA no commit 3b21e65 e também existem no tech-challenge-03.",
+    "recuperavel": "Sim, por git show 3b21e65:docs/00_COLAB_IA/<arquivo> ou pelo tc03, mas a D-017 manda manter.",
+    "quando": "B6",
+    "risco": "Apagar contraria a D-017. Só com nova decisão do usuário.",
+    "tamanho_kb": 1756,
+    "qtd_arquivos": 39,
+    "versionado": false
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/validacao-ci04-2026-10-20/",
+    "o_que_e": "PyYAML 6.0.3 instalado com pip --target para validar os workflows em 2026-10-20, mais 2 scripts de gate.",
+    "classe": "MANTER",
+    "motivo": "Scripts versionados importam daqui: auditoria-codex-2026-10-30_v01/catalogar-estatico.py:11 e validar-ci04-2026-10-20_v01.py:8 e :15.",
+    "evidencia": "46 arquivos, 835 KB.",
+    "recuperavel": "Sim: pip install --target com pyyaml==6.0.3.",
+    "quando": "B6",
+    "risco": "Apagar quebra esses scripts, sem ganho de espaço relevante.",
+    "tamanho_kb": 835,
+    "qtd_arquivos": 46,
+    "versionado": false
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/gitops-renderizado-fase4-2026-10-20_v01.yaml",
+    "o_que_e": "Saída do kustomize do GitOps em 2026-10-20.",
+    "classe": "MANTER",
+    "motivo": "Citado em 10 arquivos versionados; ocupa 20 KB.",
+    "evidencia": "git grep -l 'gitops-renderizado' conta 10 arquivos; regra .gitignore:106.",
+    "recuperavel": "Sim: kustomize build sobre o gitops/ do commit daquela data.",
+    "quando": "B6",
+    "risco": "Nenhum relevante.",
+    "tamanho_kb": 20,
+    "qtd_arquivos": 1,
+    "versionado": false
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/fontes/enunciado-1.png a enunciado-7.png",
+    "o_que_e": "Renderização das 7 páginas do enunciado usada na auditoria de 2026-10-30.",
+    "classe": "MANTER",
+    "motivo": "Ignorada de propósito (.gitignore:123-124) e usada pela auditoria versionada. É o conjunto mais recente do enunciado.",
+    "evidencia": "7 arquivos, 1.092 KB.",
+    "recuperavel": "Sim: renderizar o PDF do enunciado que está na raiz.",
+    "quando": "B6",
+    "risco": "Nenhum relevante.",
+    "tamanho_kb": 1092,
+    "qtd_arquivos": 7,
+    "versionado": false
+   },
+   {
+    "caminho": ".gitignore",
+    "o_que_e": "Regras de exclusão do repositório (arquivo versionado, 3.822 bytes).",
+    "classe": "ATUALIZAR",
+    "motivo": "Faltam regras para o que o B3 a B5 vão gerar, e um comentário engana. (1) JSON de plano (terraform show -json) fica versionável fora das pastas ignoradas e traz valores em texto puro. (2) Vídeos (.mp4, .mkv, .mov, .webm) ficam versionáveis; um vídeo de 25 min passa dos 100 MB do GitHub, e o histórico não se reescreve. (3) backend.hcl fora de terraform/, kubeconfig com sufixo (kubeconfig-togglemaster) e logs de debug do Terraform ficam versionáveis. (4) O comentário da linha 98 diz que as qa-* são reconstruíveis, mas qa-passos-locais-*, qa-otel-* e qa-revisao-* têm logs únicos.",
+    "evidencia": "git check-ignore -v --no-index deu VERSIONAVEL para terraform/base-plan.json, gravacao-b4.mp4, docs/evidencias/video-b5.mkv, 00_COLAB_IA/02_TRABALHO/x/backend.hcl, kubeconfig-togglemaster e terraform/tf-debug.log. Nenhum arquivo versionado hoje casa com *.tfplan.json, *-plan.json, vídeos, kubeconfig-* ou terraform/**/*.log.",
+    "recuperavel": "Sim, pelo Git.",
+    "quando": "agora",
+    "risco": "Sem a correção, um git add -A no B4/B5 pode publicar um plano com segredo ou travar o push com um vídeo grande.",
+    "tamanho_kb": 4,
+    "qtd_arquivos": 1,
+    "versionado": true
+   }
+  ],
+  "observacoes": [
+   "Total medido: 57 entradas do git status --ignored, 5.148.416 KB (4,91 GiB; 5,20 GB decimais em tamanho aparente), com du -sk em 2026-11-05. Os 5,8 GB informados antes não se reproduziram. Não há arquivo não versionado fora do .gitignore (status limpo). Os tamanhos estão em base 1024.",
+   "Pode sair agora: 2.314.762 KB (2,21 GiB). Pode sair depois do destroy do B5: 2.819.685 KB (2,69 GiB). Fica em MANTER cerca de 14 MB.",
+   "Arquivos ignorados não vão para o GitHub. O merge dev->main não os leva e o avaliador não os vê. Limpar esta área só libera disco e reduz a bagunça local; não muda a entrega.",
+   "Não usar git clean -X nem -x. A simulação git clean -ndX (nada foi apagado) lista .env, os 3 backend.hcl, os tfvars, validacao-local-preimplantacao, as evidências da etapa 8, qa-passos-locais e o acervo da D-017. Apagar só por caminho explícito e registrar no LOG o que saiu (caminho e KB), porque arquivo ignorado não tem commit.",
+   "Nada que deveria ser ignorado está versionado: o filtro pedido (pyc, exe, tfstate, tfplan, .terraform, .env, __pycache__) voltou vazio (rc=1). O filtro ampliado achou só 8 .log versionados de propósito em 02_TRABALHO/otel-python-2026-10-22_v01, com o caminho C:\\Users\\Gabriel. Esse caminho aparece em 61 arquivos versionados (11 fora do _ARQUIVO_MORTO); é tema da revisão pública D-018 no B6, não do .gitignore.",
+   "Nenhum arquivo ignorado depende do ignore global do usuário (~/.config/git/ignore só tem **/.claude/settings.local.json). Todas as regras vêm do .gitignore da raiz ou do terraform/.gitignore.",
+   "Planos salvos: o B3 vai criar terraform/*.tfplan (já ignorados por *.tfplan). Eles guardam os valores das variáveis, inclusive os 4 TF_VAR_* dos segredos da camada k8s. Nunca versionar e apagar todos depois do B5, junto com os 2 de 2026-11-04.",
+   "Não há plugin_cache_dir: o aws 6.63.0 está duplicado na cluster e na k8s (873.884 KB cada, mesmo sha256), e o aws 6.62.0 na base e no harness. Mudar a configuração agora, antes do B3, não compensa; o ganho some no B5.",
+   "Para o B4 e o B5: guardar a evidência bruta numa pasta que case com validacao-local-* (já ignorada) e levar para docs/evidencias só os prints revisados. Gravar o vídeo fora do repositório ou incluir as regras de vídeo antes.",
+   "A pasta de validação de 2026-11-04 tem só 1 imagem (painel-nos-grafana-local-2026-11-05.jpg, 25 KB); as outras capturas são texto. Os prints do ambiente real (EKS, New Relic, PagerDuty, Slack) para o relatório ainda precisam ser feitos no B4.",
+   "A regra .gitignore:110 (offline-test.jsonl de 156 MB) aponta para um arquivo que não existe mais no disco. Pode ficar como proteção.",
+   "Ordem sugerida: (1) apagar os itens marcados como agora, por caminho explícito, com autorização do usuário; (2) manter os 3 .terraform e os .tfplan até o destroy confirmado com state vazio; (3) no B6, decidir sobre o .env (revogar as chaves), as evidências locais e o acervo da D-017."
+  ]
+ },
+ "local_verificacao": {
+  "verificacoes": [
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/harness/.terraform/",
+    "veredito": "CONFIRMADO",
+    "justificativa": "É só cache do Terraform, sem estado nem evidência. Tem 3 arquivos: plugin_path (98 B), LICENSE.txt e terraform-provider-aws_v6.62.0_x5.exe (904.834.184 B). O provider é idêntico byte a byte ao de terraform/.terraform/providers. O teste foi para terraform/modules/iam-ci/tests/trust.tftest.hcl no commit b2c5bdf (2026-11-05), que o terraform-check.yml roda. Os 6 arquivos versionados do harness continuam como histórico (LOG linha 123). Quando: agora.",
+    "evidencia": "du 883649 KB. check-ignore: .gitignore:7 '.terraform/'. Nenhum arquivo versionado dentro. SHA-256 79d44e3c...702887c igual nas duas cópias. O plugin_path aponta para tech-challenge-04/terraform/.terraform/providers. Sem terraform.tfstate: o init foi feito com -backend=false. Nenhum arquivo versionado cita harness/.terraform. O roteiro v02, os documentos de topo, README, SECURITY e CLAUDE.md não citam 'harness'. As duas menções em logs locais são o pacote Debian libtap-harness-archive-perl.",
+    "preservar": "Os 6 arquivos versionados do harness (.terraform.lock.hcl, main.tf, offline-test.tf, outputs.tf, variables.tf, tests/trust.tftest.hcl) e terraform/.terraform, que é a raiz ativa e a fonte do provider. Para regenerar sem rede: terraform -chdir=<harness> init -backend=false -input=false -lockfile=readonly -plugin-dir=<repo>/terraform/.terraform/providers. Não rodar test-oidc-offline.py: ele reescreve as cópias versionadas do harness.",
+    "tamanho_kb_medido": 883649,
+    "comando_seguro": "No Git Bash: rm -rf '/c/Users/Gabriel/Documents/GitHub/tech-challenge-04/00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/harness/.terraform' && git -C /c/Users/Gabriel/Documents/GitHub/tech-challenge-04 status --porcelain (deve sair vazio)"
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/qa-otel-go-2026-10-27/mod-cache/, build-cache/, gopath/",
+    "veredito": "CONFIRMADO",
+    "justificativa": "São caches Go puros: GOMODCACHE com módulos públicos, GOCACHE com 258 entradas e gopath com 1 arquivo (pkg/sumdb/sum.golang.org/latest). O relatório da pasta já registra os resultados e a conclusão tirada do go.mod das dependências (grpc v1.83.1 e x/net v0.58.0 exigem go1.25.0). Nenhum script atual usa esses caches: o run_unit.py de 2026-11-04 usa GOMODCACHE=/tmp/mod-cache dentro do docker run, e a validação de 2026-11-05 usou docker build. Quando: agora.",
+    "evidencia": "du 556321 + 321004 + 1 = 877326 KB. check-ignore: .gitignore:101 'qa-*/'. 'mod-cache' e 'build-cache' não aparecem em nenhum arquivo versionado. 'GOMODCACHE' só aparece em RELATORIO_GO_OTEL_2026-10-27_v01.md:30, descrevendo o ambiente. As revisões REVISAO_GERAL_APLICACOES_2026-10-28_v01.md:62 e REVISAO_TERRAFORM_E_OTEL_2026-10-27_v01.md:56,80 citam só os logs e o build-vet-result.json. Numa amostra de 2000 arquivos, 1257 são somente leitura. 102 caminhos passam de 259 caracteres (máximo 319).",
+    "preservar": "Os 9 arquivos de evidência. Eles estão ignorados e nunca foram versionados, então só existem no disco: RELATORIO_GO_2026-10-27_v01.md, auth-tests-initial.log, auth-tests-final.log, evaluation-tests-initial.log, evaluation-tests-final.log, build-vet-result.json, backup-sha256.json, production-sha256.json e tracked-diff-review.patch. Nunca apagar a pasta inteira. Se precisar regenerar: go mod download com GOMODCACHE apontando para a pasta (usa rede; versões fixadas no go.sum).",
+    "tamanho_kb_medido": 877326,
+    "comando_seguro": "No Git Bash, em dois passos. 1) Conferir: GOMODCACHE='C:/Users/Gabriel/Documents/GitHub/tech-challenge-04/00_COLAB_IA/02_TRABALHO/qa-otel-go-2026-10-27/mod-cache' go env GOMODCACHE — tem de imprimir exatamente esse caminho; se não imprimir, parar, porque o clean apagaria o cache global. 2) Apagar: GOMODCACHE='C:/Users/Gabriel/Documents/GitHub/tech-challenge-04/00_COLAB_IA/02_TRABALHO/qa-otel-go-2026-10-27/mod-cache' go clean -modcache && rm -rf '/c/Users/Gabriel/Documents/GitHub/tech-challenge-04/00_COLAB_IA/02_TRABALHO/qa-otel-go-2026-10-27/build-cache' '/c/Users/Gabriel/Documents/GitHub/tech-challenge-04/00_COLAB_IA/02_TRABALHO/qa-otel-go-2026-10-27/gopath'. Alternativa sem Go: chmod -R u+w '<mod-cache>' && rm -rf '<mod-cache>'. Não usar Remove-Item do PowerShell 5.1 (caminhos longos)."
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/qa-otel-go-2026-10-27/auth-service-new.exe e evaluation-service-new.exe",
+    "veredito": "CONFIRMADO",
+    "justificativa": "São apenas a saída do go build da verificação de 2026-10-27 (28.160.512 e 34.101.248 B). A prova do build é o build-vet-result.json (quatro comandos com saída 0), que fica. Nenhuma evidência registra hash desses binários. As imagens Docker compilam dentro do contêiner. Quando: agora.",
+    "evidencia": "du 27504 + 33304 = 60808 KB. check-ignore: .gitignore:101. Nos arquivos versionados, os nomes só aparecem em RELATORIO_GO_OTEL_2026-10-27_v01.md:37-38, como destino do comando de build. Nenhum dos 3 JSON, dos 4 logs ou do patch da pasta contém '.exe'.",
+    "preservar": "Os 9 arquivos de evidência da pasta (lista no item anterior).",
+    "tamanho_kb_medido": 60808,
+    "comando_seguro": "rm -f '/c/Users/Gabriel/Documents/GitHub/tech-challenge-04/00_COLAB_IA/02_TRABALHO/qa-otel-go-2026-10-27/auth-service-new.exe' '/c/Users/Gabriel/Documents/GitHub/tech-challenge-04/00_COLAB_IA/02_TRABALHO/qa-otel-go-2026-10-27/evaluation-service-new.exe'"
+   },
+   {
+    "caminho": "services/auth-service/auth-service.exe e services/evaluation-service/evaluation-service.exe",
+    "veredito": "CONFIRMADO",
+    "justificativa": "Binários Windows gerados em 2026-11-05 às 15:48:13 e 15:48:24 pela linha 100 do scripts/validate-all.sh ('go build ./... && go test'). Cada serviço é um único package main, então o build grava o .exe e ele volta a cada execução. O .dockerignore dos dois serviços exclui *.exe, e o Dockerfile compila em golang:1.25-alpine. Quando: agora.",
+    "evidencia": "du 27452 + 33256 = 60708 KB. check-ignore: .gitignore:61 '*.exe'. Os nomes 'auth-service.exe' e 'evaluation-service.exe' não aparecem em nenhum arquivo versionado nem nos arquivos locais ignorados. auth-service tem 6 arquivos package main e evaluation-service tem 8, todos na raiz.",
+    "preservar": "Nada. Para regenerar: bash scripts/validate-all.sh ou go -C services/<serviço> build .",
+    "tamanho_kb_medido": 60708,
+    "comando_seguro": "rm -f '/c/Users/Gabriel/Documents/GitHub/tech-challenge-04/services/auth-service/auth-service.exe' '/c/Users/Gabriel/Documents/GitHub/tech-challenge-04/services/evaluation-service/evaluation-service.exe'"
+   },
+   {
+    "caminho": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/auth-service.exe e evaluation-service/evaluation-service.exe",
+    "veredito": "CONFIRMADO",
+    "justificativa": "Binários de 2026-10-20 17:18 (13.870.080 e 18.766.336 B) que vieram junto na cópia das fontes de 2026-10-22. Eles nunca fizeram parte do arquivo morto no Git. O conteúdo preservado são os 19 arquivos versionados da pasta, que permitem recompilar. Os executáveis do tech-challenge-03 têm o mesmo tamanho e hash diferente: é o mesmo código compilado em caminho de mesmo comprimento. Nenhum registro depende desses bytes. A D-017 vale para 2026-11-01_mescla-colab-fase3, não para esta pasta. Quando: agora.",
+    "evidencia": "du 13548 + 18328 = 31876 KB. check-ignore: .gitignore:61. Nenhum commit tocou esses arquivos. SHA-256 29a183b1... e 4d7b14a7...; no tech-challenge-03, ccd0f873... e d42549bc.... Os manifestos cobertura-arquivos.json, inventario-inicial.json e snapshot-retomada-codex.json listam só os 19 versionados.",
+    "preservar": "Os 19 arquivos versionados da pasta: fontes, go.mod, go.sum, Dockerfile, .dockerignore, README e db/init.sql.",
+    "tamanho_kb_medido": 31876,
+    "comando_seguro": "rm -f '/c/Users/Gabriel/Documents/GitHub/tech-challenge-04/00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/auth-service.exe' '/c/Users/Gabriel/Documents/GitHub/tech-challenge-04/00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/evaluation-service.exe'"
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/otel-python-2026-10-22_v01/.venv/",
+    "veredito": "CONFIRMADO",
+    "justificativa": "Ambiente virtual Python 3.12.14 criado pelo runtime do Codex, com 54 pacotes (Flask 2.2.2, OTel 1.45.1/0.66b1, boto3 1.26.50, bandit, flake8, PyYAML 6.0.3 e outros). Os 11 arquivos de evidência da pasta estão versionados, inclusive o pip-install.log. O último uso registrado é de 2026-10-27 (REVISAO_PYTHON_OTEL_2026-10-27_v01.md:16). Hoje os testes rodam em contêiner: o run_unit.py faz docker run e instala o pytest 9.2.0 lá dentro. O preflight do B3 pede Python 3.14 com PyYAML, e o py -3.14 já tem PyYAML 6.0.3. Quando: agora.",
+    "evidencia": "du 155702 KB. check-ignore: .gitignore:48 '.venv/'. Nenhum arquivo versionado dentro. O pyvenv.cfg aponta para o Python do runtime do Codex em .cache/codex-runtimes/codex-primary-runtime. O roteiro v02, os documentos de topo, README e CLAUDE.md não citam .venv. O maior caminho tem 238 caracteres.",
+    "preservar": "Os 11 arquivos versionados: RESULTADO_PYTHON.md, bandit.json, flake8.log, pip-install.log, preservacao-python.json e 6 logs de testes. Para regenerar: python -m venv .venv e pip install dos pacotes do pip-install.log (usa rede).",
+    "tamanho_kb_medido": 155702,
+    "comando_seguro": "rm -rf '/c/Users/Gabriel/Documents/GitHub/tech-challenge-04/00_COLAB_IA/02_TRABALHO/otel-python-2026-10-22_v01/.venv'"
+   },
+   {
+    "caminho": "__pycache__ de services/*, services/*/tests, scripts/integration, 00_COLAB_IA/02_TRABALHO e qa-otel-python-2026-10-27/pycache/",
+    "veredito": "CONFIRMADO",
+    "justificativa": "Só bytecode: 25 arquivos .pyc (versões 3.12 e 3.15) em 8 pastas __pycache__ (396 KB) e 170 .pyc na árvore de prefixo de cache de qa-otel-python-2026-10-27/pycache (3981 KB). O Python recria esses arquivos ao importar, e o validate-all.sh roda python -m compileall. Quando: agora.",
+    "evidencia": "check-ignore: .gitignore:45 '__pycache__/', :99 '00_COLAB_IA/**/__pycache__/' e :101 'qa-*/'. 396 + 3981 = 4377 KB. O find achou 11 pastas de cache; as 2 de validacao-ci04-2026-10-20/python-packages ficam fora da lista. No pycache do qa-otel-python, 36 caminhos passam de 259 caracteres (máximo 286).",
+    "preservar": "Os 27 arquivos de evidência de qa-otel-python-2026-10-27 (logs, JSON e probe-*.py), que estão ignorados e só existem no disco: apagar apenas a subpasta pycache. Não mexer em validacao-ci04-2026-10-20/python-packages.",
+    "tamanho_kb_medido": 4377,
+    "comando_seguro": "No Git Bash (há caminhos longos): R=/c/Users/Gabriel/Documents/GitHub/tech-challenge-04; rm -rf \"$R/00_COLAB_IA/02_TRABALHO/__pycache__\" \"$R/scripts/integration/__pycache__\" \"$R/services/analytics-service/__pycache__\" \"$R/services/analytics-service/tests/__pycache__\" \"$R/services/flag-service/__pycache__\" \"$R/services/flag-service/tests/__pycache__\" \"$R/services/targeting-service/__pycache__\" \"$R/services/targeting-service/tests/__pycache__\" \"$R/00_COLAB_IA/02_TRABALHO/qa-otel-python-2026-10-27/pycache\""
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/qa-apm/, qa-opensource/, qa-fundamentos/, qa-incidentes/ (somente *.png e *.jpg)",
+    "veredito": "AJUSTAR",
+    "justificativa": "As imagens são mesmo derivadas dos PDFs das aulas, e os 32 PDFs de origem do inventario-fontes-2026-09-16_v01.json existem e estão versionados. Mas a perda é definitiva (nenhum commit; ignoradas desde 31f92e4) e há três ressalvas. 1) O manifesto versionado preservacao-importacao-2026-10-20_v01.json lista essas imagens com SHA-256, e o verificar-preservacao-importacao-2026-10-20_v01.py faz 'assert not missing': hoje 933 de 933 presentes; depois da remoção ele falharia. 2) 165 arquivos não saem de nenhum script versionado: 90 recortes, zooms e figuras (46624 KB) e 75 folhas de contato (54432 KB). 3) O .gitignore:98 e o cobertura-opensource-2026-09-16_v01.md:22 dizem que as imagens foram preservadas. Nada ativo depende delas: os 5 guias HTML não as referenciam, e o roteiro v02, os documentos de topo e o PENDENCIAS não as citam. Há 284 GB livres. Quando: B6, por decisão do usuário.",
+    "evidencia": "Imagens por pasta (arquivos/KB): qa-apm 240/93896, qa-opensource 212/91588, qa-fundamentos 125/35924, qa-incidentes 38/15688; total 615 arquivos e 237096 KB. Páginas inteiras regeneráveis: 450 arquivos, 136040 KB. O manifesto tem 632 entradas nessas pastas. Os scripts versionados renderizar-paginas-2026-09-16_v01.py e renderizar-fundamentos-2026-09-16_v01.py usam pypdfium2, que existe no Python do runtime do Codex e não no py -3.14. Os 118 arquivos aulaNN-NN.png do qa-opensource não seguem o nome gerado pelo script ({prefixo}-pNN.png). O criar-guias-fundamentos abre qa-fundamentos/05-p10.png, que pode ser regenerado. Nenhum arquivo local ignorado cita essas pastas.",
+    "preservar": "Sempre: os 17 arquivos que não são imagem (357 KB): 8 .txt e validacao-estatica-2026-09-17_v01.json em qa-opensource, 7 aulaN-plain.txt em qa-incidentes e paginas-revisao.json em qa-apm. Eles são citados pelos dossiês e pela auditoria-opensource. Até o B6, todas as imagens. No B6, podem sair as 450 páginas inteiras (136040 KB), com uma entrada nova no LOG avisando que o verificador de 2026-10-20 vai acusar falta delas. Os 165 recortes e folhas (101056 KB) só saem por decisão explícita do usuário.",
+    "tamanho_kb_medido": 237096,
+    "comando_seguro": "(Só no B6, com autorização.) Ensaio: W=/c/Users/Gabriel/Documents/GitHub/tech-challenge-04/00_COLAB_IA/02_TRABALHO; find \"$W/qa-apm\" \"$W/qa-opensource\" \"$W/qa-fundamentos\" \"$W/qa-incidentes\" -maxdepth 1 -type f \\( -iname '*.png' -o -iname '*.jpg' \\) | grep -v -E -i 'zoom|recorte|nativa|fig|cmd|-x[0-9]|hd-|-z[0-9]|folha|grade|sheet|contato' | wc -l (deve dar 450). Para apagar, trocar o 'wc -l' final por: tr '\\n' '\\0' | xargs -0 rm -f"
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/qa-enunciado/, qa-aula05-terraform-2026-10-22/, qa-readme-2026-10-22/ e obs-aula1-p4.png",
+    "veredito": "AJUSTAR",
+    "justificativa": "Os quatro casos são diferentes. 1) qa-enunciado (7 páginas do PDF do enunciado, que está versionado na raiz) e obs-aula1-p4.png (sem cópia idêntica) estão no manifesto de 2026-10-20: mesma ressalva do item anterior. 2) qa-aula05-terraform-2026-10-22 (6 páginas: p. 5, 6, 8, 9, 10 e 11) vem de um PDF que só existe no tech-challenge-03, onde é versionado; o LEITURA_E_CONFERENCIA.md:17 e o LOG:824 apontam para a pasta. 3) qa-readme-2026-10-22 (3 diagrama-N.png e readme-preview.html) é citado pelo DOSSIE_CONTEXTO.md:96, que é ativo, e pelo LOG:836. Não dá para refazer igual: o README mudou desde então, e o validar-readme-2026-10-22_v01.mjs depende do Playwright do runtime do Codex e do Mermaid via CDN. O total é só 3224 KB. Quando: B6.",
+    "evidencia": "du: qa-enunciado 1212 KB, qa-aula05-terraform 1712 KB, qa-readme 184 KB e obs-aula1-p4.png 116 KB (117.632 B); total 3224 KB, contra 3220 KB no relatório. check-ignore: .gitignore:101 e :104. Nenhum commit tocou esses arquivos. O manifesto tem 7 entradas de qa-enunciado e 1 de obs-aula1-p4.png. Citações versionadas: auditoria-readme-requisitos-2026-09-16_v01.md:35 (enun-p01 a p07) e adaptar-documentacao-importacao-2026-10-20_v01.py:19. Há outra renderização do enunciado, também ignorada, em auditoria-codex-2026-10-30_v01/fontes/.",
+    "preservar": "qa-readme-2026-10-22 inteiro (184 KB). Até o B6, o restante também. No B6, com uma entrada nova no LOG (sem reescrever as linhas 824 e 836), podem sair qa-enunciado, qa-aula05-terraform-2026-10-22 e obs-aula1-p4.png (3040 KB). A linha 104 do .gitignore fica sem efeito, o que é inofensivo.",
+    "tamanho_kb_medido": 3224,
+    "comando_seguro": "(Só no B6, com autorização; manter qa-readme-2026-10-22.) W=/c/Users/Gabriel/Documents/GitHub/tech-challenge-04/00_COLAB_IA/02_TRABALHO; rm -rf \"$W/qa-enunciado\" \"$W/qa-aula05-terraform-2026-10-22\" && rm -f \"$W/obs-aula1-p4.png\""
+   }
+  ],
+  "total_kb_confirmado": 2074446,
+  "observacoes": [
+   "Os 9 candidatos existem, estão ignorados e não têm nenhum arquivo versionado dentro. Os tamanhos batem com a proposta; só o item 9 deu 3224 KB em vez de 3220. Nenhum arquivo do repositório foi alterado: git status vazio, HEAD fe7464b.",
+   "Pode sair agora o equivalente aos itens 1 a 7: 2.074.446 KB, cerca de 1,98 GiB. Os itens 1 e 2 respondem por 85% disso. Com 284 GB livres no C: (71% de uso), a limpeza é higiene, não urgência.",
+   "Nunca apagar pastas qa-* inteiras. A regra .gitignore:101 ignora essas pastas com tudo dentro, inclusive evidências que só existem no disco: 9 arquivos em qa-otel-go-2026-10-27 e 27 em qa-otel-python-2026-10-27. Além disso, scripts versionados gravam traces em qa-otel e qa-otel-newrelic: docker-compose.otel.yaml:18, scripts/test-observability.sh:9, scripts/test-observability-newrelic.sh:10 e scripts/integration/test-traces.py:18.",
+   "Caminhos longos: no mod-cache o maior tem 319 caracteres (102 arquivos acima de 259); no qa-otel-python-2026-10-27/pycache, 286 (36 acima). Usar go clean -modcache ou rm -rf no Git Bash, e não o Remove-Item do PowerShell 5.1. Depois de cada remoção, git status --porcelain deve continuar vazio.",
+   "Registrar a limpeza numa entrada nova do LOG, sem reescrever o histórico. Estas linhas passam a descrever coisas que não existem mais, mas continuam verdadeiras como histórico: LOG:123 (harness), REVISAO_PYTHON_OTEL_2026-10-27_v01.md:16 (.venv), RELATORIO_GO_OTEL_2026-10-27_v01.md:30 (caches), cobertura-opensource-2026-09-16_v01.md:22 e LEITURA_E_CONFERENCIA.md:17 (imagens).",
+   "Os arquivos services/*.exe reaparecem a cada execução do scripts/validate-all.sh (linha 100). Não causam problema: estão ignorados e fora do contexto do Docker.",
+   "Inconsistência que já existia, não causada pela limpeza: o RELATORIO_GO_2026-10-27_v01.md cita 'logs individuais *-build.log/*-vet.log', mas esses arquivos não estão em qa-otel-go-2026-10-27.",
+   "Para regenerar renderizações: o pypdfium2 existe no Python do runtime do Codex (C:/Users/Gabriel/.cache/codex-runtimes/codex-primary-runtime/dependencies/python), mas não no py -3.14. O PDF da aula 5 de CI-CD só existe no tech-challenge-03 (docs/aulas-fiap/02_CI-CD).",
+   "Ignorados fora da lista e não avaliados: terraform/.terraform, terraform/cluster/.terraform e terraform/k8s/.terraform (raízes ativas, manter); validacao-ci04-2026-10-20/python-packages; validacao-local-alpine-2026-11-05/trivy-cache; auditoria-codex-2026-10-30_v01/fontes/*.png. Arquivos sensíveis existem e não foram abertos: .env, os backend.hcl e terraform.tfvars das três raízes do Terraform, e base.tfplan e cluster.tfplan em validacao-local-preimplantacao-2026-11-04. Nenhum é candidato, e nenhuma limpeza deve tocá-los."
+  ]
+ },
+ "colab": {
+  "area": "00_COLAB_IA ativo: os 6 documentos de topo (3.333 linhas) e os 274 arquivos versionados de 00_COLAB_IA/02_TRABALHO (5,5 MB). O _ARQUIVO_MORTO e os 36 itens ignorados de 02_TRABALHO ficaram fora da análise.",
+  "resumo": "Dá para retomar pelos documentos de topo: o TL;DR e o primeiro bloco da PENDENCIAS, o topo do LOG e o roteiro v02 estão coerentes com fe7464b. Mesmo assim, LEIA-PRIMEIRO, PENDENCIAS, DOSSIE e ORGANIZACAO ainda trazem frases que contradizem o estado de 2026-11-05. Exemplos: 'observability fora do Git', 'dev sem push', 'falta regra para o arquivo de 156 MB' e 'retomar P-003/New Relic'. A PENDENCIAS tem 385 de 487 linhas em blocos históricos (46-430), e esses blocos escondem itens ainda abertos. O mais urgente é a versão do chart do ArgoCD: o código segue em 7.7.11 (P-017:484), e o roteiro v02 não trata disso. Os 274 arquivos de 02_TRABALHO ficam assim:\n- 80 ficam: roteiro, verificador, preparação v01, revisões e matrizes, fontes dos guias, evidência da P-013 e relatório da mescla.\n- 40 ficam, mas precisam de atualização: o roteiro v02 agora (decisão do ArgoCD) e a matriz P-014 no B6.\n- 7 dependem de decisão do usuário, porque têm link a partir dos READMEs públicos.\n- 127 podem ir para o arquivo morto: 116 no B6 e 11 depois do B5.\n- 20 são lixo: as partes do plano, idênticas ao HTML; o harness OIDC, substituído pelo teste do módulo iam-ci; e o extrato da Aula 5 da Fase 3.\nNenhuma remoção foi feita.",
+  "itens": [
+   {
+    "caminho": "00_COLAB_IA/LEIA-PRIMEIRO.md",
+    "o_que_e": "Protocolo de retomada (89 linhas). O TL;DR de 2026-11-05 está correto e tem link para o roteiro v02.",
+    "classe": "ATUALIZAR",
+    "motivo": "O TL;DR e o ritual (linhas 11-25) servem à retomada, mas há frases que contradizem o estado atual:\n- Linha 9: diz que o webhook direto do Slack 'ainda não foi comprovado'. Ele foi testado em 2026-11-04 (LOG 16:19; CLAUDE.md:7).\n- Linha 21 ('Sem push, PR, merge na main ou operação AWS nesta etapa') e linhas 71-72 ('não há commit/push/PR'): a D1 autorizou commits e push da dev em 2026-11-03.\n- Linha 55: 'retomada atual abrange consolidação e arquivamento local' é o escopo de 2026-11-01.\n- Linha 83: diz que 'a dev não teve push'.\nAs linhas 27-38 são três blocos de escopo de 2026-10-20/27/28, só históricos. Correção sugerida: nota datada de retificação e ida desses blocos para o arquivo morto. A linha 76 ([INCERTO] sobre comentário linha a linha) continua sem resposta do usuário.",
+    "evidencia": "Leitura integral. git rev-parse origin/main = 003a707. git rev-list --count origin/main..dev = 142. PENDENCIAS:128 (D1). LOG 2026-11-04 16:19.",
+    "recuperavel": "Sim. Há cópia anterior em _ARQUIVO_MORTO/2026-11-05_retomada-pre-b3_v01/00_COLAB_IA/LEIA-PRIMEIRO.md e no Git (git show fe7464b:00_COLAB_IA/LEIA-PRIMEIRO.md).",
+    "quando": "agora",
+    "qtd_arquivos": 1,
+    "tamanho_kb": 13.5
+   },
+   {
+    "caminho": "00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md (linhas 1-45 e 431-487)",
+    "o_que_e": "Checklist vigente (7-15 e 16-45), tabela de pendências herdadas da Fase 3 (431-478) e P-017 (479-487).",
+    "classe": "ATUALIZAR",
+    "motivo": "O topo lista só os tópicos 5 e 6. Itens ainda abertos ficaram enterrados em blocos antigos:\n- P-017:484: escolher a versão do chart do ArgoCD antes do deploy. O código segue em 7.7.11 (terraform/k8s/variables.tf), appVersion v2.13.2, anterior à correção da CVE-2025-55190.\n- Linha 378: Q-03 (entrega individual ou em grupo) e Q-05/Q-06 (horário e canal de submissão). Também aparece como F3-P-103 na linha 440.\n- Linhas 288-293 (P-010): F-017, F-018, F-020, F-021 e F-022 estão sem fechamento desde 2026-10-28. F-019 e F-023 já foram resolvidos em configuração (commits 5bd0588/6f829f1 e b2c5bdf).\nNa tabela 431-478, F3-P-034, F3-P-040, F3-P-041, F3-P-046 e F3-P-048 já estão cobertos pelas seções 2-4 do roteiro v02. Algumas referências de linha mudaram: enable_nat_gateway = false está agora em terraform/terraform.tfvars.example:46, e o comentário do ESO em gitops/base/auth-service/deployment.yaml:71-72. Outras heranças conferidas continuam no código: .trivyignore:58 ('Revisar em: 2026-10-15'), PyYAML==6.0.1, Flask/gunicorn/setuptools sem versão e GUIA-AWS.md em terraform/modules/messaging/main.tf:90.",
+    "evidencia": "- F-017 a F-022 aparecem no LOG só na linha 718.\n- git grep '7.7.11|CVE-2025-55190|argocd_chart_version' não acha nada nas preparações B3 v01/v02.\n- O default de argocd_chart_version é '7.7.11'.\n- LOG:289: o B2 validou os charts com o helm do ArgoCD v2.13.2.\n- Os arquivos citados foram conferidos diretamente.",
+    "recuperavel": "Sim. Há cópia anterior em _ARQUIVO_MORTO/2026-11-05_retomada-pre-b3_v01/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md e no Git.",
+    "quando": "agora",
+    "qtd_arquivos": 1,
+    "tamanho_kb": 68.9
+   },
+   {
+    "caminho": "00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md (linhas 46-430)",
+    "o_que_e": "385 das 487 linhas são blocos históricos:\n- 46-117 (72 linhas): checkpoints de 2026-11-03/04.\n- 118-188 (71): handoff de 2026-11-03.\n- 189-201 (13): orientação de 2026-11-01.\n- 202-231 (30): P-016 e P-015.\n- 232-253 (22): P-014 e P-013.\n- 254-283 (30): P-012, P-011 e P-009.\n- 284-296 (13): P-010.\n- 297-330 (34): orientação de 2026-10-27, P-008, P-007 e P-006.\n- 331-372 (42): P-003, P-004 e P-005.\n- 373-389 (17): P-002.\n- 390-430 (41): P-001, entregáveis, achados F-001 a F-012 e a retomada antiga.",
+    "classe": "MOVER_ARQUIVO_MORTO",
+    "motivo": "Esses blocos foram superados pelo checklist de 2026-11-05; a linha 67 já diz que 'os checklists anteriores são históricos'. Alguns trazem afirmações hoje falsas: a linha 425 diz 'PR/main e push aguardam pedido', e a 428 trata docs/00_COLAB_IA como histórico do 03, mas a pasta foi removida em 0ed75e9. Antes de mover, trazer para a parte vigente, numa lista curta:\n- D1–D5 (127-132), citadas por CLAUDE.md e por LEIA:9;\n- o calendário B0–B6 (165-176);\n- os itens abertos do item anterior;\n- o fechamento documental de P-013 e P-014.\nO arquivo vigente ficaria com cerca de 130 linhas: 1-45, a lista curta, 431-478 e 479-487.",
+    "evidencia": "Mapa de seções por grep '^#' e leitura integral. CLAUDE.md cita D1 e D5. LEIA-PRIMEIRO:9 diz 'D1–D5 registradas em PENDENCIAS'.",
+    "recuperavel": "Sim. Ficaria como cópia datada no _ARQUIVO_MORTO, no padrão de 2026-11-05_retomada-pre-b3_v01, e no Git (git show fe7464b:00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md).",
+    "quando": "agora"
+   },
+   {
+    "caminho": "00_COLAB_IA/LOG_DE_TRABALHO.md",
+    "o_que_e": "Diário incremental: 1071 linhas e 70 entradas, da mais nova (2026-11-05 16:50) para a mais antiga (2026-09-16 15:23).",
+    "classe": "MANTER",
+    "motivo": "É o histórico exigido pelo ritual e não deve ser apagado. Para retomar bastam o TL;DR e a primeira entrada (linhas 1-17), que estão corretos. As entradas antigas mantêm os caminhos da época ('histórico não se reescreve'). Por isso, qualquer movimento desta limpeza deve entrar como entrada nova com de-para. A linha 15 cita evidência que só existe na máquina local (02_TRABALHO/validacao-local-alpine-2026-11-05/RESULTADO.md, ignorada).",
+    "evidencia": "grep -c '^## ' = 70. Leitura das linhas 1-46. .gitignore:103 ignora validacao-local-*.",
+    "recuperavel": "Não se aplica (permanece).",
+    "quando": "agora",
+    "qtd_arquivos": 1,
+    "tamanho_kb": 145.2
+   },
+   {
+    "caminho": "00_COLAB_IA/DOSSIE_CONTEXTO.md (linhas 15-65 e títulos das linhas 504/512)",
+    "o_que_e": "Seções-base 1 a 12 do dossiê (51 linhas), escritas em setembro e outubro.",
+    "classe": "ATUALIZAR",
+    "motivo": "O TL;DR (linha 3) e as seções 21-28 estão atuais. As seções-base contradizem o estado:\n- §2 (linha 19): 'commits e merge locais... sem push/PR/main'.\n- §3 (22-26): descreve o projeto como estava em 2026-10-27.\n- §6 (46): lista decisões só até D-016; faltam D-017 a D-021.\n- §7 (49): diz que P-003 tem 'conta/cotas/orçamento pendentes' e que o New Relic externo está pendente. O orçamento foi criado em 2026-11-05, e o B1 está em 356ac4b.\n- §12 (64): manda 'retomar P-003 e E1 externa' e diz que push/PR/main aguardam pedido.\nHá duas seções numeradas '24' (linhas 504 e 512). A tabela da §5 (31-43) continua válida: é o mapa das ferramentas que geram os guias.",
+    "evidencia": "Leitura das linhas 1-130 e mapa de seções. DECISOES D-017 a D-021. PENDENCIAS:30-33 (Budgets) e :136 (B1).",
+    "recuperavel": "Sim. Há cópia em _ARQUIVO_MORTO/2026-11-05_retomada-pre-b3_v01/00_COLAB_IA/DOSSIE_CONTEXTO.md e no Git.",
+    "quando": "agora",
+    "qtd_arquivos": 1,
+    "tamanho_kb": 92.9
+   },
+   {
+    "caminho": "00_COLAB_IA/DOSSIE_CONTEXTO.md (linhas 7-13 e 66-122)",
+    "o_que_e": "Quatro notas de 2026-10-28 antes da §1 (7 linhas) e os retratos §13 a §19, de 2026-10-13 a 2026-10-28 (57 linhas). A própria §14 diz que foi 'superada pela seção 15'.",
+    "classe": "MOVER_ARQUIVO_MORTO",
+    "motivo": "São retratos datados e já superados. Exemplos: a linha 9 diz que 'a role IAM ainda não existe'; a §13 traz a avaliação Azure, superada pela D-012; a §17 diz que o 'calendário antigo precisa de atualização'. Saem 64 linhas da leitura sem perder nada, se ficarem em cópia datada. Devem ficar no arquivo vigente a §20 (123-458, herança da Fase 3 com números, armadilhas e lições de vídeo e relatório, úteis no B4-B6) e as §21-§28.",
+    "evidencia": "Leitura das linhas 7-122 e mapa de seções.",
+    "recuperavel": "Sim. Cópia datada no _ARQUIVO_MORTO e no Git (git show fe7464b:00_COLAB_IA/DOSSIE_CONTEXTO.md).",
+    "quando": "agora"
+   },
+   {
+    "caminho": "00_COLAB_IA/DECISOES.md",
+    "o_que_e": "1037 linhas: D-001 a D-021 (linhas 7-206, 200 linhas) e a herança da Fase 3, com 59 decisões F3-D/F3-SN (207-1037, 831 linhas).",
+    "classe": "MANTER",
+    "motivo": "É o registro de decisões e não deve ser apagado. D-001 a D-021 estão atuais. O bloco da Fase 3 é histórico e tem 470 links para _ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA. Essa pasta é ignorada pelo Git (.gitignore:121), então os links só funcionam na cópia local e dão 404 no GitHub, inclusive na main. A D-021 (linha 205) também aponta para evidência ignorada (validacao-local-alpine-2026-11-05/RESULTADO.md). Os IDs F3-D/F3-SN são citados só 6 vezes nos documentos ativos.",
+    "opcoes": "No B6:\n(a) manter como está e avisar no topo do bloco que os links são locais;\n(b) trocar os links por referências do tipo git show 3b21e65:docs/00_COLAB_IA/<arquivo>;\n(c) levar o bloco da Fase 3 para um arquivo próprio no _ARQUIVO_MORTO e deixar um resumo de 5 a 10 linhas. Não é apagar, mas exige autorização.",
+    "evidencia": "Contagem de links para o acervo integral = 470. git check-ignore -v aponta .gitignore:121. Citações de F3-D/F3-SN: LEIA 2, PENDENCIAS 2, DOSSIE 1, LOG 1, código 0.",
+    "recuperavel": "Não se aplica (permanece).",
+    "quando": "B6",
+    "qtd_arquivos": 1,
+    "tamanho_kb": 155.5
+   },
+   {
+    "caminho": "00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md",
+    "o_que_e": "Regras de pastas e nomes (79 linhas). A última atualização é de 2026-11-01.",
+    "classe": "ATUALIZAR",
+    "motivo": "Quatro afirmações já não valem:\n- Linha 36: observability/, docker-compose.otel.yaml e scripts/test-observability.sh 'fora do Git'. Estão versionados desde a3d0f58 e 356ac4b (2026-11-03).\n- Linha 61: 'ainda falta regra para o arquivo de 156 MB'. A regra está em .gitignore:108-110, e o arquivo nem existe mais no disco (D3: foi para a Lixeira).\n- Linha 72: diz que a remoção de docs/00_COLAB_IA foi feita 'só na árvore local, sem commit'. O commit 0ed75e9 removeu os 39 arquivos.\n- Linha 77: diz que os 34 arquivos da Fase 3 estão 'apagados sem commit', com destino a decidir no B0. Isso foi resolvido pela D2 (commit 9b3119a).\nA tabela (linhas 7-14) não inclui observability/, gitops/observability, docs/evidencias nem docs/apresentacao. Corrigir com nota datada, sem apagar o registro. As regras de arquivo morto (64-70) continuam válidas e regem esta limpeza.",
+    "evidencia": "- git ls-files mostra os 5 arquivos de observabilidade.\n- git log --diff-filter=A aponta a3d0f58.\n- git check-ignore do .jsonl aponta .gitignore:110; o arquivo não existe no disco.\n- git show --name-status: 0ed75e9 tem 39 remoções em docs/00_COLAB_IA; 9b3119a tem 34 arquivos.\n- PENDENCIAS:129-130.",
+    "recuperavel": "Sim, pelo Git (git show fe7464b:00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md).",
+    "quando": "agora",
+    "qtd_arquivos": 1,
+    "tamanho_kb": 7
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/PREPARACAO_B3_2026-11-05_v02.md",
+    "o_que_e": "Roteiro vigente do primeiro deploy (100 linhas):\n- base e cluster;\n- ArgoCD só como controlador;\n- PR;\n- cinco imagens;\n- Applications;\n- RDS e chave do evaluation;\n- encerramento.",
+    "classe": "ATUALIZAR",
+    "motivo": "É indispensável no B3-B5. É citado por CLAUDE.md:3, LEIA:3, PENDENCIAS:3/12, DOSSIE:3/570 e LOG:11, e todos os seus links relativos apontam para arquivos versionados. Falta uma decisão anterior à seção 2 (instalação do ArgoCD), que é a pendência P-017:484 sobre a versão do chart. O código instala 7.7.11, cujo appVersion v2.13.2 é anterior à correção da CVE-2025-55190. A FICHA do B2 (linhas 651-656 e 1025) aponta 10.11.7 como o chart mais recente e marca a compatibilidade como [INCERTO]. O B2 validou os charts com o helm do ArgoCD v2.13.2 (LOG:289), então trocar a versão exige repetir essa validação.",
+    "opcoes": "O usuário decide antes do tópico 5:\n(a) manter 7.7.11 e registrar o risco aceito em DECISOES;\n(b) subir para uma versão corrigida, refazendo localmente o helm template e o render das Applications antes do apply.",
+    "evidencia": "Leitura integral e checagem de links (nenhum destino ausente ou só local). git grep da versão sem ocorrência na v01/v02. Default '7.7.11' em terraform/k8s/variables.tf.",
+    "recuperavel": "Não se aplica (permanece). A versão atual está no Git (fe7464b).",
+    "quando": "agora",
+    "qtd_arquivos": 1,
+    "tamanho_kb": 12.5
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/preflight-b3-2026-11-05/ (README.md, checar_overlay.py, test_checar_overlay.py)",
+    "o_que_e": "Verificador manual do overlay, com os modos pre-pr e pre-sync, e seus 7 testes locais.",
+    "classe": "MANTER",
+    "motivo": "É usado duas vezes no tópico 5 (roteiro v02, linhas 31, 34 e 85). É código e não pode ser regenerado. Roda a partir da cópia da dev com os backends iniciados e lê a main por --checkout, então não depende de 00_COLAB_IA existir na main. Depois do B5 vira evidência e pode ir para o arquivo morto. O ID de 12 dígitos usado no teste é fictício (123456789012). Detalhe menor: o nome da pasta não tem o sufixo _v01 pedido em ORGANIZACAO:16.",
+    "evidencia": "git grep: 3 citações no roteiro v02. LOG:13 registra 7/7 testes. Leitura do README do verificador.",
+    "recuperavel": "Não se aplica (permanece).",
+    "quando": "agora",
+    "qtd_arquivos": 3,
+    "tamanho_kb": 15.7
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md",
+    "o_que_e": "Preparação de 2026-11-04:\n- validações;\n- conta AWS e GitHub;\n- planos reais (8 importações, 29 criações, 7 alterações, 0 destruições);\n- custos (US$ 9,82 por dia);\n- pré-requisitos.",
+    "classe": "MANTER",
+    "motivo": "A v02 substitui só a seção 6, e as linhas 125-127 já apontam para ela. A v02:5 diz que a v01 preserva a memória de cálculo, as evidências, os tokens e o orçamento. É fonte de números para o relatório PDF no B6. A margem da linha 87 (US$ 54,65) foi calculada com US$ 100 de créditos; a v02:10 recalcula com US$ 120 (US$ 74,65). Como é memória de cálculo, não precisa ser editada.",
+    "evidencia": "Citada por v02:5, PENDENCIAS:27, LOG 2026-11-05 16:50 e DOSSIE §24.",
+    "recuperavel": "Não se aplica (permanece).",
+    "quando": "B6",
+    "qtd_arquivos": 1,
+    "tamanho_kb": 11.4
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/{GUIA_CONTAS_E_ACESSOS_FASE4_2026-10-28_v01.md, VERIFICACAO_GUIA_CONTAS_2026-10-28_v01.json, PASSO2_CONTAS_SAAS_2026-11-01_v01.md, PAGERDUTY_OAUTH_EVENTS_API_2026-11-03_v01.md, TOKENS_GITHUB_PREIMPLANTACAO_2026-11-04_v01.md, role-github-oidc-2026-10-28_v01/ (5)}",
+    "o_que_e": "Guias para criar contas e chaves SaaS, Events API V2, tokens do GitHub e a role IAM/OIDC pelo console.",
+    "classe": "MOVER_ARQUIVO_MORTO",
+    "motivo": "As etapas estão concluídas:\n- contas e chaves validadas em 2026-11-04;\n- tokens validados em 2026-11-05;\n- role e ECR inventariados em 2026-10-28 e adotados por terraform/imports.tf (8 importações) no apply do B3.\nAinda podem ser úteis até o B5: para recriar um token, refazer a integração se o trial do PagerDuty (que acaba por volta de 2026-11-11) mudar algo, ou diagnosticar uma importação da role que falhe (seção 'Problemas comuns' do PASSO2). Ao mover, atualizar CLAUDE.md:7, que cita o guia OAuth, e os links em PENDENCIAS:21/107/121/258/271 e DOSSIE:9/13/491, se essas seções ainda estiverem ativas.",
+    "evidencia": "git grep pelos nomes: CLAUDE.md:7; PENDENCIAS e DOSSIE, quase só em blocos históricos (exceto PENDENCIAS:21). Nenhuma citação no roteiro v02, no verificador, no README ou no código.",
+    "recuperavel": "Sim: Git e a própria cópia no _ARQUIVO_MORTO.",
+    "quando": "depois_do_B5",
+    "qtd_arquivos": 10,
+    "tamanho_kb": 68.6
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/pesquisa-pagerduty-notificacoes-2026-11-03_v01/achados.txt",
+    "o_que_e": "Pesquisa de 2026-11-03 sobre notificações, push e cartão no Slack, com URL por afirmação. O próprio arquivo diz que a verificação cética final não rodou.",
+    "classe": "MOVER_ARQUIVO_MORTO",
+    "motivo": "Nenhum documento ativo cita o caminho; só o LOG:362 menciona a pesquisa. O uso declarado é o push no app (opcional) e o diagnóstico se a notificação parar. A notificação isolada PagerDuty → Slack já foi validada (LOG 2026-11-04 16:19). Pode ajudar no tópico 6; depois disso não tem uso.",
+    "evidencia": "git grep 'pesquisa-pagerduty': zero citações fora de inventários. Cabeçalho do arquivo. Commit 939444a.",
+    "recuperavel": "Sim: Git e a cópia no _ARQUIVO_MORTO.",
+    "quando": "depois_do_B5",
+    "qtd_arquivos": 1,
+    "tamanho_kb": 75.4
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/b2-fatos-stack-2026-11-03_v01/ (FICHA.md, resultado-integral.json)",
+    "o_que_e": "221 fatos com fonte oficial sobre self-healing, charts e versões da stack. A FICHA é a forma legível do JSON.",
+    "classe": "MANTER",
+    "motivo": "É a base das escolhas de versão do B2 e a única fonte registrada da defasagem do ArgoCD (FICHA:651-656 e 1025). Serve para decidir a P-017 antes do tópico 5 e para justificar as versões no relatório do B6. Não há gerador na pasta, então a FICHA não pode ser regenerada automaticamente. Depois do B6 pode ficar só a FICHA, ou tudo ir para o arquivo morto.",
+    "evidencia": "DOSSIE:501. LOG:286. git grep '7.7.11' na FICHA e no JSON.",
+    "recuperavel": "Não se aplica (permanece).",
+    "quando": "B6",
+    "qtd_arquivos": 2,
+    "tamanho_kb": 391.5
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/",
+    "o_que_e": "Auditoria P-014:\n- MATRIZ_REQUISITOS.md, com os 42 obrigatórios;\n- CATALOGO_ACHADOS.md;\n- JSON e CSV;\n- geradores;\n- texto do enunciado por página;\n- validações.",
+    "classe": "ATUALIZAR",
+    "motivo": "A matriz é a referência detalhada dos 42 obrigatórios (LOG:142, 2026-11-05) e entra no B6. Mas é um retrato de 2026-10-30: Parcial 11, Evidência local anterior 2, Pendente 27, Confirmar 2. Não reflete o B0-B2 nem o que o B3-B5 vai comprovar. A P-014 tem três caixas abertas (PENDENCIAS:236, 238, 239). As peças dependem umas das outras, então não separar a pasta:\n- gerar-matriz.py:8 lê 02_TRABALHO/MATRIZ_REQUISITOS_FASE4_2026-10-28_v01.json;\n- catalogar-estatico.py lê cobertura-arquivos.json e inventario-inicial.json.\nvalidacoes/analise-estatica.json contém o ID da conta da Fase 3 (o valor não foi impresso).",
+    "evidencia": "TL;DR da matriz. Leitura dos geradores. CLAUDE.md:15. PENDENCIAS:232-241. .gitignore:124 (as imagens PNG são só locais).",
+    "recuperavel": "Não se aplica (permanece).",
+    "quando": "B6",
+    "qtd_arquivos": 39,
+    "tamanho_kb": 864.7
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/{REVISAO_GERAL_FASE4_2026-10-28_v01.md, REVISAO_GERAL_APLICACOES_2026-10-28_v01.md, REVISAO_GERAL_INFRA_2026-10-28_v01.md, REVISAO_GERAL_DOCUMENTACAO_2026-10-27_v01.md, MATRIZ_REQUISITOS_FASE4_2026-10-28_v01.json, VERIFICACAO_REVISAO_GERAL_2026-10-28_v01.json, gerar-revisao-geral-2026-10-28_v01.py, verificar-revisao-geral-2026-10-28_v01.py}",
+    "o_que_e": "Revisão integral P-009 frente ao enunciado: relatório consolidado, três pareceres setoriais, matriz JSON e verificador.",
+    "classe": "MANTER",
+    "motivo": "A matriz JSON é entrada do gerador da matriz P-014, com caminho fixo em 02_TRABALHO (gerar-matriz.py:8). Os achados F-017 e F-018 desta revisão continuam abertos (PENDENCIAS:288-289). É um retrato de 2026-10-28 e não precisa de edição. O verificador lê preservacao-importacao e preservacao-passos-locais (verificar-revisao-geral:60-63), que estão no grupo de scripts pontuais; os dois grupos devem ir juntos para o arquivo morto.",
+    "evidencia": "PENDENCIAS:282 (link). DOSSIE §19 (linhas 113-121). LOG:714-726. Leitura dos dois scripts.",
+    "recuperavel": "Não se aplica (permanece).",
+    "quando": "B6",
+    "qtd_arquivos": 8,
+    "tamanho_kb": 142.1
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/ANALISE_COMPLETA_FASE4_2026-10-31_v01.md",
+    "o_que_e": "Análise P-015 (1856 linhas): 44 itens, 112 achados e plano B0-B6. O Apêndice B (linhas 975-1852) detalha o que falta em cada requisito.",
+    "classe": "MANTER",
+    "motivo": "Citada por CLAUDE.md:15, DOSSIE:455 e PENDENCIAS:216-231. O Apêndice B serve de lista de conferência no B6. É um retrato de 2026-10-31 (por exemplo, ainda trata F-024 e os commits como pendentes). Não deve ser atualizada: usar como linha de base, sem somar seus números aos da P-014 (DOSSIE:455).",
+    "evidencia": "Mapa de seções e git grep pelo nome.",
+    "recuperavel": "Não se aplica (permanece).",
+    "quando": "B6",
+    "qtd_arquivos": 1,
+    "tamanho_kb": 287.4
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/{PLANO_E_ARQUITETURA_FASE4_2026-09-23_v02.html, CONFERENCIA_PLANO_FASE4_2026-10-21_v01.md, RELATORIO_PASSO1_REVALIDACAO_2026-10-27_v01.md, RELATORIO_PASSO2_OBSERVABILIDADE_LOCAL_2026-10-27_v01.md, RESULTADO_PASSOS_LOCAIS_2026-10-27_v01.json, RELATORIO_TERRAFORM_BACKEND_2026-10-22_v01.md, REVISAO_TERRAFORM_E_OTEL_2026-10-27_v01.md}",
+    "o_que_e": "Plano E0-E7 de 2026-09-23, conferência dos 42 requisitos e relatórios locais de Terraform e OTel de outubro. Todos têm link a partir dos READMEs públicos.",
+    "classe": "DECISAO_USUARIO",
+    "motivo": "São os únicos auxiliares com link a partir de documentos públicos: README.md:14, 15, 139, 184, 185, 186 e 226, e terraform/README.md:67. Pela D-018, o README não deve levar o avaliador ao diário interno. Seis deles citam Claude ou Codex, e cinco trazem IDs internos (até 5 cada). O plano e a conferência foram superados pelo calendário B0-B6 e pelo roteiro v02; o próprio README:14 avisa que o plano precisa de revisão. Os relatórios de 2026-10-22/27 continuam válidos como evidência local.",
+    "opcoes": "No B6/P-017:\n(a) manter os arquivos em 02_TRABALHO, tirar os links dos READMEs e citar a evidência em texto;\n(b) levar versões revisadas, sem assistentes nem IDs, para docs/evidencias/ (ORGANIZACAO:43) e apontar o README e o relatório PDF para elas;\n(c) manter os links como estão, o que contraria a D-018.",
+    "evidencia": "git grep '02_TRABALHO' nos documentos públicos. Contagem de menções a Claude/Codex: 1 em cada .md/.html. IDs internos: PLANO 3, CONFERENCIA 3, PASSO2 1, TERRAFORM_BACKEND 1, REVISAO_TERRAFORM_E_OTEL 5.",
+    "recuperavel": "Não se aplica enquanto não houver decisão. Tudo está no Git.",
+    "quando": "B6",
+    "qtd_arquivos": 7,
+    "tamanho_kb": 169.9
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/plano-fase4/partes/ (01-cabecalho.html a 09-plano-fontes.html)",
+    "o_que_e": "As 9 partes HTML que, concatenadas, formam o plano v02.",
+    "classe": "LIXO",
+    "motivo": "É duplicata exata: a concatenação é igual, byte a byte, ao PLANO_E_ARQUITETURA_FASE4_2026-09-23_v02.html (102.741 bytes). O plano está superado e não será mais editado, então perder a divisão em partes não tira nenhum conteúdo. Só o LOG:954 e 960 cita a pasta, numa instrução histórica de remontagem.",
+    "evidencia": "cat plano-fase4/partes/0*.html | cmp - PLANO_E_ARQUITETURA_FASE4_2026-09-23_v02.html: idênticos. git grep 'plano-fase4' não acha citação em documento ativo, README, código ou roteiro. Partes adicionadas em 4c76a2d.",
+    "recuperavel": "Sim: git show 4c76a2d:00_COLAB_IA/02_TRABALHO/plano-fase4/partes/<arquivo>. O conteúdo integral fica no HTML do plano.",
+    "quando": "antes_do_merge_main",
+    "qtd_arquivos": 9,
+    "tamanho_kb": 100.3
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/{RELATORIO_PASSO1_INTEGRACAO_LOCAL_2026-10-22_v01.md, RELATORIO_GO_OTEL_2026-10-27_v01.md, REVISAO_PYTHON_OTEL_2026-10-27_v01.md, otel-python-2026-10-22_v01/ (11), ANALISE_ESTADO_E_OPCOES_CLOUD_2026-10-13_v01.md, PLANO_IMPORTACAO_FASE3_2026-10-20_v01.md, RESULTADO_IMPORTACAO_FASE3_2026-10-20_v01.md, resultado-ci04-2026-10-20_v01.md, resultado-gitops04-2026-10-20_v01.md}",
+    "o_que_e": "Relatórios e evidências brutas de outubro: integração (10-22), instrumentação Go e Python (10-22/27), opção Azure (10-13) e importação da Fase 3 (10-20).",
+    "classe": "MOVER_ARQUIVO_MORTO",
+    "motivo": "Estão superados:\n- o passo 1, pela revalidação de 10-27 (README:184);\n- Go e Python, pelo relatório do passo 2 e pelos testes no CI;\n- a opção Azure, pela D-012 (AWS);\n- o plano e o resultado da importação, pela D-014 (concluída).\nNenhum é necessário entre o B3 e o B6. Só seções históricas os citam: DOSSIE §13 e §15, PENDENCIAS P-004:363 e DECISOES D-013:109 (menção sem link). resultado-gitops04 contém o ID da conta da Fase 3, e otel-python/pip-install.log contém o caminho local com o nome do usuário. Os tests-*_v02.log diferem dos v01, então não são duplicatas.",
+    "evidencia": "git grep pelos nomes. cmp dos logs v01 e v02. Contagem dos IDs de 12 dígitos por hash, sem imprimir os valores.",
+    "recuperavel": "Sim: Git (git show fe7464b:<caminho>) e a cópia no _ARQUIVO_MORTO.",
+    "quando": "B6",
+    "qtd_arquivos": 19,
+    "tamanho_kb": 93.6
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/{adaptar-documentacao-importacao, checkpoint-importacao, corrigir-selecao-guias-importacao, fechar-importacao-contexto, importar-fase3-preparacao, integrar-importacao-dev, registrar-importacao-proposta, validar-ci04, verificar-preservacao-importacao (todos *-2026-10-20_v01.py), requirements-validacao.txt, verificacao-preservacao-importacao/preservacao-importacao/integracao-dev (*-2026-10-20_v01.json), registrar-auditoria-2026-10-13_v01.py, estado-antes-readme/verificacao-readme/resultado-render-readme/preservacao-passos-locais (*-2026-10-22_v01.json), validar-readme-2026-10-22_v01.mjs, estado-retomada-passos-locais/verificacao-passos-locais (*-2026-10-27_v01.json), verificar-passos-locais-2026-10-27_v01.py, revisar-projeto-2026-10-27_v01.py}",
+    "o_que_e": "Scripts de uma só execução e retratos de estado da importação (10-20), da reescrita do README (10-22) e dos passos locais (10-22/27).",
+    "classe": "MOVER_ARQUIVO_MORTO",
+    "motivo": "Já rodaram, e os resultados estão no LOG, em RESULTADO_IMPORTACAO e nos relatórios. Não são regeneráveis, porque retratam estados passados, mas a importação está nos commits 4c76a2d, 491cd2b, 31f92e4 e cb81b00. revisar-projeto lê docs/00_COLAB_IA/, removida em 0ed75e9, e já não funciona. Os scripts usam caminhos relativos (Path(__file__).parents): depois de movidos não rodam no lugar, o que é aceitável. adaptar-documentacao-importacao contém o ID da conta da Fase 3. Só uma seção histórica os cita (PENDENCIAS P-006:329). Devem ir junto com o grupo P-009, cujo verificador lê os preservacao-*.json.",
+    "evidencia": "git grep por nome (fora de inventários, só o LOG e PENDENCIAS:329). Leitura dos cabeçalhos e dos caminhos que cada script lê.",
+    "recuperavel": "Sim: Git e a cópia no _ARQUIVO_MORTO.",
+    "quando": "B6",
+    "qtd_arquivos": 23,
+    "tamanho_kb": 272.9
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/{harness/ (main.tf, offline-test.tf, outputs.tf, variables.tf, .terraform.lock.hcl, tests/trust.tftest.hcl), test-oidc-offline.py, offline-init.txt, empty-aws-config}",
+    "o_que_e": "Harness offline de 2026-10-28 que testou a trust OIDC, com 8 blocos run.",
+    "classe": "LIXO",
+    "motivo": "Foi substituído por terraform/modules/iam-ci/tests/trust.tftest.hcl, com 10 blocos run, que roda no Terraform Check desde b2c5bdf (2026-11-05). Nada ativo cita o harness: não há ocorrência em terraform/, .github/, no roteiro nem nos documentos de topo. O resultado de 2026-10-28 continua em offline-test-resumo.txt (item seguinte), citado pelo comentário em .gitignore:108-109. empty-aws-config tem 0 byte. Um eventual cache .terraform ignorado ao lado não foi analisado.",
+    "evidencia": "grep -c '^run ': 10 no módulo contra 8 no harness. git log b2c5bdf. git grep 'harness|etapas8-9' em terraform e .github: vazio.",
+    "recuperavel": "Sim: git show fe7464b:00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/harness/<arquivo>.",
+    "quando": "antes_do_merge_main",
+    "qtd_arquivos": 9,
+    "tamanho_kb": 24.5
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/{audit-github.py, aws/auditar-aws-somente-leitura.py, verificar-correspondencia.py, baseline.json, terraform/offline-test-resumo.txt}",
+    "o_que_e": "Scripts do inventário autenticado AWS/GitHub (34/34), linha de base de hashes e resumo do teste 8/8.",
+    "classe": "MANTER",
+    "motivo": "É a evidência versionada da P-013, que tem o fechamento documental pendente (PENDENCIAS:245-248). LEIA:38 manda consultar esta pasta. As saídas brutas, com IDs reais, ficam só na máquina local (.gitignore:112-117). Os scripts não foram reaproveitados depois. Fechada a P-013, tudo pode ir para o arquivo morto, ajustando o comentário de .gitignore:108-109.",
+    "evidencia": "git grep pelos nomes: LEIA:38, PENDENCIAS:130 e 250-252, LOG:431. .gitignore:108-117.",
+    "recuperavel": "Não se aplica (permanece).",
+    "quando": "B6",
+    "qtd_arquivos": 5,
+    "tamanho_kb": 87.6
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/{MESCLA_COLAB_FASE3_2026-11-01_v01.md, mescla-colab-fase3-2026-11-01_v01/INDICE_RASTREABILIDADE_2026-11-01_v01.md, .../manifesto-arquivamento.json, .../incorporacao-codex.json, .../verificacao-codex-depois.json}",
+    "o_que_e": "Relatório da mescla P-016, índice de 158 conhecimentos e 39 registros, de-para do arquivamento e verificação final.",
+    "classe": "MANTER",
+    "motivo": "Garantem a rastreabilidade da D-017. Citados por CLAUDE.md:18, DECISOES:159, DOSSIE:125/451 e PENDENCIAS:204/487 (P-017, aberta até o B6). O relatório tem link para os três JSONs.",
+    "evidencia": "git grep e grep dos caminhos citados dentro do relatório.",
+    "recuperavel": "Não se aplica (permanece).",
+    "quando": "agora",
+    "qtd_arquivos": 5,
+    "tamanho_kb": 64.8
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/ (rascunhos/, entradas/ e demais arquivos soltos)",
+    "o_que_e": "Intermediários da mescla:\n- 13 rascunhos (731 KB), já incorporados aos documentos de topo;\n- 14 extrações e pesquisas (917 KB), feitas a partir dos 39 originais da Fase 3;\n- scripts fechar/gerar/incorporar/retomar/verificar_codex, colher e verificar_mescla;\n- snapshot-retomada-codex.json (160 KB), git-status-retomada.txt e indice-rastreabilidade.json;\n- medir-lint.sh e o resultado do lint.",
+    "classe": "MOVER_ARQUIVO_MORTO",
+    "motivo": "É a maior pasta de 02_TRABALHO (36% do tamanho), e nada no B3-B6 depende dela. Só dois trechos a corrigir ou arquivar a citam: ORGANIZACAO:62 (o snapshot) e PENDENCIAS:184 (o lint, com B0 já concluído). A D-017 (DECISOES:155) manda 'preservar rascunhos, extrações, registros antigos e backups', então o destino é o arquivo morto, não a remoção. O lugar natural é _ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/, ao lado do acervo. O índice, o de-para e as verificações citados pelo relatório ficam onde estão.",
+    "opcoes": "(a) mover para o arquivo morto, preservando, conforme a D-017;\n(b) tirar da árvore e depender só do Git, o que exige o usuário rever a D-017.",
+    "evidencia": "Tamanhos medidos por stat. git grep pelos nomes. DECISOES:155. Os originais da Fase 3 seguem em git show 3b21e65:docs/00_COLAB_IA/<arquivo>.",
+    "recuperavel": "Sim: Git e a cópia no _ARQUIVO_MORTO. As extrações também podem ser refeitas a partir de 3b21e65.",
+    "quando": "B6",
+    "qtd_arquivos": 39,
+    "tamanho_kb": 2031.3
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/{guia_base.py, guia-base-2026-09-16_v01.css, fontes_fase4.py, inventario-fontes-2026-09-16_v01.json, extrair-pdfium, extrair-fontes, renderizar-paginas, renderizar-fundamentos (2026-09-16_v01.py), preparar-leitura-2026-09-21_v01.py, criar-guias-fundamentos-2026-09-17_v02.py, criar-guia-opensource-2026-09-17_v02.py, criar-fragmentos-incidentes-2026-09-17_v01.py, montar-guia-2026-09-16_v01.py, validar-guias-2026-09-16_v01.py, gerar-espelho-requisitos-2026-09-20_v01.py, mapear-modulos-readme-2026-09-20_v01.py, especificacao-fragmentos-guia-2026-09-16_v01.md, fragmentos/ (38)}",
+    "o_que_e": "Fontes e geradores dos 5 GUIA-ESTUDO-*.html de docs/aulas-fiap e do espelho docs/requisitos/REQUISITOS.html.",
+    "classe": "MANTER",
+    "motivo": "Pela DOSSIE §12 (linha 64), um guia só se altera pelo fragmento ou pelo gerador _v02, nunca editando o HTML final à mão. docs/requisitos/REQUISITOS.html:93 cita o gerador do espelho. Os 5 guias têm 39 menções a Claude/Codex/Opus, e os fragmentos têm 37. Se o B6 aplicar a D-018 aos guias, esta cadeia será necessária. A regeneração depende de pypdfium2/PIL (DOSSIE:43) e de extrações e imagens ignoradas (extracoes*/ e qa-fundamentos/), que podem ser refeitas a partir dos PDFs versionados. Os guias não são entrega da FIAP; o destino depende da decisão sobre eles.",
+    "opcoes": "No B6:\n(a) manter os guias na main e regerá-los sem nomes de assistentes;\n(b) manter os guias como estão, aceitando uma exceção à D-018;\n(c) tirar os guias da main e arquivar a cadeia inteira.",
+    "evidencia": "- guia_base é importado por 4 geradores vigentes.\n- criar-guias-fundamentos v02:73 lê qa-fundamentos/05-p10.png, gerado por renderizar-fundamentos.\n- Contagem de menções nos HTML e nos fragmentos.\n- DECISOES D-003, D-004, D-006 e D-008.",
+    "recuperavel": "Não se aplica (permanece).",
+    "quando": "B6",
+    "qtd_arquivos": 55,
+    "tamanho_kb": 653.5
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/{criar-guias-fundamentos-2026-09-16_v01.py, criar-guia-opensource-2026-09-16_v01.py, cobertura-fundamentos-2026-09-16_v01.md, cobertura-opensource-2026-09-16_v01.md, retomar-fundamentos-2026-09-17_v01.py, criar-requisitos-2026-09-16_v01.py, registro-requisitos-2026-09-16_v01.json, aplicar-auditoria-readme-2026-09-20_v01.py, conferir-codigo-2026-09-21_v01.py, analise-modelo-guia-2026-09-16_v01.md}",
+    "o_que_e": "Versões v01 já substituídas pelas _v02 e scripts pontuais de setembro: retomada, criação inicial e auditoria do README de requisitos, conferência de código e análise do modelo.",
+    "classe": "MOVER_ARQUIVO_MORTO",
+    "motivo": "A DOSSIE:64 manda usar os geradores _v02. criar-requisitos regrava docs/requisitos/README.md a partir do JSON: rodá-lo hoje desfaria a auditoria aplicada em 2026-09-20 e a coluna de módulos (D-008). Fora de inventários, só o LOG de setembro cita esses arquivos. A regra de ORGANIZACAO:66 manda versão substituída para o arquivo morto.",
+    "evidencia": "git grep pelos nomes. Leitura das importações e referências: retomar-fundamentos aponta para v01 e v02; criar-requisitos lê registro-requisitos e escreve docs/requisitos/README.md.",
+    "recuperavel": "Sim: Git e a cópia no _ARQUIVO_MORTO.",
+    "quando": "B6",
+    "qtd_arquivos": 10,
+    "tamanho_kb": 130.5
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/{dossies/ (18), cobertura-apm-2026-09-16_v01.md, cobertura-fundamentos-2026-09-17_v02.md, cobertura-opensource-2026-09-17_v02.md, auditoria-opensource-2026-09-17_v01.md, auditorias/auditoria-readme-requisitos-2026-09-16_v01.md, verificacoes/verificacao-final-2026-09-21_v01.md}",
+    "o_que_e": "Registros de setembro: leitura por aula, cobertura, auditoria e verificação final dos guias.",
+    "classe": "MOVER_ARQUIVO_MORTO",
+    "motivo": "Comprovam a leitura integral e a conferência dos guias, mas não entram no B3-B6. Só registros históricos os citam: D-004 (DECISOES:35, menção à pasta dossies/), PENDENCIAS P-001:400 e o LOG. As coberturas _v02 são saídas dos geradores (criar-guias-fundamentos v02:114 grava a sua) e se refazem quando o gerador roda. Devem ir junto com a decisão sobre os guias no B6.",
+    "evidencia": "git grep pelos nomes e leitura do cabeçalho de dossies/apm-aula-01.",
+    "recuperavel": "Sim: Git e a cópia no _ARQUIVO_MORTO.",
+    "quando": "B6",
+    "qtd_arquivos": 24,
+    "tamanho_kb": 95
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/aula05-terraform-2026-10-22_v01/LEITURA_E_CONFERENCIA.md",
+    "o_que_e": "Estudo P-007 da Aula 05 (CI/CD com Terraform) da Fase 3.",
+    "classe": "MOVER_ARQUIVO_MORTO",
+    "motivo": "A P-007 foi concluída em 2026-10-22, e nenhuma decisão de criar ambientes saiu dela. Só a PENDENCIAS:318 (bloco histórico) e o LOG citam o arquivo.",
+    "evidencia": "git grep 'aula05-terraform'.",
+    "recuperavel": "Sim: Git e a cópia no _ARQUIVO_MORTO.",
+    "quando": "B6",
+    "qtd_arquivos": 1,
+    "tamanho_kb": 5.2
+   },
+   {
+    "caminho": "00_COLAB_IA/02_TRABALHO/aula05-terraform-2026-10-22_v01/{extracao.json, extracao.txt}",
+    "o_que_e": "Texto integral das 16 páginas do PDF da Aula 5 de CI/CD da Fase 3.",
+    "classe": "LIXO",
+    "motivo": "Pode ser regenerado: o JSON registra a fonte (tech-challenge-03/docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 5.pdf) e o SHA-256. A pasta 02_CI-CD inteira foi removida do 04 em 9b3119a, pela D2 (não restaurar os materiais da Fase 3), e este extrato reintroduz o texto do material da FIAP. Também traz o caminho local com o nome do usuário. Nenhum documento ativo cita os extratos.",
+    "evidencia": "Início do extracao.json. git show --name-status 9b3119a (8 arquivos em 02_CI-CD). git -C tech-challenge-03 ls-files.",
+    "recuperavel": "Sim: git show fe7464b:<caminho>, ou nova extração a partir do PDF do tech-challenge-03 (somente leitura).",
+    "quando": "antes_do_merge_main",
+    "qtd_arquivos": 2,
+    "tamanho_kb": 30.7
+   }
+  ],
+  "observacoes": [
+   "Como as referências foram buscadas: git grep -F pelo nome de cada um dos 100 itens de topo de 02_TRABALHO, em quatro lugares:\n- os 6 documentos de topo;\n- CLAUDE.md, README.md, SECURITY.md, docs/, .github/, scripts/, terraform/, gitops/, observability/, services/, infra/, .gitignore e docker-compose*;\n- o roteiro v02;\n- o verificador.\nArquivos que listam o repositório inteiro não contaram como citação: baseline.json, cobertura-arquivos.json, inventario-inicial.json, analise-estatica.json, preservacao-importacao.json, snapshot-retomada-codex.json e indice-rastreabilidade.json.",
+   "Mover para o _ARQUIVO_MORTO não tira nada da main, porque o arquivo morto também é versionado (289 arquivos, 4,7 MB). Só sair da árvore (LIXO) faz isso. O repositório é privado, e a origin/dev já está no GitHub desde 2026-11-03, 142 commits à frente da origin/main (003a707). Quem tem acesso já vê tudo, e o avaliador olha a main na entrega, depois do B6. Por isso o arquivamento pode esperar o B6. Antes do tópico 5 importam as correções nos documentos de topo e a decisão sobre o ArgoCD.",
+   "Trabalho do Codex de 2026-11-05: o roteiro v02, o verificador (7/7), a D-021 e as cópias em _ARQUIVO_MORTO/2026-11-05_retomada-pre-b3_v01 estão coerentes, e os links do roteiro existem. Três pontos ficaram de fora:\n- o roteiro não trata da versão do chart do ArgoCD (PENDENCIAS:484; código ainda em 7.7.11);\n- o ORGANIZACAO não foi atualizado (última versão de 2026-11-01);\n- o corpo antigo de LEIA-PRIMEIRO e DOSSIE §1-§12 não foi revisto.",
+   "Pendências abertas fora do checklist vigente, que precisam subir para o topo da PENDENCIAS:\n- Q-03 (entrega individual ou em grupo) e Q-05/Q-06 (horário e canal de submissão): PENDENCIAS:378 e :440. São críticas no B6.\n- F-017 e F-018 (PENDENCIAS:288-289), sem registro desde 2026-10-28.\n- Heranças da Fase 3 ainda presentes no código: .trivyignore:58, PyYAML==6.0.1, comentários do ESO e do EKS 1.31, enable_nat_gateway = false no exemplo. O tfvars local tem o NAT ligado, segundo PREPARACAO v01:50.",
+   "Links para conteúdo que só existe na máquina local, e que dão 404 no GitHub:\n- 470 em DECISOES e 1 em DOSSIE e ORGANIZACAO, para o acervo integral ignorado (.gitignore:121);\n- DECISOES:205 e LOG:15, para validacao-local-alpine-2026-11-05;\n- PENDENCIAS:44 e PREPARACAO v01:7, para validacao-local-preimplantacao-2026-11-04.\nSe outra área propuser apagar essas pastas locais, as referências ficam sem alvo; os resultados continuam resumidos no LOG, em PREPARACAO v01 e na D-021. O roteiro v02:17 volta a usar validacao-local-* para os planos do B3: não remover essa regra do .gitignore.",
+   "Dados sensíveis nos arquivos ativos (nenhum valor foi impresso):\n- O ID da conta da Fase 3 aparece em 3 arquivos ativos de 02_TRABALHO (adaptar-documentacao-importacao-2026-10-20_v01.py, auditoria-codex-2026-10-30_v01/validacoes/analise-estatica.json e resultado-gitops04-2026-10-20_v01.md), em 14 do arquivo morto, em docs/GUIA_DE_REPRODUCAO.md (10 vezes) e em scripts/security-check.sh (1 vez). Decidir antes de dar acesso ao avaliador (F3-F-014, PENDENCIAS:465).\n- O caminho local com o primeiro nome do usuário aparece em 27 arquivos de 02_TRABALHO, 3 vezes na DOSSIE e 3 vezes no LOG.\n- Nenhum nome nem RM dos 5 integrantes da Fase 3 aparece em 00_COLAB_IA ativo.\n- Os IDs de 12 dígitos nos testes (preflight, validar-ci04 e harness) são fictícios.",
+   "Código e documentos públicos dependem do caminho 00_COLAB_IA/02_TRABALHO:\n- como saída padrão ignorada qa-otel*: scripts/test-observability.sh:9, scripts/test-observability-newrelic.sh:10, scripts/integration/test-traces.py:18, docker-compose.otel.yaml:18 e observability/README.md:42,46;\n- como link: README.md (7 linhas) e terraform/README.md:67;\n- por citação: docs/requisitos/REQUISITOS.html:93 cita o gerador.\nPor isso 02_TRABALHO não pode ser renomeada nem retirada inteira sem mudar esses arquivos.",
+   "Os 5 guias de estudo em docs/aulas-fiap têm 39 menções a Claude/Codex/Opus, e docs/requisitos tem 4. Tirá-las no B6 (D-018) exige a cadeia de geradores e fragmentos de 02_TRABALHO, ou uma decisão de manter ou retirar os guias. Essa decisão é da área docs/.",
+   "Regras para executar qualquer proposta:\n- precisa de autorização do usuário;\n- movimentos e remoções vão em commit próprio, separado das edições (ORGANIZACAO:67), com de-para em entrada nova do LOG;\n- não usar git add -A.\nUm commit que só toca 00_COLAB_IA roda apenas o GitOps Check, porque o Compose Integration ignora esses caminhos desde 199fe01. Os scripts arquivados deixam de rodar no lugar, porque usam caminhos relativos ao próprio arquivo.",
+   "O offline-test.jsonl de 156 MB já não existe no disco: foi para a Lixeira do Windows, pela D3. A regra em .gitignore:108-110 ficou só preventiva. Esvaziar a Lixeira continua sendo decisão do usuário."
+  ]
+ },
+ "arquivo": {
+  "area": "00_COLAB_IA/_ARQUIVO_MORTO (arquivos versionados)",
+  "resumo": "A pasta tem 289 arquivos versionados (4,65 MB) e mais 41 ignorados no disco. Desses 289, 178 têm o mesmo conteúdo em outro caminho do histórico e 111 só existem aqui, porque não houve commit entre 2026-10-21 e 2026-11-02. Nenhum passo do B3, do CI ou do ArgoCD usa a pasta, e nenhum documento público aponta para ela. Proponho tirar 99 arquivos da árvore, em commit próprio e só com autorização. São 69 antes do merge: FASE3_BASE_6100879, que tem a conta da Fase 3 e RMs, as cópias de código de 2026-10-22, dois HTML duplicados e uma pasta sem referência. Os outros 30 são redundantes com o histórico e saem depois do B5 ou no B6. Os 190 restantes ficam. Antes do PR, o usuário decide se a pasta vai para a main. O acervo da D-017 fica só no disco (ignorado) e é idêntico a 3b21e65:docs/00_COLAB_IA e ao tc03. O DECISOES.md tem 470 links para ele, que quebram no GitHub.",
+  "itens": [
+   {
+    "caminho": "00_COLAB_IA/_ARQUIVO_MORTO/",
+    "o_que_e": "Arquivo morto da colaboração: 37 pastas datadas, FASE3_BASE_6100879 e 6 arquivos soltos. Guarda cópias de documentos e de código feitas antes de cada edição (o de-para do LOG), de 2026-09-16 a 2026-11-05.",
+    "classe": "DECISAO_USUARIO",
+    "motivo": "O primeiro merge dev->main (tópico 5) publica a pasta inteira na main, que é o que o avaliador vê. Nenhum arquivo do B3 depende dela.",
+    "evidencia": "Entrou em 4c76a2d (2026-10-20); última inclusão em fe7464b (2026-11-05). São 289 arquivos versionados, 4.761,8 KB, 51% dos 569 de 00_COLAB_IA, com 213 conteúdos (blobs) distintos. 178 têm o mesmo blob em outro caminho dos 143 commits de dev e main; 111 só existem aqui. Há 48 grupos de cópias repetidas dentro da pasta (76 cópias extras). 138 arquivos citam Claude/Codex, 30 têm claude/codex no nome e 144 contêm IDs internos. Ponteiros, buscados com git grep -F pelo nome de cada pasta: 0 no roteiro v02, no preflight, no README.md, no SECURITY.md e em docs/, .github/, scripts/, terraform/, gitops/, services/ e docker-compose*. O README.md linka 00_COLAB_IA, mas não o arquivo morto. Só citam a pasta: CLAUDE.md:9 e :17, .gitignore:121 e scripts/security-check.sh:51. Os workflows filtram services/<svc>/** e terraform/**, e o ArgoCD lê gitops/overlays/prod e gitops/observability.",
+    "recuperavel": "Sim, os 289: git show fe7464b:<caminho>. O merge comum leva à main todo o histórico da dev; tirar a pasta da árvore não limpa o histórico.",
+    "quando": "antes_do_merge_main",
+    "opcoes": "(1) Manter e publicar. A favor: rastreabilidade completa e nenhum trabalho. Contra: 289 arquivos internos na main, com menções a agentes e IDs internos à vista do avaliador, 16 arquivos com a conta da Fase 3 ou RMs e 76 cópias repetidas. (2) Apagar da árvore na dev, em commit próprio, com entrada no LOG listando git show fe7464b:<caminho>. A favor: main limpa, sem branch extra, e recuperação sem rede. Contra: vai contra a preferência por cópia local da D-017. Os ponteiros do LOG, de CLAUDE.md:17, de ORGANIZACAO_DE_PASTAS.md:14 e :66 e dos manifestos de 02_TRABALHO passam a apontar para caminhos ausentes. (3) Manter só na dev, fora do merge. A favor: a dev fica intacta. Contra: o merge comum não exclui pastas. Seria preciso uma branch de publicação ou squash a cada promoção, cada pasta nova voltaria no merge seguinte, e controlar o SHA de publicação do roteiro v02 fica mais difícil. Não recomendada. (4) Mover para uma branch própria (ex.: arquivo-colab) e retirar da dev antes do PR. A favor: dev e main limpas, e o acervo continua navegável no GitHub e no disco via git worktree. Contra: mais passos Git, e a cópia some do checkout da dev. Em todas as opções o histórico continua com tudo. Recomendação: não travar o B3. Antes do PR, fazer só o commit dos LIXO claros (69 arquivos). Escolher entre 1, 2 e 4 no B6, junto com o destino de 00_COLAB_IA inteira, antes de 17/11.",
+    "qtd_arquivos": 289,
+    "tamanho_kb": 4761.8
+   },
+   {
+    "caminho": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/",
+    "o_que_e": "Versões da Fase 3 (commit 6100879) dos 30 arquivos adaptados na importação: workflows, README, docs, overlays de produção, scripts e terraform. Inclui também 3 scripts de guias da Fase 4 de antes da adaptação, arquivados aqui por engano.",
+    "classe": "LIXO",
+    "motivo": "Cópia 100% redundante, com a conta da Fase 3 e RMs, e sem nenhuma dependência funcional. A remoção reduz de 14 para 2 os arquivos do arquivo morto com o ID da conta da Fase 3 e zera os RMs da pasta.",
+    "evidencia": "Entrou em 31f92e4 (2026-10-20). 30 dos 33 blobs são iguais a 6100879:<caminho> neste repositório e aos arquivos no disco do tech-challenge-03 (HEAD 6100879). Os outros 3 (00_COLAB_IA/02_TRABALHO/*.py) não existem na 6100879: são iguais a 4c76a2d:00_COLAB_IA/02_TRABALHO/* e repetidos em 2026-10-20_ferramentas-guias. O ID da conta da Fase 3 aparece em 12 arquivos (31 ocorrências). Os 5 RMs estão em README.md e docs/RELATORIO_DE_ENTREGA.md, o mesmo conjunto do docs/RELATORIO_DE_ENTREGA.md ativo e do tc03. Ponteiros: LOG:906 (de-para), PENDENCIAS:465 (F3-F-014) e 12 arquivos de 02_TRABALHO (manifestos e dois scripts de 2026-10-20 que leem a pasta, sem uso atual). Nenhum ponteiro em .github, scripts, terraform, gitops, docs, README, SECURITY, CLAUDE ou roteiro v02. Os .github/, gitops/ e terraform/ arquivados são inertes.",
+    "recuperavel": "Sim: git show 6100879:<caminho> (30 arquivos), git show 4c76a2d:00_COLAB_IA/02_TRABALHO/<script> (3) e git show fe7464b:<caminho arquivado>. Também há cópia local no tech-challenge-03.",
+    "quando": "antes_do_merge_main",
+    "qtd_arquivos": 33,
+    "tamanho_kb": 291.4
+   },
+   {
+    "caminho": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/; 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/",
+    "o_que_e": "Fontes dos 5 serviços antes da instrumentação OpenTelemetry de 2026-10-22: auth e evaluation em Go; analytics, flag e targeting em Python.",
+    "classe": "LIXO",
+    "motivo": "Duplicata integral, tanto dentro do próprio arquivo morto quanto no histórico.",
+    "evidencia": "31 arquivos (19 Go + 12 Python), 105,2 KB, entraram em 0ed75e9 (2026-11-03). Os 31 são iguais a 3b21e65:services/<serviço>/<arquivo> e também estão repetidos em 2026-10-22_passos-locais/services, que fica. Ponteiros: a pasta Go não tem de-para no LOG, só inventários de 02_TRABALHO (cobertura-arquivos.json, inventario-inicial.json, snapshot-retomada-codex.json, baseline.json, git-status*). A pasta Python é citada em 02_TRABALHO/otel-python-2026-10-22_v01/RESULTADO_PYTHON.md:11 e em preservacao-python.json. Nenhum ponteiro nos documentos de topo, públicos ou no roteiro v02.",
+    "recuperavel": "Sim: git show 3b21e65:services/<serviço>/<arquivo> ou git show fe7464b:<caminho arquivado>.",
+    "quando": "antes_do_merge_main",
+    "qtd_arquivos": 31,
+    "tamanho_kb": 105.2
+   },
+   {
+    "caminho": "00_COLAB_IA/_ARQUIVO_MORTO/GUIA-ESTUDO-Observabilidade-e-Monitoramento-2026-09-16_v01-codex.html; 00_COLAB_IA/_ARQUIVO_MORTO/GUIA-ESTUDO-Welcome-to-Observabilidade-e-Monitoramento-2026-09-16_v01-codex.html",
+    "o_que_e": "Primeira versão (2026-09-16) dos guias de estudo das aulas 00 e 01.",
+    "classe": "LIXO",
+    "motivo": "Têm o mesmo conteúdo das cópias em 2026-09-17_revisao, que ficam e são as citadas no LOG.",
+    "evidencia": "2 arquivos, 206,1 KB, entraram em 4c76a2d (2026-10-20). O blob é idêntico ao de 2026-09-17_revisao/GUIA-ESTUDO-*-2026-09-16_v01.html. Nenhum ponteiro nos documentos de topo, públicos ou no roteiro; só 5 manifestos de 02_TRABALHO para cada um. As versões vigentes estão em docs/aulas-fiap/00.* e 01.*.",
+    "recuperavel": "Sim: há cópia idêntica em 2026-09-17_revisao/, além de git show fe7464b:<caminho>.",
+    "quando": "antes_do_merge_main",
+    "qtd_arquivos": 2,
+    "tamanho_kb": 206.1
+   },
+   {
+    "caminho": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-04_preimplantacao_v01/",
+    "o_que_e": "Cópias de terraform/main.tf e terraform/k8s/argocd.tf antes de 446adfa, e do app.py do flag-service com o marcador TODO(human) no lugar da lógica da falha.",
+    "classe": "LIXO",
+    "motivo": "Nenhum documento aponta para a pasta. Dois dos três arquivos estão no histórico, e o terceiro só difere por um marcador.",
+    "evidencia": "3 arquivos, 32,4 KB, entrou em 1ba235d (2026-11-04). argocd.tf e main.tf são iguais a 446adfa^ (diff vazio). O app.py é a versão de 57d43e5 com as 3 linhas da falha trocadas por 1 linha TODO(human); esse conteúdo não existe em outro caminho. git grep por preimplantacao_v01 no repositório inteiro: 0 ocorrências, ou seja, não há de-para no LOG.",
+    "recuperavel": "Sim: git show 446adfa^:terraform/main.tf, git show 446adfa^:terraform/k8s/argocd.tf, git show 57d43e5:services/flag-service/app.py (versão final) e git show fe7464b:<caminho arquivado> (versão com o marcador).",
+    "quando": "antes_do_merge_main",
+    "qtd_arquivos": 3,
+    "tamanho_kb": 32.4
+   },
+   {
+    "caminho": "00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md (linha 465, F3-F-014)",
+    "o_que_e": "Pendência sobre o ID da conta da Fase 3 em arquivos versionados.",
+    "classe": "ATUALIZAR",
+    "motivo": "A lista cita FASE3_BASE_6100879, mas omite 2 cópias de security-check.sh no arquivo morto. Pela própria pendência, a decisão deve sair antes de dar acesso ao avaliador.",
+    "evidencia": "No arquivo morto versionado, 14 arquivos têm o ID: 12 em FASE3_BASE_6100879 (31 ocorrências), mais 2026-10-22_passos-locais/scripts/security-check.sh e 2026-10-27_retomada-passos-locais/scripts/security-check.sh, com 1 cada, em comentário. Fora do arquivo morto, 5 arquivos: docs/GUIA_DE_REPRODUCAO.md (10 ocorrências), scripts/security-check.sh:11 e 3 em 02_TRABALHO. Sem FASE3_BASE_6100879, o arquivo morto fica com 2.",
+    "recuperavel": "Não se aplica: é edição de documento ativo.",
+    "quando": "antes_do_merge_main",
+    "qtd_arquivos": 1
+   },
+   {
+    "caminho": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-03_pagerduty-oauth_v01/; 00_COLAB_IA/_ARQUIVO_MORTO/2026-11-04_pagerduty-proximos-passos_v01/",
+    "o_que_e": "CLAUDE.md e 4 documentos de contexto de antes das sessões de OAuth do PagerDuty (2026-11-03) e de próximos passos (2026-11-04).",
+    "classe": "LIXO",
+    "motivo": "São 100% iguais a versões já commitadas nos caminhos originais; só servem de de-para.",
+    "evidencia": "10 arquivos, 547,3 KB, entraram em 939444a (2026-11-03) e 1ba235d (2026-11-04). Os 5 da primeira pasta são iguais aos blobs de 7a37dba e 366bdaa; os 5 da segunda, aos de 64d3af9. 99% das linhas continuam nos documentos atuais. Ponteiros: LOG:332, :344 e :261. Nada nos documentos públicos nem no roteiro v02.",
+    "recuperavel": "Sim: git show 7a37dba:<caminho original> e git show 366bdaa:<caminho original> (primeira pasta); git show 64d3af9:<caminho original> (segunda).",
+    "quando": "depois_do_B5",
+    "qtd_arquivos": 10,
+    "tamanho_kb": 547.3
+   },
+   {
+    "caminho": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-05_retomada-pre-b3_v01/",
+    "o_que_e": "Cópias integrais de antes da revisão de 2026-11-05: .trivyignore, roteiro B3 v01, DECISOES.md (1.029 linhas), DOSSIE, LEIA, PENDENCIAS, CLAUDE.md, docs/ARQUITETURA.md e os Dockerfiles dos 2 serviços Go.",
+    "classe": "LIXO",
+    "motivo": "Redundante com o histórico e útil só como de-para do dia. Nenhum passo do B3 usa a pasta.",
+    "evidencia": "10 arquivos, 382,9 KB, entrou em fe7464b (2026-11-05). 8 dos 10 são iguais ao blob de fe7464b^ no caminho original. Os 2 Dockerfiles diferem de fe7464b^ e são iguais a df766b2^, ou seja, a versão de antes do Alpine 3.24 (D-021). Todos diferem do HEAD, e 99% das linhas dos documentos de contexto continuam nas versões atuais. Ponteiro: só LOG:15; o roteiro v02 e o preflight não citam a pasta.",
+    "recuperavel": "Sim: git show fe7464b^:<caminho original> (8 arquivos) e git show df766b2^:services/<auth|evaluation>-service/Dockerfile (2).",
+    "quando": "depois_do_B5",
+    "qtd_arquivos": 10,
+    "tamanho_kb": 382.9
+   },
+   {
+    "caminho": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-20_fechamento-importacao/; 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-21_conferencia-plano/; 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-20_ferramentas-guias/",
+    "o_que_e": "Documentos de contexto de antes do fechamento da importação e da conferência do plano, e 3 scripts de guias de antes da adaptação feita em 31f92e4.",
+    "classe": "LIXO",
+    "motivo": "São redundantes com o histórico nos caminhos originais. O ganho é pequeno: tirar só registrando no LOG o comando de recuperação.",
+    "evidencia": "10 arquivos, 97,9 KB. fechamento-importacao: 5 arquivos, entrou em 3b21e65, os 5 iguais a 4c76a2d:00_COLAB_IA/*, citada em LOG:894. conferencia-plano: 2 arquivos, entrou em 0ed75e9, os 2 iguais a 3b21e65:00_COLAB_IA/{LOG_DE_TRABALHO,PENDENCIAS_E_PROXIMOS_PASSOS}.md, citada em LOG:880. ferramentas-guias: 3 arquivos, entrou em 31f92e4, os 3 iguais a 4c76a2d:00_COLAB_IA/02_TRABALHO/*, citada em LOG:906 e também repetida em FASE3_BASE_6100879. Nenhum ponteiro público nem no roteiro v02.",
+    "recuperavel": "Sim: git show 4c76a2d:00_COLAB_IA/<arquivo>, git show 3b21e65:00_COLAB_IA/<arquivo> e git show 4c76a2d:00_COLAB_IA/02_TRABALHO/<script>.",
+    "quando": "B6",
+    "qtd_arquivos": 10,
+    "tamanho_kb": 97.9
+   },
+   {
+    "caminho": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/ (parte versionada)",
+    "o_que_e": "Cópias dos 7 documentos de contexto de antes da mescla de 2026-11-01 e backup da retomada do Codex às 18:09 (retomada-codex-1809). A subpasta ignorada do acervo é tratada no item seguinte.",
+    "classe": "DECISAO_USUARIO",
+    "motivo": "É a pasta da D-017. Apagar o acervo é decisão do usuário.",
+    "evidencia": "14 arquivos, 311,2 KB, entrou em 0ed75e9 (2026-11-03). Só 2 dos 14 estão no histórico em outro caminho (ORGANIZACAO_DE_PASTAS.md, igual a 4c76a2d). 5 arquivos de retomada-codex-1809 são iguais aos da raiz da pasta, e só 2% das linhas faltam nos documentos atuais. Ponteiros: 70 linhas nos documentos de topo (DECISOES 60, LOG 4, DOSSIE 2, LEIA 2, ORGANIZACAO 1, PENDENCIAS 1), além de CLAUDE.md:9, .gitignore:121 e 2 links para retomada-codex-1809 em 02_TRABALHO.",
+    "recuperavel": "Sim: git show fe7464b:<caminho>.",
+    "quando": "B6",
+    "opcoes": "(1) Manter (recomendado): é a pasta mais citada. (2) Tirar só as 5 cópias repetidas de retomada-codex-1809 (39,5 KB), perdendo o retrato integral daquele momento. (3) Seguir a opção escolhida para a pasta inteira.",
+    "qtd_arquivos": 14,
+    "tamanho_kb": 311.2
+   },
+   {
+    "caminho": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/",
+    "o_que_e": "Os 39 originais de docs/00_COLAB_IA da Fase 3, movidos byte a byte pela D-017. Ficam só no disco, ignorados pelo Git.",
+    "classe": "DECISAO_USUARIO",
+    "motivo": "É o acervo da D-017. Fica só no disco por decisão registrada no .gitignore (dados pessoais e conta da Fase 3), e o PDF do relatório depende de geradores que estão aqui.",
+    "evidencia": "39 arquivos, cerca de 1.654 KB. Nunca foram versionados neste caminho: estão ignorados por .gitignore:121 desde ba7ab6d (2026-11-03). Os 39 são iguais (conferido com git hash-object) a 0ed75e9^:docs/00_COLAB_IA, que é a mesma árvore de 3b21e65 e do HEAD do tc03 (089477c6). O ID da conta da Fase 3 aparece em 12 arquivos e RMs em 2 (build-report-fase3_2026-09-14.py e RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md); os e-mails são só técnicos. A pendência F3-P-059 (PENDENCIAS:438) indica os geradores de PDF daqui para o relatório final. 470 links do DECISOES.md apontam para esta pasta.",
+    "recuperavel": "Sim, pelo Git: git show 3b21e65:docs/00_COLAB_IA/<arquivo>, e também no tech-challenge-03. Apagar do disco tira só a cópia local.",
+    "quando": "B6",
+    "opcoes": "(1) Manter no disco pelo menos até gerar o relatório PDF (recomendado). (2) Apagar do disco e recuperar por git show 3b21e65:... quando precisar; a D-017 recusou esta via por piorar a recuperação local. (3) Em qualquer caso, não versionar de novo, como já diz o .gitignore.",
+    "qtd_arquivos": 39,
+    "tamanho_kb": 1654.2
+   },
+   {
+    "caminho": "00_COLAB_IA/DECISOES.md; 00_COLAB_IA/02_TRABALHO/MESCLA_COLAB_FASE3_2026-11-01_v01.md; 00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md; 00_COLAB_IA/DOSSIE_CONTEXTO.md",
+    "o_que_e": "Documentos ativos que apontam para o acervo ignorado do arquivo morto.",
+    "classe": "ATUALIZAR",
+    "motivo": "No GitHub, tanto na dev quanto na futura main, essa pasta não existe, então os links dão 404. Além disso, ORGANIZACAO_DE_PASTAS.md:72 diz que a remoção de docs/00_COLAB_IA foi feita sem commit, mas ela foi commitada em 0ed75e9 (2026-11-03). A linha :77 diz o mesmo de 34 arquivos de docs/, que foram commitados em 9b3119a.",
+    "evidencia": "470 links Markdown em DECISOES.md (linhas 155 a 1037), 40 em MESCLA_COLAB_FASE3_2026-11-01_v01.md, 1 em DOSSIE_CONTEXTO.md e 1 em ORGANIZACAO_DE_PASTAS.md:79. O README.md:43 linka o DECISOES.md. LEIA-PRIMEIRO.md:42 e a pendência F3-P-059 já indicam a recuperação por git show 3b21e65:docs/00_COLAB_IA/<arquivo>. Correção mínima: uma nota no topo do DECISOES e no ORGANIZACAO dizendo que o acervo é local e como recuperá-lo, sem reescrever entradas antigas.",
+    "recuperavel": "Não se aplica: é edição de documento ativo.",
+    "quando": "B6",
+    "qtd_arquivos": 4
+   },
+   {
+    "caminho": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/auth-service.exe; 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/evaluation-service.exe",
+    "o_que_e": "Binários Windows compilados das fontes Go de antes da instrumentação.",
+    "classe": "LIXO_LOCAL",
+    "motivo": "Ignorados pelo Git (*.exe, .gitignore:61), ocupam 31,1 MB e não têm uso nem referência.",
+    "evidencia": "13.870.080 e 18.766.336 bytes, datados de 2026-10-20 17:18. git grep por auth-service.exe e por evaluation-service.exe: 0 ocorrências.",
+    "recuperavel": "Não pelo Git, porque são ignorados. Dá para regenerar com go build a partir das fontes arquivadas ou de git show 3b21e65:services/<serviço>.",
+    "quando": "agora",
+    "qtd_arquivos": 2,
+    "tamanho_kb": 31871.5
+   },
+   {
+    "caminho": "00_COLAB_IA/_ARQUIVO_MORTO/2026-09-17_revisao/",
+    "o_que_e": "Guias de estudo B1/B2 v01 e guia_base v02, de antes da regeneração de 2026-09-17.",
+    "classe": "MANTER",
+    "motivo": "Conteúdo exclusivo e citado como de-para. É a cópia que fica no lugar dos dois HTML soltos duplicados.",
+    "evidencia": "3 arquivos, 211,1 KB, entrou em 4c76a2d (2026-10-20). Nenhum dos 3 está em outro caminho do histórico; os 2 HTML são idênticos aos soltos *-codex.html. Citada em LOG:1015.",
+    "recuperavel": "Sim: git show fe7464b:<caminho>.",
+    "quando": "B6",
+    "qtd_arquivos": 3,
+    "tamanho_kb": 211.1
+   },
+   {
+    "caminho": "00_COLAB_IA/_ARQUIVO_MORTO/GUIA-ESTUDO-Monitoramento-Opensource-2026-09-16_v01.html; 00_COLAB_IA/_ARQUIVO_MORTO/PLANO_E_ARQUITETURA_FASE4_2026-09-21_v01.md; 00_COLAB_IA/_ARQUIVO_MORTO/README-requisitos-2026-09-16_v01-codex.md; 00_COLAB_IA/_ARQUIVO_MORTO/guia_base-2026-09-16_v01-codex.py",
+    "o_que_e": "Primeiras versões (2026-09-16 e 2026-09-21) do guia da aula 02, do plano de arquitetura, do README de requisitos e do gerador guia_base.",
+    "classe": "MANTER",
+    "motivo": "Conteúdo exclusivo, com 2 dos 4 citados nos documentos de topo. Seguem a decisão tomada para a pasta inteira.",
+    "evidencia": "4 arquivos, 117,1 KB, entraram em 4c76a2d (2026-10-20). Nenhum está em outro caminho do histórico. Foram substituídos por docs/aulas-fiap/02.Monitoramento Opensource/GUIA-ESTUDO-Monitoramento-Opensource.html, 00_COLAB_IA/02_TRABALHO/PLANO_E_ARQUITETURA_FASE4_2026-09-23_v02.html e 00_COLAB_IA/02_TRABALHO/guia_base.py. Ponteiros: DECISOES.md (guia_base v01, 1 linha), LOG (README-requisitos, 1 linha) e 5 a 6 manifestos de 02_TRABALHO.",
+    "recuperavel": "Sim: git show fe7464b:<caminho>.",
+    "quando": "B6",
+    "qtd_arquivos": 4,
+    "tamanho_kb": 117.1
+   },
+   {
+    "caminho": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-13_auditoria/; 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-20_importacao-proposta/; 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-20_inicio-importacao/",
+    "o_que_e": "LOG, PENDENCIAS, DOSSIE, DECISOES e LEIA de antes da auditoria de 2026-10-13 e das etapas da importação de 2026-10-20.",
+    "classe": "MANTER",
+    "motivo": "Único registro desses estados, citado como de-para no LOG.",
+    "evidencia": "11 arquivos, 99,5 KB, entraram em 4c76a2d (2026-10-20). Nenhum está em outro caminho do histórico. Entre 10% e 14% das linhas não existem mais nos documentos atuais (TL;DR e estados reescritos). Citadas em LOG:940, :928 e :918.",
+    "recuperavel": "Sim: git show fe7464b:<caminho>.",
+    "quando": "B6",
+    "qtd_arquivos": 11,
+    "tamanho_kb": 99.5
+   },
+   {
+    "caminho": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-21_explicacao-observabilidade/; 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-21_explicacao-pods-collector/; 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_aula05-terraform/; 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_proximos-passos/; 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_readme-observabilidade/",
+    "o_que_e": "Documentos de contexto, e o README da raiz, de antes das sessões de 2026-10-21 e 2026-10-22.",
+    "classe": "MANTER",
+    "motivo": "9 dos 12 arquivos são exclusivos e todas as pastas são citadas como de-para.",
+    "evidencia": "12 arquivos, 229,8 KB, entraram em 0ed75e9 (2026-11-03). 3 estão em outro caminho do histórico (README.md em 31f92e4; DECISOES e DOSSIE em 3b21e65). Entre 2% e 7% das linhas não existem mais nos documentos atuais. Citadas em LOG:870, :858, :824, :812, :836 e :846; readme-observabilidade também em DECISOES e DOSSIE.",
+    "recuperavel": "Sim: git show fe7464b:<caminho>.",
+    "quando": "B6",
+    "qtd_arquivos": 12,
+    "tamanho_kb": 229.8
+   },
+   {
+    "caminho": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/; 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_retomada-passos-locais/",
+    "o_que_e": "Retratos integrais de antes dos passos locais (compose, scripts, os 5 serviços, README e contexto) e da retomada de 2026-10-27 (collector e scripts de traces).",
+    "classe": "MANTER",
+    "motivo": "São retratos citados como de-para, com 12 arquivos exclusivos. A parte de código é redundante, mas cortar só uma parte desfaz o retrato integral.",
+    "evidencia": "65 arquivos, 361,8 KB, entraram em 0ed75e9 (2026-11-03). passos-locais: 52 arquivos, 47 iguais a 3b21e65, 15 iguais a arquivos vivos (docker-compose*.yaml, scripts/integration/*.py, init.sql, .dockerignore) e 5 exclusivos (4 de contexto e o README.md); citada em LOG:802. retomada: 13 arquivos, 6 no histórico (a3d0f58, 31f92e4, 3b21e65) e 7 exclusivos; citada em LOG:782 e no DOSSIE. Cada pasta tem 1 cópia de security-check.sh com o ID da conta da Fase 3 em comentário e o da Fase 2 na regra. O .gitignore arquivado em passos-locais vale na própria subárvore, sem efeito prático.",
+    "recuperavel": "Sim: git show fe7464b:<caminho>; a parte de código também por git show 3b21e65:<caminho original>.",
+    "quando": "B6",
+    "qtd_arquivos": 65,
+    "tamanho_kb": 361.8
+   },
+   {
+    "caminho": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-go/; 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-python/",
+    "o_que_e": "Fontes Go antes do telemetry.go final e arquivos Python antes da troca para cursor SQL, com 2 rascunhos de revisão.",
+    "classe": "MANTER",
+    "motivo": "Guardam versões intermediárias exclusivas e são citadas pelos relatórios de 02_TRABALHO.",
+    "evidencia": "28 arquivos, 127,0 KB, entraram em 0ed75e9 (2026-11-03). Go: 18 dos 20 são iguais a 3b21e65; os 2 telemetry.go, iguais entre si, são versões intermediárias exclusivas. Python: nenhum dos 8 está em outro caminho. Citadas em 02_TRABALHO/RELATORIO_GO_OTEL_2026-10-27_v01.md:43 (backup-sha256.json) e REVISAO_PYTHON_OTEL_2026-10-27_v01.md:82.",
+    "recuperavel": "Sim: git show fe7464b:<caminho>.",
+    "quando": "B6",
+    "qtd_arquivos": 28,
+    "tamanho_kb": 127
+   },
+   {
+    "caminho": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_etapas8-9/",
+    "o_que_e": "Contexto e Terraform espelhado (main.tf, variables.tf, iam-ci, tfvars.example e README) de antes das etapas 8 e 9.",
+    "classe": "MANTER",
+    "motivo": "Os 6 documentos de contexto são exclusivos e a pasta é citada como de-para.",
+    "evidencia": "12 arquivos, 163,9 KB, entrou em 0ed75e9 (2026-11-03). 6 estão no histórico (terraform em 31f92e4 e b78f6bd). DECISOES e DOSSIE aparecem 4 vezes no arquivo morto. Citada em LOG:630.",
+    "recuperavel": "Sim: git show fe7464b:<caminho>.",
+    "quando": "B6",
+    "qtd_arquivos": 12,
+    "tamanho_kb": 163.9
+   },
+   {
+    "caminho": "00_COLAB_IA/_ARQUIVO_MORTO/{2026-10-27_orientacao-proximos-passos, 2026-10-27_revisao-geral, 2026-10-28_apos-passo7_144715, 2026-10-28_auditoria-claude, 2026-10-28_criar-role-oidc_120027, 2026-10-28_guia-contas, 2026-10-28_orientacao-aws-cli_110640, 2026-10-28_orientacao-ecr-github_113309, 2026-10-28_orientacao-role-arn_114517, 2026-10-28_revisao-geral, 2026-10-30_auditoria-codex, 2026-11-01_orientacao-proximos-passos_v01, 2026-11-03_handoff-claude}/",
+    "o_que_e": "LOG, PENDENCIAS e DOSSIE (às vezes também DECISOES, LEIA e CLAUDE) de antes de cada sessão de 2026-10-27 a 2026-11-03. 2026-10-28_revisao-geral também guarda o rascunho da revisão geral antes da edição.",
+    "classe": "MANTER",
+    "motivo": "É o único registro exato do estado de cada sessão e é citado como de-para. O valor informativo é baixo, porque o LOG atual repete quase tudo.",
+    "evidencia": "13 pastas, 41 arquivos, 1.477,2 KB, todas entraram em 0ed75e9 (2026-11-03). Nenhum arquivo está em outro caminho do histórico, porque não houve commit entre 3b21e65 e ba7ab6d. Só 1% a 3% das linhas faltam nos documentos atuais (o LOG cresce por acréscimo). Citadas em LOG:752, 740, 642, 662, 702, 712, 690, 682, 670, 732, 580, 480 e na entrada do handoff. 2026-10-28_auditoria-claude não tem de-para no LOG, só inventários de 02_TRABALHO.",
+    "recuperavel": "Sim: git show fe7464b:<caminho>.",
+    "quando": "B6",
+    "qtd_arquivos": 41,
+    "tamanho_kb": 1477.2
+   }
+  ],
+  "observacoes": [
+   "Método: comparei os blobs de git ls-files -s com as árvores dos 143 commits de dev e main. A ref local refs/codex/turn-diffs/... aponta para uma árvore, não para um commit, e ficou de fora. Os arquivos ignorados foram comparados com git hash-object, e o tech-challenge-03 foi conferido no disco. Nada foi alterado, e não rodei nenhum comando de rede, AWS, Docker ou Terraform.",
+   "Dados sensíveis (só contagens, sem valores): o ID da conta AWS da Fase 3 está em 14 arquivos versionados do arquivo morto. São 12 em FASE3_BASE_6100879, com 31 ocorrências, mais 2026-10-22_passos-locais/scripts/security-check.sh e 2026-10-27_retomada-passos-locais/scripts/security-check.sh. RMs: 2 arquivos (FASE3_BASE_6100879/README.md e FASE3_BASE_6100879/docs/RELATORIO_DE_ENTREGA.md, com 5 cada). E-mails pessoais: 0. Ao todo, 16 arquivos distintos. No acervo ignorado, o ID aparece em 12 arquivos e os RMs em 2. O ID da conta da Fase 2 está só nas 3 cópias de security-check.sh, como regra. A conta AWS nova não aparece na pasta. Nenhum padrão de segredo foi encontrado (AKIA, chave privada, webhook do Slack, NRAK, ghp_ ou github_pat_, JWT); as 7 atribuições encontradas são marcadores de exemplo.",
+   "Histórico: tirar arquivos da árvore não limpa o histórico. O merge comum dev->main deixa a main alcançar 6100879 e 0ed75e9^ (docs/00_COLAB_IA da Fase 3, com RMs e a conta da Fase 3), que já estão em origin/dev. A visibilidade do repositório no GitHub não foi conferida (sem rede). Fora desta área, docs/GUIA_DE_REPRODUCAO.md (ID da Fase 3, 10 vezes) e docs/RELATORIO_DE_ENTREGA.md (5 RMs) vão para a main de qualquer forma, e a decisão F3-F-014 precisa cobri-los.",
+   "Processo: não houve commit entre 3b21e65 (2026-10-20) e ba7ab6d (2026-11-03), por isso 111 arquivos só existem como cópia. Desde os commits por sessão (D1), as cópias repetem o histórico: 22 dos 23 arquivos arquivados em 939444a, 1ba235d e fe7464b já estavam commitados. Sugestão para o usuário decidir: trocar a cópia física por 'commit anterior + caminho' no LOG, o que muda a regra em ORGANIZACAO_DE_PASTAS.md:66.",
+   "Ordem sugerida, sempre com autorização e em commit próprio, separado de edições: (a) decidir o destino da pasta inteira antes do PR do tópico 5; (b) se aprovado, um commit só de remoção dos 69 arquivos marcados para antes do merge, com uma entrada no LOG listando os comandos git show; (c) depois do B5, tirar os 20 arquivos das pastas de 2026-11-03 a 2026-11-05; (d) no B6, tirar os 10 de 2026-10-20/21, acrescentar as notas sobre os links e decidir o acervo; (e) os 2 .exe podem ser apagados a qualquer momento. Com tudo isso, a pasta passa de 289 para 190 arquivos e de 4,65 MB para cerca de 3,0 MB.",
+   "Nenhum passo do roteiro v02, do preflight, do CI ou do ArgoCD depende do arquivo morto. Os .github/, gitops/ e terraform/ arquivados são inertes, porque os filtros dos workflows partem da raiz. Dois .gitignore arquivados valem na própria subárvore (FASE3_BASE_6100879 e 2026-10-22_passos-locais), sem efeito prático. scripts/security-check.sh:51 só exclui as cópias arquivadas dele mesmo; se a pasta sair, essa exclusão fica sem uso, mas não quebra nada.",
+   "Textos desatualizados fora desta área, vistos de passagem: DOSSIE_CONTEXTO.md:480 diz que a falha proposital está sem commit, mas ela entrou em 57d43e5 (2026-11-04). ORGANIZACAO_DE_PASTAS.md:72 e :77 falam em remoções sem commit que já foram commitadas em 0ed75e9 e 9b3119a. Há também um auth-service.exe ignorado de 28 MB em services/auth-service/."
+  ]
+ },
+ "publico": {
+  "resumo": "Análise só de leitura em HEAD fe7464b. Fora de 00_COLAB_IA há 235 arquivos versionados (cerca de 21,0 MiB), cobertos em 28 itens. Não achei nenhum órfão de verdade. Os overlays otel e newrelic, os scripts test-observability*, os observability/*.yaml e o infra/ são usados por script, Compose ou documentação, e os 7 módulos Terraform são chamados. O único arquivo sem função é o pyproject.toml. Antes do merge entra só o que não pode esperar. Primeiro, o que mora em services/** e .github/workflows/**: READMEs dos serviços, PyYAML e IDs nos comentários dos workflows. Na main, esses caminhos disparam os jobs image e gitops. Depois, as decisões de publicação: PDFs e guias da FIAP (19,5 MiB, 61,7% do repositório) e o CLAUDE.md. Agora, porque não dependem do deploy: SECURITY.md (contradiz a regra de OIDC) e SECRETS-CONTRATO.md (faltam os três Secrets da observabilidade). No B6 fica o resto: READMEs da raiz, terraform, gitops e observability, ARQUITETURA, GUIA, matriz de requisitos, relatório e apresentação da Fase 3, D-018 nos documentos e comentários de Terraform/GitOps.",
+  "itens": [
+   {
+    "caminho": "docker-compose.otel.yaml; observability/otel-collector-local.yaml; scripts/test-observability.sh",
+    "o_que_e": "Laboratório local de traces: Collector OTel no Compose e ensaio dos 19 spans.",
+    "classe": "MANTER",
+    "motivo": "Não é órfão. É a prova local da instrumentação e o caminho documentado para reproduzi-la. Só não roda no CI.",
+    "evidencia": "scripts/test-observability.sh:7 monta COMPOSE_FILE com docker-compose.otel.yaml; docker-compose.otel.yaml:17 monta observability/otel-collector-local.yaml; documentado em README.md:178 e :194 e em observability/README.md:28, :46 e :75. git grep em .github/ = 0 ocorrências dos três.",
+    "quando": "agora",
+    "qtd_arquivos": 3,
+    "tamanho_kb": 5
+   },
+   {
+    "caminho": "docker-compose.newrelic.yaml; observability/otel-collector-newrelic.yaml; scripts/test-observability-newrelic.sh",
+    "o_que_e": "Complemento do laboratório que exporta os traces ao New Relic.",
+    "classe": "MANTER",
+    "motivo": "Não é órfão. Foi o caminho do B1 e permite mostrar o APM sem AWS. A chave vem do .env local, e o Compose para com erro sem ela.",
+    "evidencia": "scripts/test-observability-newrelic.sh:8 inclui docker-compose.newrelic.yaml; docker-compose.newrelic.yaml:11 monta observability/otel-collector-newrelic.yaml e :13 exige NEW_RELIC_LICENSE_KEY; observability/README.md:85-92 documenta; PENDENCIAS_E_PROXIMOS_PASSOS.md:136 registra o B1 por esse caminho (commit 356ac4b). git grep em .github/ = 0.",
+    "quando": "agora",
+    "qtd_arquivos": 3,
+    "tamanho_kb": 3.5
+   },
+   {
+    "caminho": "pyproject.toml",
+    "o_que_e": "Configuração do ruff (ignora BLE001).",
+    "classe": "LIXO",
+    "motivo": "Configura um linter que nada executa, e o pylint já cobre a mesma regra. Engana quem lê. Pode ir antes do merge, porque na main a remoção só aciona Compose Integration e GitOps Check, que não usam AWS.",
+    "evidencia": "pyproject.toml:1-4 tem só [tool.ruff.lint] ignore=['BLE001']; git grep -i 'ruff|pyproject' em .github/, scripts/, services/ e compose = 0; .pylintrc:68-74 desliga broad-exception-caught e o CI usa --rcfile (_ci-python.yml:243); docs/ARQUITETURA.md:320 admite. Efeito colateral pequeno: o pytest 8.1+ usa um pyproject.toml sem seção pytest como rootdir. Os testes inserem o próprio caminho (services/flag-service/tests/test_fault.py:14); basta rodar pytest -v num serviço depois.",
+    "quando": "B6",
+    "opcoes": "Remover em commit próprio e tirar a frase de docs/ARQUITETURA.md:320.",
+    "qtd_arquivos": 1,
+    "tamanho_kb": 0.2
+   },
+   {
+    "caminho": "infra/postgres-app/01-init-multi-db.sh",
+    "o_que_e": "Script que cria os bancos no PostgreSQL local.",
+    "classe": "MANTER",
+    "motivo": "Não é órfão: o Compose usa.",
+    "evidencia": "docker-compose.yaml:40 monta o script em /docker-entrypoint-initdb.d; ele carrega os schemas montados em docker-compose.yaml:43-44.",
+    "quando": "agora",
+    "qtd_arquivos": 1,
+    "tamanho_kb": 0.6
+   },
+   {
+    "caminho": "terraform/ (3 raízes e 7 módulos, com imports.tf, lockfiles e exemplos; README em item próprio)",
+    "o_que_e": "Infraestrutura como código das camadas base, cluster e k8s.",
+    "classe": "MANTER",
+    "motivo": "Nenhum módulo órfão. imports.tf é a adoção prevista no apply do B3.",
+    "evidencia": "terraform/main.tf:94 (ecr), :111 (messaging) e :129 (iam-ci); terraform/cluster/main.tf:47 (eks), :79 (rds), :107 (elasticache) e :135 (irsa). São 7 de 7 módulos chamados. Os comentários estão nos itens próprios.",
+    "quando": "agora",
+    "qtd_arquivos": 55,
+    "tamanho_kb": 200.6
+   },
+   {
+    "caminho": ".github/workflows/ (11); services/ (44 arquivos de código, Dockerfiles, testes e dependências); docker-compose.yaml; docker-compose.integration.yaml; scripts/ (12 restantes); gitops/ (44); .trivyignore; .pylintrc; .gitignore; .gitattributes; .env.example",
+    "o_que_e": "Núcleo executável: CI, serviços, Compose, scripts de verificação, manifests do ArgoCD e configurações.",
+    "classe": "MANTER",
+    "motivo": "Tudo é usado por workflow, Compose, ArgoCD ou documentação. Ajustes de texto e comentário estão nos itens próprios.",
+    "evidencia": "compose-integration.yml:43 roda scripts/test-compose.sh; gitops-check.yml:92, :101 e :105 rodam gitops/validate.sh, self-healing/test-restart.sh e security-check.sh; self-healing.yml:109 roda self-healing/restart.sh; _ci-go.yml:309 e _ci-python.yml:356 leem .trivyignore; _ci-python.yml:243 lê .pylintrc; docker-compose.integration.yaml:16 usa scripts/integration/bootstrap-aws.py; validate-all.sh é o atalho local (README.md:201); o ArgoCD lê gitops/ da main (terraform/k8s/argocd.tf:302; gitops/observability/applications/*.yaml com targetRevision main).",
+    "quando": "agora",
+    "qtd_arquivos": 118,
+    "tamanho_kb": 491.1
+   },
+   {
+    "caminho": ".gitignore; .github/workflows/compose-integration.yml:18; docker-compose.otel.yaml:18; scripts/test-observability.sh:9; scripts/test-observability-newrelic.sh:10; scripts/integration/test-traces.py:18; scripts/security-check.sh:51",
+    "o_que_e": "Referências funcionais à pasta 00_COLAB_IA.",
+    "classe": "MANTER",
+    "motivo": "São regras de ignore, filtro de gatilho e pasta de saída do QA local. Não são autoria, e D-018 não pede para tirá-las. Só mudam se o diário sair do repositório.",
+    "evidencia": ".gitignore tem 16 linhas com 00_COLAB_IA (ex.: :99-100) e 1 com 'codex' no nome de pasta (:124); compose-integration.yml:18 ignora 00_COLAB_IA/**; docker-compose.otel.yaml:18, test-observability.sh:9, test-observability-newrelic.sh:10 e test-traces.py:18 gravam o QA em 00_COLAB_IA/02_TRABALHO/qa-otel*; security-check.sh:51 exclui o arquivo morto da varredura.",
+    "quando": "agora",
+    "qtd_arquivos": 7
+   },
+   {
+    "caminho": "docs/apresentacao/ToggleMaster_Fase3.pptx",
+    "o_que_e": "Apresentação da entrega da Fase 3 (7 slides).",
+    "classe": "LIXO",
+    "motivo": "Não é usada na Fase 4 e confunde o avaliador. Há cópia idêntica no repositório 03 e no histórico. Só mexe em docs/: o Compose Integration ignora docs/** e o GitOps Check não usa AWS. Pode ir antes se a main deve nascer sem ela.",
+    "evidencia": "git grep 'ToggleMaster_Fase3' fora do diário = 0 (23 citações só no diário); texto dos slides: 8 menções a 'Fase 3', 0 a 'Fase 4' e 5 RMs (contados, não impressos); blob af3d95cc9e idêntico em tech-challenge-03/docs/apresentacao/.",
+    "quando": "B6",
+    "opcoes": "(a) remover da árvore em commit próprio (recomendado); (b) mover para 00_COLAB_IA/_ARQUIVO_MORTO, que continua publicado na main com os RMs.",
+    "qtd_arquivos": 1,
+    "tamanho_kb": 86.8
+   },
+   {
+    "caminho": "docs/RELATORIO_DE_ENTREGA.md; docs/evidencias/estimativa-custos-aws-2026-09-11.png",
+    "o_que_e": "Relatório entregue na Fase 3 e o print de custos citado por ele.",
+    "classe": "MOVER_ARQUIVO_MORTO",
+    "motivo": "O caminho tem o nome que o avaliador espera para o relatório da Fase 4, mas o conteúdo é da Fase 3. Mover no B6, junto com a criação do relatório novo; não depende do deploy. Também libera docs/evidencias/ para os prints da Fase 4.",
+    "evidencia": "Linha 3: 'FIAP - Tech Challenge - Fase 3 - Grupo 203'. Difere do original do repo 03 só pelo aviso da linha 1 (+2 linhas, git diff --no-index). A seção 1 tem 5 participantes com nome, RM e link (valores não impressos). Links ao repo 03 em :21-22 e :57-64; marcador PREENCHER_URL_DO_VIDEO em :24 e :94; :100 cita docs/POSTECH - Tech Challenge - Fase 3.pdf, que não existe aqui. O PNG só é citado por esse relatório e é idêntico (blob 128f3b4555) ao do repo 03.",
+    "quando": "B6",
+    "opcoes": "(a) mover os dois para 00_COLAB_IA/_ARQUIVO_MORTO (recomendado: mantém a rastreabilidade prometida em README.md:232); (b) remover da árvore, já que o repo 03 guarda o original. Nos dois casos, ajustar README.md:232.",
+    "qtd_arquivos": 2,
+    "tamanho_kb": 178.9
+   },
+   {
+    "caminho": "services/{analytics,flag,targeting,evaluation,auth}-service/README.md (opcional: o comentário 'ver D-012' em services/{analytics,flag,targeting}-service/app.py)",
+    "o_que_e": "READMEs de execução de cada serviço, herdados das fases anteriores, com anexo da Fase 4.",
+    "classe": "ATUALIZAR",
+    "motivo": "As instruções velhas (Python 3.9, us-east-1, chaves estáticas da AWS Academy) contradizem o projeto. Precisa ser antes do merge. Tudo em services/<svc>/** dispara o pipeline do serviço no push da main, onde rodam image e gitops. Antes do merge não custa nada, porque o primeiro merge já roda os cinco pipelines. Entre o B3 e o B5, a mudança republicaria imagens no meio da demo. Depois do B5, o job falha sem a conta. Se a base for mantida (roteiro do B3, linha 97), ele publica imagem nova e grava commit de tag na main.",
+    "evidencia": "Python '3.9 ou superior' em analytics:14, flag:11 e targeting:11, mas os Dockerfiles usam python:3.12-slim (:6 e :43). us-east-1 em analytics:52 e :58 e em evaluation:57 e :60, mas o padrão é us-east-2 (terraform/variables.tf:21; .env.example:45). analytics:15-18 pede AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY e AWS_SESSION_TOKEN 'AWS Academy', mas no cluster é IRSA (SECURITY.md:16-17). analytics:52 traz 'httpsiso://'. 'Não há chave ou exporter New Relic nesta etapa' (analytics:123, flag:125, targeting:112) ficou datado após o B1. D-018: 'Codex' em analytics:3 e :111, flag:3 e :113, targeting:3 e :100. Os READMEs Go (auth:7, evaluation:20) já dizem 1.25.0, como os go.mod: a hipótese 'Go 1.21' não se confirmou. Gatilho: flag-service.yml:29-46 (paths services/flag-service/**); jobs image e gitops em _ci-python.yml:426 e :586 e _ci-go.yml:379 e :542.",
+    "quando": "antes_do_merge_main",
+    "qtd_arquivos": 5,
+    "tamanho_kb": 38.2
+   },
+   {
+    "caminho": "services/flag-service/requirements.txt:8",
+    "o_que_e": "PyYAML==6.0.1 na imagem do flag-service.",
+    "classe": "DECISAO_USUARIO",
+    "motivo": "Dependência sem uso, que sobrou da demonstração de CVE da Fase 3. O gatilho de pipeline é o mesmo do item anterior, então só antes do merge.",
+    "evidencia": "git grep 'import yaml|from yaml' em services/ = 0. O único uso é scripts/gitops/check-grafana.py:27, e o GitOps Check instala o PyYAML à parte (gitops-check.yml:56 e :76-77). Origem: F3-SN-34 (DECISOES.md:1011) e pendência F3-P-114. Está registrado em docs/ARQUITETURA.md:31 e :393.",
+    "quando": "antes_do_merge_main",
+    "opcoes": "(a) remover antes do merge e ajustar docs/ARQUITETURA.md:31 e :393, para a imagem do B3 já sair sem ela (recomendado); (b) manter só se o vídeo repetir a demo de CVE, como prevê F3-SN-34.",
+    "qtd_arquivos": 1,
+    "tamanho_kb": 0.4
+   },
+   {
+    "caminho": "terraform/modules/eks/main.tf:73-74; terraform/cluster/main.tf:55; terraform/modules/eks/variables.tf:24; terraform/modules/messaging/main.tf:90; gitops/base/auth-service/deployment.yaml:7; terraform/k8s/variables.tf:128",
+    "o_que_e": "Comentários que contradizem o código ou citam arquivos inexistentes.",
+    "classe": "ATUALIZAR",
+    "motivo": "Confundem quem confere o código. Fazer no B6: o terraform-check só roda init -backend=false, o GitOps Check não usa AWS e comentário não muda plano. Evitar mexer em .tf entre o plano salvo e o apply do B3. As 33 linhas (em 20 arquivos) que comparam com a Fase 2, como 'por que IRSA' ou 'por que StatefulSet', explicam escolhas e podem ficar.",
+    "evidencia": "Os comentários citam EKS 1.31, mas o padrão é '1.34' (terraform/cluster/variables.tf:76; docs/ARQUITETURA.md:134). messaging/main.tf:90 cita 'GUIA-AWS.md da Fase 2', e não existe arquivo com esse nome na árvore. auth-service/deployment.yaml:7 cita infra/k8s/auth-service/deployment.yaml da Fase 2, também inexistente. k8s/variables.tf:128 diz que a visibilidade 'nao foi verificada', mas o repo é privado (F-023). docs/ARQUITETURA.md:395-397 já lista esses restos. Links Markdown relativos fora do diário: 0 quebrados.",
+    "quando": "B6",
+    "qtd_arquivos": 6
+   },
+   {
+    "caminho": "README.md; terraform/README.md; gitops/README.md; observability/README.md; docs/ARQUITETURA.md",
+    "o_que_e": "Autoria de agentes, IDs internos e links ao diário em documentos públicos do projeto.",
+    "classe": "ATUALIZAR",
+    "motivo": "D-018 (DECISOES.md:161-169) manda tirar essas referências no B6/P-017, sem apagar histórico. Como só muda .md, o Compose Integration não roda (ignora **.md e docs/**) e nenhum pipeline de imagem é acionado. Fazer na mesma passada dos itens de conteúdo desses arquivos.",
+    "evidencia": "Por arquivo (linhas com agente / IDs ou códigos de etapa / caminhos 00_COLAB_IA): README.md 1/2/9, com 12 links (ex.: :5 'Última atualização: 2026-10-27, Codex' e :139 'E0–E7 ... 00_COLAB_IA/02_TRABALHO/PLANO...'); terraform/README.md 1/0/2 (:5 e :67); gitops/README.md 1/0/1 (:5 e :61); observability/README.md 1/0/2 (:5 e :46); docs/ARQUITETURA.md 0/0/2, com :246 e :254 descrevendo o filtro do CI, o que pode ficar (os B1/B2 de :97-98 são nós do diagrama, falso positivo). Zero em docs/GUIA_DE_REPRODUCAO.md, docs/RELATORIO_DE_ENTREGA.md, SECURITY.md e gitops/SECRETS-CONTRATO.md. Serviços, requisitos, guias e CLAUDE.md estão nos itens próprios.",
+    "quando": "B6",
+    "qtd_arquivos": 5
+   },
+   {
+    "caminho": ".github/workflows/: _ci-go.yml, _ci-python.yml, analytics-, auth-, evaluation-, flag- e targeting-service.yml, terraform-check.yml, gitops-check.yml",
+    "o_que_e": "IDs internos da Fase 3 nos comentários dos workflows.",
+    "classe": "DECISAO_USUARIO",
+    "motivo": "Editar _ci-go.yml ou _ci-python.yml dispara os cinco pipelines no push da main, com image e gitops. O único momento sem custo é antes do primeiro merge.",
+    "evidencia": "93 linhas em 9 arquivos: _ci-go.yml 31, _ci-python.yml 31, targeting-service.yml 7, analytics/auth/evaluation/flag-service.yml 5 cada, terraform-check.yml 3, gitops-check.yml 1. Ex.: _ci-go.yml:6 '(F-008: ...)' e :12 'O-11 a O-21, O-24 e O-26'. terraform-check.yml:7 '(D-017)' é a F3-D-017 (camadas, DECISOES.md:437), mas a D-017 da Fase 4 é a mescla do diário (DECISOES.md:151). No job gitops, _ci-go.yml:572 e _ci-python.yml:616 ainda citam 'git pull --rebase', que o job não usa mais (docs/ARQUITETURA.md:303 e :395).",
+    "quando": "antes_do_merge_main",
+    "opcoes": "(a) limpar agora, num commit só de comentários, validado pelo CI da dev antes do PR; (b) manter os IDs nos workflows e aplicar D-018 só a documentos; (c) deixar para o B6 com [skip ci] na mensagem do commit que chegar à main, o que é frágil e também pula os checks.",
+    "qtd_arquivos": 9,
+    "tamanho_kb": 100.1
+   },
+   {
+    "caminho": "terraform/**/*.tf (29); gitops/**/*.yaml (17); .trivyignore; scripts/security-check.sh; services/{analytics,flag,targeting}-service/app.py",
+    "o_que_e": "IDs internos da Fase 3 em comentários de código e configuração.",
+    "classe": "DECISAO_USUARIO",
+    "motivo": "Os números colidem com decisões diferentes da Fase 4: quem segue o ID no diário cai na decisão errada. Terraform e GitOps podem ir no B6, porque os checks não usam AWS e comentário não muda plano nem manifesto. Os três app.py seguem a regra dos serviços: antes do merge ou nunca.",
+    "evidencia": "130 linhas em 29 .tf (k8s/argocd.tf 15, modules/eks/main.tf 15, cluster/main.tf 14, modules/rds/main.tf 11, k8s/secrets.tf 9). 34 linhas em 17 YAML do gitops (auth-service/deployment.yaml 6, postgres-targeting/statefulset.yaml 6, base/kustomization.yaml 4). Mais .trivyignore:5 e :7, security-check.sh:10 e os app.py (analytics:203, flag:294, targeting:230, 'ver D-012'). Colisões: D-012 aparece 14 vezes, D-015 8, D-018 6 e D-009 6. Ex.: terraform/k8s/secrets.tf:2 '(D-018)' e gitops/base/auth-service/configmap.yaml:9 '(D-018)' são a F3-D-018 'Sem ESO' (DECISOES.md:451), mas a D-018 vigente é a regra dos assistentes (DECISOES.md:161).",
+    "quando": "B6",
+    "opcoes": "(a) no B6, trocar cada ID por meia frase de explicação; (b) prefixar F3- (ex.: F3-D-012), mantendo a rastreabilidade sem colisão; (c) manter, lendo D-018 como regra só para documentos.",
+    "qtd_arquivos": 51
+   },
+   {
+    "caminho": "CLAUDE.md",
+    "o_que_e": "Ponteiro de contexto para os assistentes, na raiz.",
+    "classe": "DECISAO_USUARIO",
+    "motivo": "Vai para a raiz da main ao lado do README e mostra detalhes operacionais que o avaliador não precisa ver. Decidir antes do merge: depois, o arquivo já está na árvore da main.",
+    "evidencia": "3 linhas com agentes (ex.: :5 'Última atualização: 2026-11-05, Codex'), 7 com IDs (ex.: D-021 em :3 e D-020 em :7) e 5 caminhos 00_COLAB_IA. :7 registra que a senha do PagerDuty foi mantida com risco aceito, e :3 traz o saldo de créditos da AWS. D-018 (DECISOES.md:165) o mantém como 'ponteiro interno'.",
+    "quando": "antes_do_merge_main",
+    "opcoes": "(a) manter versionado, como está em D-018; (b) tirar do índice (git rm --cached) e ignorar no .gitignore, preservando o arquivo local que o Claude Code lê; (c) manter, mas só com ponteiros neutros, sem riscos nem valores.",
+    "qtd_arquivos": 1,
+    "tamanho_kb": 3.3
+   },
+   {
+    "caminho": "docs/aulas-fiap/**/*.pdf",
+    "o_que_e": "31 PDFs das aulas da FIAP, incluindo o Capítulo de Projeto da Fase 4.",
+    "classe": "DECISAO_USUARIO",
+    "motivo": "É material com direitos da FIAP, que o avaliador já tem e não precisa, e o maior peso do repositório. Decidir antes do merge, porque depois os PDFs estão na árvore da main. Num merge comum, o histórico da main herda de qualquer jeito os commits que já estão no origin/dev; só um squash os deixaria fora desse histórico.",
+    "evidencia": "19.648.311 B (cerca de 18,7 MiB). Com os guias, 20.431.046 B, ou 61,7% do peso versionado e 92,9% do que está fora do diário. Nenhum documento do projeto liga direto a um PDF de aula; só os guias HTML os citam (APM 142 linhas, Opensource 24, Automação 7, Observabilidade 3, Welcome 1). F3-SN-31 (DECISOES.md:971-979): o usuário voltou a versioná-los em 2026-09-13, com ressalva sobre publicar material da instituição e status 'revisar'. O repositório é privado segundo F-023 (ANALISE_COMPLETA_FASE4_2026-10-31_v01.md:534); não conferi remotamente.",
+    "quando": "antes_do_merge_main",
+    "opcoes": "(a) tirar da árvore (git rm --cached) e ignorar docs/aulas-fiap/ no .gitignore, mantendo a cópia local (recomendado); (b) manter, aceitando a ressalva de 2026-09-13; (c) mover para 00_COLAB_IA/_ARQUIVO_MORTO, o que não resolve, porque segue publicado.",
+    "qtd_arquivos": 31,
+    "tamanho_kb": 19187.8
+   },
+   {
+    "caminho": "docs/aulas-fiap/*/GUIA-ESTUDO-*.html",
+    "o_que_e": "Cinco guias de estudo gerados a partir dos PDFs das aulas.",
+    "classe": "DECISAO_USUARIO",
+    "motivo": "São material de estudo, não do projeto. Citam as aulas página a página e trazem autoria de agentes (D-018). Decidir junto com os PDFs, porque os guias apontam para eles.",
+    "evidencia": "5 arquivos, 782.735 B. 39 linhas com agentes (APM 18, Opensource 11, Automação 5, Observabilidade 3, Welcome 2), ex.: GUIA-ESTUDO-APM.html:92 'Gerado em 2026-09-21 · Claude (Opus 5)' e :114 'Complemento — elaboração didática do Claude (Opus 5)'. São ligados por README.md:17-21 (e :23), docs/requisitos/README.md:205 e REQUISITOS.html:94.",
+    "quando": "antes_do_merge_main",
+    "opcoes": "(a) sair junto com os PDFs, tirando no mesmo commit os links de README.md:17-23, docs/requisitos/README.md:205 e REQUISITOS.html:94 (recomendado); (b) mover para 00_COLAB_IA/02_TRABALHO, onde a autoria é permitida, mas continua publicado; (c) manter e limpar a autoria no B6.",
+    "qtd_arquivos": 5,
+    "tamanho_kb": 764.4
+   },
+   {
+    "caminho": "POSTECH - Tech Challenge - Fase 4.pdf",
+    "o_que_e": "Enunciado oficial da Fase 4, na raiz.",
+    "classe": "MANTER",
+    "motivo": "Já está publicado: é o único arquivo da main. Tirar agora não muda o histórico e quebraria a fonte citada pela matriz de requisitos. Rever só se o repositório ficar público.",
+    "evidencia": "302.763 B. git ls-tree main lista só este arquivo. Citado por README.md:12, docs/requisitos/README.md:5 e REQUISITOS.html.",
+    "quando": "agora",
+    "qtd_arquivos": 1,
+    "tamanho_kb": 295.7
+   },
+   {
+    "caminho": "README.md",
+    "o_que_e": "Página principal, a primeira que o avaliador lê.",
+    "classe": "ATUALIZAR",
+    "motivo": "Trata como pendente ou inexistente o que o B1/B2 já fez. Corrigir no B6, com os resultados do B3-B5: stack no ar, evidências, links do vídeo e do PDF. Mudar só .md não aciona pipeline de imagem. A linha 139 pode ser corrigida antes.",
+    "evidencia": ":16 'E0 parcial, E1 local concluída e exportação APM/etapas de cluster pendentes'. :32 'exportação New Relic pendente', mas o B1 foi concluído em 2026-11-03. :34 'Confirmar nova conta, orçamento/cotas', mas a conta foi conferida em 2026-10-28 e o orçamento criado em 2026-11-05. :35 '23 objetos Kubernetes' é a contagem de 2026-10-20, antes da stack. :90 fala em 'três workers' e réplicas do gateway 'ainda não definidas', mas os padrões versionados são 2 nós m7i-flex.large (terraform/cluster/variables.tf) e replicaCount: 1 (gitops/observability/values/otel-gateway.yaml:33); conferir com o tfvars local. :139 diz que 'as integrações de incidentes, o dashboard e a automação ainda não existem', mas existem gitops/observability/grafana/dashboards/togglemaster-overview.json, grafana/alerting/ (4 arquivos), .github/workflows/self-healing.yml e scripts/self-healing/restart.sh. :25 ainda não tem links finais; :94, :220 e :228 tratam a implantação como futura. D-018 está no item próprio.",
+    "quando": "B6",
+    "qtd_arquivos": 1,
+    "tamanho_kb": 21
+   },
+   {
+    "caminho": "terraform/README.md",
+    "o_que_e": "Guia das três camadas do Terraform.",
+    "classe": "ATUALIZAR",
+    "motivo": "Diz que a conta não foi informada e que a observabilidade não existe. Corrigir no B6, porque depois do apply do B3 os estados e outputs passam a existir e o texto muda de novo. A mudança aciona só o terraform-check, sem AWS.",
+    "evidencia": ":3 'A nova conta AWS ainda não foi informada'. A tabela omite, em :13, o terraform/k8s/observability.tf (namespace, três Secrets e a Application, :21-114) e, em :12, o cluster/self-healing.tf:22 (access entry). :42 'não houve push, PR ou integração na main', mas já há push (origin/dev = fe7464b). :43 diz que a visibilidade 'não foi validada', mas o repo é privado (F-023). :67 'esta importação não implementa a stack de observabilidade' é falso e traz link ao plano no diário. :74 liga o backlog interno.",
+    "quando": "B6",
+    "qtd_arquivos": 1,
+    "tamanho_kb": 7.1
+   },
+   {
+    "caminho": "gitops/README.md",
+    "o_que_e": "Guia dos manifests e do overlay de produção.",
+    "classe": "ATUALIZAR",
+    "motivo": "Explica as sentinelas pela conta 'não fornecida' e não mostra a pasta de observabilidade. Corrigir no B6 ou no commit do B3 que preencher o overlay.",
+    "evidencia": ":3 'sentinelas explícitas porque a nova conta AWS ainda não foi fornecida'. A conta existe; as sentinelas seguem porque os outputs só existem depois do apply (overlays/prod/kustomization.yaml:72, patches/irsa.yaml:14, patches/endpoints.yaml:30). A árvore de :9-19 omite gitops/observability/ (14 arquivos). :22 'Não foi acrescentada observabilidade nesta importação' é falso. :54 '23 objetos' é de 2026-10-20. :5 e :61 estão no item de D-018.",
+    "quando": "B6",
+    "qtd_arquivos": 1,
+    "tamanho_kb": 4.7
+   },
+   {
+    "caminho": "observability/README.md",
+    "o_que_e": "Guia da observabilidade: laboratório local, New Relic e cluster.",
+    "classe": "ATUALIZAR",
+    "motivo": "Título e TL;DR ainda falam só do laboratório local, e a seção do cluster diz que nada foi implantado. Atualizar no B6 com as evidências do B3-B5.",
+    "evidencia": ":1 'Observabilidade local'. :3 'não exige AWS ou New Relic', mas :81-95 tratam do New Relic e :101-160 do cluster. :97 diz que o resto 'continua nas etapas seguintes'. :105 'Situação em 2026-11-03: ... ainda não foi implantada'. :42 e :46 usam caminhos de 00_COLAB_IA como exemplo de saída. :5 está no item de D-018.",
+    "quando": "B6",
+    "qtd_arquivos": 1,
+    "tamanho_kb": 13.6
+   },
+   {
+    "caminho": "docs/ARQUITETURA.md",
+    "o_que_e": "Referência técnica herdada da Fase 3, com remendos da Fase 4.",
+    "classe": "DECISAO_USUARIO",
+    "motivo": "O aviso da linha 1 diz 'histórico, não é evidência da Fase 4', mas o corpo mistura trechos atuais e velhos e não cobre a observabilidade. Decidir no B6, quando o que foi implantado estiver comprovado.",
+    "evidencia": ":1 aviso histórico. Tem +25/−11 linhas frente ao original do repo 03 (git diff --no-index): :13 Alpine 3.24; :235-268 GitOps Check, self-healing e image-scan; :307-313 verificações. Tem 0 menções a OpenTelemetry, Loki, New Relic, PagerDuty e Slack. :29-30 ainda dizem alpine:3.20. A §7 (:386-397) está velha: :392 'Não há test_*.py', mas há 4 em services/*/tests/; :320 cita o pyproject; :31 e :393, o PyYAML.",
+    "quando": "B6",
+    "opcoes": "(a) torná-lo o documento de arquitetura da Fase 4: tirar o aviso, acrescentar observabilidade e incidentes, refazer a §7 (recomendado se houver tempo no B6); (b) restaurar o texto da Fase 3, mover para 00_COLAB_IA/_ARQUIVO_MORTO e levar os trechos da Fase 4 ao README e ao observability/README.md; (c) manter híbrido, o que não se recomenda.",
+    "qtd_arquivos": 1,
+    "tamanho_kb": 30.9
+   },
+   {
+    "caminho": "docs/GUIA_DE_REPRODUCAO.md (e as referências SECURITY.md:36 e .env.example:58)",
+    "o_que_e": "Passo a passo para recriar o ambiente da Fase 3.",
+    "classe": "DECISAO_USUARIO",
+    "motivo": "É o único guia público de reprodução, mas descreve a Fase 3 e carrega o ID da conta anterior. O roteiro da Fase 4 só existe no diário. Decidir no B6, porque os passos da Fase 4 só ficam provados depois do B3-B5.",
+    "evidencia": "845 linhas. :1 aviso histórico; :5 'ambiente completo da Fase 3'; +3/−1 linhas frente ao repo 03. 13 ocorrências do ID da conta da Fase 3 (:164-209; valores não impressos) e mais 1 no comentário de scripts/security-check.sh:11. A linha :78 desse script guarda o ID da conta da Fase 2 como padrão de bloqueio; é funcional e fica. Tem 0 menções a OpenTelemetry, New Relic, PagerDuty e Slack. SECURITY.md:36 e .env.example:58 ainda o indicam como instrução atual (bucket e Apêndice A, :701). O roteiro da Fase 4 está em 00_COLAB_IA/02_TRABALHO/PREPARACAO_B3_2026-11-05_v02.md.",
+    "quando": "B6",
+    "opcoes": "(a) convertê-lo no guia da Fase 4 a partir do roteiro executado, trocando a conta por <conta>; (b) arquivar em 00_COLAB_IA/_ARQUIVO_MORTO e escrever um guia curto da Fase 4, ajustando SECURITY.md:36 e .env.example:58; (c) manter como histórico, só mascarando a conta.",
+    "qtd_arquivos": 1,
+    "tamanho_kb": 54.9
+   },
+   {
+    "caminho": "SECURITY.md:20-23",
+    "o_que_e": "Política de segurança: descrição da confiança OIDC do CI.",
+    "classe": "ATUALIZAR",
+    "motivo": "Diz o contrário do código: hoje só a branch main assume as roles. É uma afirmação de segurança errada e não depende do deploy, então pode ser corrigida agora. Mudar só .md não aciona pipeline de imagem.",
+    "evidencia": ":22 'ela aceita qualquer branch ou pull request'. terraform/modules/iam-ci/main.tf:81 restringe o subject a ref:refs/heads/${var.github_deploy_branch}. terraform/README.md:61 e os 10 casos de terraform/modules/iam-ci/tests/trust.tftest.hcl provam que só a main assume. :36 aponta o GUIA da Fase 3 (ver o item do GUIA).",
+    "quando": "agora",
+    "qtd_arquivos": 1,
+    "tamanho_kb": 3.4
+   },
+   {
+    "caminho": "gitops/SECRETS-CONTRATO.md",
+    "o_que_e": "Contrato dos nomes de Secrets entre Terraform e GitOps.",
+    "classe": "ATUALIZAR",
+    "motivo": "Omite os três Secrets da observabilidade. Os nomes casam hoje, mas este é o contrato conferido no B3 ('se um nome ou uma chave divergir, o pod não sobe', :5-6). Não depende do deploy.",
+    "evidencia": "git grep 'newrelic|grafana|observab' no arquivo = 0. terraform/k8s/observability.tf:49, :68 e :89 criam grafana-admin, newrelic-license e grafana-notificacoes, que são consumidos em gitops/observability/values/kube-prometheus-stack.yaml:114 e :121 e em otel-gateway.yaml:57.",
+    "quando": "agora",
+    "qtd_arquivos": 1,
+    "tamanho_kb": 3.8
+   },
+   {
+    "caminho": "docs/requisitos/README.md; docs/requisitos/REQUISITOS.html",
+    "o_que_e": "Matriz pública dos 42 obrigatórios, 2 opções e 4 sugestões, e seu espelho em HTML.",
+    "classe": "ATUALIZAR",
+    "motivo": "Todos os requisitos seguem 'Pendente', e há autoria de agentes. Atualizar no B6, junto da matriz dos 42 com evidências. Depois, regenerar o HTML a partir do README.",
+    "evidencia": "45 ocorrências de 'Pendente'. D-018 no README.md: 2 linhas com agente (:5 'Codex (redação) e Claude (Opus 5)' e :102 'autoria Codex') e 1 ID (:194 F-008). No REQUISITOS.html: 2 linhas com agente (:92 'HTML gerado ... Claude (Opus 5)' e :94), 1 ID, e :93 cita o gerador em 00_COLAB_IA/02_TRABALHO. README.md:205 e REQUISITOS.html:94 ligam os guias da FIAP. Os 88 REQ-OBR-NN são a numeração pública da matriz e podem ficar.",
+    "quando": "B6",
+    "qtd_arquivos": 2,
+    "tamanho_kb": 80.4
+   }
+  ],
+  "observacoes": [
+   "Regra de tempo usada: services/** e .github/workflows/** só mudam antes do primeiro merge. Na main, esses caminhos rodam os jobs image e gitops (_ci-python.yml:426 e :586; _ci-go.yml:379 e :542). Depois do B5, o job falha sem a conta. Se a base for mantida (roteiro do B3, linha 97), ele publica imagem e grava commit de tag. Arquivos .md e docs/** não acionam o Compose Integration (paths-ignore) nem o pipeline de imagem. terraform/** e gitops/** só acionam checks sem AWS.",
+   "Histórico: o origin/dev (fe7464b) já tem tudo, 142 commits à frente da main (003a707). Num merge comum, a main herda esse histórico, e tirar algo antes do merge limpa só a árvore. Um squash evitaria isso, mas complica os PRs seguintes da dev, porque a base comum continua 003a707.",
+   "Depois do primeiro merge, o job gitops grava commits de tag na main. Um PR de documentação no B6 deve sair de uma dev atualizada com a main, para não conflitar em gitops/overlays/prod/kustomization.yaml.",
+   "Premissas que não se confirmaram: os READMEs Go já dizem 1.25.0; infra/ e os compose otel e newrelic são usados; não há módulo Terraform órfão; não há link Markdown relativo quebrado fora do diário. Também não há mais TODO(human) em services/ (git grep = 0): inject_fault foi implementado no commit 57d43e5, de 2026-11-04, embora PENDENCIAS_E_PROXIMOS_PASSOS.md:50 e :76 ainda o citem.",
+   "Dados pessoais, só contagens: 5 RMs no relatório da Fase 3 e 5 na apresentação. O ID da conta da Fase 3 aparece 13 vezes no GUIA e 1 em scripts/security-check.sh:11. O ID da conta da Fase 2 aparece 1 vez (security-check.sh:78), como padrão funcional. Não há e-mail real: os acertos eram @app.route e @db.invalid. Numa das conferências, parte dos números de RM saiu na saída de uma ferramenta local; nada foi gravado nem repetido aqui.",
+   "Fora do escopo, mas decisivo: 00_COLAB_IA (569 arquivos, cerca de 10,6 MiB) também entra na main no merge. Isso define se as referências funcionais ao diário seguem válidas e quanto a D-018 de fato protege.",
+   "Os itens de D-018 e os de conteúdo tocam os mesmos READMEs; fazer numa passada só no B6. Regex usadas: agentes = claude|codex|opus|anthropic|chatgpt|copilot; IDs = [DFPORS]-NNN e CIC-N; etapas = B0-B6, D1-D5 e E1-E9. Descartei os falsos positivos do E9 do flake8 e dos nós B1/B2 do diagrama em docs/ARQUITETURA.md:97-98.",
+   "Nada no repositório foi alterado. Usei git ls-files, git grep, git ls-tree, git diff --no-index contra o tech-challenge-03 e unzip -p do .pptx direto na saída. Não usei rede nem AWS, nem li .env, backend.hcl ou tfvars. Desvio: dois comandos meus gravaram por engano listas temporárias fora do repositório, em C:\\Users\\Gabriel\\AppData\\Local\\Temp\\d018_counts_unused (3 KB, contagens por arquivo) e C:\\Users\\Gabriel\\AppData\\Local\\Temp\\x_unused (53 KB, a lista do git ls-files). Contêm só caminhos e números. Não apaguei, para respeitar o modo somente leitura; podem ser removidas sem efeito."
+  ]
+ }
+}

@@ -1,0 +1,57 @@
+# ============================================================
+# KUSTOMIZATION - observabilidade (Fase 4)
+# ============================================================
+# Pasta observada pela Application "observability", criada pela camada
+# terraform/k8s (observability.tf). E o padrao "app of apps":
+#
+#   applications/   uma Application filha por chart Helm (Prometheus e
+#                   Grafana, Loki, Collector gateway, Collector agente)
+#   values/         os values de cada chart, lidos pelas filhas ($values)
+#   grafana/        dashboard e alertas, entregues ao Grafana como
+#                   ConfigMaps (os sidecars do chart os carregam)
+#
+# Para conferir sem aplicar nada:
+#   kubectl kustomize gitops/observability
+#
+# Os segredos NAO estao aqui: o Terraform cria os Secrets
+# newrelic-license, grafana-admin e grafana-notificacoes no namespace
+# observability, e os values citam so os nomes.
+# ============================================================
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Sem `namespace:` global de proposito: as Applications moram em argocd
+# e os ConfigMaps em observability; cada objeto declara o seu.
+resources:
+  - applications/kube-prometheus-stack.yaml
+  - applications/loki.yaml
+  - applications/otel-gateway.yaml
+  - applications/otel-agent.yaml
+
+configMapGenerator:
+  # Dashboard "ToggleMaster - Visao geral" (uid togglemaster-overview).
+  - name: grafana-dashboard-togglemaster
+    namespace: observability
+    files:
+      - grafana/dashboards/togglemaster-overview.json
+    options:
+      labels:
+        grafana_dashboard: "1"
+      # Nome estavel: o sidecar atualiza o arquivo no lugar quando o
+      # conteudo muda, sem apagar e recriar o dashboard.
+      disableNameSuffixHash: true
+
+  # Templates, contact points, policies e regra de alerta. O sidecar grava
+  # cada chave como arquivo em /etc/grafana/provisioning/alerting e pede
+  # ao Grafana para recarregar.
+  - name: grafana-alerting-togglemaster
+    namespace: observability
+    files:
+      - grafana/alerting/templates.yaml
+      - grafana/alerting/contactpoints.yaml
+      - grafana/alerting/policies.yaml
+      - grafana/alerting/rules.yaml
+    options:
+      labels:
+        grafana_alert: "1"
+      disableNameSuffixHash: true

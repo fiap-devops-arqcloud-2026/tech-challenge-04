@@ -1,0 +1,275 @@
+[
+  {
+    "path": "docs/00_COLAB_IA/DECISOES.md",
+    "sha256": "a06a20ad5f100010a6bf6b85230b7287c07435993685afd9d1c5566ccec1d826",
+    "bytes": 30287,
+    "blob": "9b47cca8d1b6b95d552444519a56d46b57c74ec8",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/DECISOES.md"
+  },
+  {
+    "path": "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md",
+    "sha256": "3e37ef5250307cea4a20a19977385c8151a5c669397a9dc95652c4b0f22b2239",
+    "bytes": 13064,
+    "blob": "5e688960912105a8df37e951dabed231aa8b183f",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/INSTRUCOES_ASSISTENTES.md"
+  },
+  {
+    "path": "docs/00_COLAB_IA/LEIA-PRIMEIRO.md",
+    "sha256": "d18f8a9425093c33a0f28e52db8d377b526eebf82890f54d3220ee016cb3a27a",
+    "bytes": 2419,
+    "blob": "1dfd4f31255818696b25fded2aa8e268281d0d2e",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/LEIA-PRIMEIRO.md"
+  },
+  {
+    "path": "docs/00_COLAB_IA/LOG_DE_TRABALHO.md",
+    "sha256": "d69300cbc160f0260c38a923a9acc4ead2f3e1e94d8be9755849cef6034ed7ad",
+    "bytes": 73903,
+    "blob": "6761b557867084278810eed2786f0434992312f9",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/LOG_DE_TRABALHO.md"
+  },
+  {
+    "path": "docs/00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md",
+    "sha256": "cc7dd695b0e6f6a0ee279fbe5bcb9b75dcb36a84a89122989610b5526eb836c6",
+    "bytes": 5534,
+    "blob": "6b38c87385e245e057e9ccde026499160b9f5cf5",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md"
+  },
+  {
+    "path": "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md",
+    "sha256": "b2e8a23fba88c6e111743ab07d82e40851107aaef3a5a9224cd452a7208552f1",
+    "bytes": 5065,
+    "blob": "ea345566283f46b08ba7d4ddec085a55bc16f282",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/ARQUITETURA.md",
+    "sha256": "8fb3d361b80e0bbae8ffcb9e5859c2231304c5bb2744641c5dccde769c504a8c",
+    "bytes": 3864,
+    "blob": "a50d213230c02468e02a06fc0fe0f42cae130339",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/ARQUITETURA.md"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md",
+    "sha256": "495c0ba86050acfebe896afa63a2f5043a2dd5421991ab76d33a7d7e8db5b999",
+    "bytes": 20375,
+    "blob": "e3dc8a4df919516133759c71708e764cba33cfe2",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/BOOTSTRAP-BACKEND-S3_2026-08-27.md",
+    "sha256": "2bfe3dbca6e08be39e17a1b59dadbd8f48c2f035eeb8a6d2578d62148949de71",
+    "bytes": 16940,
+    "blob": "38b35e122e16fd4430d561901f08f95c0f98d0f6",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/BOOTSTRAP-BACKEND-S3_2026-08-27.md"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md",
+    "sha256": "d2178e3cba92ff43021be8f426f66cdee52af5b042e098263367b07a5426be76",
+    "bytes": 17153,
+    "blob": "2d3760c6f3cd3c56b545d3d2b6dbc200b079953d",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md",
+    "sha256": "b362f1fa508c556b66a254e45a99b8b73f8cd6b3d430171ec4711564a434fc85",
+    "bytes": 17617,
+    "blob": "26b69912965d6348db04208d26f46a52efe3ba28",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md",
+    "sha256": "878ab61bf2be0c435d44cb86bb48ebe5548e4c154639670a020c75ac493f5e90",
+    "bytes": 13661,
+    "blob": "0dca16b4fbcb7839fb6e9ab492cc92cad74fdec8",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/ESTIMATIVA_CUSTOS_AWS.md",
+    "sha256": "b22adc206fcf927efc35aba2511676d3dde69150235660a3f64a942cbda859f7",
+    "bytes": 1687,
+    "blob": "67d11a8974140791a10a614fc1149ef48b175588",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/ESTIMATIVA_CUSTOS_AWS.md"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/EVIDENCIAS.md",
+    "sha256": "1a117c90f1a7baa390141f23c9ee624acc32898d1fac1e448a8c2c3812f2cc27",
+    "bytes": 1570,
+    "blob": "cfea6995acae080553fffccb18a2421b90d38b22",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/EVIDENCIAS.md"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_EXECUCAO.md",
+    "sha256": "017390e69df713d31d041ec70ad715205eeca046ebf103997e93a0aad25750e0",
+    "bytes": 2450,
+    "blob": "f9f3490c5796e632f65ac2bbf0a4c66f6f7ba274",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/GUIA_EXECUCAO.md"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md",
+    "sha256": "57e72ff3ad4bf00bfd6e0d91edd7ebe6f273fba9303f83c074c9827efd515ff9",
+    "bytes": 37057,
+    "blob": "77690c0126214a80e4b3926797773958d2c11b2e",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md",
+    "sha256": "bfbec97452b963ed2109c276f1fc9301fc16a98a1a57c6bb0b1e3e177a4aa5cd",
+    "bytes": 10462,
+    "blob": "d5b41eefc530cf03cb4a8fee051e53ed079864da",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md",
+    "sha256": "b380421a9f20910063422d033e3b78e67d8d6ecda095981164ba3f857e9c25ab",
+    "bytes": 71542,
+    "blob": "ac5a528c128db3bbc2aec0b83e7cebf4f8f11cd2",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/ORGANIZACAO_DE_PASTAS_2026-08-27.md",
+    "sha256": "dc5452edcc307777e61d0b317dc16407f9877b662b31a69324d1eb0bc87d7c7b",
+    "bytes": 3073,
+    "blob": "112b880b68c1bedd06588bc5394b2b694cd3e35b",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/ORGANIZACAO_DE_PASTAS_2026-08-27.md"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md",
+    "sha256": "06f761203c444bd6f92d17aa9addbc7c9cf073133f37b3f88640114aeb66890c",
+    "bytes": 37007,
+    "blob": "1c5439847e8cfa11c346225e60e81f2ca4baa9a5",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md",
+    "sha256": "3d32b63ebac18b36cfb6cdf4463ea062751aba1f9172989192e1a3bce9db54b4",
+    "bytes": 45853,
+    "blob": "0d55213331572f851b510f5140916e891daaf269",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md",
+    "sha256": "cc94717452c709290aa62746fc78dc360c00136776e6c2e9af9f2f049284993e",
+    "bytes": 16058,
+    "blob": "63875156f42896aaa58449d8e32590ae0cd1a05d",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.pdf",
+    "sha256": "99ec8617f66df1d53e7ed989750de5a791a2f2647122862fbe05a8a01564fa99",
+    "bytes": 247558,
+    "blob": "744e82642c8bb3710e0e8cda25a0de3d5a38a4e3",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.pdf"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md",
+    "sha256": "4ed59372fdcacd9da33dad53a1b5b76a8b8399f53ba4bf04a61a4f8c6334f1a1",
+    "bytes": 13198,
+    "blob": "ff714c6886aa26fd40ebdc3baac06ee782e86f6b",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/ROTEIRO_VIDEO.md",
+    "sha256": "d25cdd9457bd87adaee11e30c0db2189b562f766b63b4956a9e84430a7ddac0f",
+    "bytes": 1122,
+    "blob": "d802dff7f052592aa18ff7404e7b5c2ed52c460b",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/ROTEIRO_VIDEO.md"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md",
+    "sha256": "ba5cb5e5fb75f365292d1b15ceea5164447fc084bd7f425c31664c8ab5936fe7",
+    "bytes": 24802,
+    "blob": "4805faa4cc0670cb1406cbec2fe2adc9dbf31428",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/TESTE_COMPOSE.md",
+    "sha256": "cee8e300eb144dbd3a1ab70fa09d313960723a30d225a90cb8964384472ea158",
+    "bytes": 2064,
+    "blob": "fa62fef23e7fa5a1c35c27081b409196e8deba7e",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/TESTE_COMPOSE.md"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/PLANO_AUDITORIA_2026-09-09_v01.md",
+    "sha256": "7b1c621f618823c83b97f8448227cbfd7a4ac948dd19fbd19b5f9fab577546b7",
+    "bytes": 2422,
+    "blob": "439fd88feee436c7900dfb934ad4e753407641d4",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/PLANO_AUDITORIA_2026-09-09_v01.md"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-fiap-texto-por-pagina-2026-09-09.txt",
+    "sha256": "d8b180c90c27f9ac05b66663666a17c4a05b36ea0ada3a43b955c980a128d843",
+    "bytes": 6416,
+    "blob": "111f87c3293aaf7ea5815525729ef6e6fea7ea66",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-fiap-texto-por-pagina-2026-09-09.txt"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-pagina-1.png",
+    "sha256": "994dc78efea1f7d215c8d908d64b858fac8a42b17e9df1902ef621318e608223",
+    "bytes": 90285,
+    "blob": "1b869943f0cc67a4b2664f8194965e326c98674c",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-pagina-1.png"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-pagina-2.png",
+    "sha256": "9a529126a979138ddea330c7b3baed9a5425552fc4ddd5ecc927bda26b1b4161",
+    "bytes": 141567,
+    "blob": "46f4f51eef6dc23aaabb5b7ba9d806ace5b26650",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-pagina-2.png"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-pagina-3.png",
+    "sha256": "030bec65cefb12744fbd4a862afe5d24f09bd3d176ca7e04cf76b5d0815ab93b",
+    "bytes": 142579,
+    "blob": "c5b9061bb9804770fa3a25eeff4c355e1c405afb",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-pagina-3.png"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-pagina-4.png",
+    "sha256": "8cb30666dbf0742393a9ce7921d1055dbcc711d671b9623b88451944dbb6d998",
+    "bytes": 150797,
+    "blob": "7d72d86c49173b43c7cf8a7d72d5620a16dd0bf5",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-pagina-4.png"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-pagina-5.png",
+    "sha256": "143796ca68dff5159b4067c1606e113cd50a7110222b2b7f61c5373e5f1d94ea",
+    "bytes": 150168,
+    "blob": "76c81ce5c6a8649253d9b2aefdd295c4198c64f5",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-pagina-5.png"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-pagina-6.png",
+    "sha256": "898fd1e28a1fb1ff8b516ee15999fe7d15917aefef7c701eaab7945203147012",
+    "bytes": 36149,
+    "blob": "bfbfa666a2dda95e7b4170ff5335dcd2dc09d462",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-pagina-6.png"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-pagina-7.png",
+    "sha256": "97f9e754fbe348985061998734cc80b2f915b45a1e102454a6459b9881674d8f",
+    "bytes": 211554,
+    "blob": "eb240979a403cd86c01df9b64dcb48d20e1a3372",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-pagina-7.png"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py",
+    "sha256": "b89bdfa6093b422b60af759b3cdcc34896618cc20fa1ceda0a0f030bc0520ce0",
+    "bytes": 17688,
+    "blob": "5467b92031bc9795ab3b68f5c95d828e0d573e65",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/capturar-estimativa-aws_2026-09-11.cjs",
+    "sha256": "493851fb03b0e6bab630da3c98730dc22026c687fcfbb7d6cf20998aad684525",
+    "bytes": 1608,
+    "blob": "7bebe4156604a350cbaf4264a822acdfbc7a07b6",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/capturar-estimativa-aws_2026-09-11.cjs"
+  },
+  {
+    "path": "docs/00_COLAB_IA/_ARQUIVO_MORTO/gerar-relatorio-pdf_2026-09-11_v00.py",
+    "sha256": "53774073f8887fd5202b5a00903107a6060ff6fb54d3c7d66d6fdb4e9f1b0fee",
+    "bytes": 7268,
+    "blob": "1dffb7f62377bac34f79396a76270fccd84d6f49",
+    "destino": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/acervo-integral-docs-00_COLAB_IA/_ARQUIVO_MORTO/gerar-relatorio-pdf_2026-09-11_v00.py"
+  }
+]

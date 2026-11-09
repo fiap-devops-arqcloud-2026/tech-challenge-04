@@ -1,0 +1,60 @@
+# Laboratório local de traces. Sem credenciais ou exportação para serviços externos.
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+extensions:
+  health_check:
+    endpoint: 0.0.0.0:13133
+
+processors:
+  memory_limiter:
+    check_interval: 1s
+    limit_mib: 192
+    spike_limit_mib: 48
+  filter/health:
+    error_mode: propagate
+    traces:
+      span:
+        - 'attributes["http.route"] == "/health"'
+        - 'attributes["url.path"] == "/health"'
+        - 'attributes["http.target"] == "/health"'
+  transform/sanitize:
+    error_mode: propagate
+    trace_statements:
+      # Lista permitida: URLs completas, query, headers, SQL/DSN, corpos e IDs
+      # de usuários não são persistidos. Preserva nomes de operações e topologia.
+      - context: resource
+        statements:
+          - 'keep_keys(attributes, ["service.name", "service.namespace", "service.version", "deployment.environment.name", "telemetry.sdk.name", "telemetry.sdk.language", "telemetry.sdk.version"])'
+      - context: span
+        statements:
+          - 'keep_keys(attributes, ["http.route", "http.method", "http.request.method", "http.status_code", "http.response.status_code", "http.flavor", "url.scheme", "server.address", "server.port", "network.protocol.version", "net.peer.name", "net.peer.port", "db.system", "db.system.name", "db.name", "db.namespace", "db.operation", "db.operation.name", "messaging.system", "messaging.destination.name", "messaging.operation", "messaging.operation.name", "messaging.operation.type", "error.type", "cache.hit"])'
+          - 'set(status.message, "")'
+      - context: spanevent
+        statements:
+          - 'keep_keys(attributes, ["exception.type"])'
+  batch:
+    timeout: 1s
+    send_batch_size: 256
+
+exporters:
+  debug:
+    verbosity: basic
+  file/traces:
+    path: /var/lib/otel/traces.jsonl
+    format: json
+    append: true
+    flush_interval: 1s
+
+service:
+  extensions: [health_check]
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [memory_limiter, filter/health, transform/sanitize, batch]
+      exporters: [debug, file/traces]

@@ -1,0 +1,13 @@
+# Usar depois de docker-compose.otel.yaml. Acrescenta a exportação dos traces ao New Relic.
+# A license key vem de NEW_RELIC_LICENSE_KEY no .env local (ignorado pelo Git), lido junto com o exemplo:
+#   docker compose --env-file .env.example --env-file .env ...
+# Sem a variável o Compose para com erro, em vez de subir um exporter sem chave.
+services:
+  otel-collector:
+    command:
+      - --config=/etc/otelcol-contrib/config.yaml
+      - --config=/etc/otelcol-contrib/newrelic.yaml
+    volumes:
+      - ./observability/otel-collector-newrelic.yaml:/etc/otelcol-contrib/newrelic.yaml:ro
+    environment:
+      NEW_RELIC_LICENSE_KEY: ${NEW_RELIC_LICENSE_KEY:?defina NEW_RELIC_LICENSE_KEY no .env local}

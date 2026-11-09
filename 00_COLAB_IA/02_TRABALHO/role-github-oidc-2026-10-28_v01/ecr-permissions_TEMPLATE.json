@@ -1,0 +1,36 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "EcrAuthToken",
+      "Effect": "Allow",
+      "Action": [
+        "ecr:GetAuthorizationToken"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "EcrPushPull",
+      "Effect": "Allow",
+      "Action": [
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:InitiateLayerUpload",
+        "ecr:UploadLayerPart",
+        "ecr:CompleteLayerUpload",
+        "ecr:PutImage",
+        "ecr:BatchGetImage",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:DescribeImages",
+        "ecr:DescribeRepositories"
+      ],
+      "Resource": [
+        "arn:aws:ecr:us-east-2:SUBSTITUA_ID_AWS:repository/auth-service",
+        "arn:aws:ecr:us-east-2:SUBSTITUA_ID_AWS:repository/flag-service",
+        "arn:aws:ecr:us-east-2:SUBSTITUA_ID_AWS:repository/targeting-service",
+        "arn:aws:ecr:us-east-2:SUBSTITUA_ID_AWS:repository/evaluation-service",
+        "arn:aws:ecr:us-east-2:SUBSTITUA_ID_AWS:repository/analytics-service"
+      ]
+    }
+  ]
+}
+

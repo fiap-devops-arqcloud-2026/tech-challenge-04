@@ -1,0 +1,2516 @@
+{
+  "conhecimentos": [
+    {
+      "id": "F3-K-001",
+      "titulo": "Critério literal para obrigatório x opcional e varredura do enunciado",
+      "lote": "consolidar_PROC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:405-407",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:465-467",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:68",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:14",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:412-420",
+        "docs/00_COLAB_IA/DECISOES.md:120",
+        "docs/00_COLAB_IA/DECISOES.md:176",
+        "docs/00_COLAB_IA/DECISOES.md:214"
+      ]
+    },
+    {
+      "id": "F3-K-002",
+      "titulo": "Regras gerais de avaliação: Fase 3 x Fase 4",
+      "lote": "consolidar_PROC-A",
+      "destino_original": "RELATORIO_MESCLA",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-fiap-texto-por-pagina-2026-09-09.txt:12-29",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-fiap-texto-por-pagina-2026-09-09.txt:46",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-fiap-texto-por-pagina-2026-09-09.txt:101",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-fiap-texto-por-pagina-2026-09-09.txt:148",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:30",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:154"
+      ]
+    },
+    {
+      "id": "F3-K-003",
+      "titulo": "Vídeo e relatório deixados para o fim na Fase 3",
+      "lote": "consolidar_PROC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:74-85",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:134",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:420"
+      ]
+    },
+    {
+      "id": "F3-K-004",
+      "titulo": "Cronograma interno não é prazo da FIAP",
+      "lote": "consolidar_PROC-A",
+      "destino_original": "RELATORIO_MESCLA",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:447",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:455"
+      ]
+    },
+    {
+      "id": "F3-K-005",
+      "titulo": "Entregáveis de vídeo e relatório: o que mudou da Fase 3 para a Fase 4",
+      "lote": "consolidar_PROC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:34-58",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:830-834",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:7-12",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-fiap-texto-por-pagina-2026-09-09.txt:142-146"
+      ]
+    },
+    {
+      "id": "F3-K-006",
+      "titulo": "Matriz requisito → evidência na tela",
+      "lote": "consolidar_PROC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:63-74",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:387",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:964-979",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:834",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/EVIDENCIAS.md:12-31",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:40"
+      ]
+    },
+    {
+      "id": "F3-K-007",
+      "titulo": "Separar cenas sem cluster das que exigem cluster",
+      "lote": "consolidar_PROC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:265",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:359",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:375",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:407",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:30",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:118-121",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:147-149",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:423",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:13-31",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:78-81",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:342-344",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:561-589"
+      ]
+    },
+    {
+      "id": "F3-K-008",
+      "titulo": "Gravar fora de ordem sem cortar o intervalo que prova a automação",
+      "lote": "consolidar_PROC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:634-635",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:836-837",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:289-291",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:353-355"
+      ]
+    },
+    {
+      "id": "F3-K-009",
+      "titulo": "Roteiro de cenas e durações (modelo da Fase 3)",
+      "lote": "consolidar_PROC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/ROTEIRO_VIDEO.md:1-19",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:828-850",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:72-77"
+      ]
+    },
+    {
+      "id": "F3-K-010",
+      "titulo": "Critérios de risco na demonstração",
+      "lote": "consolidar_PROC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/DECISOES.md:69",
+        "docs/00_COLAB_IA/DECISOES.md:124",
+        "docs/00_COLAB_IA/DECISOES.md:212-214"
+      ]
+    },
+    {
+      "id": "F3-K-011",
+      "titulo": "Ensaio completo com folga antes da gravação",
+      "lote": "consolidar_PROC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:261",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:359",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:184",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:136-148"
+      ]
+    },
+    {
+      "id": "F3-K-012",
+      "titulo": "Narração: explicar o porquê de cada evidência",
+      "lote": "consolidar_PROC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:100-109",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:212-219",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:285-287",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:316-319",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:530-532",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:623-628",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:807-810"
+      ]
+    },
+    {
+      "id": "F3-K-013",
+      "titulo": "Demonstração DevSecOps/GitOps da Fase 3 (referência histórica)",
+      "lote": "consolidar_PROC-A",
+      "destino_original": "RELATORIO_MESCLA",
+      "fontes": [
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:18",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:134-146"
+      ]
+    },
+    {
+      "id": "F3-K-014",
+      "titulo": "Áudio: falha da Fase 3 e protocolo de checagem",
+      "lote": "consolidar_PROC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:12",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:79",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:135-150",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:856-860"
+      ]
+    },
+    {
+      "id": "F3-K-015",
+      "titulo": "Tela legível e segredos fora do vídeo",
+      "lote": "consolidar_PROC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:83-96",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:141",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:128-133",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:622-627"
+      ]
+    },
+    {
+      "id": "F3-K-016",
+      "titulo": "Guia de comandos explicados para a gravação",
+      "lote": "consolidar_PROC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:75",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:187-190"
+      ]
+    },
+    {
+      "id": "F3-K-017",
+      "titulo": "Estrutura do relatório (modelo das Fases 2 e 3)",
+      "lote": "consolidar_PROC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:7-12",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:316-325",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/gerar-relatorio-pdf_2026-09-11_v00.py:5-7",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:3-5",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:194-196",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:200",
+        "docs/00_COLAB_IA/LEIA-PRIMEIRO.md:26",
+        "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:13",
+        "docs/00_COLAB_IA/DECISOES.md:16"
+      ]
+    },
+    {
+      "id": "F3-K-018",
+      "titulo": "Desvios a declarar no relatório",
+      "lote": "consolidar_PROC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:31",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:85",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:150-152",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:307-308",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:400-401",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:419",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/EVIDENCIAS.md:33-36",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:24-25",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:124-128",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:26-28",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:185",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:87-90",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:919-961",
+        "docs/00_COLAB_IA/DECISOES.md:15",
+        "docs/00_COLAB_IA/DECISOES.md:126",
+        "docs/00_COLAB_IA/DECISOES.md:178"
+      ]
+    },
+    {
+      "id": "F3-K-019",
+      "titulo": "Print de custo",
+      "lote": "consolidar_PROC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:984-990",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:813-818",
+        "docs/00_COLAB_IA/DECISOES.md:248",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:262"
+      ]
+    },
+    {
+      "id": "F3-K-020",
+      "titulo": "Checklist antes do envio",
+      "lote": "consolidar_PROC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:97-109",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:7-9",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:225-241",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:278-304",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:336-366",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:230-231",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:813-824",
+        "docs/00_COLAB_IA/LEIA-PRIMEIRO.md:26",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:12",
+        "docs/00_COLAB_IA/DECISOES.md:7",
+        "docs/00_COLAB_IA/DECISOES.md:15-16"
+      ]
+    },
+    {
+      "id": "F3-K-021",
+      "titulo": "Documentação alinhada alimenta o relatório",
+      "lote": "consolidar_PROC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:262",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:353",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:419",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:455"
+      ]
+    },
+    {
+      "id": "F3-K-022",
+      "titulo": "Gerador do PDF do relatório",
+      "lote": "consolidar_PROC-A",
+      "destino_original": "PENDENCIAS",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/gerar-relatorio-pdf_2026-09-11_v00.py:5-35",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:3-21",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:820-824",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:198"
+      ]
+    },
+    {
+      "id": "F3-K-023",
+      "titulo": "Concentrar o cluster em poucas sessões e destruí-lo ao fim de cada uma",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_EXECUCAO.md:39-42",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/ESTIMATIVA_CUSTOS_AWS.md:24-26",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:104",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:108-145",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:27-56"
+      ]
+    },
+    {
+      "id": "F3-K-024",
+      "titulo": "Disciplina de execução do destroy",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:38-75",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:216-220"
+      ]
+    },
+    {
+      "id": "F3-K-025",
+      "titulo": "Terraform sempre com plano salvo",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:64",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:69",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:194-217",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:862-867",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:47"
+      ]
+    },
+    {
+      "id": "F3-K-026",
+      "titulo": "Um terraform.tfvars local por camada, fora do Git",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/DECISOES.md:16",
+        "docs/00_COLAB_IA/DECISOES.md:20",
+        "docs/00_COLAB_IA/DECISOES.md:39",
+        "docs/00_COLAB_IA/DECISOES.md:41",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:38-75"
+      ]
+    },
+    {
+      "id": "F3-K-027",
+      "titulo": "Provedor OIDC: plan limpo não garante apply limpo",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/DECISOES.md:45-59"
+      ]
+    },
+    {
+      "id": "F3-K-028",
+      "titulo": "Sequência e pré-voo da primeira subida",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:614-616",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:648-649",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:729-733",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:776-778",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:938-939",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:23-26",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:43-71",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:73-157"
+      ]
+    },
+    {
+      "id": "F3-K-029",
+      "titulo": "Shell e pré-voo na máquina Windows",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:15",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:77-96",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:607-609"
+      ]
+    },
+    {
+      "id": "F3-K-030",
+      "titulo": "Limites do plano gratuito na conta anterior",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:427-428",
+        "docs/00_COLAB_IA/DECISOES.md:158-168",
+        "docs/00_COLAB_IA/DECISOES.md:172-176"
+      ]
+    },
+    {
+      "id": "F3-K-031",
+      "titulo": "Fim do suporte padrão do EKS 1.34",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:46",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1589-1592",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:224"
+      ]
+    },
+    {
+      "id": "F3-K-032",
+      "titulo": "Apply que falha no meio não corrompe o estado",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:391-401"
+      ]
+    },
+    {
+      "id": "F3-K-033",
+      "titulo": "Tags project e phase em minúsculas via default_tags",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/DECISOES.md:246-254",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:300-302"
+      ]
+    },
+    {
+      "id": "F3-K-034",
+      "titulo": "Cinco estados de evidência que não se substituem",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "LEIA-PRIMEIRO",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:14",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:139",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:26",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:97",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:322-333",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:303",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:305",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:320",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:337"
+      ]
+    },
+    {
+      "id": "F3-K-035",
+      "titulo": "Legenda de estados no checklist",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:256",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:262",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:9-18",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:73"
+      ]
+    },
+    {
+      "id": "F3-K-036",
+      "titulo": "Health verde não prova banco pronto",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:911-915",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1010-1012",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1552"
+      ]
+    },
+    {
+      "id": "F3-K-037",
+      "titulo": "Compose integrado como validação barata antes do cluster",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:109",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:113",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:157",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:169",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:91",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/TESTE_COMPOSE.md:1-44"
+      ]
+    },
+    {
+      "id": "F3-K-038",
+      "titulo": "Documentação divergente do código é risco real",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:254-263",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:318",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:335",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:78-95",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:59-71",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_EXECUCAO.md:3-25"
+      ]
+    },
+    {
+      "id": "F3-K-039",
+      "titulo": "Ausência de testes unitários na Fase 3 (fato superado)",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "RELATORIO_MESCLA",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:113",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:142",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:99"
+      ]
+    },
+    {
+      "id": "F3-K-040",
+      "titulo": "Não expor segredos no terminal",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "LEIA-PRIMEIRO",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:979-995",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1051",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1065-1076",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1146-1153",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1245-1246"
+      ]
+    },
+    {
+      "id": "F3-K-041",
+      "titulo": "O que nunca se versiona",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "ORGANIZACAO",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/ORGANIZACAO_DE_PASTAS_2026-08-27.md:70-72",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:69",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:48",
+        "docs/00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md:46"
+      ]
+    },
+    {
+      "id": "F3-K-042",
+      "titulo": "continue-on-error escondia um CVE crítico real; medir antes de endurecer",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:183",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:232-235",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:519",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:946-952",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:68"
+      ]
+    },
+    {
+      "id": "F3-K-043",
+      "titulo": "Upgrade de dependência por segurança arrasta a versão do Go",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:294-301"
+      ]
+    },
+    {
+      "id": "F3-K-044",
+      "titulo": "Classificação dos controles DevSecOps e de segurança",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:501-503",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:525-527"
+      ]
+    },
+    {
+      "id": "F3-K-045",
+      "titulo": "Fluxo dev, PR e main, com merge que preserva histórico",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "LEIA-PRIMEIRO",
+      "fontes": [
+        "docs/00_COLAB_IA/DECISOES.md:80-109",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:49-50",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:653-654",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:837",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:168"
+      ]
+    },
+    {
+      "id": "F3-K-046",
+      "titulo": "Nunca git add de tudo",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "LEIA-PRIMEIRO",
+      "fontes": [
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:51-52",
+        "docs/00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md:72",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:49-50"
+      ]
+    },
+    {
+      "id": "F3-K-047",
+      "titulo": "Merge escolhendo um lado inteiro perde código em silêncio",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:122",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:169",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:266-281"
+      ]
+    },
+    {
+      "id": "F3-K-048",
+      "titulo": "Bot GitOps faz push direto na main",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:11",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:85",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:123-130",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:637-640",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1539"
+      ]
+    },
+    {
+      "id": "F3-K-049",
+      "titulo": "Sincronizar a dev com a main antes de editar",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:53-64",
+        "docs/00_COLAB_IA/LEIA-PRIMEIRO.md:37"
+      ]
+    },
+    {
+      "id": "F3-K-050",
+      "titulo": "Cada fato com detalhe em um só documento",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "ORGANIZACAO",
+      "fontes": [
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:91-105",
+        "docs/00_COLAB_IA/LEIA-PRIMEIRO.md:19-26",
+        "docs/00_COLAB_IA/DECISOES.md:10-17"
+      ]
+    },
+    {
+      "id": "F3-K-051",
+      "titulo": "Arquivo morto e movimentos em commit separado",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "ORGANIZACAO",
+      "fontes": [
+        "docs/00_COLAB_IA/LEIA-PRIMEIRO.md:30-32",
+        "docs/00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md:42",
+        "docs/00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md:50",
+        "docs/00_COLAB_IA/DECISOES.md:22",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:95",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:70",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:73"
+      ]
+    },
+    {
+      "id": "F3-K-052",
+      "titulo": "Nomes e destinos de arquivos",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "ORGANIZACAO",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/ORGANIZACAO_DE_PASTAS_2026-08-27.md:48-68",
+        "docs/00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md:33-44"
+      ]
+    },
+    {
+      "id": "F3-K-053",
+      "titulo": "Verificações de documentação antes de fechar",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:42",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:117",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:146",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:163",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:204",
+        "docs/00_COLAB_IA/DECISOES.md:10-17"
+      ]
+    },
+    {
+      "id": "F3-K-054",
+      "titulo": "Relatório em Markdown versionado e PDF reproduzível",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/gerar-relatorio-pdf_2026-09-11_v00.py:1-69",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/gerar-relatorio-pdf_2026-09-11_v00.py:104-210",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:46-62",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:117-121",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:820-824"
+      ]
+    },
+    {
+      "id": "F3-K-055",
+      "titulo": "README de serviço não é fonte para decisão de infraestrutura",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "LEIA-PRIMEIRO",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:435-437",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:116",
+        "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:26"
+      ]
+    },
+    {
+      "id": "F3-K-056",
+      "titulo": "Documento público sem IA, assistentes nem códigos internos (regra da Fase 3)",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "PENDENCIAS",
+      "fontes": [
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:39",
+        "docs/00_COLAB_IA/LEIA-PRIMEIRO.md:28",
+        "docs/00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md:37",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:40",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:146"
+      ]
+    },
+    {
+      "id": "F3-K-057",
+      "titulo": "Procurar a informação na fonte óbvia",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "LEIA-PRIMEIRO",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:363",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:375",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:422",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:424"
+      ]
+    },
+    {
+      "id": "F3-K-058",
+      "titulo": "Registros não são prova: confrontar com código e Git",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "LEIA-PRIMEIRO",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:6",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:11",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:80",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:12",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/PLANO_AUDITORIA_2026-09-09_v01.md:23",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:267",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:295",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:316",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:322"
+      ]
+    },
+    {
+      "id": "F3-K-059",
+      "titulo": "Formato do LOG e das notas de topo",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "LEIA-PRIMEIRO",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:10-12",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:165",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:198-202",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:237-271",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:297",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:3-10",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:38-43"
+      ]
+    },
+    {
+      "id": "F3-K-060",
+      "titulo": "Onde registrar e ritual de sessão",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "LEIA-PRIMEIRO",
+      "fontes": [
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:107-114",
+        "docs/00_COLAB_IA/LEIA-PRIMEIRO.md:34-39",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:1-25",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:214-220",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:1-7"
+      ]
+    },
+    {
+      "id": "F3-K-061",
+      "titulo": "Preferências de escrita e de código do usuário",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "LEIA-PRIMEIRO",
+      "fontes": [
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:38-45",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:8-9",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:63-72",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:162-169",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:51-56",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:371",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:393-395"
+      ]
+    },
+    {
+      "id": "F3-K-062",
+      "titulo": "Comandos que exigem pedido explícito",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "LEIA-PRIMEIRO",
+      "fontes": [
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:70",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:81",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:155",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:157",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:167"
+      ]
+    },
+    {
+      "id": "F3-K-063",
+      "titulo": "Registrar por escrito qualquer combinado com professores",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:32",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:28"
+      ]
+    },
+    {
+      "id": "F3-K-064",
+      "titulo": "Entregar o básico que funciona; extras só com justificativa",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:69",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:111",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:159-175",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:27"
+      ]
+    },
+    {
+      "id": "F3-K-065",
+      "titulo": "Requisitos da Fase 3 que a base não pode regredir",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/auditoria-2026-09-09/pdf/enunciado-fiap-texto-por-pagina-2026-09-09.txt:53-118"
+      ]
+    },
+    {
+      "id": "F3-K-066",
+      "titulo": "Gravação de 2026-09-11 saiu sem áudio",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:3-5",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:45-46",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:137-142",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:1059"
+      ]
+    },
+    {
+      "id": "F3-K-067",
+      "titulo": "Nada é destruído antes de o vídeo estar validado",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:51-52",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:739-747"
+      ]
+    },
+    {
+      "id": "F3-K-068",
+      "titulo": "Formato de runbook que funcionou",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:7-39",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:854-1065",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:528-534"
+      ]
+    },
+    {
+      "id": "F3-K-069",
+      "titulo": "Captura automatizada da estimativa do AWS Pricing Calculator",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/capturar-estimativa-aws_2026-09-11.cjs:1-49",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:399-401"
+      ]
+    },
+    {
+      "id": "F3-K-070",
+      "titulo": "Documentação oficial consultada na Fase 3",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "RELATORIO_MESCLA",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:38",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:46",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:101",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:130",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:173",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:100",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:131",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:191",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:206",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:220"
+      ]
+    },
+    {
+      "id": "F3-K-071",
+      "titulo": "Índice de documentos de apoio da Fase 3",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "RELATORIO_MESCLA",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:7",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:22",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:58",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:83-85",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1628-1636"
+      ]
+    },
+    {
+      "id": "F3-K-072",
+      "titulo": "Execuções e identificadores Git da Fase 3",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "RELATORIO_MESCLA",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:174-192",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:65",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:239-242",
+        "docs/00_COLAB_IA/DECISOES.md:17",
+        "docs/00_COLAB_IA/DECISOES.md:36",
+        "docs/00_COLAB_IA/DECISOES.md:51",
+        "docs/00_COLAB_IA/DECISOES.md:90-92"
+      ]
+    },
+    {
+      "id": "F3-K-073",
+      "titulo": "Formato preferido para guias de estudo",
+      "lote": "consolidar_PROC-B",
+      "destino_original": "RELATORIO_MESCLA",
+      "fontes": [
+        "docs/00_COLAB_IA/DECISOES.md:300-338"
+      ]
+    },
+    {
+      "id": "F3-K-074",
+      "titulo": "Arquitetura de referência da base herdada",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/ARQUITETURA.md:11-29",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/ARQUITETURA.md:61-91",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:88-89",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:86-87",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:97",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:109",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:140",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:41",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:81-83",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:96-97"
+      ]
+    },
+    {
+      "id": "F3-K-075",
+      "titulo": "Estrutura do monorepo",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "ORGANIZACAO",
+      "fontes": [
+        "docs/00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md:9-29"
+      ]
+    },
+    {
+      "id": "F3-K-076",
+      "titulo": "Serviços, portas, nomes canônicos e configuração por ambiente",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:24",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:32",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:130",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:411",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:413",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:421",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:279-281",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:7",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:73",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:411",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:447"
+      ]
+    },
+    {
+      "id": "F3-K-077",
+      "titulo": "Fluxo da aplicação e contrato da API de avaliação",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:310-326",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1231-1266",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1334-1370",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:130"
+      ]
+    },
+    {
+      "id": "F3-K-078",
+      "titulo": "Ambiente local Docker Compose",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:85-256",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:402-415"
+      ]
+    },
+    {
+      "id": "F3-K-079",
+      "titulo": "Abordagem híbrida Terraform + ArgoCD",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:537-539",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:549-551"
+      ]
+    },
+    {
+      "id": "F3-K-080",
+      "titulo": "Node group, limites de instância e sizing",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/DECISOES.md:156-168",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:428",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:432"
+      ]
+    },
+    {
+      "id": "F3-K-081",
+      "titulo": "Bancos: 2 RDS e targeting em StatefulSet",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/DECISOES.md:170-182",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:389"
+      ]
+    },
+    {
+      "id": "F3-K-082",
+      "titulo": "Versões fixadas e prazo de suporte do EKS",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:155",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:195",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:224-230"
+      ]
+    },
+    {
+      "id": "F3-K-083",
+      "titulo": "Três camadas, conteúdo e estados",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/DECISOES.md:21",
+        "docs/00_COLAB_IA/DECISOES.md:136",
+        "docs/00_COLAB_IA/DECISOES.md:138-154",
+        "docs/00_COLAB_IA/DECISOES.md:232-244",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:26-29",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:524-528",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:762",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:829-830",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1574-1577",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:203-217",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:144-149",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:63-67",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:82-85",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:97-103",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/ARQUITETURA.md:57-59"
+      ]
+    },
+    {
+      "id": "F3-K-084",
+      "titulo": "Contagem de recursos por camada",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:51",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:54",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:87",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:153",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:223",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:211-219",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:224-232",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:264",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:366-374"
+      ]
+    },
+    {
+      "id": "F3-K-085",
+      "titulo": "Ordem de apply e dependência por remote state",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:257",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:345",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:351",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:166-173"
+      ]
+    },
+    {
+      "id": "F3-K-086",
+      "titulo": "Camada k8s exige dois applies em cluster novo",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:774-803",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1546"
+      ]
+    },
+    {
+      "id": "F3-K-087",
+      "titulo": "Backend S3 e bootstrap do bucket de estado",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:254",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:75",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:83",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:165",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/BOOTSTRAP-BACKEND-S3_2026-08-27.md:103",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/BOOTSTRAP-BACKEND-S3_2026-08-27.md:133-165",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/BOOTSTRAP-BACKEND-S3_2026-08-27.md:195-291",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:75-80",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:322",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:319"
+      ]
+    },
+    {
+      "id": "F3-K-088",
+      "titulo": "Flags de exclusão destrutiva no Terraform herdado",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:11-25",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:27-34"
+      ]
+    },
+    {
+      "id": "F3-K-089",
+      "titulo": "Versões do Terraform, providers e tags de custo",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:393",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:395",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:399",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:401",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:430",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:431"
+      ]
+    },
+    {
+      "id": "F3-K-090",
+      "titulo": "Ciclo GitOps com Kustomize e ArgoCD",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/DECISOES.md:184-194",
+        "docs/00_COLAB_IA/DECISOES.md:208-230",
+        "docs/00_COLAB_IA/DECISOES.md:256-266",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:18",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:31",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:61-65",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:125-146",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:68",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:463-489",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:411-420"
+      ]
+    },
+    {
+      "id": "F3-K-091",
+      "titulo": "selfHeal do ArgoCD, HPA e self-healing da Fase 4",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:61-65",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:31",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:477-488",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:842-857"
+      ]
+    },
+    {
+      "id": "F3-K-092",
+      "titulo": "Overlay prod: arquivos e preenchimento após o apply",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:817-857",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:902-905",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:166-173",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:260-291",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:21",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:83",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:95",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:523-547"
+      ]
+    },
+    {
+      "id": "F3-K-093",
+      "titulo": "Estado esperado do cluster e addons obrigatórios",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:767",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:907-915",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1374-1412",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:363",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:389",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:125-130",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:613-630",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:733-734"
+      ]
+    },
+    {
+      "id": "F3-K-094",
+      "titulo": "Render do gitops: contagens históricas",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "RELATORIO_MESCLA",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:381-389",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:96-97"
+      ]
+    },
+    {
+      "id": "F3-K-095",
+      "titulo": "Identidade sem chave AWS estática e trust da role do CI",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/DECISOES.md:14",
+        "docs/00_COLAB_IA/DECISOES.md:200",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:134",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:260",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:419",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:53",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:114-116",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:321-324",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:100",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:110-116",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/ARQUITETURA.md:93-106",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/EVIDENCIAS.md:16"
+      ]
+    },
+    {
+      "id": "F3-K-096",
+      "titulo": "Segredos gerados pelo Terraform e contrato de Secrets",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/DECISOES.md:118-136"
+      ]
+    },
+    {
+      "id": "F3-K-097",
+      "titulo": "Regras de segredos, state e gravação",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "LEIA-PRIMEIRO",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:129",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:145-147",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:156-157",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:347-397",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:456-461",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/BOOTSTRAP-BACKEND-S3_2026-08-27.md:11-19",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:477-483",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:507"
+      ]
+    },
+    {
+      "id": "F3-K-098",
+      "titulo": "ID da conta no nome do bucket de estado",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:423",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:416",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:7"
+      ]
+    },
+    {
+      "id": "F3-K-099",
+      "titulo": "DevSecOps: Trivy bloqueante, exceções e demonstração",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:234-237",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:303-308",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:366-368",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:410",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:72",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:51-53",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:89",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:57-59",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:735-736",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1538"
+      ]
+    },
+    {
+      "id": "F3-K-100",
+      "titulo": "Criptografia em repouso e lacunas de segurança herdadas",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:100",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:110-116",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:165",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:171",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:32"
+      ]
+    },
+    {
+      "id": "F3-K-101",
+      "titulo": "Inventário da conta AWS da Fase 3 (2026-09-11)",
+      "lote": "consolidar_TEC-A",
+      "destino_original": "RELATORIO_MESCLA",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:11-25",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:172",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:224-225",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:254-258",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:659"
+      ]
+    },
+    {
+      "id": "F3-K-102",
+      "titulo": "Ordem obrigatória: base, imagens no ECR, cluster, kubeconfig, k8s; destroy na ordem inversa",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/DECISOES.md:29-43",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:13",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:122-123",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_EXECUCAO.md:35-38",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:23-31",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:425",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:363",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:192-197"
+      ]
+    },
+    {
+      "id": "F3-K-103",
+      "titulo": "Camada k8s em duas etapas por causa do CRD Application",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_EXECUCAO.md:35-38",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:113-114",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:42-48",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:111",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:50",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:63",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:127",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:428-457",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:759-777",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:211-222"
+      ]
+    },
+    {
+      "id": "F3-K-104",
+      "titulo": "ECR vazio e republicação das imagens",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:52",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:77",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:618-736",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1537-1541",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:219-244",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:288-331",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:1028-1037",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:87"
+      ]
+    },
+    {
+      "id": "F3-K-105",
+      "titulo": "kubeconfig após recriação e principal IAM único",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:125-126",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:53",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:749-757"
+      ]
+    },
+    {
+      "id": "F3-K-106",
+      "titulo": "Nunca usar terraform apply interativo",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "LEIA-PRIMEIRO",
+      "fontes": [
+        "docs/00_COLAB_IA/DECISOES.md:33",
+        "docs/00_COLAB_IA/DECISOES.md:38"
+      ]
+    },
+    {
+      "id": "F3-K-107",
+      "titulo": "Ligar o NAT antes do cluster e desligar ao fim; tfvars.example vem com NAT desligado",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:179-201",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:613-627",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:657",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:129",
+        "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:35",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:28",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:296-298"
+      ]
+    },
+    {
+      "id": "F3-K-108",
+      "titulo": "Ordem de encerramento completo",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:7",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:8",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:9",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:71",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:148",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:157",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:161",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:749-811",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:897-915"
+      ]
+    },
+    {
+      "id": "F3-K-109",
+      "titulo": "EBS do PVC fica órfão se o cluster sair antes da camada k8s",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/DECISOES.md:37",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:128",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:8-9",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:7",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:77-89",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:118-131",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:193"
+      ]
+    },
+    {
+      "id": "F3-K-110",
+      "titulo": "Conferência de sobras depois do destroy",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:167-193",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:629-649",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1416-1524",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:749-811",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:992-996",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:161"
+      ]
+    },
+    {
+      "id": "F3-K-111",
+      "titulo": "Bucket de estado: fora do Terraform, apagado por último",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:35",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:98",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:130",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:195-206"
+      ]
+    },
+    {
+      "id": "F3-K-112",
+      "titulo": "Erros comuns no bootstrap do bucket e do backend",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/BOOTSTRAP-BACKEND-S3_2026-08-27.md:328-339"
+      ]
+    },
+    {
+      "id": "F3-K-113",
+      "titulo": "DependencyViolation em VPC ou subnet no destroy",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:165",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:608-611",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1416-1524"
+      ]
+    },
+    {
+      "id": "F3-K-114",
+      "titulo": "Pipelines e identidade do CI durante o encerramento",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:23",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:36"
+      ]
+    },
+    {
+      "id": "F3-K-115",
+      "titulo": "Retenção de log groups e sobras de fases anteriores",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:14-17",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:161"
+      ]
+    },
+    {
+      "id": "F3-K-116",
+      "titulo": "Schemas do RDS não são aplicados no caminho AWS; health verde não prova banco pronto",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:331-345",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:432-445",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:130",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:50-56",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:40",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:29",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:62",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:92",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1001-1153",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:491-594"
+      ]
+    },
+    {
+      "id": "F3-K-117",
+      "titulo": "Seed na AWS e dono único da SERVICE_API_KEY",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:465-557",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1205-1412",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:491-594",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:1008-1011",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:865-867",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:64-70",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:51",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:113-115",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:30-31",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:46"
+      ]
+    },
+    {
+      "id": "F3-K-118",
+      "titulo": "Parâmetros do /evaluate e única regra implementada",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:58-62",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:39",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:93",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:134-135",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:22"
+      ]
+    },
+    {
+      "id": "F3-K-119",
+      "titulo": "Armadilhas do ambiente local (Compose)",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:205-209",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1559-1563"
+      ]
+    },
+    {
+      "id": "F3-K-120",
+      "titulo": "REDIS_URL, fila, ARNs IRSA e imagens fixos no overlay",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:72-76",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:52",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:463-476",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:977-1006",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:250",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:320",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:363",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:30-31",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:653-664"
+      ]
+    },
+    {
+      "id": "F3-K-121",
+      "titulo": "Estrutura dos nove workflows e dos jobs",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:194-230",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:299-338",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:678-693",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:91-105",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:118-119",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:47-57",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:145-157",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:30",
+        "docs/00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md:13"
+      ]
+    },
+    {
+      "id": "F3-K-122",
+      "titulo": "Gatilhos por caminho e efeito de levar mudanças à main",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:72-89",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:14",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:107",
+        "docs/00_COLAB_IA/DECISOES.md:12",
+        "docs/00_COLAB_IA/DECISOES.md:24",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:618-736"
+      ]
+    },
+    {
+      "id": "F3-K-123",
+      "titulo": "Filtros paths não incluem .pylintrc nem .trivyignore; checks obrigatórios",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:115",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:130"
+      ]
+    },
+    {
+      "id": "F3-K-124",
+      "titulo": "Robô do CI comita na main; sincronizar a dev",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/DECISOES.md:61-77",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:215-219",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:1028-1037"
+      ]
+    },
+    {
+      "id": "F3-K-125",
+      "titulo": "Laço idempotente do job gitops em vez de concurrency e rebase",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:283-292"
+      ]
+    },
+    {
+      "id": "F3-K-126",
+      "titulo": "Run cancelado por novo push e fila parada",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:378-379",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:945-952",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:1017-1026",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:642-646",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:618-736"
+      ]
+    },
+    {
+      "id": "F3-K-127",
+      "titulo": "Falha de OIDC no CI e escopo da trust da role",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:642-646",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:705-706",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:148",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:23-31"
+      ]
+    },
+    {
+      "id": "F3-K-128",
+      "titulo": "Regra do Trivy, exceções nominais e rerun",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:30",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:87",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:910-943",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:184-187"
+      ]
+    },
+    {
+      "id": "F3-K-129",
+      "titulo": "Pipeline verde com continue-on-error escondia CVE crítico",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:176-190",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:105-109"
+      ]
+    },
+    {
+      "id": "F3-K-130",
+      "titulo": "Versões de actions e ferramentas que quebraram e foram fixadas",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:381-389",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:238-239",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:425",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:387"
+      ]
+    },
+    {
+      "id": "F3-K-131",
+      "titulo": "Versões e imagens base herdadas",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:184-187",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:194-209",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:255-261",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:663-665"
+      ]
+    },
+    {
+      "id": "F3-K-132",
+      "titulo": "Riscos esperados na primeira execução do CI",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:167-188"
+      ]
+    },
+    {
+      "id": "F3-K-133",
+      "titulo": "Trivy local diverge do CI; dependência vulnerável na primeira linha",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:131",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:66",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:337-345",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:243-251",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:642-645"
+      ]
+    },
+    {
+      "id": "F3-K-134",
+      "titulo": "Compose Integration como teste integrado",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:345-400"
+      ]
+    },
+    {
+      "id": "F3-K-135",
+      "titulo": "Verificações locais mínimas e validate-all.sh no Windows",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:252",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:269",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:303",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:320"
+      ]
+    },
+    {
+      "id": "F3-K-136",
+      "titulo": "security-check.sh e IDs de conta proibidos",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:251",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:301",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:89-90",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:42",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:53"
+      ]
+    },
+    {
+      "id": "F3-K-137",
+      "titulo": "Estimativa oficial da Fase 3 no AWS Pricing Calculator (2026-09-11)",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/ESTIMATIVA_CUSTOS_AWS.md:1-35",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:245-298",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:66",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:369-415",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1567-1581",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1611-1612",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:440-444",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:33",
+        "docs/00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md:23",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:135",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:148",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:200",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:90",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:426"
+      ]
+    },
+    {
+      "id": "F3-K-138",
+      "titulo": "NAT Gateway é o principal custo parado",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:51-56",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:614-616",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1478-1480",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1583-1587",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1622-1624",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:296-298",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:411",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:200-201",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:625-627"
+      ]
+    },
+    {
+      "id": "F3-K-139",
+      "titulo": "Suporte estendido do EKS custa 6x",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:89",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:101-103",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:295",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:301",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:312",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:318",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:511-514",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/ARQUITETURA.md:48-51"
+      ]
+    },
+    {
+      "id": "F3-K-140",
+      "titulo": "Referências de custo por componente e crédito da conta anterior",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/DECISOES.md:144",
+        "docs/00_COLAB_IA/DECISOES.md:164",
+        "docs/00_COLAB_IA/DECISOES.md:176",
+        "docs/00_COLAB_IA/DECISOES.md:210",
+        "docs/00_COLAB_IA/DECISOES.md:216",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/ARQUITETURA.md:33-35",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_EXECUCAO.md:39-42",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:120-122",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:21-26",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:522-524",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:13-19",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/BOOTSTRAP-BACKEND-S3_2026-08-27.md:324-326",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:97"
+      ]
+    },
+    {
+      "id": "F3-K-141",
+      "titulo": "O que continua cobrando depois do destroy",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1614-1620",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1522-1524",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:200",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:647-649",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:212"
+      ]
+    },
+    {
+      "id": "F3-K-142",
+      "titulo": "Disciplina de sessões curtas e destroy ao fim",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:389",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:359",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:369",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:347",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:140-142",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1611-1612",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:3-4"
+      ]
+    },
+    {
+      "id": "F3-K-143",
+      "titulo": "Tempos medidos na sessão de 2026-09-11",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1594-1612",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:588-592",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:747-749",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1418-1426",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1436",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1444",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1488"
+      ]
+    },
+    {
+      "id": "F3-K-144",
+      "titulo": "Tempos de destroy medidos por camada",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:67-70"
+      ]
+    },
+    {
+      "id": "F3-K-145",
+      "titulo": "Estimativas de duração (não medidas)",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:154-181",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:264-268",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:363-364",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:481",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:674",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:754-788",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:1057-1059",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:289-291",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:732-734",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:3-5",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:177",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:203-213",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:231",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:668-681",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:148",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:140"
+      ]
+    },
+    {
+      "id": "F3-K-146",
+      "titulo": "Contagens de objetos Terraform e leitura do plan como guarda",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:5-15",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:212-213",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:35-43",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:83",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:5",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:9",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:7-9",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:585-592",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:751-754",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1491-1494"
+      ]
+    },
+    {
+      "id": "F3-K-147",
+      "titulo": "Pré-voo antes de sessão paga",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:221-230",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:234",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:446-520"
+      ]
+    },
+    {
+      "id": "F3-K-148",
+      "titulo": "Provedor OIDC do GitHub já existente na conta",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:87",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:93",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1528-1555"
+      ]
+    },
+    {
+      "id": "F3-K-149",
+      "titulo": "Limites do plano gratuito na conta da Fase 3",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:152-165",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:39",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:89"
+      ]
+    },
+    {
+      "id": "F3-K-150",
+      "titulo": "Tabela de diagnóstico do cluster",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1528-1555",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:769-772",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:917-923",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:653-664",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:227-229",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:968-975",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:1013-1015",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:719-720"
+      ]
+    },
+    {
+      "id": "F3-K-151",
+      "titulo": "Shell certo para cada comando no Windows",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "LEIA-PRIMEIRO",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:60-81",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:356-366",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1053-1063",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1106-1115",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1556-1562",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:28-41",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:425-427",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:57",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:75",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:232",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:46",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:132"
+      ]
+    },
+    {
+      "id": "F3-K-152",
+      "titulo": "git add só dos arquivos revisados",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "ORGANIZACAO",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:36",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:74",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:202",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1537-1541"
+      ]
+    },
+    {
+      "id": "F3-K-153",
+      "titulo": "Proteção de branch não imposta e efeitos de ativá-la",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:43",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:15",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:130"
+      ]
+    },
+    {
+      "id": "F3-K-154",
+      "titulo": "Documentos herdados podem contradizer o código",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "DOSSIE",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:80",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:22"
+      ]
+    },
+    {
+      "id": "F3-K-155",
+      "titulo": "READMEs dos serviços com região us-east-1",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "PENDENCIAS",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:414",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:160-161",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DOSSIE_CONTEXTO_2026-09-11.md:74"
+      ]
+    },
+    {
+      "id": "F3-K-156",
+      "titulo": "Linha do tempo da pilha AWS da Fase 3",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "RELATORIO_MESCLA",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:83-85",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:285",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:337-345",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:23-31"
+      ]
+    },
+    {
+      "id": "F3-K-157",
+      "titulo": "Evidências de CI/CD que rodaram na Fase 3",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "RELATORIO_MESCLA",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:105-109",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:27-28",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:115-117",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:64",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:82",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:104"
+      ]
+    },
+    {
+      "id": "F3-K-158",
+      "titulo": "Implementação paralela encontrada na main da Fase 3",
+      "lote": "consolidar_TEC-B",
+      "destino_original": "RELATORIO_MESCLA",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:354-371"
+      ]
+    }
+  ],
+  "pendencias": [
+    {
+      "id": "F3-H-001",
+      "id_original": "PROC-A-01",
+      "lote": "consolidar_PROC-A",
+      "aplicavel_original": "sim",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:3-21",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/gerar-relatorio-pdf_2026-09-11_v00.py:15-35",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:820-824"
+      ]
+    },
+    {
+      "id": "F3-H-002",
+      "id_original": "F3-P-100",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "nao",
+      "fontes": [
+        "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:11",
+        "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:53",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:14-15",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:71"
+      ]
+    },
+    {
+      "id": "F3-H-003",
+      "id_original": "F3-P-101",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "nao",
+      "fontes": [
+        "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:12",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:16",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:71"
+      ]
+    },
+    {
+      "id": "F3-H-004",
+      "id_original": "F3-P-053",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "talvez",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:3",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:23",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:208",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:216-218",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:7",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:67-71",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:167"
+      ]
+    },
+    {
+      "id": "F3-H-005",
+      "id_original": "F3-P-102",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "nao",
+      "fontes": [
+        "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:13",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:12",
+        "docs/00_COLAB_IA/DECISOES.md:16",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:81",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:206",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:31",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:278"
+      ]
+    },
+    {
+      "id": "F3-H-006",
+      "id_original": "F3-P-103",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "sim",
+      "fontes": [
+        "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:14",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:20",
+        "docs/00_COLAB_IA/DECISOES.md:15",
+        "docs/00_COLAB_IA/DECISOES.md:23",
+        "docs/00_COLAB_IA/DECISOES.md:288",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:453",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:32",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:87",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:24-25",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:226-228"
+      ]
+    },
+    {
+      "id": "F3-H-007",
+      "id_original": "F3-P-104",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "sim",
+      "fontes": [
+        "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:15"
+      ]
+    },
+    {
+      "id": "F3-H-008",
+      "id_original": "F3-P-105",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "talvez",
+      "fontes": [
+        "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:16"
+      ]
+    },
+    {
+      "id": "F3-H-009",
+      "id_original": "F3-P-110",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "sim",
+      "fontes": [
+        "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:24",
+        "docs/00_COLAB_IA/DECISOES.md:12"
+      ]
+    },
+    {
+      "id": "F3-H-010",
+      "id_original": "F3-P-111",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "sim",
+      "fontes": [
+        "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:25"
+      ]
+    },
+    {
+      "id": "F3-H-011",
+      "id_original": "F3-P-112",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "sim",
+      "fontes": [
+        "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:26",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:116",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:435-437",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:160-161"
+      ]
+    },
+    {
+      "id": "F3-H-012",
+      "id_original": "F3-P-113",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "sim",
+      "fontes": [
+        "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:27"
+      ]
+    },
+    {
+      "id": "F3-H-013",
+      "id_original": "F3-P-114",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "sim",
+      "fontes": [
+        "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:28",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/GUIA_GRAVACAO.md:980-982",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:414-415"
+      ]
+    },
+    {
+      "id": "F3-H-014",
+      "id_original": "F3-P-115",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "sim",
+      "fontes": [
+        "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:29"
+      ]
+    },
+    {
+      "id": "F3-H-015",
+      "id_original": "F3-P-120",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "sim",
+      "fontes": [
+        "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:35",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:129"
+      ]
+    },
+    {
+      "id": "F3-H-016",
+      "id_original": "F3-P-121",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "sim",
+      "fontes": [
+        "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:36"
+      ]
+    },
+    {
+      "id": "F3-H-017",
+      "id_original": "F3-P-122",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "sim",
+      "fontes": [
+        "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:37"
+      ]
+    },
+    {
+      "id": "F3-H-018",
+      "id_original": "F3-P-123",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "sim",
+      "fontes": [
+        "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:38"
+      ]
+    },
+    {
+      "id": "F3-H-019",
+      "id_original": "F3-P-124",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "sim",
+      "fontes": [
+        "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:39",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:251",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:89",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:53"
+      ]
+    },
+    {
+      "id": "F3-H-020",
+      "id_original": "F3-P-130",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "sim",
+      "fontes": [
+        "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:45",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:105",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:200-206",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:921-922"
+      ]
+    },
+    {
+      "id": "F3-H-021",
+      "id_original": "F3-P-131",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "sim",
+      "fontes": [
+        "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:46",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1589-1592",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:61",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:99-105"
+      ]
+    },
+    {
+      "id": "F3-H-022",
+      "id_original": "F3-P-132",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "talvez",
+      "fontes": [
+        "docs/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md:47",
+        "docs/00_COLAB_IA/INSTRUCOES_ASSISTENTES.md:123"
+      ]
+    },
+    {
+      "id": "F3-H-023",
+      "id_original": "F3-P-140",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "sim",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:14",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:107",
+        "docs/00_COLAB_IA/DECISOES.md:12",
+        "docs/00_COLAB_IA/DECISOES.md:24"
+      ]
+    },
+    {
+      "id": "F3-H-024",
+      "id_original": "F3-P-040",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "sim",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:250",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:288",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:363",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:260-285",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:835-839",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:72-76"
+      ]
+    },
+    {
+      "id": "F3-H-025",
+      "id_original": "F3-P-041",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "sim",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:271",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:305",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:322",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:28-29",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:331-345",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:591",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1003-1012",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:1603",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/EVIDENCIAS.md:21-36",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:50-56"
+      ]
+    },
+    {
+      "id": "F3-H-026",
+      "id_original": "F3-P-046",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "sim",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:42-48",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:50",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:63"
+      ]
+    },
+    {
+      "id": "F3-H-027",
+      "id_original": "F3-P-048",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "sim",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:58-70",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:39",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:51"
+      ]
+    },
+    {
+      "id": "F3-H-028",
+      "id_original": "F3-P-052",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "sim",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:265",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:284",
+        "docs/00_COLAB_IA/DECISOES.md:65",
+        "docs/00_COLAB_IA/DECISOES.md:77",
+        "docs/00_COLAB_IA/DECISOES.md:92",
+        "docs/00_COLAB_IA/DECISOES.md:109",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/INSTRUCOES_ASSISTENTES_2026-09-14.md:33-35",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:11"
+      ]
+    },
+    {
+      "id": "F3-H-029",
+      "id_original": "F3-P-034",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "sim",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:389",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RUNBOOK-SESSAO.md:7",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:214"
+      ]
+    },
+    {
+      "id": "F3-H-030",
+      "id_original": "F3-F-014",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "talvez",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:423",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:416"
+      ]
+    },
+    {
+      "id": "F3-H-031",
+      "id_original": "F3-D-015",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "talvez",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/AUDITORIA_FIAP_2026-09-09_v01.md:28",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/REVALIDACAO_AUDITORIA_FIAP_2026-09-09_v01.md:103",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/build-report-fase3_2026-09-14.py:315"
+      ]
+    },
+    {
+      "id": "F3-H-032",
+      "id_original": "F3-S-03",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "talvez",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:99",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:103",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/CHECKLIST_REQUISITOS_FASE3_2026-09-09.md:112-116"
+      ]
+    },
+    {
+      "id": "F3-H-033",
+      "id_original": "F3-P-059",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "talvez",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PLANO_GRAVACAO_2026-09-15.md:820-824"
+      ]
+    },
+    {
+      "id": "F3-H-034",
+      "id_original": "F3-P-074",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "nao",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/BOOTSTRAP-BACKEND-S3_2026-08-27.md:5",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/BOOTSTRAP-BACKEND-S3_2026-08-27.md:284-291",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/OPERACAO_2026-09-15.md:436-438"
+      ]
+    },
+    {
+      "id": "F3-H-035",
+      "id_original": "F3-P-035",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "nao",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:353",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:387",
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:389"
+      ]
+    },
+    {
+      "id": "F3-H-036",
+      "id_original": "F3-F-050",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "nao",
+      "fontes": [
+        "docs/00_COLAB_IA/LOG_DE_TRABALHO.md:161",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:8",
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/DESTRUIR_AWS_2026-09-11.md:214"
+      ]
+    },
+    {
+      "id": "F3-H-037",
+      "id_original": "F3-R-04",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "nao",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/PENDENCIAS_E_PROXIMOS_PASSOS_2026-09-11.md:36"
+      ]
+    },
+    {
+      "id": "F3-H-038",
+      "id_original": "F3-RELATORIO-9",
+      "lote": "consolidar_PROC-B",
+      "aplicavel_original": "nao",
+      "fontes": [
+        "docs/00_COLAB_IA/_ARQUIVO_MORTO/RELATORIO_ENTREGA_FIAP_FASE3_GRUPO203_2026-09-11_v00_PRELIMINAR.md:309-312"
+      ]
+    },
+    {
+      "id": "F3-H-039",
+      "id_original": "PF3-01",
+      "lote": "consolidar_TEC-A",
+      "aplicavel_original": "sim",
+      "fontes": [
+        "docs/00_COLAB_IA/DECISOES.md:170-182",
+        "docs/RELATORIO_DE_ENTREGA.md:41",
+        "docs/RELATORIO_DE_ENTREGA.md:48"
+      ]
+    }
+  ]
+}

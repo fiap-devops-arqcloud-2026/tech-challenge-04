@@ -1,0 +1,669 @@
+{
+ "fornecedor": "PagerDuty (Incident Management) + integração oficial PagerDuty para Slack. Verificação cética feita em 2026-11-01 contra docs.pagerduty.com, pagerduty.com (preços e termos), slack.com/help, grafana.com/docs e learn.microsoft.com. Os comandos PowerShell foram testados localmente no Windows PowerShell 5.1.26100 contra um servidor HTTP local de simulação, com chave fictícia e sem chamar o PagerDuty.",
+ "verificacoes": [
+  {
+   "item": "Passo 1: caminho ícone do usuário > Subscriptions > Your Subscription > Subscription Details; só o Account Owner vê faturamento",
+   "veredito": "confirmado",
+   "correcao": "O cartão mostra Current Plan, Stakeholder Seats, Plan Period e Renewal date. A página também cita o caminho alternativo User Icon > Account Settings > Your Subscription. Não há menção à data de fim do trial.",
+   "fonte_url": "https://docs.pagerduty.com/account-admin/billing"
+  },
+  {
+   "item": "Passo 2: política 'Default' criada no onboarding do trial",
+   "veredito": "corrigido",
+   "correcao": "O fato é verdadeiro, mas a fonte certa é a página de onboarding do trial (passo 5 do onboarding: 'creates a Default escalation policy and assigns it to your first service'), não a de escalation policies.",
+   "fonte_url": "https://docs.pagerduty.com/get-started/trial-account-onboarding"
+  },
+  {
+   "item": "Passo 2: 'Default Mobilization EP' vazia e interna; Free limitado a 1 escalation policy; cada regra precisa de pelo menos um alvo; caminho People > Escalation Policies",
+   "veredito": "confirmado",
+   "correcao": "A doc confirma: política vazia, interna e de nível de conta, presente em toda conta. A doc NÃO diz explicitamente 'não use'. Não use porque ela não tem alvo, o que é inferência. A doc também não diz se ela conta no limite do Free.",
+   "fonte_url": "https://docs.pagerduty.com/incident-management/schedules/escalation-policies"
+  },
+  {
+   "item": "Passo 3: assistente New Service (Name/Description, Generate/Select escalation policy, etapa de agrupamento, Integrations, 'Create service without an integration', 'Create Service')",
+   "veredito": "confirmado",
+   "correcao": "A etapa de agrupamento exige PagerDuty AIOps / Signal Intelligence; sem isso, o assistente pula para Integrations. O rótulo 'Reduce Noise' é da aba Settings, não do assistente.",
+   "fonte_url": "https://docs.pagerduty.com/incident-management/services/services-and-integrations"
+  },
+  {
+   "item": "Passo 4: urgência padrão 'High-urgency notifications, escalate as needed'; auto-resolução e re-trigger de ack desligados por padrão; caminho Settings > Assign and Notify > Edit",
+   "veredito": "confirmado",
+   "correcao": "As opções disponíveis dependem do plano. Alert Grouping exige o add-on AIOps ou um trial de AIOps.",
+   "fonte_url": "https://docs.pagerduty.com/incident-management/services/configurable-service-settings"
+  },
+  {
+   "item": "Passo 5: 'Add another integration' > Events API V2 > Add; Integration Key na linha da integração; papéis Manager/Admin/Global Admin/Account Owner; máximo de 250 integrações por serviço",
+   "veredito": "confirmado",
+   "correcao": "A doc diz para clicar à direita da linha para ver a 'Integration Key', sem nomear o controle. A chave tem 32 caracteres (routing_key).",
+   "fonte_url": "https://docs.pagerduty.com/incident-management/services/services-and-integrations"
+  },
+  {
+   "item": "Passo 5: 'se vazar, apague a integração e crie outra (a chave muda)'",
+   "veredito": "nao_verificavel",
+   "correcao": "Nenhuma página consultada descreve rotação ou regeneração da Integration Key. Apagar a integração e criar outra é um procedimento razoável, mas não está documentado.",
+   "fonte_url": "https://docs.pagerduty.com/incident-management/services/services-and-integrations"
+  },
+  {
+   "item": "Passo 6: Add Email Address (Work/Home, Save); aparelho registrado para push ao fazer login no app; 'Expired' resolve removendo o contato e logando de novo",
+   "veredito": "confirmado",
+   "correcao": "Limite geral: até 10 meios de contato por usuário.",
+   "fonte_url": "https://docs.pagerduty.com/account-admin/user-profile/contact-information"
+  },
+  {
+   "item": "Passo 6: app exige iOS 17+ / Android 12+",
+   "veredito": "corrigido",
+   "correcao": "Correto hoje, mas a doc avisa que a partir de 16/11/2026 as novas versões do app exigem iOS 18+ ou Android 13+.",
+   "fonte_url": "https://docs.pagerduty.com/get-started/mobile-app"
+  },
+  {
+   "item": "Passo 6 / limites: SMS e voz limitados a 100 por mês no Free",
+   "veredito": "confirmado",
+   "correcao": "A página de billing diz 'Free accounts can use 100 SMS and phone notifications per month'. A tabela de preços mostra '100/month'.",
+   "fonte_url": "https://docs.pagerduty.com/account-admin/billing"
+  },
+  {
+   "item": "Passo 7: My Profile > Notification Rules; seções 'High urgency incident notifications' e 'Low urgency incident notifications'; '+', minutos, meio de contato, Save; recomendação de incluir push e escalonar atrasos",
+   "veredito": "confirmado",
+   "correcao": "Os meios de contato precisam existir antes das regras.",
+   "fonte_url": "https://docs.pagerduty.com/account-admin/user-profile/notification-rules"
+  },
+  {
+   "item": "Passo 7: push de baixa urgência é silencioso por padrão",
+   "veredito": "confirmado",
+   "correcao": "Não está na página de notification rules, e sim em Mobile App Settings. Fonte trocada.",
+   "fonte_url": "https://support.pagerduty.com/docs/mobile-app-settings"
+  },
+  {
+   "item": "Comandos: endpoint POST https://events.pagerduty.com/v2/enqueue; campos obrigatórios do trigger (routing_key, event_action, payload.summary, payload.source, payload.severity); severity critical|error|warning|info",
+   "veredito": "confirmado",
+   "correcao": "Os campos opcionais component, group, class, custom_details, timestamp, links e images TAMBÉM estão documentados nessa página. A incerteza anterior de que só os obrigatórios eram confirmados está corrigida.",
+   "fonte_url": "https://docs.pagerduty.com/developer/send-alert-event"
+  },
+  {
+   "item": "dedup_key: obrigatório para acknowledge/resolve; mesmo routing_key; após resolvido, novo trigger cria novo alerta e ack/resolve são descartados",
+   "veredito": "confirmado",
+   "correcao": "A referência da API marca dedup_key como 'required for everything except trigger'. A página de envio acrescenta: sem dedup_key no trigger, o PagerDuty gera um único.",
+   "fonte_url": "https://docs.pagerduty.com/developer/api/reference/events-v2/send-event/create-v2-event"
+  },
+  {
+   "item": "Resposta de sucesso HTTP 202 com {\"status\":\"success\",\"message\":\"Event processed\",\"dedup_key\":...}",
+   "veredito": "confirmado",
+   "correcao": "A referência mostra esse corpo como exemplo de resposta, sem rotulá-lo explicitamente como 202. A visão geral define 202 como 'Accepted'.",
+   "fonte_url": "https://docs.pagerduty.com/developer/api/reference/events-v2/send-event/create-v2-event"
+  },
+  {
+   "item": "Códigos 400 (não repetir), 429 e 5xx (repetir depois de um tempo); payload de até 512 KB; limite de taxa dinâmico por serviço",
+   "veredito": "confirmado",
+   "correcao": "Erro de rede também deve ser repetido.",
+   "fonte_url": "https://docs.pagerduty.com/developer/events-api-v2-overview"
+  },
+  {
+   "item": "Limites summary 1024 e dedup_key 255 atribuídos à página Events API v2 Overview",
+   "veredito": "corrigido",
+   "correcao": "Os valores estão certos, mas aparecem na página 'Send an Alert Event', não na Overview.",
+   "fonte_url": "https://docs.pagerduty.com/developer/send-alert-event"
+  },
+  {
+   "item": "Comando 1: forçar TLS 1.2 com -bor Tls12 sempre",
+   "veredito": "corrigido",
+   "correcao": "Neste Windows 11, o PowerShell 5.1 já mostra SecurityProtocol = SystemDefault (testado em 2026-11-01). A Microsoft recomenda não fixar a versão: fixar impede o TLS 1.3, e o Windows 11 usa TLS 1.3. Agora o comando só acrescenta Tls12 se o valor NÃO for SystemDefault.",
+   "fonte_url": "https://learn.microsoft.com/en-us/dotnet/framework/network-programming/tls"
+  },
+  {
+   "item": "Comando 1: Read-Host -AsSecureString + SecureStringToBSTR/PtrToStringBSTR/ZeroFreeBSTR",
+   "veredito": "confirmado",
+   "correcao": "A sintaxe foi validada com o parser do PowerShell 5.1 (0 erros). A leitura interativa não pôde ser executada pelo verificador porque não há console interativo. É a técnica padrão de .NET Framework.",
+   "fonte_url": "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/read-host?view=powershell-5.1"
+  },
+  {
+   "item": "Comando 2: ConvertTo-Json -Depth 5 e Invoke-WebRequest -Body com bytes UTF-8 e -UseBasicParsing",
+   "veredito": "confirmado",
+   "correcao": "Testado localmente: gera JSON válido com payload e custom_details aninhados e recebe 202 e corpo corretos. Observação: se os comandos forem salvos num .ps1 UTF-8 sem BOM, o PowerShell 5.1 lê acentos como ANSI e os corrompe. Por isso os textos dos comandos ficaram sem acento.",
+   "fonte_url": "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/convertto-json?view=powershell-5.1"
+  },
+  {
+   "item": "Comandos 2/3: ler o corpo do erro com New-Object IO.StreamReader($r.GetResponseStream())",
+   "veredito": "corrigido",
+   "correcao": "Testado no PowerShell 5.1 com um servidor local que respondia 400: o StreamReader devolveu corpo VAZIO, porque o cmdlet já consumiu o stream. Já $_.ErrorDetails.Message trouxe o corpo completo. Todos os blocos catch foram trocados.",
+   "fonte_url": "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-webrequest?view=powershell-5.1"
+  },
+  {
+   "item": "Comando 4: Remove-Variable sem $dedup",
+   "veredito": "corrigido",
+   "correcao": "Incluídas dedup e pdUrl na limpeza. O dedup_key não é segredo, mas a limpeza fica completa.",
+   "fonte_url": "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/remove-variable?view=powershell-5.1"
+  },
+  {
+   "item": "Passo 9: Integrations > Extensions > Slack; Authorize Integration; Add Workspace; Allow; Link Account; PagerDuty Admin/Global Admin/Account Owner; Slack workspace admin ou owner",
+   "veredito": "confirmado",
+   "correcao": "Depois da configuração inicial, Team Managers, Admins e Account Owners podem configurar canais de um serviço.",
+   "fonte_url": "https://docs.pagerduty.com/integrations/slack-integration-guide"
+  },
+  {
+   "item": "Slack Free: até 10 apps; histórico de 90 dias",
+   "veredito": "confirmado",
+   "correcao": "A página acrescenta que mensagens e arquivos com mais de 1 ano são apagados permanentemente.",
+   "fonte_url": "https://slack.com/help/articles/115002422943-Message-file-and-app-limits-on-the-free-version-of-Slack"
+  },
+  {
+   "item": "Passo 10: /pd link em canal público; /pdeu na região EU",
+   "veredito": "confirmado",
+   "correcao": "",
+   "fonte_url": "https://docs.pagerduty.com/integrations/slack-integration-guide/slack-user-guide"
+  },
+  {
+   "item": "Passo 10: rótulos exatos do formulário /pd connect ('Choose a PagerDuty account', 'Connect service or team to [canal]', 'How do you want to be notified?')",
+   "veredito": "corrigido",
+   "correcao": "A doc oficial não traz esses rótulos. Ela descreve: escolher a conta PagerDuty na lista, buscar e escolher o serviço ou time, escolher Responder (com botões) ou Stakeholder (sem botões) e clicar em Connect. O guia passou a usar essa descrição genérica.",
+   "fonte_url": "https://docs.pagerduty.com/integrations/slack-integration-guide"
+  },
+  {
+   "item": "Passo 10: só Slack Admins ou App Managers criam conexões; os demais geram pedido de aprovação; em canal privado, remover o @pagerduty apaga a conexão",
+   "veredito": "corrigido",
+   "correcao": "O conteúdo está certo, mas a fonte é o Slack Integration Guide, não o Slack User Guide. O guia também diz que o app é adicionado automaticamente ao canal privado e que o admin aprova no portal de admin do Slack ('Manage app for entire workspace?' > Approve).",
+   "fonte_url": "https://docs.pagerduty.com/integrations/slack-integration-guide"
+  },
+  {
+   "item": "Passo 11: presets Highlights Only, Status Updates Only (padrão dos canais de notificação), No Updates, All Updates e Custom (só canais de notificação/anúncio), configurados na aba Notification Channels",
+   "veredito": "confirmado",
+   "correcao": "O nome do controle aparece só na legenda de uma imagem ('Conditions dropdown').",
+   "fonte_url": "https://docs.pagerduty.com/integrations/slack-integration-guide"
+  },
+  {
+   "item": "Passo 11: 'No Updates posta só o evento de abertura'",
+   "veredito": "nao_verificavel",
+   "correcao": "A leitura da página não confirmou essa descrição. Foi removida do guia como fato.",
+   "fonte_url": "https://docs.pagerduty.com/integrations/slack-integration-guide"
+  },
+  {
+   "item": "Fato: a integração Slack V2 não é mais gerenciada no nível do serviço",
+   "veredito": "nao_verificavel",
+   "correcao": "Não encontrado de forma explícita nas páginas consultadas. A doc confirma apenas que a configuração começa em Integrations > Extensions > Slack.",
+   "fonte_url": "https://docs.pagerduty.com/integrations/slack-integration-guide"
+  },
+  {
+   "item": "Botões do cartão no Slack: Acknowledge, Resolve, Run a Workflow, More actions",
+   "veredito": "corrigido",
+   "correcao": "Também existe 'Join Dedicated Channel' (só quando há canal dedicado). O 'More actions…' inclui Add a Note, Add Responder, View Details, Escalate, Reassign e Create Channel. Algumas opções dependem do plano.",
+   "fonte_url": "https://docs.pagerduty.com/integrations/slack-integration-guide/slack-user-guide"
+  },
+  {
+   "item": "Push mostra número do incidente, serviço e descrição; ack direto da notificação no iOS",
+   "veredito": "confirmado",
+   "correcao": "Para Android, a doc só descreve ack dentro do app.",
+   "fonte_url": "https://docs.pagerduty.com/get-started/mobile-app"
+  },
+  {
+   "item": "Passo 13 / trial: 14 dias; o serviço para no fim do trial, a menos que o cliente assine, eleja o Free ou o PagerDuty estenda; o Free pode ser encerrado sem aviso; dados deixam de ficar disponíveis",
+   "veredito": "confirmado",
+   "correcao": "A página de preços não informa a duração do trial; só os Termos dizem 14 dias.",
+   "fonte_url": "https://www.pagerduty.com/terms-of-service/"
+  },
+  {
+   "item": "Downgrade via Sales; só o Account Owner passa de trial para pago (User Icon > Subscriptions > Upgrade Plan)",
+   "veredito": "confirmado",
+   "correcao": "Não foi encontrado na documentação o caminho para 'eleger o Free'.",
+   "fonte_url": "https://docs.pagerduty.com/account-admin/billing"
+  },
+  {
+   "item": "Preços: Free US$ 0, 5 usuários, 1 escalation policy, 1 escala; e-mail e push incluídos; Professional US$ 25 (mensal) ou US$ 21 (anual) por usuário/mês",
+   "veredito": "confirmado",
+   "correcao": "O card do Free diz 'Basic chat experience, limited email, push, SMS & phone notifications', enquanto a tabela marca e-mail e push como 'Included'.",
+   "fonte_url": "https://www.pagerduty.com/pricing/incident-management/"
+  },
+  {
+   "item": "Limite de até 5 usuários ou escalas por nível no Free",
+   "veredito": "confirmado",
+   "correcao": "A doc fala em notificações multiusuário por nível de escalonamento, limitadas a cinco nos planos Professional e Free.",
+   "fonte_url": "https://docs.pagerduty.com/incident-management/schedules/escalation-policies"
+  },
+  {
+   "item": "Linha 'Events' = 'Not included' no Free, interpretada como cota do Signal Intelligence/AIOps",
+   "veredito": "corrigido",
+   "correcao": "A linha 'Events' fica na seção 'Platform limits'. Ela define Event como objeto enviado à events API e aceito, e mostra cotas só para os planos PD Reliability Platform (Starter 5.000, Essential 40.000, Plus 150.000, Ultimate 2.000.000). Free e Professional aparecem como 'Not included'. Não é AIOps. Ao mesmo tempo, 'Monitoring and Developer Integrations', 'Global Integration Key', 'Alert Deduplication' e 'Open and Flexible APIs' estão incluídos no Free. Se a Events API v2 funciona no Free depois do trial continua sem confirmação.",
+   "fonte_url": "https://www.pagerduty.com/pricing/incident-management/"
+  },
+  {
+   "item": "Slack no Free: 'Chat Experience' incluída; 'Create and Link Slack Channels', 'Send Message to a Slack channel' e 'Archive Slack Channel' não incluídos",
+   "veredito": "confirmado",
+   "correcao": "A linha 'Chat Experience (Slack, Microsoft Teams)' mostra 'Included' na tabela; 'Basic chat experience' aparece só no card. 'Incident Workflows' também é 'Not included' no Free (1 no Professional). Isso sugere, sem confirmação, que as 3 linhas de Slack são ações de workflow.",
+   "fonte_url": "https://www.pagerduty.com/pricing/incident-management/"
+  },
+  {
+   "item": "Grafana (B4): contact point PagerDuty usa o campo 'Integration Key' de uma integração Events API V2",
+   "veredito": "confirmado",
+   "correcao": "A doc do Grafana recomenda criar o serviço sem integração e depois adicionar Events API V2. Tem botão Test (só no Grafana Alertmanager). A doc não diz se o Grafana envia resolve automaticamente.",
+   "fonte_url": "https://grafana.com/docs/grafana/latest/alerting/configure-notifications/manage-contact-points/integrations/pager-duty/"
+  }
+ ],
+ "faltando": [
+  "Abrir o programa certo: 'Windows PowerShell' (ícone azul, PowerShell 5.1), não o 'PowerShell 7' (pwsh). Conferir com $PSVersionTable.PSVersion (comando 0).",
+  "Rodar todos os comandos na MESMA janela. Fechar a janela apaga $pdKey e $dedup, e aí o resolve não funciona.",
+  "Antes de colar a chave, conferir em Services > ToggleMaster Fase 4 > Integrations que a integração é 'Events API V2'. Uma chave de ruleset/global começa com 'R' e não é a pretendida aqui.",
+  "Teste opcional de 'acknowledge' (comando 3) entre o trigger e o resolve, para mostrar no Slack e no app a mudança de estado Triggered > Acknowledged > Resolved.",
+  "Se a conexão /pd connect ficar pendente, aprovar no portal de admin do Slack: buscar o app PagerDuty e clicar em Approve em 'Manage app for entire workspace?'.",
+  "Confirmar que o e-mail de notificação chegou (olhar também a pasta de spam) e que o push tocou no celular, e registrar o horário.",
+  "Não deixar incidentes de teste abertos: sempre fechar com o resolve ou pelo botão Resolve.",
+  "Conferir que .env está no .gitignore ANTES de criar o arquivo .env para o Docker Compose (B4).",
+  "Evidências: tirar prints sem a Integration Key, porque a aba Integrations exibe a chave. Registrar no LOG a data e hora, o dedup_key usado e o resultado HTTP.",
+  "Atualizar o app PagerDuty até 16/11/2026: a partir dessa data, novas versões exigem iOS 18+ ou Android 13+.",
+  "Anotar a data exata de término do trial vista na conta (Subscriptions) e marcar um lembrete alguns dias antes, para gravar o vídeo e decidir sobre o Free.",
+  "Para a B4, testar depois o botão 'Test' do contact point PagerDuty no Grafana: o incidente de teste aparece na aba Activity do serviço."
+ ],
+ "guia_corrigido": {
+  "fornecedor": "PagerDuty (Incident Management) + integração oficial PagerDuty para Slack. Consulta e verificação: 2026-11-01. As páginas antigas de support.pagerduty.com e developer.pagerduty.com redirecionam para docs.pagerduty.com.",
+  "passos": [
+   {
+    "n": 1,
+    "titulo": "Conferir papel, plano e trial antes de começar",
+    "onde": "PagerDuty web: ícone do usuário (canto superior direito) > Subscriptions > aba Your Subscription > cartão Subscription Details",
+    "o_que_fazer": "Confirme que você é o Account Owner. Só ele vê o faturamento e só ele passa de trial para pago. Veja no cartão o Current Plan, o Plan Period e a Renewal date. Anote no LOG do projeto o que aparecer sobre o fim do trial.",
+    "resultado_esperado": "O cartão Subscription Details mostra o plano e as datas. A documentação não diz onde aparece a data exata de fim do trial (ver incertezas).",
+    "cuidado": "Não clique em 'Upgrade Plan': isso abre o fluxo de compra. Só o Account Owner tem acesso a faturamento.",
+    "fonte_url": "https://docs.pagerduty.com/account-admin/billing"
+   },
+   {
+    "n": 2,
+    "titulo": "Escolher a política de escalonamento",
+    "onde": "PagerDuty web: People > Escalation Policies",
+    "o_que_fazer": "Abra a lista. (a) Se existir a política 'Default' criada no onboarding do trial, com você no nível 1, use essa no serviço. (b) Ignore a 'Default Mobilization EP': ela é vazia, interna e existe em toda conta (é usada pelo Quick Declare), então não aciona ninguém. (c) Se nenhuma política tiver você no nível 1, deixe o assistente criar uma no passo 3 com 'Generate a new escalation policy'.",
+    "resultado_esperado": "Fica definida uma política cujo nível 1 tem você como alvo.",
+    "cuidado": "O plano Free permite só 1 escalation policy, então não crie políticas extras. Toda regra precisa de pelo menos um alvo (usuário ou escala). A política 'Default' vem do onboarding do trial (https://docs.pagerduty.com/get-started/trial-account-onboarding).",
+    "fonte_url": "https://docs.pagerduty.com/incident-management/schedules/escalation-policies"
+   },
+   {
+    "n": 3,
+    "titulo": "Criar o serviço 'ToggleMaster Fase 4'",
+    "onde": "PagerDuty web: Services > Service Directory > botão New Service",
+    "o_que_fazer": "1) Name: ToggleMaster Fase 4. Description: 'Alertas do Grafana do Tech Challenge Fase 4'. Clique em Next. 2) Escolha 'Select an existing escalation policy' e selecione a política do passo 2, ou 'Generate a new escalation policy', que coloca você como primeiro nível. Clique em Next. 3) Se aparecer a etapa de agrupamento de alertas (AIOps), escolha 'Turn Off Alert Grouping' e clique em Next. Sem AIOps ou Signal Intelligence, a etapa é pulada. 4) Em Integrations, procure e selecione 'Events API V2', ou clique em 'Create service without an integration' e adicione a integração no passo 5 (é o caminho que a documentação do Grafana sugere). 5) Clique em 'Create Service'.",
+    "resultado_esperado": "O serviço aparece em Service Directory. Se você adicionou a integração, cai direto na aba Integrations do serviço.",
+    "cuidado": "Com o agrupamento desligado, cada dedup_key diferente vira um incidente, e a demo fica previsível. A deduplicação por dedup_key continua funcionando.",
+    "fonte_url": "https://docs.pagerduty.com/incident-management/services/services-and-integrations"
+   },
+   {
+    "n": 4,
+    "titulo": "Conferir a urgência do serviço",
+    "onde": "Services > Service Directory > ToggleMaster Fase 4 > aba Settings > Edit ao lado de Assign and Notify",
+    "o_que_fazer": "Em 'How should responders be notified?', deixe 'High-urgency notifications, escalate as needed', que é o padrão. Mantenha desmarcados 'Resolve open incidents after [TIME]' e 'Re-trigger acknowledged incidents after [TIME] and re-notify assigned responders'; os dois vêm desligados. Salve só se mudou algo.",
+    "resultado_esperado": "Todo incidente do serviço é de alta urgência e segue suas regras de alta urgência (passo 7).",
+    "cuidado": "Não use 'Dynamic notifications based on alert severity' agora. A resolução deve vir do evento 'resolve' (Grafana ou self-healing), não da auto-resolução. As opções disponíveis variam com o plano.",
+    "fonte_url": "https://docs.pagerduty.com/incident-management/services/configurable-service-settings"
+   },
+   {
+    "n": 5,
+    "titulo": "Adicionar a integração Events API V2 e copiar a Integration Key",
+    "onde": "Services > Service Directory > ToggleMaster Fase 4 > aba Integrations",
+    "o_que_fazer": "Se a integração ainda não existir, clique em 'Add another integration', selecione 'Events API V2' e clique em 'Add'. Na lista, clique à direita da linha da integração para ver a 'Integration Key', de 32 caracteres. Copie e cole direto no seu gerenciador de senhas como 'PD_ROUTING_KEY - ToggleMaster Fase 4'.",
+    "resultado_esperado": "A integração 'Events API V2' aparece na aba Integrations e a chave pode ser consultada ali.",
+    "cuidado": "A chave é um segredo: quem a tiver abre incidentes no seu serviço. Nunca cole no chat, no Git, em print ou no vídeo (a aba Integrations exibe a chave, então não grave essa tela). Só Manager, Admin, Global Admin ou Account Owner adicionam integrações. Limite: 250 integrações por serviço.",
+    "fonte_url": "https://docs.pagerduty.com/incident-management/services/services-and-integrations"
+   },
+   {
+    "n": 6,
+    "titulo": "Cadastrar meios de contato: e-mail e app móvel (push)",
+    "onde": "PagerDuty web: ícone do usuário > My Profile > aba Contact Information. Celular: app PagerDuty (App Store / Google Play)",
+    "o_que_fazer": "1) E-mail: em Email, use 'Add Email Address', informe o endereço, escolha o tipo (Work/Home) e clique em Save. O e-mail de cadastro normalmente já aparece. 2) Push: instale o app PagerDuty (iOS 17+ ou Android 12+) e faça login com a conta. O aparelho é registrado para push no login. 3) Volte à aba Contact Information e confira se o aparelho aparece.",
+    "resultado_esperado": "A aba lista o e-mail e o aparelho, sem a marcação 'Expired'.",
+    "cuidado": "Se aparecer 'Expired', remova o aparelho e faça login de novo. A partir de 16/11/2026, novas versões do app exigem iOS 18+ ou Android 13+. SMS e voz são opcionais e, no Free, limitados a 100 por mês (https://docs.pagerduty.com/account-admin/billing).",
+    "fonte_url": "https://docs.pagerduty.com/account-admin/user-profile/contact-information"
+   },
+   {
+    "n": 7,
+    "titulo": "Configurar as regras de notificação pessoais (acionar o time)",
+    "onde": "PagerDuty web: ícone do usuário > My Profile > aba Notification Rules",
+    "o_que_fazer": "Em 'High urgency incident notifications', clique em '+' e crie: regra 1 com 0 minutos e o push do app; regra 2 com 1 minuto e o e-mail. Clique em Save em cada uma. Em 'Low urgency incident notifications', crie uma regra com 0 minutos e e-mail ou push.",
+    "resultado_esperado": "Num incidente de alta urgência, o push chega na hora e o e-mail cerca de 1 minuto depois, se o incidente continuar sem ack.",
+    "cuidado": "Os meios de contato do passo 6 precisam existir antes. O PagerDuty recomenda sempre incluir push e espaçar os atrasos. O push de baixa urgência é silencioso por padrão no app (https://support.pagerduty.com/docs/mobile-app-settings).",
+    "fonte_url": "https://docs.pagerduty.com/account-admin/user-profile/notification-rules"
+   },
+   {
+    "n": 8,
+    "titulo": "Teste manual: trigger, acknowledge (opcional) e resolve pela Events API v2 no Windows PowerShell 5.1",
+    "onde": "Menu Iniciar > 'Windows PowerShell' (não o 'PowerShell 7'), sempre na MESMA janela + PagerDuty web: Incidents",
+    "o_que_fazer": "Rode na ordem os comandos de comandos_teste: 0 (conferir a versão), 1 (ler a chave), 2 (trigger) e confira o incidente; 3 (acknowledge, opcional); 4 (resolve); 5 (limpeza). Cole cada bloco inteiro e tecle Enter.",
+    "resultado_esperado": "O trigger retorna 'HTTP 202' e um corpo com \"status\":\"success\", \"message\":\"Event processed\" e o dedup_key. Em segundos surge um incidente Triggered no serviço ToggleMaster Fase 4 e chegam o push e o e-mail. Depois do resolve (também 202), o incidente fica Resolved.",
+    "cuidado": "Acknowledge e resolve exigem o mesmo routing_key e o mesmo dedup_key do trigger. Por isso não feche a janela entre os comandos. Um trigger repetido com o mesmo dedup_key enquanto o incidente está aberto vai para o mesmo alerta. Não salve os comandos num .ps1 com a chave dentro.",
+    "fonte_url": "https://docs.pagerduty.com/developer/send-alert-event"
+   },
+   {
+    "n": 9,
+    "titulo": "Instalar o app PagerDuty no Slack e mapear o workspace",
+    "onde": "PagerDuty web: Integrations > Extensions > tile Slack. Depois, a tela de autorização do Slack no navegador",
+    "o_que_fazer": "1) No PagerDuty, vá em Integrations > Extensions e clique no tile Slack. Se pedir, clique em 'Authorize Integration'. 2) Na tela de mapeamento de workspaces, clique em 'Add Workspace'. 3) Na página do Slack, confira no seletor que o workspace certo está escolhido. 4) Clique em 'Allow'. 5) De volta ao PagerDuty, se aparecer a faixa, clique em 'Link Account'.",
+    "resultado_esperado": "O workspace aparece na configuração do Slack no PagerDuty e o app PagerDuty passa a existir no workspace.",
+    "cuidado": "No PagerDuty, exige base role Admin, Global Admin ou Account Owner; no Slack, ser admin ou owner do workspace (quem cria o workspace é owner). O Slack Free permite até 10 apps (https://slack.com/help/articles/115002422943-Message-file-and-app-limits-on-the-free-version-of-Slack). Clicar em 'Allow' concede permissões OAuth: faça você mesmo, conscientemente.",
+    "fonte_url": "https://docs.pagerduty.com/integrations/slack-integration-guide"
+   },
+   {
+    "n": 10,
+    "titulo": "Vincular sua conta e conectar o canal ao serviço",
+    "onde": "Slack: crie um canal público, por exemplo #togglemaster-incidentes",
+    "o_que_fazer": "1) Num canal público, digite /pd link, clique em 'link your accounts' e entre no PagerDuty na janela que abrir. 2) No canal #togglemaster-incidentes, digite /pd connect. 3) No formulário: escolha sua conta PagerDuty na lista, busque e escolha o serviço 'ToggleMaster Fase 4' e escolha o tipo 'Responder' (cartão com botões Acknowledge/Resolve; 'Stakeholder' vem sem botões). Clique em 'Connect'.",
+    "resultado_esperado": "O canal fica conectado ao serviço, e os incidentes passam a gerar um cartão no canal.",
+    "cuidado": "Na região US, o comando é /pd; na EU seria /pdeu. Por padrão, só Slack Admins ou App Managers criam conexões. Se a conexão ficar pendente, aprove no portal de admin do Slack: app PagerDuty > 'Manage app for entire workspace?' > Approve. Em canal privado, o app entra sozinho; se alguém removê-lo, a conexão é apagada. Os rótulos exatos do formulário não estão na documentação.",
+    "fonte_url": "https://docs.pagerduty.com/integrations/slack-integration-guide"
+   },
+   {
+    "n": 11,
+    "titulo": "Escolher quais eventos vão para o canal",
+    "onde": "PagerDuty web: Integrations > Extensions > Slack > seu workspace > aba Notification Channels (preset no menu de condições)",
+    "o_que_fazer": "Na conexão do canal #togglemaster-incidentes, troque o preset padrão 'Status Updates Only' por 'All Updates', ou por 'Custom' marcando triggered, acknowledged, escalated e resolved em Incident updates.",
+    "resultado_esperado": "O canal recebe o cartão de incidente aberto e depois as atualizações de ack e resolve.",
+    "cuidado": "Presets existentes: Highlights Only, Status Updates Only, No Updates, All Updates e Custom (Custom só para canais de notificação ou anúncio). Se a tela tiver outros nomes, registre no LOG.",
+    "fonte_url": "https://docs.pagerduty.com/integrations/slack-integration-guide"
+   },
+   {
+    "n": 12,
+    "titulo": "Confirmar o fluxo ponta a ponta no Slack",
+    "onde": "Windows PowerShell (comandos 2, 3 e 4) + Slack #togglemaster-incidentes + PagerDuty Incidents",
+    "o_que_fazer": "Rode de novo o comando 2 (gera um dedup_key novo). Confira no canal o cartão '[TESTE] ToggleMaster Fase 4...' com os botões Acknowledge, Resolve, Run a Workflow e More actions. Rode o comando 3 (ack, opcional) e o comando 4 (resolve), e veja as atualizações no canal. Tire prints sem a chave.",
+    "resultado_esperado": "O cartão aparece no Slack segundos depois do HTTP 202, e o ack e a resolução aparecem conforme o preset.",
+    "cuidado": "Não há procedimento oficial de teste do Slack, então esta conferência é empírica. Se nada aparecer, confira se o canal está conectado (Integrations > Extensions > Slack), se o preset não é 'No Updates', se a conexão não ficou pendente de aprovação e se o app continua no canal.",
+    "fonte_url": "https://docs.pagerduty.com/integrations/slack-integration-guide/slack-user-guide"
+   },
+   {
+    "n": 13,
+    "titulo": "Planejar o fim do trial (~2026-11-11)",
+    "onde": "PagerDuty web: ícone do usuário > Subscriptions; contato com Sales/Support",
+    "o_que_fazer": "Grave o vídeo da demo (Grafana > PagerDuty > Slack) antes do fim do trial. Antes dessa data, decida se vai eleger o plano Free. Pelos Termos, sem assinatura ou eleição do Free, o serviço para no fim do trial. A documentação diz que downgrade se faz pelo time de Sales; procure Sales/Support para eleger o Free.",
+    "resultado_esperado": "A data de término fica registrada no LOG, o vídeo é gravado durante o trial e a decisão sobre o Free é tomada conscientemente.",
+    "cuidado": "O Free não é automático. Sem assinar nem eleger o Free, os dados deixam de ficar disponíveis, e o PagerDuty pode encerrar o Free sem aviso. No Free: 5 usuários, 1 escalation policy, 1 escala; 'Incident Workflows', 'Create and Link Slack Channels' e 'Send Message to a Slack channel' aparecem como não incluídos, mas 'Chat Experience' está incluída.",
+    "fonte_url": "https://www.pagerduty.com/terms-of-service/"
+   },
+   {
+    "n": 14,
+    "titulo": "Registrar evidências e guardar o segredo",
+    "onde": "Gerenciador de senhas + 00_COLAB_IA/LOG_DE_TRABALHO.md",
+    "o_que_fazer": "Registre no LOG a data e hora, o dedup_key de cada teste, o HTTP recebido, o horário do push e do e-mail e se o cartão do Slack chegou. Guarde a chave só no gerenciador de senhas. Para a B4, antes de criar qualquer .env, confira que '.env' está no .gitignore.",
+    "resultado_esperado": "Evidências rastreáveis e nenhuma chave em disco versionado.",
+    "cuidado": "Prints e vídeo nunca podem mostrar a aba Integrations com a chave aberta.",
+    "fonte_url": "https://docs.pagerduty.com/incident-management/services/services-and-integrations"
+   }
+  ],
+  "comandos_teste": [
+   {
+    "descricao": "0) Conferir que é o Windows PowerShell 5.1 e ver o protocolo TLS da sessão",
+    "shell": "Windows PowerShell 5.1",
+    "comando": "$PSVersionTable.PSVersion.ToString()\n[Net.ServicePointManager]::SecurityProtocol",
+    "resposta_esperada": "Uma versão começando com 5.1 (nesta máquina, 5.1.26100.x) e 'SystemDefault'. SystemDefault significa que o Windows 11 escolhe TLS 1.2 ou 1.3.",
+    "onde_conferir": "No próprio terminal.",
+    "fonte_url": "https://learn.microsoft.com/en-us/dotnet/framework/network-programming/tls"
+   },
+   {
+    "descricao": "1) Ler a Integration Key sem exibi-la nem gravá-la em disco (fica só na memória desta janela). Só ajusta o TLS se a sessão não estiver em SystemDefault.",
+    "shell": "Windows PowerShell 5.1",
+    "comando": "if ([Net.ServicePointManager]::SecurityProtocol -ne [Net.SecurityProtocolType]::SystemDefault) { [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12 }\n$pdUrl = \"https://events.pagerduty.com/v2/enqueue\"\n$sec = Read-Host -AsSecureString -Prompt \"Cole a Integration Key do servico ToggleMaster Fase 4 (nao aparece na tela)\"\n$bstr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($sec)\ntry { $pdKey = ([Runtime.InteropServices.Marshal]::PtrToStringBSTR($bstr)).Trim() } finally { [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($bstr) }\nif ($pdKey.Length -ne 32) { Write-Warning \"A chave tem $($pdKey.Length) caracteres; o esperado sao 32. Confira se copiou a Integration Key inteira.\" } else { \"Chave lida (32 caracteres).\" }",
+    "resposta_esperada": "Mostra 'Chave lida (32 caracteres).' e não exibe a chave. Para colar no prompt, use Ctrl+V ou o botão direito do mouse.",
+    "onde_conferir": "No terminal. A chave fica só na variável $pdKey desta janela.",
+    "fonte_url": "https://docs.pagerduty.com/developer/send-alert-event"
+   },
+   {
+    "descricao": "2) Enviar evento 'trigger' (abre o incidente)",
+    "shell": "Windows PowerShell 5.1",
+    "comando": "$dedup = \"togglemaster-teste-\" + (Get-Date -Format \"yyyyMMdd-HHmmss\")\n$evento = @{\n  routing_key  = $pdKey\n  event_action = \"trigger\"\n  dedup_key    = $dedup\n  payload      = @{\n    summary        = \"[TESTE] ToggleMaster Fase 4 - alerta manual via Events API v2\"\n    source         = \"togglemaster-local\"\n    severity       = \"critical\"\n    component      = \"flag-service\"\n    group          = \"togglemaster\"\n    class          = \"teste-manual\"\n    custom_details = @{ origem = \"PowerShell 5.1\"; objetivo = \"validar PagerDuty e Slack\" }\n  }\n}\n$json = $evento | ConvertTo-Json -Depth 5\ntry {\n  $resp = Invoke-WebRequest -Uri $pdUrl -Method Post -ContentType \"application/json; charset=utf-8\" -Body ([Text.Encoding]::UTF8.GetBytes($json)) -UseBasicParsing\n  \"HTTP $($resp.StatusCode)\"; $resp.Content; \"dedup_key usado: $dedup\"\n} catch {\n  if ($_.Exception.Response) { \"HTTP $([int]$_.Exception.Response.StatusCode)\" }\n  if ($_.ErrorDetails.Message) { $_.ErrorDetails.Message } else { $_.Exception.Message }\n}",
+    "resposta_esperada": "'HTTP 202' e um corpo como {\"status\":\"success\",\"message\":\"Event processed\",\"dedup_key\":\"togglemaster-teste-AAAAMMDD-HHMMSS\"}. HTTP 400: JSON ou campos inválidos (não repita; corrija). HTTP 429 ou 5xx: espere alguns minutos e repita. Mensagem sem HTTP: erro de rede ou TLS.",
+    "onde_conferir": "PagerDuty web: menu Incidents (status Triggered, serviço ToggleMaster Fase 4). Também o push no app, o e-mail e o cartão no canal do Slack, se já estiver conectado.",
+    "fonte_url": "https://docs.pagerduty.com/developer/api/reference/events-v2/send-event/create-v2-event"
+   },
+   {
+    "descricao": "3) (Opcional) Enviar 'acknowledge' com o MESMO dedup_key",
+    "shell": "Windows PowerShell 5.1",
+    "comando": "$evento = @{ routing_key = $pdKey; event_action = \"acknowledge\"; dedup_key = $dedup }\n$json = $evento | ConvertTo-Json -Depth 3\ntry {\n  $resp = Invoke-WebRequest -Uri $pdUrl -Method Post -ContentType \"application/json; charset=utf-8\" -Body ([Text.Encoding]::UTF8.GetBytes($json)) -UseBasicParsing\n  \"HTTP $($resp.StatusCode)\"; $resp.Content\n} catch {\n  if ($_.Exception.Response) { \"HTTP $([int]$_.Exception.Response.StatusCode)\" }\n  if ($_.ErrorDetails.Message) { $_.ErrorDetails.Message } else { $_.Exception.Message }\n}",
+    "resposta_esperada": "HTTP 202 com \"status\":\"success\". O incidente passa para Acknowledged e as notificações param de escalar.",
+    "onde_conferir": "PagerDuty web: Incidents (status Acknowledged). No Slack, a atualização aparece se o preset incluir acknowledged.",
+    "fonte_url": "https://docs.pagerduty.com/developer/send-alert-event"
+   },
+   {
+    "descricao": "4) Enviar 'resolve' com o MESMO dedup_key (resolve o incidente)",
+    "shell": "Windows PowerShell 5.1",
+    "comando": "$evento = @{ routing_key = $pdKey; event_action = \"resolve\"; dedup_key = $dedup }\n$json = $evento | ConvertTo-Json -Depth 3\ntry {\n  $resp = Invoke-WebRequest -Uri $pdUrl -Method Post -ContentType \"application/json; charset=utf-8\" -Body ([Text.Encoding]::UTF8.GetBytes($json)) -UseBasicParsing\n  \"HTTP $($resp.StatusCode)\"; $resp.Content\n} catch {\n  if ($_.Exception.Response) { \"HTTP $([int]$_.Exception.Response.StatusCode)\" }\n  if ($_.ErrorDetails.Message) { $_.ErrorDetails.Message } else { $_.Exception.Message }\n}",
+    "resposta_esperada": "HTTP 202 com \"status\":\"success\" e o mesmo dedup_key. O incidente passa para Resolved. Se o incidente já estava resolvido, o evento é aceito, mas descartado.",
+    "onde_conferir": "PagerDuty web: Incidents > filtro Resolved, ou a linha do tempo do próprio incidente. No Slack, a atualização aparece se o preset incluir resolved.",
+    "fonte_url": "https://docs.pagerduty.com/developer/send-alert-event"
+   },
+   {
+    "descricao": "5) Limpar a chave e as variáveis da sessão ao terminar",
+    "shell": "Windows PowerShell 5.1",
+    "comando": "Remove-Variable -Name pdKey, pdUrl, sec, bstr, evento, json, resp, dedup -ErrorAction SilentlyContinue\n\"Variaveis removidas. Feche esta janela do PowerShell.\"",
+    "resposta_esperada": "Mensagem 'Variaveis removidas...'. Nada da chave fica em disco: não foi usado arquivo nem variável de ambiente.",
+    "onde_conferir": "No terminal. Opcional: Get-Variable pdKey deve dar erro de variável inexistente.",
+    "fonte_url": "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/remove-variable?view=powershell-5.1"
+   }
+  ],
+  "segredos": [
+   {
+    "nome": "PD_ROUTING_KEY (Integration Key da integração Events API V2 do serviço 'ToggleMaster Fase 4', 32 caracteres)",
+    "para_que": "Autenticar os eventos trigger/acknowledge/resolve enviados a https://events.pagerduty.com/v2/enqueue e direcioná-los ao serviço certo.",
+    "quem_usa": "Hoje, o teste manual no PowerShell. Na B4, o contact point PagerDuty do Grafana (campo 'Integration Key') e, se o self-healing for resolver o incidente, o workflow do GitHub Actions.",
+    "como_guardar": "No gerenciador de senhas. Para uso local, num .env fora do Git (confirmar o .gitignore antes) lido pelo Docker Compose. No GitHub, como Actions secret (Settings > Secrets and variables > Actions). Nunca em código, chat, print ou vídeo. Se vazar, remova a integração e crie outra; o procedimento oficial de rotação não foi encontrado."
+   },
+   {
+    "nome": "Vínculo PagerDuty <-> Slack (OAuth do app PagerDuty no workspace)",
+    "para_que": "Permitir que o PagerDuty publique cartões no canal e que os botões e /pd funcionem.",
+    "quem_usa": "O próprio app PagerDuty para Slack. Não há token para copiar.",
+    "como_guardar": "Nada a guardar. Para revogar: remover o workspace em Integrations > Extensions > Slack ou desinstalar o app no Slack."
+   },
+   {
+    "nome": "(Não necessário hoje) PagerDuty REST API token",
+    "para_que": "Só se depois for preciso chamar a REST API (por exemplo, listar incidentes).",
+    "quem_usa": "Ninguém nesta etapa.",
+    "como_guardar": "Não gerar agora. Se gerar no futuro, guardar no gerenciador de senhas ou como Actions secret, com escopo mínimo."
+   }
+  ],
+  "limites_plano": [
+   {
+    "item": "Plano Free: preço e usuários",
+    "valor": "US$ 0; 'Max users per account' = 5.",
+    "fonte_url": "https://www.pagerduty.com/pricing/incident-management/"
+   },
+   {
+    "item": "Plano Free: escalonamento e escalas",
+    "valor": "1 escalation policy e 1 on-call schedule. Notificações multiusuário limitadas a 5 por nível de escalonamento (Free e Professional).",
+    "fonte_url": "https://docs.pagerduty.com/incident-management/schedules/escalation-policies"
+   },
+   {
+    "item": "Plano Free: notificações",
+    "valor": "'Email and push notifications' = Included na tabela; o card diz 'limited email, push, SMS & phone notifications'. SMS e telefone: 100 por mês.",
+    "fonte_url": "https://www.pagerduty.com/pricing/incident-management/"
+   },
+   {
+    "item": "Plano Free: integrações e APIs",
+    "valor": "Included: 'Monitoring and Developer Integrations', 'Global Integration Key', 'Alert Deduplication', 'Open and Flexible APIs'. A linha 'Events' (seção 'Platform limits') é 'Not included' no Free e no Professional e tem cota só nos planos PD Reliability Platform (Starter 5.000; Essential 40.000; Plus 150.000; Ultimate 2.000.000). O efeito disso na Events API v2 do Free não foi confirmado.",
+    "fonte_url": "https://www.pagerduty.com/pricing/incident-management/"
+   },
+   {
+    "item": "Plano Free: Slack e workflows",
+    "valor": "'Chat Experience (Slack, Microsoft Teams)' = Included ('Basic chat experience' no card). Not included: 'Create and Link Slack Channels', 'Send Message to a Slack channel', 'Archive Slack Channel' e 'Incident Workflows' (o Professional tem 1).",
+    "fonte_url": "https://www.pagerduty.com/pricing/incident-management/"
+   },
+   {
+    "item": "Alert Grouping",
+    "valor": "Exige o add-on PagerDuty AIOps ou um trial de AIOps; sem isso, a etapa do assistente é pulada.",
+    "fonte_url": "https://docs.pagerduty.com/incident-management/services/configurable-service-settings"
+   },
+   {
+    "item": "Professional (referência)",
+    "valor": "US$ 25 por usuário/mês (mensal) ou US$ 21 por usuário/mês (anual).",
+    "fonte_url": "https://www.pagerduty.com/pricing/incident-management/"
+   },
+   {
+    "item": "Trial",
+    "valor": "14 dias. No fim, o serviço para automaticamente, a menos que o cliente assine, eleja o Free Plan ou o PagerDuty estenda o trial. O Free pode ser encerrado sem aviso.",
+    "fonte_url": "https://www.pagerduty.com/terms-of-service/"
+   },
+   {
+    "item": "Mudança de plano",
+    "valor": "Downgrade: 'reach out to the Sales team'. Só o Account Owner acessa o faturamento e faz o upgrade (User Icon > Subscriptions > Upgrade Plan).",
+    "fonte_url": "https://docs.pagerduty.com/account-admin/billing"
+   },
+   {
+    "item": "Events API v2: payload e taxa",
+    "valor": "Payload de até 512 KB. Limite de taxa dinâmico por serviço: em 429 ou 5xx, repetir com backoff de alguns minutos; 400 não deve ser repetido.",
+    "fonte_url": "https://docs.pagerduty.com/developer/events-api-v2-overview"
+   },
+   {
+    "item": "Events API v2: campos",
+    "valor": "summary com até 1024 caracteres e dedup_key com até 255. routing_key de 32 caracteres.",
+    "fonte_url": "https://docs.pagerduty.com/developer/send-alert-event"
+   },
+   {
+    "item": "Integrações por serviço",
+    "valor": "No máximo 250.",
+    "fonte_url": "https://docs.pagerduty.com/incident-management/services/services-and-integrations"
+   },
+   {
+    "item": "Meios de contato",
+    "valor": "Até 10 por usuário; até 3 números para telefone e 3 para SMS.",
+    "fonte_url": "https://docs.pagerduty.com/account-admin/user-profile/contact-information"
+   },
+   {
+    "item": "Slack Free (workspace)",
+    "valor": "Até 10 apps de terceiros ou personalizados. Histórico visível e pesquisável de 90 dias; itens com mais de 1 ano são apagados.",
+    "fonte_url": "https://slack.com/help/articles/115002422943-Message-file-and-app-limits-on-the-free-version-of-Slack"
+   },
+   {
+    "item": "App móvel PagerDuty",
+    "valor": "iOS 17+ / Android 12+ hoje; a partir de 16/11/2026, novas versões exigem iOS 18+ / Android 13+.",
+    "fonte_url": "https://docs.pagerduty.com/get-started/mobile-app"
+   }
+  ],
+  "fatos_para_b1_b4": [
+   {
+    "fato": "Endpoint: POST https://events.pagerduty.com/v2/enqueue. Campos obrigatórios do trigger: routing_key (32 caracteres), event_action (trigger|acknowledge|resolve), payload.summary, payload.source e payload.severity (critical|error|warning|info). Opcionais documentados: timestamp, component, group, class, custom_details, links e images (imagem só via HTTPS).",
+    "fonte_url": "https://docs.pagerduty.com/developer/send-alert-event"
+   },
+   {
+    "fato": "dedup_key é obrigatório em acknowledge e resolve. Com o alerta aberto, eventos com a mesma chave e o mesmo routing_key se aplicam a esse alerta. Depois de resolvido, um novo trigger cria outro alerta, e ack/resolve são descartados. Assim, o self-healing do GitHub Actions pode resolver o incidente enviando 'resolve' com o dedup_key do alerta e a mesma routing key.",
+    "fonte_url": "https://docs.pagerduty.com/developer/api/reference/events-v2/send-event/create-v2-event"
+   },
+   {
+    "fato": "Sucesso: HTTP 202 ('Accepted'), com o corpo de exemplo {\"status\":\"success\",\"message\":\"Event processed\",\"dedup_key\":\"...\"}. Repetir em 429, 5xx e erro de rede; não repetir em 400.",
+    "fonte_url": "https://docs.pagerduty.com/developer/events-api-v2-overview"
+   },
+   {
+    "fato": "Serviço novo: urgência padrão 'High-urgency notifications, escalate as needed'; ack timeout e auto-resolução desligados.",
+    "fonte_url": "https://docs.pagerduty.com/incident-management/services/configurable-service-settings"
+   },
+   {
+    "fato": "Grafana: contact point do tipo PagerDuty, com o campo 'Integration Key' de uma integração Events API V2. Tem botão 'Test' (só no Grafana Alertmanager); o incidente de teste aparece na aba Activity do serviço. A doc não diz se o Grafana envia resolve automaticamente: validar na B4.",
+    "fonte_url": "https://grafana.com/docs/grafana/latest/alerting/configure-notifications/manage-contact-points/integrations/pager-duty/"
+   },
+   {
+    "fato": "Slack: a configuração começa em Integrations > Extensions > Slack > Add Workspace > Allow. Canais se conectam com /pd connect (Responder = com botões; Stakeholder = sem botões). Presets por canal: Highlights Only, Status Updates Only (padrão dos canais de notificação), No Updates, All Updates e Custom.",
+    "fonte_url": "https://docs.pagerduty.com/integrations/slack-integration-guide"
+   },
+   {
+    "fato": "Cartão de incidente no Slack: Acknowledge, Resolve, Join Dedicated Channel (se houver), Run a Workflow e More actions… (Add a Note, Add Responder, View Details, Escalate, Reassign, Create Channel; algumas opções dependem do plano). Para agir pelo Slack, cada usuário vincula a conta com /pd link.",
+    "fonte_url": "https://docs.pagerduty.com/integrations/slack-integration-guide/slack-user-guide"
+   },
+   {
+    "fato": "O push do app mostra número do incidente, serviço e descrição. No iOS dá para dar ack direto da notificação (pressionar e segurar > Ack). Serve para mostrar no vídeo o time sendo acionado.",
+    "fonte_url": "https://docs.pagerduty.com/get-started/mobile-app"
+   },
+   {
+    "fato": "O trial dura 14 dias e o serviço para no fim, a menos que o cliente assine ou eleja o Free. O vídeo da B4 deve ser gravado antes de ~2026-11-11, ou a eleição do Free tem de estar garantida antes disso.",
+    "fonte_url": "https://www.pagerduty.com/terms-of-service/"
+   },
+   {
+    "fato": "PowerShell 5.1 no Windows 11: SecurityProtocol vem como SystemDefault (TLS 1.2/1.3 decidido pelo SO); não é preciso forçar TLS 1.2. Em erros HTTP, o corpo da resposta está em $_.ErrorDetails.Message (testado localmente em 2026-11-01).",
+    "fonte_url": "https://learn.microsoft.com/en-us/dotnet/framework/network-programming/tls"
+   }
+  ],
+  "incertezas": [
+   "Data exata de fim do trial: a documentação de billing só cita o cartão Subscription Details (plano, período, renewal date). A estimativa de ~2026-11-11 vem de 14 dias (Termos) a partir de 2026-10-28. Conferir na conta.",
+   "Events API v2 no Free depois do trial: a linha 'Events' (Platform limits) é 'Not included' no Free e no Professional, mas integrações, Global Integration Key e deduplicação estão incluídas. Não confirmado; validar com o suporte ou testando depois do trial.",
+   "Slack no Free: 'Chat Experience' está incluída, mas 'Send Message to a Slack channel', 'Create and Link Slack Channels' e 'Incident Workflows' não. Provavelmente as linhas não incluídas são ações de Incident Workflow e /pd connect continua funcionando, mas isso não foi confirmado. Recomendação: gravar o vídeo durante o trial; alternativa documentada como decisão: contact point Slack direto no Grafana.",
+   "Caminho para eleger o Free Plan: os Termos exigem a eleição, a página de billing manda falar com Sales para downgrade, e nenhum passo no app foi encontrado.",
+   "Se a 'Default Mobilization EP' conta no limite de 1 escalation policy do Free não está documentado.",
+   "Os rótulos exatos do formulário /pd connect e do controle de preset ('Conditions dropdown') não estão no texto da documentação. Registrar no LOG o que a tela mostrar.",
+   "A descrição do preset 'No Updates' (se posta só a abertura) não foi confirmada.",
+   "Rotação ou regeneração da Integration Key não está documentada nas páginas consultadas.",
+   "O corpo exato de um HTTP 400 do PagerDuty não foi confirmado (a referência não mostra exemplo). O tratamento de erro foi testado contra um servidor local simulado, não contra o PagerDuty.",
+   "A leitura interativa com Read-Host -AsSecureString foi validada só pelo parser. O usuário confirma na primeira execução.",
+   "Self-healing via GitHub Actions: disparar o workflow a partir do PagerDuty (webhooks V3 ou Incident Workflows) não foi pesquisado. Incident Workflows não está incluído no Free.",
+   "A aprovação de conexões no Slack depende das configurações do workspace. Como o usuário criou o workspace, ele deve ser owner e conseguir aprovar."
+  ],
+  "fontes": [
+   {
+    "titulo": "PagerDuty Docs - Services and Integrations",
+    "url": "https://docs.pagerduty.com/incident-management/services/services-and-integrations"
+   },
+   {
+    "titulo": "PagerDuty Docs - Configurable Service Settings",
+    "url": "https://docs.pagerduty.com/incident-management/services/configurable-service-settings"
+   },
+   {
+    "titulo": "PagerDuty Docs - Escalation Policies",
+    "url": "https://docs.pagerduty.com/incident-management/schedules/escalation-policies"
+   },
+   {
+    "titulo": "PagerDuty Docs - Trial Account Onboarding",
+    "url": "https://docs.pagerduty.com/get-started/trial-account-onboarding"
+   },
+   {
+    "titulo": "PagerDuty Docs - Send an Alert Event (Events API v2)",
+    "url": "https://docs.pagerduty.com/developer/send-alert-event"
+   },
+   {
+    "titulo": "PagerDuty Docs - Events API v2 Overview",
+    "url": "https://docs.pagerduty.com/developer/events-api-v2-overview"
+   },
+   {
+    "titulo": "PagerDuty API Reference - Create v2 event",
+    "url": "https://docs.pagerduty.com/developer/api/reference/events-v2/send-event/create-v2-event"
+   },
+   {
+    "titulo": "PagerDuty Docs - Notification Rules",
+    "url": "https://docs.pagerduty.com/account-admin/user-profile/notification-rules"
+   },
+   {
+    "titulo": "PagerDuty Docs - Contact Information",
+    "url": "https://docs.pagerduty.com/account-admin/user-profile/contact-information"
+   },
+   {
+    "titulo": "PagerDuty Docs - Mobile App",
+    "url": "https://docs.pagerduty.com/get-started/mobile-app"
+   },
+   {
+    "titulo": "PagerDuty Docs - Mobile App Settings",
+    "url": "https://support.pagerduty.com/docs/mobile-app-settings"
+   },
+   {
+    "titulo": "PagerDuty Docs - Slack Integration Guide",
+    "url": "https://docs.pagerduty.com/integrations/slack-integration-guide"
+   },
+   {
+    "titulo": "PagerDuty Docs - Slack User Guide",
+    "url": "https://docs.pagerduty.com/integrations/slack-integration-guide/slack-user-guide"
+   },
+   {
+    "titulo": "PagerDuty Docs - Billing, Invoices and Payments",
+    "url": "https://docs.pagerduty.com/account-admin/billing"
+   },
+   {
+    "titulo": "PagerDuty - Incident Management Pricing",
+    "url": "https://www.pagerduty.com/pricing/incident-management/"
+   },
+   {
+    "titulo": "PagerDuty - Terms of Service",
+    "url": "https://www.pagerduty.com/terms-of-service/"
+   },
+   {
+    "titulo": "Slack Help - Limites da versão gratuita",
+    "url": "https://slack.com/help/articles/115002422943-Message-file-and-app-limits-on-the-free-version-of-Slack"
+   },
+   {
+    "titulo": "Grafana Docs - Configure PagerDuty for Alerting",
+    "url": "https://grafana.com/docs/grafana/latest/alerting/configure-notifications/manage-contact-points/integrations/pager-duty/"
+   },
+   {
+    "titulo": "Microsoft Learn - TLS best practices with .NET Framework",
+    "url": "https://learn.microsoft.com/en-us/dotnet/framework/network-programming/tls"
+   },
+   {
+    "titulo": "Microsoft Learn - Invoke-WebRequest (PowerShell 5.1)",
+    "url": "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-webrequest?view=powershell-5.1"
+   }
+  ]
+ }
+}

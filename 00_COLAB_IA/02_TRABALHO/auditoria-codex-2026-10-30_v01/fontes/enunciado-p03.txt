@@ -1,0 +1,30 @@
+Tech Challenge  Página 3 de 7 
+ 
+engenharia demorou 6 horas para ser avisada pelos usuários e mais 4 horas 
+para achar a causa raiz nos logs espalhados pelos pods. 
+  
+O novo objetivo é claro : Precisamos de Observabilidad e Total e 
+Resposta Ativa. Se um serviço ficar lento, precisamos ver o Trace; se der erro, 
+precisamos dos Logs centralizados; se um limite for atingido, o time deve ser 
+acordado pelo PagerDuty/OpsGenie; e o próprio sistema deve tentar se curar 
+(Self-Healing). 
+PROPOSTA 
+Sua missão é instrumentar os microsserviços do ToggleMaster, 
+implementar uma stack de monitoramento Opensource padronizada com 
+OpenTelemetry no Kubernetes, integrar uma solução de APM para visibilidade 
+profunda e configurar a automação de resposta e mitigação de incidentes. 
+  Requisitos técnicos 
+1. Monitoramento Opensource (Métricas e Logs no K8s) 
+(Disciplinas: Prometheus, Grafana, Loki, Observabilidade no Kubernetes) 
+Provisione as ferramentas base de observabilidade dentro do seu cluster 
+Kubernetes (adicionando os Helm charts ao seu repositório GitOps): 
+• Prometheus: para armazenamento e consulta de métricas de 
+infraestrutura. 
+• Loki: para centralização e indexação de todos os logs dos contêineres 
+do cluster. 
+• Grafana: como ferramenta principal de visualização. 
+o Crie, no mínimo, 1 Dashboard customizado  no Grafana que 
+centralize a saúde do ecossistema: uso de recursos do cluster, taxa 
+de requisições dos microsserviços e painel de logs em tempo real.  
+ 
+ 

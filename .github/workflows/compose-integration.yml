@@ -1,0 +1,52 @@
+name: Compose Integration
+
+# FILTRO DE DOCUMENTACAO
+# O ensaio sobe os 5 servicos e leva cerca de 4 minutos. Um commit que
+# muda SO documentacao nao altera nada do que ele testa, entao o GitHub
+# pula o workflow. Basta UM arquivo fora da lista (codigo, compose,
+# scripts, workflow) para o ensaio rodar.
+#
+# Ficam de fora: o diario da colaboracao (00_COLAB_IA/), a pasta docs/ e
+# qualquer .md. O ensaio do CI so le docker-compose.yaml,
+# docker-compose.integration.yaml, .env.example, services/ e scripts/.
+#
+# A varredura de segredos NAO depende deste filtro: ela roda no GitOps
+# Check, que olha todo commit, inclusive os de documentacao.
+on:
+  pull_request:
+    paths-ignore:
+      - "00_COLAB_IA/**"
+      - "docs/**"
+      - "**.md"
+  push:
+    branches: [main, dev]
+    # Mesma lista do pull_request.
+    paths-ignore:
+      - "00_COLAB_IA/**"
+      - "docs/**"
+      - "**.md"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  integration:
+    name: Five-service end-to-end flow
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      COMPOSE_PROJECT_NAME: tc04-integration
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and test the Compose stack
+        run: bash scripts/test-compose.sh
+      - name: Container status
+        if: always()
+        run: docker compose --env-file .env.example -f docker-compose.yaml -f docker-compose.integration.yaml ps -a
+      - name: Diagnostic logs
+        if: failure()
+        run: docker compose --env-file .env.example -f docker-compose.yaml -f docker-compose.integration.yaml logs --no-color --tail=100
+      - name: Remove disposable test containers and volumes
+        if: always()
+        run: docker compose --env-file .env.example -f docker-compose.yaml -f docker-compose.integration.yaml down -v --remove-orphans

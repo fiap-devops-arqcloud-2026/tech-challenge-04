@@ -1,0 +1,24 @@
+# ============================================================
+# CONFIGMAP - flag-service
+# ============================================================
+
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: flag-service-config
+  labels:
+    app: flag-service
+
+data:
+  # Porta do Gunicorn dentro do container.
+  PORT: "8002"
+
+  # Endereco do auth-service para validar as chaves de API recebidas.
+  # E DNS interno do cluster: <nome-do-service>:<porta>. Nao passa pela
+  # internet e nao depende de Ingress.
+  AUTH_SERVICE_URL: "http://auth-service:8001"
+
+  # Fase 4: nome do servico nos traces, no Service Map e nos logs. O
+  # resto da configuracao OpenTelemetry vem do ConfigMap otel-config.
+  OTEL_SERVICE_NAME: "flag-service"

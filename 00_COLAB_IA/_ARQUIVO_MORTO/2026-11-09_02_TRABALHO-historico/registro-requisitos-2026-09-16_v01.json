@@ -1,0 +1,290 @@
+{
+  "required": [
+    {
+      "id": "REQ-OBR-01",
+      "requirement": "Manter toda a base das Fases 1, 2 e 3 funcionando.",
+      "page": 2,
+      "quote": "é obrigatório que toda a base das Fases 1, 2 e 3 esteja funcionando"
+    },
+    {
+      "id": "REQ-OBR-02",
+      "requirement": "Manter os cinco microsserviços conteinerizados.",
+      "page": 2,
+      "quote": "Os 5 microsserviços conteinerizados."
+    },
+    {
+      "id": "REQ-OBR-03",
+      "requirement": "Provisionar a infraestrutura por Terraform.",
+      "page": 2,
+      "quote": "A infraestrutura provisionada via código (Terraform)."
+    },
+    {
+      "id": "REQ-OBR-04",
+      "requirement": "Manter pipelines CI/CD com DevSecOps (GitHub Actions ou similar).",
+      "page": 2,
+      "quote": "Pipelines de CI/CD (GitHub Actions ou similar) com DevSecOps."
+    },
+    {
+      "id": "REQ-OBR-05",
+      "requirement": "Implantar em Kubernetes gerenciado via GitOps; alternativas citadas: EKS/GKE/AKS e ArgoCD/Flux. Ver Q-01.",
+      "page": 2,
+      "quote": "Implantação no Kubernetes (EKS, GKE, AKS) gerenciada via GitOps"
+    },
+    {
+      "id": "REQ-OBR-06",
+      "requirement": "Provisionar a stack de observabilidade no cluster e acrescentar Helm charts ao repositório GitOps.",
+      "page": 3,
+      "quote": "adicionando os Helm charts ao seu repositório GitOps"
+    },
+    {
+      "id": "REQ-OBR-07",
+      "requirement": "Usar Prometheus para armazenar e consultar métricas de infraestrutura.",
+      "page": 3,
+      "quote": "Prometheus: para armazenamento e consulta de métricas de infraestrutura."
+    },
+    {
+      "id": "REQ-OBR-08",
+      "requirement": "Usar Loki para centralizar os logs de todos os contêineres do cluster.",
+      "page": 3,
+      "quote": "Loki: para centralização e indexação de todos os logs dos contêineres do cluster."
+    },
+    {
+      "id": "REQ-OBR-09",
+      "requirement": "Usar Grafana como visualização principal.",
+      "page": 3,
+      "quote": "Grafana: como ferramenta principal de visualização."
+    },
+    {
+      "id": "REQ-OBR-10",
+      "requirement": "Criar ao menos um dashboard customizado com recursos do cluster, taxa de requisições dos microsserviços e painel de logs em tempo real.",
+      "page": 3,
+      "quote": "no mínimo, 1 Dashboard customizado"
+    },
+    {
+      "id": "REQ-OBR-11",
+      "requirement": "Centralizar métricas, logs e traces dos microsserviços no OTel Collector, recebendo, processando e exportando para os backends corretos (Prometheus, Loki e APM).",
+      "page": 4,
+      "quote": "receber, processar e exportar suas métricas, logs e traces"
+    },
+    {
+      "id": "REQ-OBR-12",
+      "requirement": "Escolher UMA ferramenta APM: Datadog OU New Relic; o PDF orienta contas gratuitas for education. Ver Q-04.",
+      "page": 4,
+      "quote": "Datadog OU New Relic - use as contas gratuitas for education"
+    },
+    {
+      "id": "REQ-OBR-13",
+      "requirement": "Alterar o código-fonte ou Dockerfile dos microsserviços com bibliotecas de instrumentação.",
+      "page": 4,
+      "quote": "altere o código-fonte ou o Dockerfile dos microsserviços"
+    },
+    {
+      "id": "REQ-OBR-14",
+      "requirement": "Gerar tracing distribuído e mostrar no APM o caminho de uma requisição ao evaluation-service.",
+      "page": 4,
+      "quote": "Ao fazer uma requisição no evaluation-service, o APM deve mostrar o \"caminho\""
+    },
+    {
+      "id": "REQ-OBR-15",
+      "requirement": "Exibir no APM o mapa de dependências dos cinco microsserviços.",
+      "page": 4,
+      "quote": "mapa de dependências dos seus 5 microsserviços"
+    },
+    {
+      "id": "REQ-OBR-16",
+      "requirement": "Configurar um alerta inteligente no Grafana ou no APM.",
+      "page": 5,
+      "quote": "configure um alerta inteligente (no Grafana ou APM)"
+    },
+    {
+      "id": "REQ-OBR-17",
+      "requirement": "Criar conta no PagerDuty OU OpsGenie e integrar abertura automática de incidente ao alerta.",
+      "page": 5,
+      "quote": "integre o alerta para abrir um incidente automaticamente"
+    },
+    {
+      "id": "REQ-OBR-18",
+      "requirement": "Enviar notificação detalhada de ChatOps a Slack, Discord ou Teams. Ver Q-02.",
+      "page": 5,
+      "quote": "notificação detalhada para um canal do Slack, Discord ou Teams"
+    },
+    {
+      "id": "REQ-OBR-19",
+      "requirement": "Criar automação de Self-Healing que reaja automaticamente ao alerta e tente mitigar sem intervenção humana.",
+      "page": 5,
+      "quote": "reaja automaticamente ao alerta criado"
+    },
+    {
+      "id": "REQ-OBR-20",
+      "requirement": "Entregar no repositório IaC/GitOps atualizado com stack e OTel Collector.",
+      "page": 5,
+      "quote": "Código IaC/GitOps atualizado para incluir a stack de monitoramento e o OTel Collector."
+    },
+    {
+      "id": "REQ-OBR-21",
+      "requirement": "Entregar código das aplicações atualizado com instrumentação.",
+      "page": 5,
+      "quote": "Código fonte das aplicações atualizado com a instrumentação."
+    },
+    {
+      "id": "REQ-OBR-22",
+      "requirement": "Entregar scripts ou automações de Self-Healing.",
+      "page": 5,
+      "quote": "Scripts ou automações criadas para o Self-Healing."
+    },
+    {
+      "id": "REQ-OBR-23",
+      "requirement": "Evidenciar funcionamento prático de todas as métricas, configurações e requisitos; material apenas configurado não basta.",
+      "page": 5,
+      "quote": "Não basta configurar; é preciso mostrar operando na prática."
+    },
+    {
+      "id": "REQ-OBR-24",
+      "requirement": "Entregar vídeo com duração de até 25 minutos.",
+      "page": 5,
+      "quote": "Vídeo de Demonstração (até 25 min)"
+    },
+    {
+      "id": "REQ-OBR-25",
+      "requirement": "Mostrar no vídeo EKS (IaC) e ArgoCD (GitOps) rodando com a nova stack. [INCERTO]: divergência com alternativas da p. 2; Q-01.",
+      "page": 5,
+      "quote": "mostre que o cluster EKS (IaC) e o ArgoCD (GitOps) continuam rodando"
+    },
+    {
+      "id": "REQ-OBR-26",
+      "requirement": "No vídeo: abrir Grafana, exibir dashboard/métricas, buscar logs no Loki e explicar o roteamento do Collector.",
+      "page": 5,
+      "quote": "Busque logs no Loki. Explique rapidamente como o OTel Collector está roteando esses dados."
+    },
+    {
+      "id": "REQ-OBR-27",
+      "requirement": "No vídeo: abrir Datadog/New Relic, mostrar Service Map, fazer requisição de teste e exibir trace distribuído detalhado.",
+      "page": 6,
+      "quote": "Faça uma requisição de teste e exiba o Trace Distribuído detalhado no APM."
+    },
+    {
+      "id": "REQ-OBR-28",
+      "requirement": "No vídeo: causar um problema proposital no sistema.",
+      "page": 6,
+      "quote": "Cause um problema proposital no sistema"
+    },
+    {
+      "id": "REQ-OBR-29",
+      "requirement": "No vídeo: mostrar o alerta em Firing no Grafana/APM.",
+      "page": 6,
+      "quote": "Mostre o alerta disparando (Firing) no Grafana/APM."
+    },
+    {
+      "id": "REQ-OBR-30",
+      "requirement": "No vídeo: mostrar incidente aberto no PagerDuty/OpsGenie e notificação chegando ao Slack/Discord. [INCERTO] para Teams; Q-02.",
+      "page": 6,
+      "quote": "notificação chegando no Slack/Discord"
+    },
+    {
+      "id": "REQ-OBR-31",
+      "requirement": "No vídeo: mostrar a automação de Self-Healing acionada e executando a ação corretiva.",
+      "page": 6,
+      "quote": "Mostre a automação de Self-Healing sendo acionada e executando a ação corretiva"
+    },
+    {
+      "id": "REQ-OBR-32",
+      "requirement": "Entregar relatório no formato PDF.",
+      "page": 6,
+      "quote": "Relatório de Entrega (.PDF)"
+    },
+    {
+      "id": "REQ-OBR-33",
+      "requirement": "Incluir nomes, RMs e usernames no relatório.",
+      "page": 6,
+      "quote": "Nomes, RMs e usernames."
+    },
+    {
+      "id": "REQ-OBR-34",
+      "requirement": "Incluir links do repositório de código e do vídeo no relatório.",
+      "page": 6,
+      "quote": "Links do repositório de código e do vídeo."
+    },
+    {
+      "id": "REQ-OBR-35",
+      "requirement": "Incluir print do dashboard do Grafana no relatório.",
+      "page": 6,
+      "quote": "Print do Dashboard do Grafana."
+    },
+    {
+      "id": "REQ-OBR-36",
+      "requirement": "Incluir print de trace distribuído no APM no relatório.",
+      "page": 6,
+      "quote": "Print de um Trace distribuído no APM."
+    },
+    {
+      "id": "REQ-OBR-37",
+      "requirement": "Incluir print da notificação de incidente no ChatOps no relatório.",
+      "page": 6,
+      "quote": "Print da notificação de incidente no ChatOps."
+    },
+    {
+      "id": "REQ-OBR-38",
+      "requirement": "Incluir print de log/execução da automação de Self-Healing no relatório.",
+      "page": 6,
+      "quote": "Print do log/execução da automação de Self-Healing."
+    },
+    {
+      "id": "REQ-OBR-39",
+      "requirement": "Explicar brevemente a arquitetura OTel implementada no relatório.",
+      "page": 6,
+      "quote": "breve explicação da arquitetura do OTel implementada"
+    },
+    {
+      "id": "REQ-OBR-40",
+      "requirement": "Justificar no relatório escolhas Datadog versus New Relic e OpsGenie versus PagerDuty.",
+      "page": 6,
+      "quote": "escolha entre Datadog vs New Relic e OpsGenie vs PagerDuty"
+    },
+    {
+      "id": "REQ-OBR-41",
+      "requirement": "Desenvolver em grupo, por interpretação conservadora. [INCERTO]: o PDF diz \"em princípio\"; Q-03.",
+      "page": 2,
+      "quote": "em princípio, deve ser desenvolvida em grupo"
+    }
+  ],
+  "bonus": [
+    {
+      "id": "REQ-BON-01",
+      "requirement": "Adotar Grafana Alloy como alternativa ao OTel Collector padrão, mantendo as funções centrais de OTel.",
+      "page": 4,
+      "quote": "O uso do Grafana Alloy no lugar do OTel Collector padrão é opcional."
+    },
+    {
+      "id": "REQ-BON-02",
+      "requirement": "Preferir bibliotecas OpenTelemetry da linguagem na instrumentação; a instrumentação em si continua obrigatória.",
+      "page": 4,
+      "quote": "preferencialmente utilizando as bibliotecas do OpenTelemetry"
+    }
+  ],
+  "suggestions": [
+    {
+      "id": "SUG-01",
+      "suggestion": "Criar matriz de evidências por requisito e ensaiar a demonstração ponta a ponta.",
+      "why": "Evita confundir código configurado com funcionamento comprovado; detalhamento autoral da organização da entrega.",
+      "module": "Todos"
+    },
+    {
+      "id": "SUG-02",
+      "suggestion": "Definir janela, duração e contexto do alerta e usar agrupamento/deduplicação.",
+      "why": "Reduz ruído e ajuda o alerta inteligente a ser acionável; valores dependem do cenário.",
+      "module": "Observabilidade e Monitoramento; Automação de incidentes"
+    },
+    {
+      "id": "SUG-03",
+      "suggestion": "Vincular logs e traces por identificadores e padronizar nomes dos serviços.",
+      "why": "Facilita navegar da falha ao caminho da requisição; esquema exato não é prescrito.",
+      "module": "Monitoramento Opensource; APM"
+    },
+    {
+      "id": "SUG-04",
+      "suggestion": "Dar escopo mínimo e limite de repetição à automação; validar recuperação após cada ação.",
+      "why": "Evita ciclos de reinício e efeitos amplos; política de segurança é decisão do projeto.",
+      "module": "Automação de incidentes"
+    }
+  ]
+}

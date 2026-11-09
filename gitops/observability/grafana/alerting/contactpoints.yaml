@@ -1,0 +1,69 @@
+# ============================================================
+# GRAFANA ALERTING - contact points (para onde o alerta vai)
+# ============================================================
+# Dois contact points:
+#
+#   togglemaster-incidente     PagerDuty (abre e resolve o incidente) +
+#                              Slack (mensagem detalhada no canal)
+#   togglemaster-self-healing  webhook para a API do GitHub, que dispara
+#                              o workflow self-healing.yml
+#
+# SEGREDOS: $PAGERDUTY_INTEGRATION_KEY, $SLACK_WEBHOOK_URL e
+# $GITHUB_DISPATCH_TOKEN sao variaveis de ambiente do Grafana, vindas do
+# Secret grafana-notificacoes (terraform/k8s/observability.tf). O Git so
+# guarda os NOMES.
+#
+# RESOLUCAO: o PagerDuty recebe o "resolve" quando o alerta volta ao
+# normal, e o incidente fecha sozinho. O webhook do GitHub NAO recebe
+# (disableResolveMessage), senao a volta ao normal dispararia um segundo
+# self-healing sem motivo.
+# ============================================================
+apiVersion: 1
+
+contactPoints:
+  - orgId: 1
+    name: togglemaster-incidente
+    receivers:
+      - uid: togglemaster-pagerduty
+        type: pagerduty
+        settings:
+          # O Grafana troca $VAR pelo valor e, se o resultado parecer um
+          # numero, guarda como numero - e nao sobe (testado em 2026-11-03
+          # no 13.3.0). Aspas no YAML nao evitam isso. A chave real e
+          # hexadecimal com letras; a variavel pagerduty_integration_key
+          # do Terraform recusa qualquer chave que vire numero.
+          integrationKey: $PAGERDUTY_INTEGRATION_KEY
+          severity: critical
+          class: http-5xx
+          component: '{{ .CommonLabels.service }}'
+          group: togglemaster
+          source: grafana-togglemaster
+          summary: '{{ template "togglemaster.title" . }}'
+
+      - uid: togglemaster-slack
+        type: slack
+        settings:
+          url: $SLACK_WEBHOOK_URL
+          title: '{{ template "togglemaster.title" . }}'
+          text: '{{ template "togglemaster.slack.text" . }}'
+
+  - orgId: 1
+    name: togglemaster-self-healing
+    receivers:
+      - uid: togglemaster-github
+        type: webhook
+        disableResolveMessage: true
+        settings:
+          url: https://api.github.com/repos/fiap-devops-arqcloud-2026/tech-challenge-04/dispatches
+          httpMethod: POST
+          # O Grafana nao aceita Authorization em headers; o token vai por
+          # estes dois campos, que ele guarda como segredo.
+          authorization_scheme: Bearer
+          authorization_credentials: $GITHUB_DISPATCH_TOKEN
+          headers:
+            Accept: application/vnd.github+json
+            X-GitHub-Api-Version: "2026-03-10"
+          # O corpo padrao do Grafana nao tem event_type, que a API exige;
+          # o template monta {"event_type": "self-healing", "client_payload": {...}}.
+          payload:
+            template: '{{ template "togglemaster.github" . }}'

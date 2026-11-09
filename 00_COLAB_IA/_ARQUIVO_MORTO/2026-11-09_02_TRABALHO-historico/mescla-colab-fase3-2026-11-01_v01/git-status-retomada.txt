@@ -1,0 +1,433 @@
+ M 00_COLAB_IA/DECISOES.md
+ M 00_COLAB_IA/DOSSIE_CONTEXTO.md
+ M 00_COLAB_IA/LEIA-PRIMEIRO.md
+ M 00_COLAB_IA/LOG_DE_TRABALHO.md
+ M 00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md
+ M CLAUDE.md
+ M README.md
+ D "docs/POSTECH - Tech Challenge - Fase 3.pdf"
+ D "docs/aulas-fiap/01_Welcome to Automa\303\247\303\243o e Seguran\303\247a na Cloud/GUIA-ESTUDO-Automacao-e-Seguranca-na-Cloud.html"
+ D "docs/aulas-fiap/01_Welcome to Automa\303\247\303\243o e Seguran\303\247a na Cloud/POSTECH - Capitulo de Projeto - Fase 3.pdf"
+ D docs/aulas-fiap/02_CI-CD/GUIA-ESTUDO-CI-CD.html
+ D "docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 1.pdf"
+ D "docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 2.pdf"
+ D "docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 3.pdf"
+ D "docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 4.pdf"
+ D "docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 5.pdf"
+ D "docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 6.pdf"
+ D "docs/aulas-fiap/02_CI-CD/POSTECH - CI-CD - Aula 7.pdf"
+ D "docs/aulas-fiap/03_Infraestrutura como c\303\263digo/GUIA-ESTUDO-Infraestrutura-como-Codigo.html"
+ D "docs/aulas-fiap/03_Infraestrutura como c\303\263digo/POSTECH - Infraestrutura como co\314\201digo - Aula 1.pdf"
+ D "docs/aulas-fiap/03_Infraestrutura como c\303\263digo/POSTECH - Infraestrutura como co\314\201digo - Aula 2.pdf"
+ D "docs/aulas-fiap/03_Infraestrutura como c\303\263digo/POSTECH - Infraestrutura como co\314\201digo - Aula 3.pdf"
+ D "docs/aulas-fiap/03_Infraestrutura como c\303\263digo/POSTECH - Infraestrutura como co\314\201digo - Aula 4.pdf"
+ D "docs/aulas-fiap/03_Infraestrutura como c\303\263digo/POSTECH - Infraestrutura como co\314\201digo - Aula 5.pdf"
+ D "docs/aulas-fiap/03_Infraestrutura como c\303\263digo/POSTECH - Infraestrutura como co\314\201digo - Aula 6.pdf"
+ D "docs/aulas-fiap/03_Infraestrutura como c\303\263digo/POSTECH - Infraestrutura como co\314\201digo - Aula 7.pdf"
+ D "docs/aulas-fiap/03_Infraestrutura como c\303\263digo/POSTECH - Infraestrutura como co\314\201digo - Aula 8.pdf"
+ D "docs/aulas-fiap/04_Seguran\303\247a em DevOps (DevSecOps)/GUIA-ESTUDO-Seguranca-em-DevOps-DevSecOps.html"
+ D "docs/aulas-fiap/04_Seguran\303\247a em DevOps (DevSecOps)/POSTECH - Seguranc\314\247a em DevOps (DevSecOps) - Aula 1.pdf"
+ D "docs/aulas-fiap/04_Seguran\303\247a em DevOps (DevSecOps)/POSTECH - Seguranc\314\247a em DevOps (DevSecOps) - Aula 2.pdf"
+ D "docs/aulas-fiap/04_Seguran\303\247a em DevOps (DevSecOps)/POSTECH - Seguranc\314\247a em DevOps (DevSecOps) - Aula 3.pdf"
+ D "docs/aulas-fiap/04_Seguran\303\247a em DevOps (DevSecOps)/POSTECH - Seguranc\314\247a em DevOps (DevSecOps) - Aula 4.pdf"
+ D "docs/aulas-fiap/04_Seguran\303\247a em DevOps (DevSecOps)/POSTECH - Seguranc\314\247a em DevOps (DevSecOps) - Aula 5.pdf"
+ D "docs/aulas-fiap/04_Seguran\303\247a em DevOps (DevSecOps)/POSTECH - Seguranc\314\247a em DevOps (DevSecOps) - Aula 6.pdf"
+ D "docs/aulas-fiap/04_Seguran\303\247a em DevOps (DevSecOps)/POSTECH - Seguranc\314\247a em DevOps (DevSecOps) - Aula 7.pdf"
+ D "docs/aulas-fiap/05_Seguran\303\247a na Cloud/GUIA-ESTUDO-Seguranca-na-Cloud.html"
+ D "docs/aulas-fiap/05_Seguran\303\247a na Cloud/POSTECH - Seguranc\314\247a na Cloud - Aula 1.pdf"
+ D "docs/aulas-fiap/05_Seguran\303\247a na Cloud/POSTECH - Seguranc\314\247a na Cloud - Aula 2.pdf"
+ D "docs/aulas-fiap/05_Seguran\303\247a na Cloud/POSTECH - Seguranc\314\247a na Cloud - Aula 3.pdf"
+ D "docs/aulas-fiap/05_Seguran\303\247a na Cloud/POSTECH - Seguranc\314\247a na Cloud - Aula 4.pdf"
+ D "docs/aulas-fiap/05_Seguran\303\247a na Cloud/POSTECH - Seguranc\314\247a na Cloud - Aula 5.pdf"
+ M scripts/security-check.sh
+ M scripts/test-compose.sh
+ M services/analytics-service/Dockerfile
+ M services/analytics-service/README.md
+ M services/analytics-service/app.py
+ M services/analytics-service/requirements.txt
+ M services/auth-service/README.md
+ M services/auth-service/go.mod
+ M services/auth-service/go.sum
+ M services/auth-service/handlers.go
+ M services/auth-service/key.go
+ M services/auth-service/main.go
+ M services/evaluation-service/README.md
+ M services/evaluation-service/evaluator.go
+ M services/evaluation-service/go.mod
+ M services/evaluation-service/go.sum
+ M services/evaluation-service/handlers.go
+ M services/evaluation-service/main.go
+ M services/evaluation-service/sqs.go
+ M services/evaluation-service/types.go
+ M services/flag-service/Dockerfile
+ M services/flag-service/README.md
+ M services/flag-service/app.py
+ M services/flag-service/requirements.txt
+ M services/targeting-service/Dockerfile
+ M services/targeting-service/README.md
+ M services/targeting-service/app.py
+ M services/targeting-service/requirements.txt
+ M terraform/main.tf
+ M terraform/modules/iam-ci/main.tf
+ M terraform/modules/iam-ci/variables.tf
+ M terraform/terraform.tfvars.example
+ M terraform/variables.tf
+?? 00_COLAB_IA/02_TRABALHO/ANALISE_COMPLETA_FASE4_2026-10-31_v01.md
+?? 00_COLAB_IA/02_TRABALHO/CONFERENCIA_PLANO_FASE4_2026-10-21_v01.md
+?? 00_COLAB_IA/02_TRABALHO/GUIA_CONTAS_E_ACESSOS_FASE4_2026-10-28_v01.md
+?? 00_COLAB_IA/02_TRABALHO/MATRIZ_REQUISITOS_FASE4_2026-10-28_v01.json
+?? 00_COLAB_IA/02_TRABALHO/PASSO2_CONTAS_SAAS_2026-11-01_v01.md
+?? 00_COLAB_IA/02_TRABALHO/RELATORIO_GO_OTEL_2026-10-27_v01.md
+?? 00_COLAB_IA/02_TRABALHO/RELATORIO_PASSO1_INTEGRACAO_LOCAL_2026-10-22_v01.md
+?? 00_COLAB_IA/02_TRABALHO/RELATORIO_PASSO1_REVALIDACAO_2026-10-27_v01.md
+?? 00_COLAB_IA/02_TRABALHO/RELATORIO_PASSO2_OBSERVABILIDADE_LOCAL_2026-10-27_v01.md
+?? 00_COLAB_IA/02_TRABALHO/RELATORIO_TERRAFORM_BACKEND_2026-10-22_v01.md
+?? 00_COLAB_IA/02_TRABALHO/RESULTADO_PASSOS_LOCAIS_2026-10-27_v01.json
+?? 00_COLAB_IA/02_TRABALHO/REVISAO_GERAL_APLICACOES_2026-10-28_v01.md
+?? 00_COLAB_IA/02_TRABALHO/REVISAO_GERAL_DOCUMENTACAO_2026-10-27_v01.md
+?? 00_COLAB_IA/02_TRABALHO/REVISAO_GERAL_FASE4_2026-10-28_v01.md
+?? 00_COLAB_IA/02_TRABALHO/REVISAO_GERAL_INFRA_2026-10-28_v01.md
+?? 00_COLAB_IA/02_TRABALHO/REVISAO_PYTHON_OTEL_2026-10-27_v01.md
+?? 00_COLAB_IA/02_TRABALHO/REVISAO_TERRAFORM_E_OTEL_2026-10-27_v01.md
+?? 00_COLAB_IA/02_TRABALHO/VERIFICACAO_GUIA_CONTAS_2026-10-28_v01.json
+?? 00_COLAB_IA/02_TRABALHO/VERIFICACAO_REVISAO_GERAL_2026-10-28_v01.json
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/CATALOGO_ACHADOS.md
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/MATRIZ_REQUISITOS.md
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/catalogar-estatico.py
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/catalogo-achados.json
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/cobertura-arquivos.json
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/fontes/enunciado-1.png
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/fontes/enunciado-2.png
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/fontes/enunciado-3.png
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/fontes/enunciado-4.png
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/fontes/enunciado-5.png
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/fontes/enunciado-6.png
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/fontes/enunciado-7.png
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/fontes/enunciado-p01.txt
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/fontes/enunciado-p02.txt
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/fontes/enunciado-p03.txt
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/fontes/enunciado-p04.txt
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/fontes/enunciado-p05.txt
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/fontes/enunciado-p06.txt
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/fontes/enunciado-p07.txt
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/fontes/enunciado.json
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/gerar-catalogo.py
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/gerar-matriz.py
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/git-status-inicial.txt
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/inventario-inicial.json
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/matriz-requisitos.csv
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/matriz-requisitos.json
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/validacoes/analise-estatica.json
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/validacoes/compose-config.json
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/validacoes/gitops-renderizado.txt
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/validacoes/guias.txt
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/validacoes/links.json
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/validacoes/oidc-evidencia-historica.json
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/validacoes/padroes-segredos.json
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/validacoes/preservacao-materiais.json
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/validacoes/repro-ambiente-compose.json
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/validacoes/repro-count-init.txt
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/validacoes/repro-count-plan.txt
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/validacoes/repro-count-sensitive/main.tf
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/validacoes/resultados.json
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/validacoes/terraform-cluster-validate.txt
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/validacoes/terraform-fmt.txt
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/validacoes/terraform-k8s-validate.txt
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/validacoes/terraform-validate.txt
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/validacoes/terraform-version.txt
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/verificar-estatico.py
+?? 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/verificar-links.py
+?? 00_COLAB_IA/02_TRABALHO/aula05-terraform-2026-10-22_v01/LEITURA_E_CONFERENCIA.md
+?? 00_COLAB_IA/02_TRABALHO/aula05-terraform-2026-10-22_v01/extracao.json
+?? 00_COLAB_IA/02_TRABALHO/aula05-terraform-2026-10-22_v01/extracao.txt
+?? 00_COLAB_IA/02_TRABALHO/estado-antes-readme-2026-10-22_v01.json
+?? 00_COLAB_IA/02_TRABALHO/estado-retomada-passos-locais-2026-10-27_v01.json
+?? 00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/audit-github.py
+?? 00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/aws/PARECER_AWS_ETAPA8.md
+?? 00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/aws/auditar-aws-somente-leitura.py
+?? 00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/aws/inventario-aws-sanitizado.json
+?? 00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/baseline.json
+?? 00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/correspondencia-aws-github.json
+?? 00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/github/configuracao.json
+?? 00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/empty-aws-config
+?? 00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/harness/.terraform.lock.hcl
+?? 00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/harness/main.tf
+?? 00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/harness/offline-test.tf
+?? 00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/harness/outputs.tf
+?? 00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/harness/tests/trust.tftest.hcl
+?? 00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/harness/variables.tf
+?? 00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/offline-init.txt
+?? 00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/offline-test.jsonl
+?? 00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/test-oidc-offline.py
+?? 00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/verificar-correspondencia.py
+?? 00_COLAB_IA/02_TRABALHO/gerar-revisao-geral-2026-10-28_v01.py
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/entradas/colher.py
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/entradas/entrada_DEC.json
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/entradas/entrada_PROC-A.json
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/entradas/entrada_PROC-B.json
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/entradas/entrada_TEC-A.json
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/entradas/entrada_TEC-B.json
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/entradas/entrada_relatorio.json
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/entradas/manifesto-f3.tsv
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/entradas/pesquisa_newrelic.json
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/entradas/pesquisa_pagerduty.json
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/entradas/pesquisa_slack-grafana.json
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/entradas/verificacao_newrelic.json
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/entradas/verificacao_slack-grafana.json
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/entradas/verificar_mescla.py
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/medir-lint.sh
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/rascunhos/consolidar_PROC-A.json
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/rascunhos/consolidar_PROC-B.json
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/rascunhos/consolidar_TEC-A.json
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/rascunhos/consolidar_TEC-B.json
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/rascunhos/consolidar_decisoes.json
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/rascunhos/decisoes.md
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/rascunhos/dossie.md
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/rascunhos/guia.md
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/rascunhos/leia.md
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/rascunhos/organizacao.md
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/rascunhos/pendencias.md
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/rascunhos/relatorio.md
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/rascunhos/verifica_pagerduty.json
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/resultado-lint-2026-11-01.txt
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/retomar_codex.py
+?? 00_COLAB_IA/02_TRABALHO/mescla-colab-fase3-2026-11-01_v01/snapshot-retomada-codex.json
+?? 00_COLAB_IA/02_TRABALHO/otel-python-2026-10-22_v01/RESULTADO_PYTHON.md
+?? 00_COLAB_IA/02_TRABALHO/otel-python-2026-10-22_v01/bandit.json
+?? 00_COLAB_IA/02_TRABALHO/otel-python-2026-10-22_v01/flake8.log
+?? 00_COLAB_IA/02_TRABALHO/otel-python-2026-10-22_v01/pip-install.log
+?? 00_COLAB_IA/02_TRABALHO/otel-python-2026-10-22_v01/preservacao-python.json
+?? 00_COLAB_IA/02_TRABALHO/otel-python-2026-10-22_v01/tests-analytics-service.log
+?? 00_COLAB_IA/02_TRABALHO/otel-python-2026-10-22_v01/tests-analytics-service_v02.log
+?? 00_COLAB_IA/02_TRABALHO/otel-python-2026-10-22_v01/tests-flag-service.log
+?? 00_COLAB_IA/02_TRABALHO/otel-python-2026-10-22_v01/tests-flag-service_v02.log
+?? 00_COLAB_IA/02_TRABALHO/otel-python-2026-10-22_v01/tests-targeting-service.log
+?? 00_COLAB_IA/02_TRABALHO/otel-python-2026-10-22_v01/tests-targeting-service_v02.log
+?? 00_COLAB_IA/02_TRABALHO/preservacao-passos-locais-2026-10-22_v01.json
+?? 00_COLAB_IA/02_TRABALHO/resultado-render-readme-2026-10-22_v01.json
+?? 00_COLAB_IA/02_TRABALHO/revisar-projeto-2026-10-27_v01.py
+?? 00_COLAB_IA/02_TRABALHO/role-github-oidc-2026-10-28_v01/LEIA-ME.md
+?? 00_COLAB_IA/02_TRABALHO/role-github-oidc-2026-10-28_v01/ecr-permissions_TEMPLATE.json
+?? 00_COLAB_IA/02_TRABALHO/role-github-oidc-2026-10-28_v01/trust-policy_TEMPLATE.json
+?? 00_COLAB_IA/02_TRABALHO/role-github-oidc-2026-10-28_v01/verificacao-documental.json
+?? 00_COLAB_IA/02_TRABALHO/role-github-oidc-2026-10-28_v01/verificacao-oidc.json
+?? 00_COLAB_IA/02_TRABALHO/validar-readme-2026-10-22_v01.mjs
+?? 00_COLAB_IA/02_TRABALHO/verificacao-passos-locais-2026-10-27_v01.json
+?? 00_COLAB_IA/02_TRABALHO/verificacao-readme-2026-10-22_v01.json
+?? 00_COLAB_IA/02_TRABALHO/verificar-passos-locais-2026-10-27_v01.py
+?? 00_COLAB_IA/02_TRABALHO/verificar-revisao-geral-2026-10-28_v01.py
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-21_conferencia-plano/LOG_DE_TRABALHO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-21_conferencia-plano/PENDENCIAS_E_PROXIMOS_PASSOS.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-21_explicacao-observabilidade/LOG_DE_TRABALHO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-21_explicacao-pods-collector/LOG_DE_TRABALHO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_aula05-terraform/LOG_DE_TRABALHO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_aula05-terraform/PENDENCIAS_E_PROXIMOS_PASSOS.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/.dockerignore
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/Dockerfile
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/README.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/db/init.sql
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/go.mod
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/go.sum
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/handlers.go
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/key.go
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/main.go
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/.dockerignore
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/Dockerfile
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/README.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/evaluator.go
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/go.mod
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/go.sum
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/handlers.go
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/main.go
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/sqs.go
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/types.go
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/analytics-service/Dockerfile
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/analytics-service/README.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/analytics-service/app.py
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/analytics-service/requirements.txt
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/flag-service/Dockerfile
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/flag-service/README.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/flag-service/app.py
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/flag-service/requirements.txt
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/targeting-service/Dockerfile
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/targeting-service/README.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/targeting-service/app.py
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/targeting-service/requirements.txt
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/.gitignore
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/00_COLAB_IA/DECISOES.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/00_COLAB_IA/DOSSIE_CONTEXTO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/00_COLAB_IA/LEIA-PRIMEIRO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/00_COLAB_IA/LOG_DE_TRABALHO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/CLAUDE.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/README.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/docker-compose.integration.yaml
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/docker-compose.yaml
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/scripts/integration/assert-events.py
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/scripts/integration/bootstrap-aws.py
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/scripts/integration/test-flow.py
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/scripts/security-check.sh
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/scripts/test-compose.sh
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/scripts/validate-all.sh
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/analytics-service/.dockerignore
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/analytics-service/Dockerfile
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/analytics-service/README.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/analytics-service/app.py
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/analytics-service/requirements.txt
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/auth-service/.dockerignore
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/auth-service/Dockerfile
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/auth-service/README.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/auth-service/db/init.sql
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/auth-service/go.mod
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/auth-service/go.sum
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/auth-service/handlers.go
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/auth-service/key.go
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/auth-service/main.go
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/evaluation-service/.dockerignore
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/evaluation-service/Dockerfile
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/evaluation-service/README.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/evaluation-service/evaluator.go
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/evaluation-service/go.mod
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/evaluation-service/go.sum
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/evaluation-service/handlers.go
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/evaluation-service/main.go
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/evaluation-service/sqs.go
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/evaluation-service/types.go
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/flag-service/.dockerignore
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/flag-service/Dockerfile
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/flag-service/README.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/flag-service/app.py
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/flag-service/db/init.sql
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/flag-service/requirements.txt
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/targeting-service/.dockerignore
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/targeting-service/Dockerfile
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/targeting-service/README.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/targeting-service/app.py
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/targeting-service/db/init.sql
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_passos-locais/services/targeting-service/requirements.txt
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_proximos-passos/DOSSIE_CONTEXTO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_proximos-passos/LOG_DE_TRABALHO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_proximos-passos/PENDENCIAS_E_PROXIMOS_PASSOS.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_readme-observabilidade/00_COLAB_IA/DECISOES.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_readme-observabilidade/00_COLAB_IA/DOSSIE_CONTEXTO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_readme-observabilidade/00_COLAB_IA/LOG_DE_TRABALHO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_readme-observabilidade/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_readme-observabilidade/README.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-go/services/auth-service/.dockerignore
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-go/services/auth-service/Dockerfile
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-go/services/auth-service/README.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-go/services/auth-service/go.mod
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-go/services/auth-service/go.sum
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-go/services/auth-service/handlers.go
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-go/services/auth-service/key.go
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-go/services/auth-service/main.go
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-go/services/auth-service/telemetry.go
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-go/services/evaluation-service/.dockerignore
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-go/services/evaluation-service/Dockerfile
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-go/services/evaluation-service/README.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-go/services/evaluation-service/evaluator.go
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-go/services/evaluation-service/go.mod
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-go/services/evaluation-service/go.sum
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-go/services/evaluation-service/handlers.go
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-go/services/evaluation-service/main.go
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-go/services/evaluation-service/sqs.go
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-go/services/evaluation-service/telemetry.go
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-go/services/evaluation-service/types.go
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-python/02_TRABALHO/REVISAO_PYTHON_OTEL_2026-10-27_antes-sql_v01.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-python/02_TRABALHO/REVISAO_PYTHON_OTEL_2026-10-27_rascunho_v01.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-python/sql-cursor/services/flag-service/README.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-python/sql-cursor/services/flag-service/app.py
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-python/sql-cursor/services/flag-service/tests/test_telemetry.py
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-python/sql-cursor/services/targeting-service/README.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-python/sql-cursor/services/targeting-service/app.py
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_instrumentacao-python/sql-cursor/services/targeting-service/tests/test_telemetry.py
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_orientacao-proximos-passos/LOG_DE_TRABALHO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_orientacao-proximos-passos/PENDENCIAS_E_PROXIMOS_PASSOS.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_retomada-passos-locais/00_COLAB_IA/DECISOES.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_retomada-passos-locais/00_COLAB_IA/DOSSIE_CONTEXTO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_retomada-passos-locais/00_COLAB_IA/LEIA-PRIMEIRO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_retomada-passos-locais/00_COLAB_IA/LOG_DE_TRABALHO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_retomada-passos-locais/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_retomada-passos-locais/CLAUDE.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_retomada-passos-locais/README.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_retomada-passos-locais/docker-compose.otel.yaml
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_retomada-passos-locais/observability/README.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_retomada-passos-locais/observability/otel-collector-local.yaml
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_retomada-passos-locais/scripts/integration/test-traces.py
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_retomada-passos-locais/scripts/security-check.sh
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_retomada-passos-locais/scripts/test-observability.sh
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_revisao-geral/DOSSIE_CONTEXTO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_revisao-geral/LOG_DE_TRABALHO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-27_revisao-geral/PENDENCIAS_E_PROXIMOS_PASSOS.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_apos-passo7_144715/DOSSIE_CONTEXTO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_apos-passo7_144715/LOG_DE_TRABALHO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_apos-passo7_144715/PENDENCIAS_E_PROXIMOS_PASSOS.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_auditoria-claude/LOG_DE_TRABALHO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_auditoria-claude/PENDENCIAS_E_PROXIMOS_PASSOS.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_criar-role-oidc_120027/DOSSIE_CONTEXTO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_criar-role-oidc_120027/LOG_DE_TRABALHO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_criar-role-oidc_120027/PENDENCIAS_E_PROXIMOS_PASSOS.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_etapas8-9/CLAUDE.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_etapas8-9/DECISOES.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_etapas8-9/DOSSIE_CONTEXTO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_etapas8-9/LEIA-PRIMEIRO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_etapas8-9/LOG_DE_TRABALHO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_etapas8-9/PENDENCIAS_E_PROXIMOS_PASSOS.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_etapas8-9/terraform/README.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_etapas8-9/terraform/main.tf
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_etapas8-9/terraform/modules/iam-ci/main.tf
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_etapas8-9/terraform/modules/iam-ci/variables.tf
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_etapas8-9/terraform/terraform.tfvars.example
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_etapas8-9/terraform/variables.tf
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_guia-contas/DOSSIE_CONTEXTO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_guia-contas/LOG_DE_TRABALHO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_guia-contas/PENDENCIAS_E_PROXIMOS_PASSOS.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_orientacao-aws-cli_110640/LOG_DE_TRABALHO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_orientacao-aws-cli_110640/PENDENCIAS_E_PROXIMOS_PASSOS.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_orientacao-ecr-github_113309/DOSSIE_CONTEXTO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_orientacao-ecr-github_113309/LOG_DE_TRABALHO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_orientacao-ecr-github_113309/PENDENCIAS_E_PROXIMOS_PASSOS.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_orientacao-role-arn_114517/LOG_DE_TRABALHO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_orientacao-role-arn_114517/PENDENCIAS_E_PROXIMOS_PASSOS.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_revisao-geral/DOSSIE_CONTEXTO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_revisao-geral/LOG_DE_TRABALHO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_revisao-geral/PENDENCIAS_E_PROXIMOS_PASSOS.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_revisao-geral/rascunho-antes-revisao-editorial/MATRIZ_REQUISITOS_FASE4_2026-10-28_v01.json
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_revisao-geral/rascunho-antes-revisao-editorial/REVISAO_GERAL_FASE4_2026-10-28_v01.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_revisao-geral/rascunho-antes-revisao-editorial/VERIFICACAO_REVISAO_GERAL_2026-10-28_v01.json
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-28_revisao-geral/rascunho-antes-revisao-editorial/gerar-revisao-geral-2026-10-28_v01.py
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-30_auditoria-codex/DECISOES.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-30_auditoria-codex/DOSSIE_CONTEXTO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-30_auditoria-codex/LOG_DE_TRABALHO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-10-30_auditoria-codex/PENDENCIAS_E_PROXIMOS_PASSOS.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/CLAUDE.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/DECISOES.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/DOSSIE_CONTEXTO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/LEIA-PRIMEIRO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/LOG_DE_TRABALHO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/ORGANIZACAO_DE_PASTAS.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/PENDENCIAS_E_PROXIMOS_PASSOS.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/retomada-codex-1809/00_COLAB_IA/DECISOES.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/retomada-codex-1809/00_COLAB_IA/DOSSIE_CONTEXTO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/retomada-codex-1809/00_COLAB_IA/LEIA-PRIMEIRO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/retomada-codex-1809/00_COLAB_IA/LOG_DE_TRABALHO.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/retomada-codex-1809/00_COLAB_IA/ORGANIZACAO_DE_PASTAS.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/retomada-codex-1809/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md
+?? 00_COLAB_IA/_ARQUIVO_MORTO/2026-11-01_mescla-colab-fase3/retomada-codex-1809/CLAUDE.md
+?? docker-compose.otel.yaml
+?? observability/README.md
+?? observability/otel-collector-local.yaml
+?? scripts/integration/test-traces.py
+?? scripts/test-observability.sh
+?? services/analytics-service/telemetry.py
+?? services/analytics-service/tests/test_telemetry.py
+?? services/auth-service/handlers_test.go
+?? services/auth-service/telemetry.go
+?? services/auth-service/telemetry_test.go
+?? services/evaluation-service/evaluator_test.go
+?? services/evaluation-service/telemetry.go
+?? services/evaluation-service/telemetry_test.go
+?? services/flag-service/telemetry.py
+?? services/flag-service/tests/test_telemetry.py
+?? services/targeting-service/telemetry.py
+?? services/targeting-service/tests/test_telemetry.py

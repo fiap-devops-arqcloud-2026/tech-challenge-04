@@ -1,0 +1,166 @@
+# ============================================================
+# VALUES - opentelemetry-collector 0.178.2, papel GATEWAY
+# ============================================================
+# Chart: https://open-telemetry.github.io/opentelemetry-helm-charts
+# (appVersion 0.163.2, a mesma versao do Collector validada no Compose).
+#
+# O gateway e o Collector CENTRAL: tudo passa por ele.
+#   traces  <- OTLP dos 5 servicos (OTEL_EXPORTER_OTLP_ENDPOINT aponta
+#              para otel-gateway:4318)
+#           -> New Relic (APM: Service Map e trace distribuido)
+#           -> conector span_metrics (gera metricas a partir dos spans)
+#   metrics <- span_metrics
+#           -> Prometheus, por OTLP (taxa de requisicoes, erros, latencia)
+#   logs    <- OTLP do agente DaemonSet (otel-agent.yaml)
+#           -> Loki
+#
+# A sanitizacao e a mesma do Collector local (observability/
+# otel-collector-local.yaml), provada no ensaio de 2026-10-27: os traces
+# saem do cluster so com atributos de uma lista fechada, sem dados de
+# usuario. O /health fica de fora.
+#
+# Nomes de componentes no padrao atual do Collector (otlp_http,
+# span_metrics, k8s_attributes); os antigos (otlphttp, spanmetrics...)
+# viraram aliases obsoletos.
+# ============================================================
+
+mode: deployment
+
+# Service "otel-gateway": endereco usado no otel-config dos servicos
+# (gitops/base/kustomization.yaml) e no exporter do agente.
+fullnameOverride: otel-gateway
+
+replicaCount: 1
+
+# Mesma imagem do Compose, fixada por digest do indice multiplataforma.
+image:
+  repository: otel/opentelemetry-collector-contrib
+  tag: "0.163.2"
+  digest: sha256:7f22d2a6748110ffb6a59bc0df448bccbf501cdb667d610ede4c61d3863d5849
+
+command:
+  name: otelcol-contrib
+
+# Acrescenta k8s.namespace.name, k8s.pod.name, k8s.deployment.name... aos
+# traces, consultando a API do Kubernetes pelo IP de origem da conexao.
+# O chart cria o ClusterRole de leitura de pods/namespaces/replicasets.
+presets:
+  kubernetesAttributes:
+    enabled: true
+
+# License key do New Relic, do Secret criado pelo Terraform
+# (terraform/k8s/observability.tf). O valor nunca aparece no values.
+extraEnvs:
+  - name: NEW_RELIC_LICENSE_KEY
+    valueFrom:
+      secretKeyRef:
+        name: newrelic-license
+        key: NEW_RELIC_LICENSE_KEY
+
+# So OTLP. Jaeger e Zipkin vem ligados no chart e nao sao usados.
+ports:
+  jaeger-compact:
+    enabled: false
+  jaeger-thrift:
+    enabled: false
+  jaeger-grpc:
+    enabled: false
+  zipkin:
+    enabled: false
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    memory: 512Mi
+
+config:
+  receivers:
+    # Receptores padrao do chart que nao usamos.
+    jaeger: null
+    zipkin: null
+    prometheus: null
+
+  processors:
+    # memory_limiter e batch vem do padrao do chart (80% / 25% do limite
+    # de memoria do container). Os dois abaixo sao os do ensaio local.
+    filter/health:
+      error_mode: propagate
+      traces:
+        span:
+          - 'attributes["http.route"] == "/health"'
+          - 'attributes["url.path"] == "/health"'
+          - 'attributes["http.target"] == "/health"'
+
+    transform/sanitize:
+      error_mode: propagate
+      trace_statements:
+        - context: resource
+          statements:
+            - 'keep_keys(attributes, ["service.name", "service.namespace", "service.version", "deployment.environment.name", "telemetry.sdk.name", "telemetry.sdk.language", "telemetry.sdk.version"])'
+        - context: span
+          statements:
+            - 'keep_keys(attributes, ["http.route", "http.method", "http.request.method", "http.status_code", "http.response.status_code", "http.flavor", "url.scheme", "server.address", "server.port", "network.protocol.version", "net.peer.name", "net.peer.port", "db.system", "db.system.name", "db.name", "db.namespace", "db.operation", "db.operation.name", "messaging.system", "messaging.destination.name", "messaging.operation", "messaging.operation.name", "messaging.operation.type", "error.type", "cache.hit"])'
+            - 'set(status.message, "")'
+        - context: spanevent
+          statements:
+            - 'keep_keys(attributes, ["exception.type"])'
+
+  connectors:
+    # Transforma spans em metricas. Gera traces.span.metrics.calls e
+    # traces.span.metrics.duration (ms) com as dimensoes service.name,
+    # span.name, span.kind e status.code. Uma resposta 5xx deixa o span
+    # SERVER com STATUS_CODE_ERROR (convencao semantica de HTTP), e e
+    # isso que o alerta e o dashboard medem.
+    span_metrics:
+      namespace: traces.span.metrics
+      # 15s em vez dos 60s padrao: o alerta enxerga a falha mais cedo,
+      # o que encurta a espera no video.
+      metrics_flush_interval: 15s
+      # Serie sem spans novos por 5 min some (servico parado nao fica
+      # com contador congelado).
+      metrics_expiration: 5m
+      histogram:
+        explicit:
+          buckets: [5ms, 10ms, 25ms, 50ms, 100ms, 250ms, 500ms, 1s, 2500ms, 5s]
+
+  exporters:
+    debug: null
+
+    otlp_http/newrelic:
+      endpoint: https://otlp.nr-data.net
+      headers:
+        api-key: ${env:NEW_RELIC_LICENSE_KEY}
+      compression: gzip
+
+    # Receptor OTLP nativo do Prometheus; o exporter acrescenta /v1/metrics.
+    otlp_http/prometheus:
+      endpoint: http://kps-prometheus.observability.svc.cluster.local:9090/api/v1/otlp
+
+    # Ingestao OTLP do Loki; o exporter acrescenta /v1/logs.
+    otlp_http/loki:
+      endpoint: http://loki.observability.svc.cluster.local:3100/otlp
+
+  service:
+    pipelines:
+      traces:
+        receivers: [otlp]
+        # k8s_attributes DEPOIS da sanitizacao: o keep_keys apaga
+        # atributos de recurso fora da lista, e os k8s.* vem da API do
+        # cluster (confiaveis), nao do servico.
+        processors: [memory_limiter, filter/health, transform/sanitize, k8s_attributes, batch]
+        exporters: [otlp_http/newrelic, span_metrics]
+      metrics:
+        receivers: [span_metrics]
+        processors: [memory_limiter, batch]
+        exporters: [otlp_http/prometheus]
+      logs:
+        # O preset kubernetesAttributes poe k8s_attributes no inicio desta
+        # pipeline e da de metricas (conferido no helm template). Nao
+        # atrapalha: o pod e identificado primeiro por k8s.pod.ip e
+        # k8s.pod.uid, que os logs ja trazem do agente, e so por ultimo
+        # pela conexao (que seria a do agente).
+        receivers: [otlp]
+        processors: [memory_limiter, batch]
+        exporters: [otlp_http/loki]

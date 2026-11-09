@@ -1,0 +1,28 @@
+{"time": "2026-10-22T15:19:19.090857+00:00", "level": "WARNING", "service.name": "analytics-service", "message": "AWS_SQS_URL n�o configurada � worker SQS desabilitado (modo local/desenvolvimento)."}
+C:\Users\Gabriel\Documents\GitHub\tech-challenge-04\00_COLAB_IA\02_TRABALHO\otel-python-2026-10-22_v01\.venv\Lib\site-packages\flask\helpers.py:611: DeprecationWarning: 'pkgutil.get_loader' is deprecated and slated for removal in Python 3.14; use importlib.util.find_spec() instead
+  loader = pkgutil.get_loader(import_name)
+C:\Users\Gabriel\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pkgutil.py:291: DeprecationWarning: 'pkgutil.find_loader' is deprecated and slated for removal in Python 3.14; use importlib.util.find_spec() instead
+  return find_loader(fullname)
+C:\Users\Gabriel\Documents\GitHub\tech-challenge-04\00_COLAB_IA\02_TRABALHO\otel-python-2026-10-22_v01\.venv\Lib\site-packages\flask\scaffold.py:834: DeprecationWarning: 'pkgutil.get_loader' is deprecated and slated for removal in Python 3.14; use importlib.util.find_spec() instead
+  loader = pkgutil.get_loader(root_mod_name)
+test_consumer_parent_persistence_then_ack_and_safe_logs (test_telemetry.ConsumerTests.test_consumer_parent_persistence_then_ack_and_safe_logs) ... ok
+test_dynamodb_failure_does_not_ack_or_record_exception_payload (test_telemetry.ConsumerTests.test_dynamodb_failure_does_not_ack_or_record_exception_payload) ... ok
+test_invalid_json_does_not_persist_or_ack (test_telemetry.ConsumerTests.test_invalid_json_does_not_persist_or_ack) ... ok
+test_message_without_context_still_processes (test_telemetry.ConsumerTests.test_message_without_context_still_processes) ... ok
+test_health_does_not_create_spans (test_telemetry.TelemetryTests.test_health_does_not_create_spans) ... C:\Users\Gabriel\Documents\GitHub\tech-challenge-04\00_COLAB_IA\02_TRABALHO\otel-python-2026-10-22_v01\.venv\Lib\site-packages\flask\testing.py:71: DeprecationWarning: 'werkzeug.urls.url_parse' is deprecated and will be removed in Werkzeug 3.0. Use 'urllib.parse.urlsplit' instead.
+  url = url_parse(path)
+C:\Users\Gabriel\Documents\GitHub\tech-challenge-04\00_COLAB_IA\02_TRABALHO\otel-python-2026-10-22_v01\.venv\Lib\site-packages\werkzeug\urls.py:545: DeprecationWarning: 'werkzeug.urls.URL' is deprecated and will be removed in Werkzeug 3.0. Use the 'urllib.parse' library instead.
+  return result_type(scheme, netloc, url, query, fragment)
+ok
+test_http_parent_context_and_safe_json_log (test_telemetry.TelemetryTests.test_http_parent_context_and_safe_json_log) ... C:\Users\Gabriel\Documents\GitHub\tech-challenge-04\00_COLAB_IA\02_TRABALHO\otel-python-2026-10-22_v01\.venv\Lib\site-packages\flask\testing.py:71: DeprecationWarning: 'werkzeug.urls.url_parse' is deprecated and will be removed in Werkzeug 3.0. Use 'urllib.parse.urlsplit' instead.
+  url = url_parse(path)
+C:\Users\Gabriel\Documents\GitHub\tech-challenge-04\00_COLAB_IA\02_TRABALHO\otel-python-2026-10-22_v01\.venv\Lib\site-packages\werkzeug\urls.py:545: DeprecationWarning: 'werkzeug.urls.URL' is deprecated and will be removed in Werkzeug 3.0. Use the 'urllib.parse' library instead.
+  return result_type(scheme, netloc, url, query, fragment)
+ok
+test_manual_error_retains_type_without_message (test_telemetry.TelemetryTests.test_manual_error_retains_type_without_message) ... ok
+test_no_endpoint_and_explicit_disabled_do_not_create_exporters (test_telemetry.TelemetryTests.test_no_endpoint_and_explicit_disabled_do_not_create_exporters) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.553s
+
+OK

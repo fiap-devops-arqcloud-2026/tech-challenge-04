@@ -1,0 +1,560 @@
+{
+ "fornecedor": "Slack (canal + Incoming Webhook) e Grafana Alerting 13.x (contact points Slack e PagerDuty). Verificação feita em 2026-11-01.",
+ "verificacoes": [
+  {
+   "item": "Fornecedor: 'Grafana Alerting 12.x' e incerteza 'páginas oficiais confirmam até a 12.4'",
+   "veredito": "corrigido",
+   "correcao": "A versão atual é a Grafana 13. A página de download mostra a 13.3.0, lançada em 2026-10-27, e o Docker Hub tem a tag grafana/grafana:13.3.0 (amd64/arm64/armv7, atualizada em 2026-10-27). O Grafana 13 foi lançado em 2026-04-21. A série 12.x não é mais a atual.",
+   "fonte_url": "https://grafana.com/grafana/download"
+  },
+  {
+   "item": "Fato: CVE-2026-100105 (High, CVSS 7.7, 2026-10-27) sem versões corrigidas listadas",
+   "veredito": "corrigido",
+   "correcao": "A página do advisory traz as versões corrigidas: >=12.4.14 <13.0.0, >=13.0.12 <13.1.0, >=13.1.9 <13.2.0 e >=13.2.5. Também aparece '<12.4.0', uma faixa ambígua. A 13.3.0 está coberta. Para B4, fixar a imagem grafana/grafana:13.3.0 e nunca usar 'latest'. Em 2026-10-27 saíram outros dois CVEs High: CVE-2026-103506 (SSO, 8.9) e CVE-2026-88967 (SSRF Azure Monitor, 7.7).",
+   "fonte_url": "https://grafana.com/security/security-advisories/cve-2026-100105/"
+  },
+  {
+   "item": "Passo 1: criar canal (+ > Channel > nome > Public > Create; caminho no celular; Owner pode restringir quem cria canais)",
+   "veredito": "confirmado",
+   "correcao": "Confere com o artigo. Membros criam canais por padrão, Workspace Owners podem mudar essa permissão, e o recurso existe em todos os planos. Templates de canal só aparecem em plano pago.",
+   "fonte_url": "https://slack.com/help/articles/201402297-Create-a-channel"
+  },
+  {
+   "item": "Passo 1: evitar #general (posting_to_general_channel_denied)",
+   "veredito": "confirmado",
+   "correcao": "A doc diz que a postagem no #general é restrita para o criador do webhook.",
+   "fonte_url": "https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/"
+  },
+  {
+   "item": "Passo 2: Create New App > From scratch > nome > workspace > Create App (fonte api.slack.com/quickstart)",
+   "veredito": "corrigido",
+   "correcao": "https://api.slack.com/quickstart agora redireciona (302) para https://docs.slack.dev/quickstart, que só mostra o fluxo pela Slack CLI. O quickstart oficial de app settings diz 'Create an app' > 'Blank app' > Continue > App Name > Workspace > Create. A página de webhooks diz 'Create an app' > nome e workspace > Create. O rótulo pode ser 'From scratch' ou 'Blank app', e o botão final pode ser 'Create' ou 'Create App'. Os dois fluxos levam ao mesmo resultado.",
+   "fonte_url": "https://docs.slack.dev/app-management/quickstart-app-settings/"
+  },
+  {
+   "item": "Passo 2/limites: webhook não sobrescreve canal, username ou ícone e não apaga mensagens",
+   "veredito": "confirmado",
+   "correcao": "O canal é escolhido por quem instala, e o nome e o ícone vêm da configuração do app.",
+   "fonte_url": "https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/"
+  },
+  {
+   "item": "Passo 3: Incoming Webhooks > Activate Incoming Webhooks (On)",
+   "veredito": "confirmado",
+   "correcao": "",
+   "fonte_url": "https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/"
+  },
+  {
+   "item": "Passo 4: Add New Webhook to Workspace > escolher canal > Authorize; URL em 'Webhook URLs for Your Workspace' no formato hooks.slack.com/services/T/B/X",
+   "veredito": "confirmado",
+   "correcao": "",
+   "fonte_url": "https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/"
+  },
+  {
+   "item": "Passo 4: aprovação de apps desligada por padrão; caminho Admin > Apps and workflows > App Management Settings; pedidos vão para Owners e app managers",
+   "veredito": "confirmado",
+   "correcao": "O artigo não diz em quais planos a aprovação existe. Sobre apps internos, ele só indica que precisam ser 'requested and approved' quando a aprovação está ligada. Também não descreve o passo a passo para aprovar um pedido. A instrução 'aprove o seu próprio pedido em Admin > Apps and workflows' fica como não verificada em detalhe.",
+   "fonte_url": "https://slack.com/help/articles/222386767-Manage-app-approval-for-your-workspace"
+  },
+  {
+   "item": "Passo 5: .env ignorado no .gitignore, linhas 28-30",
+   "veredito": "confirmado",
+   "correcao": "Conferido no repositório local: .gitignore:28 '.env', 29 '.env.*', 30 '!.env.example'. O comando git check-ignore -v .env retorna '.gitignore:28:.env'.",
+   "fonte_url": "https://docs.slack.dev/security"
+  },
+  {
+   "item": "Passo 5: a URL é o próprio segredo; não publicar; o Slack procura e revoga segredos vazados",
+   "veredito": "confirmado",
+   "correcao": "",
+   "fonte_url": "https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/"
+  },
+  {
+   "item": "Passo 6/fatos: sucesso = HTTP 200 com corpo 'ok'",
+   "veredito": "confirmado",
+   "correcao": "",
+   "fonte_url": "https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/"
+  },
+  {
+   "item": "Erros com código HTTP: 400 invalid_payload/user_not_found, 403 action_prohibited, 404 channel_not_found, 410 channel_is_archived, 500 rollup_error",
+   "veredito": "confirmado",
+   "correcao": "",
+   "fonte_url": "https://docs.slack.dev/changelog/2016-05-17-changes-to-errors-for-incoming-webhooks"
+  },
+  {
+   "item": "Lista de erros sem código HTTP (no_service, no_service_id, no_team, no_text, no_active_hooks, invalid_token, team_disabled, too_many_attachments, posting_to_general_channel_denied)",
+   "veredito": "confirmado",
+   "correcao": "Todos aparecem na doc atual, sem código HTTP associado.",
+   "fonte_url": "https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/"
+  },
+  {
+   "item": "'no_service vem com HTTP 404' (passo 9 e teste de revogação)",
+   "veredito": "nao_verificavel",
+   "correcao": "A doc oficial atual não associa no_service a um código HTTP. No guia ficou 'normalmente 404 (não confirmado na doc atual)'.",
+   "fonte_url": "https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/"
+  },
+  {
+   "item": "Passo 6: erros do tipo 'não tente de novo sem mudar nada' = user_not_found/channel_not_found e action_prohibited",
+   "veredito": "corrigido",
+   "correcao": "invalid_payload também está nessa lista: a doc manda corrigir o payload antes de tentar de novo. action_prohibited é 'não tentar de novo'. user_not_found e channel_not_found são 'corrigir antes de tentar de novo'.",
+   "fonte_url": "https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/"
+  },
+  {
+   "item": "Comando de teste: forçar TLS 1.2 com [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12",
+   "veredito": "corrigido",
+   "correcao": "Funciona, mas substitui os protocolos habilitados na sessão e pode desligar o TLS 1.3. A Microsoft documenta para o Windows PowerShell 5.1 a forma aditiva: [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12.",
+   "fonte_url": "https://learn.microsoft.com/en-us/powershell/gallery/powershellget/update-powershell-51"
+  },
+  {
+   "item": "Comando de teste: Invoke-RestMethod -Body byte[] com -ContentType 'application/json; charset=utf-8'; retorno de string 'ok'",
+   "veredito": "confirmado",
+   "correcao": "No 5.1, -Body é do tipo Object. O charset no ContentType define a codificação do corpo. Resposta em texto volta como String. Sem -ContentType, o POST usaria application/x-www-form-urlencoded, então o parâmetro é obrigatório. Também acrescentei -TimeoutSec 30 e .Trim() na URL lida.",
+   "fonte_url": "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-restmethod?view=powershell-5.1"
+  },
+  {
+   "item": "Comando de teste: ConvertTo-Json -Compress sem -Depth",
+   "veredito": "confirmado",
+   "correcao": "O payload é plano ({text}), então -Depth não é necessário. Se um dia usar blocks ou attachments aninhados, use -Depth 10, porque o padrão do 5.1 é 2.",
+   "fonte_url": "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-restmethod?view=powershell-5.1"
+  },
+  {
+   "item": "Comando de teste: tratamento de erro com $_.Exception.Response.StatusCode e $_.ErrorDetails.Message no PS 5.1",
+   "veredito": "nao_verificavel",
+   "correcao": "A página do cmdlet não documenta esse comportamento de forma explícita. É o padrão usado na prática no 5.1, mas não há fonte oficial nesta verificação. O código mostra também $_.Exception.Message como fallback.",
+   "fonte_url": "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-restmethod?view=powershell-5.1"
+  },
+  {
+   "item": "Comando de erro proposital: JSON malformado -> HTTP 400 invalid_payload",
+   "veredito": "confirmado",
+   "correcao": "O código 400 de invalid_payload está documentado. A resposta exata a esse corpo específico não foi executada nesta verificação.",
+   "fonte_url": "https://docs.slack.dev/changelog/2016-05-17-changes-to-errors-for-incoming-webhooks"
+  },
+  {
+   "item": "Passo 7/limites: Free com até 10 apps de terceiros ou customizados",
+   "veredito": "confirmado",
+   "correcao": "Também aparece em 'Usage limits for free workspaces'.",
+   "fonte_url": "https://slack.com/help/articles/115002422943-Usage-limits-for-free-workspaces"
+  },
+  {
+   "item": "Passo 7/limites: 90 dias de histórico visível; exclusão de conteúdo com mais de 1 ano desde 2024-08-26",
+   "veredito": "confirmado",
+   "correcao": "",
+   "fonte_url": "https://slack.com/help/articles/27204752526611-Feature-limitations-on-the-free-version-of-Slack"
+  },
+  {
+   "item": "Limites: huddles só 1:1 no Free",
+   "veredito": "confirmado",
+   "correcao": "O mesmo artigo diz ainda que, no Free, workflows (Workflow Builder) param de funcionar e não podem ser criados, e que canvases e lists ficam somente leitura. Não afeta o projeto.",
+   "fonte_url": "https://slack.com/help/articles/27204752526611-Feature-limitations-on-the-free-version-of-Slack"
+  },
+  {
+   "item": "Taxa do webhook: 1 por segundo com picos curtos; 1 mensagem por segundo por canal; HTTP 429 com Retry-After",
+   "veredito": "confirmado",
+   "correcao": "",
+   "fonte_url": "https://docs.slack.dev/apis/web-api/rate-limits/"
+  },
+  {
+   "item": "Passo 7: o projeto usa 2 apps (webhook + app do PagerDuty no Slack)",
+   "veredito": "nao_verificavel",
+   "correcao": "Esse número é planejamento do projeto, não vem da doc. O app do PagerDuty no Slack não é necessário para o fluxo Grafana -> Slack via webhook. Hoje só 1 app é obrigatório.",
+   "fonte_url": "https://slack.com/help/articles/115002422943-Usage-limits-for-free-workspaces"
+  },
+  {
+   "item": "Passo 8: caminho no Grafana Alerts & IRM > Alerting > Notification configuration > Contact points > + Add contact point; Test só com o Grafana Alertmanager",
+   "veredito": "confirmado",
+   "correcao": "",
+   "fonte_url": "https://grafana.com/docs/grafana/latest/alerting/configure-notifications/manage-contact-points/integrations/configure-slack/"
+  },
+  {
+   "item": "Slack no Grafana: modo Webhook (só o campo Webhook) ou API token (xoxb- + Recipient com ID do canal, scope chat:write.public); um canal por contact point; sem blocks customizados; Color só muda a barra lateral",
+   "veredito": "confirmado",
+   "correcao": "",
+   "fonte_url": "https://grafana.com/docs/grafana/latest/alerting/configure-notifications/manage-contact-points/integrations/configure-slack/"
+  },
+  {
+   "item": "Divergência: o YAML de provisionamento marca recipient como required",
+   "veredito": "confirmado",
+   "correcao": "A página de file provisioning marca recipient e token como required, mas diz que a url do webhook dispensa o token. A doc da UI diz que o modo webhook não usa Recipient. No Terraform, recipient é opcional. A divergência é real. No provisionamento por YAML, testar se o recipient pode ser omitido.",
+   "fonte_url": "https://grafana.com/docs/grafana/latest/alerting/set-up/provision-alerting-resources/file-provisioning/"
+  },
+  {
+   "item": "PagerDuty: Service > Integrations > + Add an integration > Events API V2 > Add > expandir > copiar Integration Key; Test cria incidente na aba Activity",
+   "veredito": "confirmado",
+   "correcao": "A doc também manda criar o serviço com 'Create a service without an integration' antes. O contact point é ligado à regra em Alert rules > Configure labels and notifications.",
+   "fonte_url": "https://grafana.com/docs/grafana/latest/alerting/configure-notifications/manage-contact-points/integrations/pager-duty/"
+  },
+  {
+   "item": "PagerDuty: campos opcionais (severity padrão critical, class, component, group, summary, source, client, client_url, details, url, disable_resolve_message padrão false)",
+   "veredito": "confirmado",
+   "correcao": "Esses campos vêm do provider Terraform. A página da UI não lista opcionais. O Terraform descreve integration_key apenas como 'PagerDuty API key' e não lista os valores de severity.",
+   "fonte_url": "https://raw.githubusercontent.com/grafana/terraform-provider-grafana/main/docs/resources/contact_point.md"
+  },
+  {
+   "item": "integrationKey = 'chave Events API de 32 caracteres'; severity critical/error/warning/info",
+   "veredito": "corrigido",
+   "correcao": "A informação está certa, mas a fonte é a página de file provisioning, não o Terraform.",
+   "fonte_url": "https://grafana.com/docs/grafana/latest/alerting/set-up/provision-alerting-resources/file-provisioning/"
+  },
+  {
+   "item": "Provisionamento: interpolação de $variavel; variável não definida vira string vazia; $$ para escapar; arquivos em provisioning/alerting",
+   "veredito": "confirmado",
+   "correcao": "Algumas propriedades não aceitam interpolação, como anotações de regra e conteúdo de templates. Os campos de contact point não estão nessa lista. Depois de mudar o arquivo, é preciso reiniciar o Grafana ou recarregar pela Admin API.",
+   "fonte_url": "https://grafana.com/docs/grafana/latest/alerting/set-up/provision-alerting-resources/file-provisioning/"
+  },
+  {
+   "item": "Provider Terraform marca url (Slack) e integration_key (PagerDuty) como sensitive",
+   "veredito": "confirmado",
+   "correcao": "O token do Slack também é sensitive. O campo url do bloco pagerduty não é.",
+   "fonte_url": "https://raw.githubusercontent.com/grafana/terraform-provider-grafana/main/docs/resources/contact_point.md"
+  },
+  {
+   "item": "REST API key no lugar da Integration Key gera 400",
+   "veredito": "nao_verificavel",
+   "correcao": "Vem só do fórum da comunidade, não de documentação oficial. Mantido como alerta prático.",
+   "fonte_url": "https://community.grafana.com/t/pagerduty-contact-point-response-status-400-bad-request/81296"
+  },
+  {
+   "item": "Passo 9: revogar removendo o webhook ou desinstalando o app",
+   "veredito": "nao_verificavel",
+   "correcao": "A doc de webhooks não descreve como revogar. A Central de Ajuda mostra como remover um app: Tools & settings > Manage apps > Installed Apps > App Details > Configuration > Remove App. Mas não diz que isso revoga os webhooks. O teste com a URL antiga é a prova necessária.",
+   "fonte_url": "https://slack.com/help/articles/360003125231-Remove-apps-and-custom-integrations-from-your-workspace"
+  },
+  {
+   "item": "Boas práticas Slack: sem hardcode, .env no .gitignore, cofre (GitHub Actions Secrets) em produção, rotação, auth.revoke",
+   "veredito": "confirmado",
+   "correcao": "A doc acrescenta que URLs de webhook são específicas do canal e da identidade do app, e que allow-list de IP não se aplica a incoming webhooks.",
+   "fonte_url": "https://docs.slack.dev/security"
+  }
+ ],
+ "faltando": [
+  "Passo 0: abrir o Windows PowerShell 5.1 certo. Menu Iniciar > 'Windows PowerShell', não o 'PowerShell 7' nem o ISE (no ISE o Read-Host -AsSecureString abre uma janela). Conferir com $PSVersionTable.PSVersion, que deve mostrar Major 5, Minor 1.",
+  "Como colar no prompt mascarado do Read-Host: Ctrl+V ou clique direito. Nada aparece, só asteriscos, e depois é só apertar Enter. Colar o bloco inteiro do comando de uma vez no console. Não salvar como .ps1, porque a ExecutionPolicy padrão do Windows cliente pode bloquear scripts.",
+  "Conferir que o .env está ignorado antes de gravar nele: git check-ignore -v .env deve retornar .gitignore:28:.env.",
+  "Fixar a versão do Grafana, que vai ser usada em B4: grafana/grafana:13.3.0 ou outra com a correção do CVE-2026-100105. Nunca usar latest.",
+  "Antes de testar o contact point PagerDuty (não é hoje), o serviço no PagerDuty precisa existir com escalation policy e usuário on-call. Isso é do guia do PagerDuty, mas é pré-requisito do passo 8.",
+  "Depois do teste, fazer print do canal sem a URL aparecendo e guardar como evidência dentro dos 90 dias de histórico do Free.",
+  "Registrar no LOG/DOSSIE do projeto a data do teste e o resultado ('ok'), sem a URL."
+ ],
+ "guia_corrigido": {
+  "fornecedor": "Slack (canal + Incoming Webhook) e Grafana Alerting 13.x (contact points para Slack e PagerDuty). Verificado em 2026-11-01 em docs.slack.dev, slack.com/help, grafana.com/docs, grafana.com/security, Docker Hub, repositório oficial do provider Terraform da Grafana e learn.microsoft.com.",
+  "passos": [
+   {
+    "n": 0,
+    "titulo": "Abrir o Windows PowerShell 5.1 e conferir a versão",
+    "onde": "Menu Iniciar > digite 'Windows PowerShell' > abra 'Windows PowerShell' (não o ISE, não o PowerShell 7)",
+    "o_que_fazer": "Rode $PSVersionTable.PSVersion. Depois, na pasta do repositório, rode git check-ignore -v .env para confirmar que o .env está ignorado.",
+    "resultado_esperado": "Major 5, Minor 1. O git mostra '.gitignore:28:.env  .env'.",
+    "cuidado": "No ISE, o Read-Host -AsSecureString abre uma caixa de diálogo; prefira o console. Cole os blocos de comando direto no console em vez de salvar como .ps1, porque a ExecutionPolicy padrão pode bloquear scripts.",
+    "fonte_url": "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-restmethod?view=powershell-5.1"
+   },
+   {
+    "n": 1,
+    "titulo": "Criar o canal público #incidentes-tech-challenge",
+    "onde": "App desktop ou web do Slack, no workspace Free criado em 2026-10-28",
+    "o_que_fazer": "Na barra lateral, clique no + e escolha Channel (Canal). Digite incidentes-tech-challenge, deixe como Public (Público) e confirme com Create. Adicionar pessoas é opcional.",
+    "resultado_esperado": "O canal #incidentes-tech-challenge aparece na barra lateral e você é membro dele.",
+    "cuidado": "Por padrão os membros podem criar canais, e o Workspace Owner pode restringir isso. Você criou o workspace, então é o Owner. Não use o #general: o webhook pode falhar com posting_to_general_channel_denied. No celular: Home > + > nome > Next > público/privado > Create.",
+    "fonte_url": "https://slack.com/help/articles/201402297-Create-a-channel"
+   },
+   {
+    "n": 2,
+    "titulo": "Criar o app do Slack em branco",
+    "onde": "https://api.slack.com/apps (página de apps), logado com a mesma conta do workspace",
+    "o_que_fazer": "Clique em 'Create an app' ou 'Create New App'. Escolha a opção em branco, que pode se chamar 'From scratch' ou 'Blank app' (nesse caso, clique em Continue). Informe o App Name (sugestão: grafana-alertas-tc4), selecione o workspace do projeto e clique em Create (ou Create App).",
+    "resultado_esperado": "A página de configuração do app abre em Basic Information.",
+    "cuidado": "Os rótulos dos botões mudaram entre versões da doc: 'From scratch' ou 'Blank app', 'Create' ou 'Create App'. Não use 'From a manifest' nem a Slack CLI agora. O nome e o ícone do app são os que aparecem nas mensagens, e o webhook não consegue trocá-los pelo payload.",
+    "fonte_url": "https://docs.slack.dev/app-management/quickstart-app-settings/"
+   },
+   {
+    "n": 3,
+    "titulo": "Ativar Incoming Webhooks",
+    "onde": "api.slack.com/apps > (seu app) > Features > Incoming Webhooks",
+    "o_que_fazer": "Ligue a chave Activate Incoming Webhooks (On).",
+    "resultado_esperado": "Aparece a seção 'Webhook URLs for Your Workspace' com o botão Add New Webhook to Workspace.",
+    "cuidado": "Ligar a chave não gera URL. A URL só sai no passo 4.",
+    "fonte_url": "https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/"
+   },
+   {
+    "n": 4,
+    "titulo": "Add New Webhook to Workspace, escolher o canal e autorizar",
+    "onde": "Mesma página; depois a tela de autorização do Slack",
+    "o_que_fazer": "Clique em Add New Webhook to Workspace, escolha #incidentes-tech-challenge e clique em Authorize/Allow.",
+    "resultado_esperado": "Uma linha nova em 'Webhook URLs for Your Workspace', no formato https://hooks.slack.com/services/T.../B.../..., com botão Copy.",
+    "cuidado": "A aprovação de apps vem desligada por padrão. Se alguém ligou 'Only allow pre-approved apps' (Admin > Apps and workflows > App Management Settings), o botão vira uma solicitação que vai para os Workspace Owners e app managers por notificação do Slack. Como Owner, você precisa aprovar (a doc não detalha a tela de aprovação). Em canal privado, entre no canal antes.",
+    "fonte_url": "https://slack.com/help/articles/222386767-Manage-app-approval-for-your-workspace"
+   },
+   {
+    "n": 5,
+    "titulo": "Copiar a URL e guardar como segredo",
+    "onde": "Botão Copy; gerenciador de senhas e/ou .env na raiz do repo (ignorado pelo .gitignore, linhas 28-30)",
+    "o_que_fazer": "Guarde a URL no gerenciador de senhas como SLACK_WEBHOOK_URL. Para uso local, coloque no .env como SLACK_WEBHOOK_URL=... Nunca cole a URL no chat, em README, commit, issue, print ou vídeo.",
+    "resultado_esperado": "Segredo guardado fora do Git.",
+    "cuidado": "A URL é o próprio segredo: quem tiver a URL posta no canal. O Slack procura segredos vazados e revoga. A URL continua visível na página do app para quem administra o app, então confira que nada aparece na tela durante a gravação.",
+    "fonte_url": "https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/"
+   },
+   {
+    "n": 6,
+    "titulo": "Teste manual no Windows PowerShell 5.1",
+    "onde": "Console do Windows PowerShell 5.1",
+    "o_que_fazer": "Cole o bloco 'Teste de envio' inteiro. Quando pedir, cole a URL (Ctrl+V ou clique direito; só aparecem asteriscos) e aperte Enter. Se quiser, rode também o teste de erro proposital.",
+    "resultado_esperado": "O console mostra 'Resposta: ok' (HTTP 200, corpo 'ok') e a mensagem aparece no #incidentes-tech-challenge com o nome do app.",
+    "cuidado": "No PS 5.1, resposta não 2xx vira exceção, por isso o try/catch. Significado dos erros: invalid_payload (400) = JSON malformado, corrija antes de repetir. user_not_found (400) e channel_not_found (404) = usuário ou canal inválido, corrija antes de repetir. action_prohibited (403) = admin restringiu, não repita. channel_is_archived (410) = canal arquivado. rollup_error (500). no_service = webhook desativado, removido ou URL inválida/cortada. no_service_id = ID de serviço ausente ou inválido. no_active_hooks = webhook desativado. no_text = sem 'text'. invalid_token = token expirado, inválido ou ausente. team_disabled = workspace inativo. Se passar do limite de taxa: HTTP 429 com Retry-After.",
+    "fonte_url": "https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/"
+   },
+   {
+    "n": 7,
+    "titulo": "Confirmar os limites do plano Free",
+    "onde": "slack.com/help",
+    "o_que_fazer": "Confira: até 10 instalações de apps de terceiros ou customizados (hoje o projeto precisa de 1, o app do webhook; o app do PagerDuty no Slack é opcional). Histórico visível de 90 dias. Conteúdo com mais de 1 ano é apagado.",
+    "resultado_esperado": "1 ou 2 de 10 apps. Prints e vídeo feitos dentro de 90 dias após o teste.",
+    "cuidado": "Workflow Builder, canvases e lists não funcionam no Free; o projeto não depende deles. Taxa do webhook: 1 mensagem por segundo por canal, com picos curtos tolerados. Acima disso, HTTP 429 com Retry-After.",
+    "fonte_url": "https://slack.com/help/articles/27204752526611-Feature-limitations-on-the-free-version-of-Slack"
+   },
+   {
+    "n": 8,
+    "titulo": "Conferir o que o Grafana Alerting vai exigir (não executar hoje)",
+    "onde": "Grafana 13.x > Alerts & IRM > Alerting > Notification configuration > Contact points > + Add contact point",
+    "o_que_fazer": "Slack: integração Slack, campo Webhook URL = SLACK_WEBHOOK_URL. O modo alternativo é Token xoxb- + Recipient (ID do canal) com scope chat:write.public, que não vamos usar. PagerDuty: integração PagerDuty, campo Integration Key = chave da integração 'Events API V2' do serviço. No PagerDuty, crie o serviço com 'Create a service without an integration' e depois vá em Service > Integrations > + Add an integration > Events API V2 > Add > expandir > copiar Integration Key. Campos opcionais (provider Terraform): severity (padrão critical; valores critical/error/warning/info), class, component, group, summary, source, client, client_url, details, url e disable_resolve_message (padrão false). Clique em Test e em Save contact point. Depois, em Alert rules > (regra) > Configure labels and notifications, escolha o contact point.",
+    "resultado_esperado": "Só dois segredos para hoje: SLACK_WEBHOOK_URL e PAGERDUTY_INTEGRATION_KEY. O Test do Slack posta no canal, e o Test do PagerDuty cria incidente na aba Activity do serviço.",
+    "cuidado": "Test só existe com o Grafana Alertmanager. Fixe a imagem grafana/grafana:13.3.0 ou outra corrigida para o CVE-2026-100105 (>=12.4.14, >=13.0.12, >=13.1.9 ou >=13.2.5); nunca use latest. No provisionamento por arquivo (provisioning/alerting), use $SLACK_WEBHOOK_URL e $PAGERDUTY_INTEGRATION_KEY. Variável não definida vira string vazia, e $ literal se escreve $$. O YAML marca recipient do Slack como required, mas a doc da UI diz que o modo webhook não usa Recipient, então teste. Não use a REST API key do PagerDuty (relato da comunidade: gera 400).",
+    "fonte_url": "https://grafana.com/docs/grafana/latest/alerting/configure-notifications/manage-contact-points/integrations/pager-duty/"
+   },
+   {
+    "n": 9,
+    "titulo": "Se a URL vazar: revogar e gerar outra",
+    "onde": "api.slack.com/apps > (seu app) > Incoming Webhooks; ou Slack > Tools & settings > Manage apps > Installed Apps > (app) > App Details > Configuration > Remove App",
+    "o_que_fazer": "Remova o webhook vazado na página do app, se houver opção para isso. Se não houver, remova o app do workspace e reinstale. Crie um webhook novo no mesmo canal. Atualize gerenciador de senhas, .env, Grafana e, depois, GitHub Actions Secrets. Rode o teste do passo 6 com a URL antiga (deve dar erro, por exemplo no_service) e com a nova (deve dar 'ok').",
+    "resultado_esperado": "A URL antiga falha e a nova responde 'ok'.",
+    "cuidado": "A doc oficial não descreve como regenerar ou revogar uma URL, nem confirma que remover o app revoga o webhook. Por isso o teste com a URL antiga é obrigatório. Se a URL vazou num commit, trate como comprometida e troque. Não reescreva o histórico do Git sem combinar com o grupo.",
+    "fonte_url": "https://slack.com/help/articles/360003125231-Remove-apps-and-custom-integrations-from-your-workspace"
+   }
+  ],
+  "comandos_teste": [
+   {
+    "descricao": "Conferir a versão do PowerShell e se o .env está ignorado",
+    "shell": "Windows PowerShell 5.1",
+    "comando": "$PSVersionTable.PSVersion\ngit -C \"$HOME\\Documents\\GitHub\\tech-challenge-04\" check-ignore -v .env",
+    "resposta_esperada": "Major 5 Minor 1; '.gitignore:28:.env\t.env'",
+    "onde_conferir": "Saída do console",
+    "fonte_url": "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-restmethod?view=powershell-5.1"
+   },
+   {
+    "descricao": "Teste de envio para o Incoming Webhook do Slack. A URL é lida com Read-Host -AsSecureString e não aparece na tela.",
+    "shell": "Windows PowerShell 5.1",
+    "comando": "$sec = Read-Host -AsSecureString 'Cole a URL do Incoming Webhook do Slack'\n$bstr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($sec)\ntry { $url = ([Runtime.InteropServices.Marshal]::PtrToStringBSTR($bstr)).Trim() } finally { [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($bstr) }\nif ($url -notlike 'https://hooks.slack.com/services/*') { Write-Warning 'A URL nao comeca com https://hooks.slack.com/services/ - confira se copiou inteira.' }\n[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12\n$payload = @{ text = ('Teste manual do webhook - Tech Challenge Fase 4 - ' + (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')) } | ConvertTo-Json -Compress\n$bytes = [Text.Encoding]::UTF8.GetBytes($payload)\ntry {\n  $r = Invoke-RestMethod -Uri $url -Method Post -ContentType 'application/json; charset=utf-8' -Body $bytes -TimeoutSec 30\n  Write-Host ('Resposta: ' + $r)\n} catch {\n  if ($_.Exception.Response) { Write-Host ('HTTP: ' + [int]$_.Exception.Response.StatusCode) }\n  Write-Host ('Erro: ' + $_.ErrorDetails.Message)\n  Write-Host ('Detalhe: ' + $_.Exception.Message)\n} finally {\n  Remove-Variable url, sec, bstr -ErrorAction SilentlyContinue\n}",
+    "resposta_esperada": "Resposta: ok (HTTP 200, corpo 'ok'). Em erro: código HTTP e um texto como invalid_payload (400), channel_not_found (404), channel_is_archived (410), action_prohibited (403), no_service, no_active_hooks, no_text ou HTTP 429 (taxa).",
+    "onde_conferir": "Canal #incidentes-tech-challenge: mensagem 'Teste manual do webhook - Tech Challenge Fase 4 - <data/hora>' com o nome do app.",
+    "fonte_url": "https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/"
+   },
+   {
+    "descricao": "Teste de erro proposital (opcional): JSON malformado",
+    "shell": "Windows PowerShell 5.1",
+    "comando": "$sec = Read-Host -AsSecureString 'Cole a URL do Incoming Webhook do Slack'\n$bstr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($sec)\ntry { $url = ([Runtime.InteropServices.Marshal]::PtrToStringBSTR($bstr)).Trim() } finally { [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($bstr) }\n[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12\ntry {\n  Invoke-RestMethod -Uri $url -Method Post -ContentType 'application/json' -Body '{text: sem aspas' -TimeoutSec 30\n} catch {\n  if ($_.Exception.Response) { Write-Host ('HTTP: ' + [int]$_.Exception.Response.StatusCode) }\n  Write-Host ('Erro: ' + $_.ErrorDetails.Message)\n} finally {\n  Remove-Variable url, sec, bstr -ErrorAction SilentlyContinue\n}",
+    "resposta_esperada": "HTTP: 400 e Erro: invalid_payload. Nenhuma mensagem no canal.",
+    "onde_conferir": "Saída do console; o canal não recebe mensagem.",
+    "fonte_url": "https://docs.slack.dev/changelog/2016-05-17-changes-to-errors-for-incoming-webhooks"
+   },
+   {
+    "descricao": "Teste de revogação (só se a URL vazar e for trocada)",
+    "shell": "Windows PowerShell 5.1",
+    "comando": "(Repita o bloco 'Teste de envio' colando a URL ANTIGA; depois repita com a URL NOVA.)",
+    "resposta_esperada": "URL antiga: erro de webhook removido ou desativado (no_service ou no_active_hooks; o código HTTP não está documentado na doc atual, historicamente 404). URL nova: 'Resposta: ok'.",
+    "onde_conferir": "Console; só a mensagem da URL nova aparece no canal.",
+    "fonte_url": "https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/"
+   }
+  ],
+  "segredos": [
+   {
+    "nome": "SLACK_WEBHOOK_URL",
+    "para_que": "URL do Incoming Webhook (https://hooks.slack.com/services/T.../B.../...) para postar no #incidentes-tech-challenge. É o campo Webhook URL do contact point Slack do Grafana. Pode servir também para avisar o resultado do self-healing.",
+    "quem_usa": "Grafana Alerting (contact point Slack); teste manual no PowerShell; mais tarde, talvez o GitHub Actions",
+    "como_guardar": "Gerenciador de senhas + .env local (ignorado: .gitignore linhas 28-30). No Grafana, provisionamento com $SLACK_WEBHOOK_URL ou pela UI. No GitHub, como Actions Secret. Nunca em commit, README, chat, issue ou vídeo. No provider Terraform, o campo url é sensitive."
+   },
+   {
+    "nome": "PAGERDUTY_INTEGRATION_KEY",
+    "para_que": "Integration Key (routing key, 32 caracteres) da integração 'Events API V2' do serviço no PagerDuty. É o campo obrigatório do contact point PagerDuty do Grafana.",
+    "quem_usa": "Grafana Alerting (contact point PagerDuty); testes manuais da Events API v2",
+    "como_guardar": "Igual ao do Slack: gerenciador de senhas, .env ignorado, $PAGERDUTY_INTEGRATION_KEY no provisionamento e Actions Secret se precisar. Não confundir com a REST API key. No Terraform, integration_key é sensitive."
+   },
+   {
+    "nome": "SLACK_BOT_TOKEN (xoxb-), NÃO necessário agora",
+    "para_que": "Só para o modo 'API token' do Grafana (Token + Recipient com ID do canal, scope chat:write.public).",
+    "quem_usa": "Ninguém por enquanto",
+    "como_guardar": "Não gerar. Se um dia for gerado, guardar como os outros e revogar com auth.revoke quando não for mais usado."
+   }
+  ],
+  "limites_plano": [
+   {
+    "item": "Apps no Slack Free",
+    "valor": "Até 10 instalações de apps de terceiros ou customizados. Hoje o projeto precisa de 1 (o app do webhook); o app do PagerDuty no Slack é opcional.",
+    "fonte_url": "https://slack.com/help/articles/115002422943-Usage-limits-for-free-workspaces"
+   },
+   {
+    "item": "Histórico no Slack Free",
+    "valor": "Últimos 90 dias de mensagens e arquivos visíveis e pesquisáveis. Desde 2024-08-26, conteúdo com mais de 1 ano é apagado.",
+    "fonte_url": "https://slack.com/help/articles/27204752526611-Feature-limitations-on-the-free-version-of-Slack"
+   },
+   {
+    "item": "Outros recursos do Free",
+    "valor": "Huddles só 1:1. Workflow Builder indisponível. Canvases e lists somente leitura. Nada disso afeta o projeto.",
+    "fonte_url": "https://slack.com/help/articles/27204752526611-Feature-limitations-on-the-free-version-of-Slack"
+   },
+   {
+    "item": "Taxa do Incoming Webhook",
+    "valor": "1 por segundo, com picos curtos tolerados, e no máximo 1 mensagem por segundo por canal. Acima disso: HTTP 429 com Retry-After.",
+    "fonte_url": "https://docs.slack.dev/apis/web-api/rate-limits/"
+   },
+   {
+    "item": "Personalização via webhook",
+    "valor": "Não dá para trocar canal, username ou ícone no payload. O webhook também não apaga mensagens.",
+    "fonte_url": "https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/"
+   },
+   {
+    "item": "Contact point Slack no Grafana",
+    "valor": "Um canal por contact point. Sem blocks customizados: só templates de title/text, e a cor muda apenas a barra lateral.",
+    "fonte_url": "https://grafana.com/docs/grafana/latest/alerting/configure-notifications/manage-contact-points/integrations/configure-slack/"
+   }
+  ],
+  "fatos_para_b1_b4": [
+   {
+    "fato": "O Incoming Webhook do Slack responde HTTP 200 com corpo 'ok'. A URL (hooks.slack.com/services/T/B/X) é segredo, e o Slack revoga segredos vazados.",
+    "fonte_url": "https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/"
+   },
+   {
+    "fato": "Erros com código HTTP: 400 invalid_payload e user_not_found; 403 action_prohibited; 404 channel_not_found; 410 channel_is_archived; 500 rollup_error. Sem código documentado: no_service, no_service_id, no_team, no_text, no_active_hooks, invalid_token, team_disabled, too_many_attachments, posting_to_general_channel_denied.",
+    "fonte_url": "https://docs.slack.dev/changelog/2016-05-17-changes-to-errors-for-incoming-webhooks"
+   },
+   {
+    "fato": "Grafana, contact point Slack: modo Webhook (só o campo Webhook) ou API token (xoxb- + Recipient, scope chat:write.public). Caminho: Alerts & IRM > Alerting > Notification configuration > Contact points > + Add contact point. O Test só existe com o Grafana Alertmanager.",
+    "fonte_url": "https://grafana.com/docs/grafana/latest/alerting/configure-notifications/manage-contact-points/integrations/configure-slack/"
+   },
+   {
+    "fato": "Grafana, contact point PagerDuty: Integration Key da integração 'Events API V2'. O Test cria incidente na aba Activity do serviço. O contact point é ligado à regra em Configure labels and notifications.",
+    "fonte_url": "https://grafana.com/docs/grafana/latest/alerting/configure-notifications/manage-contact-points/integrations/pager-duty/"
+   },
+   {
+    "fato": "Campos PagerDuty no Terraform: integration_key obrigatório e sensitive. Opcionais: severity (padrão critical), class, component, group, summary, source, client, client_url, details, url e disable_resolve_message (padrão false).",
+    "fonte_url": "https://raw.githubusercontent.com/grafana/terraform-provider-grafana/main/docs/resources/contact_point.md"
+   },
+   {
+    "fato": "No provisionamento, integrationKey é 'the 32-character Events API key' e severity aceita critical, error, warning e info. Os arquivos ficam em provisioning/alerting. A interpolação usa $variavel; variável não definida vira string vazia; $$ escapa.",
+    "fonte_url": "https://grafana.com/docs/grafana/latest/alerting/set-up/provision-alerting-resources/file-provisioning/"
+   },
+   {
+    "fato": "A versão atual do Grafana é a 13.3.0 (2026-10-27). A tag grafana/grafana:13.3.0 existe no Docker Hub (amd64/arm64/armv7).",
+    "fonte_url": "https://grafana.com/grafana/download"
+   },
+   {
+    "fato": "CVE-2026-100105 (High 7.7, 2026-10-27): bypass de autorização em contact points via schema downgrade, que pode expor credenciais e redirecionar notificações. Versões corrigidas: >=12.4.14, >=13.0.12, >=13.1.9 e >=13.2.5 nas respectivas linhas (a 13.3.0 está coberta).",
+    "fonte_url": "https://grafana.com/security/security-advisories/cve-2026-100105/"
+   },
+   {
+    "fato": "No Windows PowerShell 5.1, a forma documentada pela Microsoft para habilitar TLS 1.2 é a aditiva: SecurityProtocol -bor Tls12.",
+    "fonte_url": "https://learn.microsoft.com/en-us/powershell/gallery/powershellget/update-powershell-51"
+   },
+   {
+    "fato": "Boas práticas do Slack: sem hardcode, .env no .gitignore, cofre (GitHub Actions Secrets) em produção, rotação de tokens e auth.revoke. URLs de webhook são específicas do canal e do app.",
+    "fonte_url": "https://docs.slack.dev/security"
+   },
+   {
+    "fato": "Erro comum: usar a REST API key do PagerDuty no lugar da Integration Key gera 400. Fonte: fórum da comunidade, não oficial.",
+    "fonte_url": "https://community.grafana.com/t/pagerduty-contact-point-response-status-400-bad-request/81296"
+   }
+  ],
+  "incertezas": [
+   "A doc oficial não mostra como regenerar ou revogar uma URL de webhook, nem confirma que remover o app revoga seus webhooks. Só o teste com a URL antiga prova a revogação.",
+   "O código HTTP de no_service, no_active_hooks e no_service_id não está na doc atual.",
+   "Os rótulos do Slack para criar o app variam entre as docs: 'From scratch' ou 'Blank app', 'Create' ou 'Create App'.",
+   "O artigo de aprovação de apps não diz em quais planos ela existe nem descreve a tela de aprovar pedidos. O padrão é desligado.",
+   "O comportamento de $_.ErrorDetails.Message com Invoke-RestMethod no PS 5.1 não está na página oficial do cmdlet; é prática comum.",
+   "O YAML de provisionamento marca recipient do Slack como required, enquanto a doc da UI e o Terraform dizem que não é preciso no modo webhook. Testar quando provisionar.",
+   "Não está documentado qual evento o Grafana envia ao PagerDuty no resolve. Verificar no teste de B4.",
+   "O fixed version '<12.4.0' do advisory é ambíguo.",
+   "Nada foi executado nas contas. Os comandos do Slack não foram rodados nesta verificação, e nenhum segredo foi pedido ou visto."
+  ],
+  "fontes": [
+   {
+    "titulo": "Slack - Sending messages using incoming webhooks",
+    "url": "https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/"
+   },
+   {
+    "titulo": "Slack - Changes to errors for incoming webhooks",
+    "url": "https://docs.slack.dev/changelog/2016-05-17-changes-to-errors-for-incoming-webhooks"
+   },
+   {
+    "titulo": "Slack - Rate limits",
+    "url": "https://docs.slack.dev/apis/web-api/rate-limits/"
+   },
+   {
+    "titulo": "Slack - Security best practices",
+    "url": "https://docs.slack.dev/security"
+   },
+   {
+    "titulo": "Slack - Quickstart app settings",
+    "url": "https://docs.slack.dev/app-management/quickstart-app-settings/"
+   },
+   {
+    "titulo": "Slack Help - Create a channel",
+    "url": "https://slack.com/help/articles/201402297-Create-a-channel"
+   },
+   {
+    "titulo": "Slack Help - Feature limitations on the free version",
+    "url": "https://slack.com/help/articles/27204752526611-Feature-limitations-on-the-free-version-of-Slack"
+   },
+   {
+    "titulo": "Slack Help - Usage limits for free workspaces",
+    "url": "https://slack.com/help/articles/115002422943-Usage-limits-for-free-workspaces"
+   },
+   {
+    "titulo": "Slack Help - Manage app approval",
+    "url": "https://slack.com/help/articles/222386767-Manage-app-approval-for-your-workspace"
+   },
+   {
+    "titulo": "Slack Help - Remove apps and custom integrations",
+    "url": "https://slack.com/help/articles/360003125231-Remove-apps-and-custom-integrations-from-your-workspace"
+   },
+   {
+    "titulo": "Grafana - Configure Slack for Alerting",
+    "url": "https://grafana.com/docs/grafana/latest/alerting/configure-notifications/manage-contact-points/integrations/configure-slack/"
+   },
+   {
+    "titulo": "Grafana - Configure PagerDuty for Alerting",
+    "url": "https://grafana.com/docs/grafana/latest/alerting/configure-notifications/manage-contact-points/integrations/pager-duty/"
+   },
+   {
+    "titulo": "Grafana - File provisioning de alerting",
+    "url": "https://grafana.com/docs/grafana/latest/alerting/set-up/provision-alerting-resources/file-provisioning/"
+   },
+   {
+    "titulo": "Grafana Terraform provider - grafana_contact_point",
+    "url": "https://raw.githubusercontent.com/grafana/terraform-provider-grafana/main/docs/resources/contact_point.md"
+   },
+   {
+    "titulo": "Grafana - Download (13.3.0)",
+    "url": "https://grafana.com/grafana/download"
+   },
+   {
+    "titulo": "Grafana - Security advisories",
+    "url": "https://grafana.com/security/"
+   },
+   {
+    "titulo": "Grafana - CVE-2026-100105",
+    "url": "https://grafana.com/security/security-advisories/cve-2026-100105/"
+   },
+   {
+    "titulo": "Docker Hub - grafana/grafana:13.3.0",
+    "url": "https://hub.docker.com/v2/repositories/grafana/grafana/tags/13.3.0"
+   },
+   {
+    "titulo": "Microsoft - Invoke-RestMethod (PowerShell 5.1)",
+    "url": "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-restmethod?view=powershell-5.1"
+   },
+   {
+    "titulo": "Microsoft - Enable TLS 1.2 in Windows PowerShell 5.1",
+    "url": "https://learn.microsoft.com/en-us/powershell/gallery/powershellget/update-powershell-51"
+   },
+   {
+    "titulo": "Grafana Community - PagerDuty 400 (não oficial)",
+    "url": "https://community.grafana.com/t/pagerduty-contact-point-response-status-400-bad-request/81296"
+   }
+  ]
+ }
+}

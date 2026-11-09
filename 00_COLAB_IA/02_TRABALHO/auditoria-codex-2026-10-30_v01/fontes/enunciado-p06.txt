@@ -1,0 +1,31 @@
+Tech Challenge  Página 6 de 7 
+ 
+• APM e Tracing:  abra o painel do Datadog/New Relic. Mostre o 
+"Service Map". Faça uma requisição de teste e ex iba o Trace 
+Distribuído detalhado no APM. 
+• Incidente e Self-Healing (A Prova Real): 
+o Cause um problema proposital no sistema (ex: pare o banco de 
+dados do flag-service ou injete erro no código). 
+o Mostre o alerta disparando (Firing) no Grafana/APM. 
+o Mostre o in cidente sendo aberto no PagerDuty/OpsGenie e a 
+notificação chegando no Slack/Discord. 
+o Mostre a automação de Self -Healing sendo acionada  e 
+executando a ação corretiva (ex: mostrando o pod reiniciando 
+automaticamente via terminal). 
+Relatório de Entrega (.PDF): 
+• Nomes, RMs e usernames. 
+• Links do repositório de código e do vídeo. 
+• Evidências Visuais (Obrigatório): 
+o Print do Dashboard do Grafana. 
+o Print de um Trace distribuído no APM. 
+o Print da notificação de incidente no ChatOps. 
+o Print do log/execução da automação de Self-Healing. 
+• Justificativa Técnica:  breve explicação da arquitetura do OTel 
+implementada e da escolha entre Datadog vs New Relic e OpsGenie 
+vs PagerDuty. 
+Lembrando que qualquer dúvida, podem nos chamar no Discord. 
+Boa Sorte! 
+ 
+ 
+ 
+ 

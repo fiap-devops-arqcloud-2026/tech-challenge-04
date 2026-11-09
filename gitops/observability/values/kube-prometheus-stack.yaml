@@ -1,0 +1,176 @@
+# ============================================================
+# VALUES - kube-prometheus-stack 92.17.1 (Prometheus + Grafana)
+# ============================================================
+# Chart: https://prometheus-community.github.io/helm-charts
+# Versao e chaves conferidas em 2026-11-03 no values.yaml da tag
+# kube-prometheus-stack-92.17.1. Traz o Prometheus 3.15.1 e o subchart
+# grafana 14.3.1 (Grafana 13.3.0).
+#
+# PAPEL DE CADA PECA NESTA STACK:
+#   - Prometheus: guarda as metricas de infraestrutura (CPU e memoria
+#     dos pods, via kubelet/cAdvisor) e as de aplicacao que o Collector
+#     gateway gera a partir dos traces (span_metrics) e envia por OTLP;
+#   - Grafana: dashboard, busca de logs no Loki e as REGRAS DE ALERTA,
+#     com os contact points PagerDuty, Slack e GitHub;
+#   - Alertmanager: DESLIGADO. Os alertas vivem no Grafana; manter dois
+#     sistemas de alerta so dividiria a configuracao.
+#
+# Dimensionado para 2 nos m7i-flex.large (8 GiB cada), dividindo espaco
+# com os 5 servicos, o ArgoCD, o Loki e os Collectors.
+# ============================================================
+
+# Nome curto e previsivel para os objetos: o Service do Prometheus vira
+# kps-prometheus, endereco que o Collector gateway usa (otel-gateway.yaml).
+fullnameOverride: kps
+
+# Alertas ficam no Grafana (ver gitops/observability/grafana/).
+alertmanager:
+  enabled: false
+
+# ------------------------------------------------------------
+# COMPONENTES QUE NAO EXISTEM PARA NOS NO EKS
+# ------------------------------------------------------------
+# O plano de controle e gerenciado pela AWS: controller manager,
+# scheduler e etcd nao ficam acessiveis, e os ServiceMonitors deles so
+# gerariam alvos fora do ar. O kube-proxy roda como addon e tambem nao
+# expoe metricas para fora do no.
+kubeControllerManager:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeEtcd:
+  enabled: false
+kubeProxy:
+  enabled: false
+
+# Regras padrao: desliga so os grupos dos componentes acima (e do
+# Alertmanager/Windows, que nao existem aqui). As regras de container,
+# pod, kubelet e node continuam: elas alimentam os dashboards de CPU e
+# memoria que o chart instala.
+defaultRules:
+  create: true
+  rules:
+    alertmanager: false
+    etcd: false
+    kubeControllerManager: false
+    kubeProxy: false
+    kubeSchedulerAlerting: false
+    kubeSchedulerRecording: false
+    windows: false
+
+# ------------------------------------------------------------
+# PROMETHEUS
+# ------------------------------------------------------------
+prometheus:
+  prometheusSpec:
+    # Liga o receptor OTLP nativo (--web.enable-otlp-receiver): o Collector
+    # gateway envia as metricas de span por OTLP/HTTP para
+    # http://kps-prometheus.observability.svc.cluster.local:9090/api/v1/otlp
+    # (o exporter acrescenta /v1/metrics). Os nomes chegam traduzidos para
+    # o padrao do Prometheus: traces.span.metrics.calls vira
+    # traces_span_metrics_calls_total.
+    enableOTLPReceiver: true
+
+    # Retencao curta: o ambiente existe por poucos dias (gravacao do
+    # video) e o disco e pequeno. O limite por tamanho vence antes de
+    # encher o volume.
+    retention: 2d
+    retentionSize: 4GiB
+
+    # Volume gp3 (StorageClass criada pela camada terraform/k8s). Sem
+    # isto, o Prometheus perderia as metricas a cada reinicio do pod.
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: gp3
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 5Gi
+
+    resources:
+      requests:
+        cpu: 200m
+        memory: 512Mi
+      limits:
+        memory: 1536Mi
+
+# ------------------------------------------------------------
+# GRAFANA (subchart grafana 14.3.1)
+# ------------------------------------------------------------
+grafana:
+  # Service "grafana" na porta 80. Acesso no video por port-forward:
+  #   kubectl -n observability port-forward svc/grafana 3000:80
+  fullnameOverride: grafana
+
+  # Imagem fixada. 13.3.0 e a versao com a correcao do CVE-2026-100105
+  # (guia PASSO2, nota 4); a variante distroless e a padrao do chart.
+  image:
+    tag: 13.3.0-distroless
+
+  # Senha do admin vem do Secret criado pelo Terraform
+  # (terraform/k8s/observability.tf), nunca de values versionado.
+  admin:
+    existingSecret: grafana-admin
+    userKey: admin-user
+    passwordKey: admin-password
+
+  # Segredos dos contact points como variaveis de ambiente. Os arquivos
+  # de alerting citam $PAGERDUTY_INTEGRATION_KEY, $SLACK_WEBHOOK_URL e
+  # $GITHUB_DISPATCH_TOKEN; o Grafana troca pelos valores ao carregar.
+  envFromSecret: grafana-notificacoes
+
+  grafana.ini:
+    server:
+      # Links das notificacoes (regra, dashboard, silenciar) apontam para
+      # o port-forward do apresentador. Sem Ingress no projeto, nao ha
+      # endereco publico para usar aqui.
+      root_url: http://localhost:3000
+
+  # Dashboards e alertas chegam por ConfigMaps de gitops/observability/
+  # grafana, lidos pelos sidecars. Sem disco proprio: tudo que importa
+  # esta no Git, e um pod novo reconstroi o estado sozinho.
+  persistence:
+    enabled: false
+
+  sidecar:
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+      labelValue: "1"
+    datasources:
+      # uid fixo do Prometheus padrao: o dashboard e a regra de alerta
+      # referenciam "prometheus" pelo uid, nao pelo nome.
+      uid: prometheus
+      # Sem Alertmanager, a datasource dele apontaria para o nada.
+      alertmanager:
+        enabled: false
+    alerts:
+      enabled: true
+      label: grafana_alert
+      labelValue: "1"
+
+  additionalDataSources:
+    - name: Loki
+      type: loki
+      uid: loki
+      access: proxy
+      url: http://loki.observability.svc.cluster.local:3100
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
+
+# ------------------------------------------------------------
+# DEMAIS COMPONENTES (pequenos)
+# ------------------------------------------------------------
+prometheusOperator:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      memory: 256Mi

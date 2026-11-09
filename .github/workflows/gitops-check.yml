@@ -1,0 +1,105 @@
+# ============================================================
+# GITOPS CHECK - manifestos, Grafana, self-healing e segredos
+# ============================================================
+# O QUE ELE FAZ
+# Cobre o que os outros workflows nao olhavam:
+#   - gitops/: renderiza as pastas do Kustomize como o ArgoCD fara e
+#     confere dashboards e alertas do Grafana, que o Kustomize so embute
+#     como texto (scripts/gitops/validate.sh);
+#   - self-healing: os 11 cenarios do restart.sh com um kubectl falso,
+#     sem cluster (scripts/self-healing/test-restart.sh);
+#   - segredos: a varredura dos arquivos versionados atras de chaves e
+#     tokens (scripts/security-check.sh).
+# Sao os mesmos scripts do validate-all.sh local.
+#
+# POR QUE SEM FILTRO DE CAMINHO
+# A varredura de segredos tem de olhar TODO commit: um token pode entrar
+# por qualquer arquivo. E o job inteiro leva menos de um minuto.
+#
+# E O COMMIT DO ROBO NA MAIN?
+# O job gitops dos servicos grava a tag nova em gitops/ com o
+# GITHUB_TOKEN e "[skip ci]" na mensagem. Push feito com o GITHUB_TOKEN
+# nao dispara workflow, entao nao ha laco.
+#
+# Nao usa AWS nem segredo: so le o repositorio.
+# ============================================================
+
+name: GitOps Check
+
+on:
+  # Todo PR, qualquer destino: barra o erro antes do merge.
+  pull_request:
+
+  # Push na dev e na main.
+  push:
+    branches: [main, dev]
+
+  # Botao "Run workflow" na aba Actions.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Um push novo na mesma branch cancela a rodada anterior, menos na main.
+concurrency:
+  group: gitops-check-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+env:
+  # Mesma versao do kustomize do job gitops dos servicos (P-036).
+  KUSTOMIZE_VERSION: "5.4.3"
+  # SHA-256 do kustomize_v5.4.3_linux_amd64.tar.gz, copiado do
+  # checksums.txt oficial da release. Se o arquivo baixado nao bater,
+  # o job para antes de executar o binario.
+  KUSTOMIZE_SHA256: "3669470b454d865c8184d6bce78df05e977c9aea31c30df3c669317d43bcc7a7"
+  # PyYAML fixo: le os values e os alertas do Grafana.
+  PYYAML_VERSION: "6.0.3"
+
+jobs:
+  check:
+    # Um job so, com as tres verificacoes em passos. O GitHub cobra cada
+    # job arredondando para cima o minuto; tres jobs de 20 s custariam
+    # tres minutos, um job custa um.
+    name: GitOps, self-healing e segredos
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout do codigo
+        uses: actions/checkout@v4
+
+      - name: Instalar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar PyYAML
+        run: python -m pip install --disable-pip-version-check "pyyaml==${PYYAML_VERSION}"
+
+      - name: Instalar kustomize (versao e checksum fixos)
+        run: |
+          curl -sSLo kustomize.tar.gz \
+            "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv${KUSTOMIZE_VERSION}/kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz"
+          echo "${KUSTOMIZE_SHA256}  kustomize.tar.gz" | sha256sum --check --strict
+          tar -xzf kustomize.tar.gz
+          sudo mv kustomize /usr/local/bin/
+          rm kustomize.tar.gz
+          kustomize version
+
+      # Kustomize das 3 pastas, dashboards, alertas e os testes do
+      # proprio verificador do Grafana.
+      - name: GitOps - Kustomize e Grafana
+        run: bash scripts/gitops/validate.sh
+
+      # --------------------------------------------------------
+      # Os dois passos abaixo nao dependem do Python nem do kustomize.
+      # `!cancelled()` faz cada um rodar mesmo se um passo anterior
+      # falhar: uma rodada mostra TODOS os problemas, e nao so o primeiro.
+      # --------------------------------------------------------
+      - name: Self-healing - 11 cenarios do restart.sh
+        if: ${{ !cancelled() }}
+        run: bash scripts/self-healing/test-restart.sh
+
+      - name: Varredura de segredos
+        if: ${{ !cancelled() }}
+        run: bash scripts/security-check.sh

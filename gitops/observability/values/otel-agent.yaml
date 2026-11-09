@@ -1,0 +1,86 @@
+# ============================================================
+# VALUES - opentelemetry-collector 0.178.2, papel AGENTE (DaemonSet)
+# ============================================================
+# Um pod por no. Le os arquivos de log de TODOS os containers do no
+# (/var/log/pods), acrescenta os atributos do pod de origem e entrega ao
+# gateway por OTLP/gRPC. O gateway encaminha ao Loki.
+#
+# POR QUE UM AGENTE SEPARADO: logs de container sao arquivos no disco de
+# cada no; so um processo no proprio no consegue le-los. Traces e
+# metricas nao tem essa restricao e vao direto ao gateway.
+# ============================================================
+
+mode: daemonset
+
+fullnameOverride: otel-agent
+
+image:
+  repository: otel/opentelemetry-collector-contrib
+  tag: "0.163.2"
+  digest: sha256:7f22d2a6748110ffb6a59bc0df448bccbf501cdb667d610ede4c61d3863d5849
+
+command:
+  name: otelcol-contrib
+
+presets:
+  # Receptor file_log em /var/log/pods/*/*/*.log com o operador container
+  # (k8s.namespace.name, k8s.pod.name, k8s.container.name a partir do
+  # caminho do arquivo). Os logs do proprio Collector ficam de fora.
+  logsCollection:
+    enabled: true
+    includeCollectorLogs: false
+    # Guarda no disco do no ate onde cada arquivo ja foi lido: um
+    # reinicio do agente nao reenvia nem perde logs. Com isto o chart roda
+    # o container como root, necessario para ler os logs dos outros pods
+    # (arquivos do kubelet, com dono root).
+    storeCheckpoints: true
+  # Completa os atributos (k8s.deployment.name, k8s.node.name...) pela API,
+  # filtrando so os pods deste no.
+  kubernetesAttributes:
+    enabled: true
+
+# O agente nao recebe nada pela rede: so le arquivos.
+ports:
+  otlp:
+    enabled: false
+  otlp-http:
+    enabled: false
+  jaeger-compact:
+    enabled: false
+  jaeger-thrift:
+    enabled: false
+  jaeger-grpc:
+    enabled: false
+  zipkin:
+    enabled: false
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi
+  limits:
+    memory: 256Mi
+
+config:
+  receivers:
+    otlp: null
+    jaeger: null
+    zipkin: null
+    prometheus: null
+
+  exporters:
+    debug: null
+    otlp_grpc:
+      endpoint: otel-gateway.observability.svc.cluster.local:4317
+      # Trafego interno do cluster, sem TLS (o gateway recebe OTLP puro).
+      tls:
+        insecure: true
+
+  service:
+    pipelines:
+      logs:
+        receivers: [file_log]
+        processors: [memory_limiter, k8s_attributes, batch]
+        exporters: [otlp_grpc]
+      traces: null
+      metrics: null
