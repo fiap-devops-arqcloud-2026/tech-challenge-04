@@ -1,8 +1,8 @@
 # Decisões
 
-TL;DR: D-001 a D-020 preservadas. D-021 registra a autorização para atualizar o runtime Alpine dos dois serviços Go; PR/main, implantação e encerramento permanecem separados. A herança F3 é histórica.
+TL;DR: D-001 a D-021 preservadas; D-022 registra a limpeza expressamente autorizada em 2026-11-09, com recuperação por Git e preservação das evidências únicas. Nenhuma alteração de infraestrutura decorre da limpeza.
 
-Última atualização: 2026-11-05, Codex.
+Última atualização: 2026-11-09, Codex.
 
 ## D-001 — Caminhos e organização (aceita, 2026-09-16)
 
@@ -203,6 +203,16 @@ Status: riscos aceitos. Não reabrir como pendência; reavaliar só a pedido do 
 **Decisão do usuário:** “Sim, atualizar os dois Dockerfiles na dev”. Alterar somente a imagem da etapa final dos dois serviços para `alpine:3.24`; conservar o builder e as políticas de scan. A tag acompanha patches do ramo em builds futuros. Alternativa considerada: manter 3.20 até depois da gravação.
 
 **Aplicação e evidência:** commit `df766b2`. As cópias testadas foram comparadas com os Dockerfiles efetivos. Resolveram para 3.24.3; ambos os processos rodaram sem root com CA presente; auth criou/validou chave em PostgreSQL e evaluation fez leituras de Redis. O Trivy 0.70.0 reportou zero achados CRITICAL nas duas imagens sob o filtro e as exceções do CI. Ver [evidência local](02_TRABALHO/validacao-local-alpine-2026-11-05/RESULTADO.md) e [política oficial de suporte do Alpine](https://alpinelinux.org/releases/). Nenhuma publicação no ECR foi feita para esse teste.
+
+## D-022 — Excluir artefatos comprovadamente dispensáveis (2026-11-09)
+
+Contexto: o usuário pediu analisar a auditoria do Claude e excluir arquivos inúteis. A auditoria anterior apenas propunha pacotes; postergar cópias sem consumidor até B5/B6 não trazia dependência técnica.
+
+Decisão: remover 121 arquivos versionados comprovados no manifesto e 22 alvos locais regeneráveis. Antecipar apenas as cópias redundantes que a auditoria colocava em B5/B6, com referência integral de recuperação no Git. Manter material FIAP, guias, credenciais, estado/planos, caches ativos e resultados/evidências únicos. Não apagar uma pasta qa-* inteira. Código funcional e dependências não foram alterados.
+
+Alternativas: apagar todo o diário (rejeitada: perderia handoff e evidências); apagar toda pasta ignorada (rejeitada: contém arquivos insubstituíveis); mover todo o lixo para nova pasta (não reduziria o conteúdo). A remoção no checkout não limpa o histórico do Git.
+
+Estado: executada; commit de exclusões separado e manifesto com path, SHA-256, blob e git show eb408a5:<caminho>. Os originais dos documentos atualizados nesta sessão foram preservados conforme a convenção do projeto em _ARQUIVO_MORTO/2026-11-09_antes-limpeza_v01. Relatório: [limpeza](02_TRABALHO/limpeza-2026-11-09_v01/RELATORIO.md). A limpeza não decide P3 sobre materiais úteis nem autoriza operações AWS.
 
 ## Decisões herdadas da Fase 3 — registro histórico revisado em 2026-11-01
 

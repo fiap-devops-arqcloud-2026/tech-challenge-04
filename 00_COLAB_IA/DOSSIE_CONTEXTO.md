@@ -1,8 +1,8 @@
 # Dossiê de contexto
 
-TL;DR: Preparação do B3 revisada: B0/B1/B2, tokens, notificações e orçamento validados. Em 2026-11-05 há US$ 120 de créditos, nenhum EKS em us-east-2 e Alpine 3.24 aprovado. Seção 28 e [roteiro vigente do B3](02_TRABALHO/PREPARACAO_B3_2026-11-05_v02.md) indicam como executar o primeiro deploy sem antecipar sync; autorizações dos tópicos 5/6 continuam separadas. Seção 29 (2026-11-07): auditoria de organização sem remoção e duas decisões antes do tópico 5, o ArgoCD e o que a main mostra.
+TL;DR: Limpeza autorizada em 2026-11-09, detalhada na seção 30 e no [relatório da limpeza](02_TRABALHO/limpeza-2026-11-09_v01/RELATORIO.md). Auditoria original do Claude preservada; 121 arquivos redundantes/obsoletos retirados e caches regeneráveis removidos. Permanecem os requisitos, estudos, evidências e próximos passos úteis; ArgoCD e tópicos 5/6 pendentes.
 
-Última atualização: 2026-11-07, Claude (Opus 5.5).
+Última atualização: 2026-11-09, Codex.
 
 Atualização 2026-10-28 14:47: usuário informou conclusão do guia IAM/OIDC até passo7. Provedor, policy, role, Variables e consultas IAM são concluídos por relato; nenhuma prova de CI remoto/cluster decorre disso. Prosseguir com inventário, correção F-023 na dev, backend próprio, adoção de recursos manuais e plan revisado. Não recriar role nem reutilizar state antigo. PR/main/apply permanecem fora do pedido de orientação. Registros seguintes sobre ausência da role refletem momentos anteriores.
 
@@ -583,3 +583,12 @@ Usar [preparação v02](02_TRABALHO/PREPARACAO_B3_2026-11-05_v02.md): conferir p
   - os pacotes P1 a P6 aguardam aprovação.
 - ArgoCD: o chart 7.7.11 instala a v2.13.2, com a CVE-2025-55190 crítica. Nenhum chart 7.7 traz a correção, que veio na v2.13.9. A decisão fica com o usuário, antes do apply da k8s.
 - `SECURITY.md` passou a descrever a trust OIDC real, e `gitops/SECRETS-CONTRATO.md` ganhou os Secrets da observabilidade.
+
+
+## 30. Limpeza executada — 2026-11-09, Codex
+
+Pedido expresso: analisar o trabalho de limpeza do Claude e excluir os arquivos inúteis. A auditoria dele era somente leitura; o baseline desta execução foi eb408a5. Foram retirados 121 arquivos versionados (99 cópias de arquivo morto, 20 auxiliares superados/duplicados, pyproject.toml sem consumidor e apresentação Fase 3 idêntica à do repositório 03). O conteúdo de cada arquivo continua recuperável com commit/caminho/blob no manifesto. Também foram excluídos 29.310 arquivos em 22 alvos locais regeneráveis, 1,92 GiB. Não confundir tamanho removido do checkout com redução do histórico .git.
+
+Código, Terraform ativo, GitOps, scripts vigentes, READMEs usados, aulas/guia/enunciado e arquivos locais protegidos foram preservados. Evidências únicas de qa-* não foram apagadas. Os três caches Terraform ativos, estados, planos, backend.hcl, tfvars e .env ficaram. Não alterar fontes do 03; só foi conferida a cópia idêntica da apresentação e a existência do PDF da aula 5.
+
+O manifesto substitui os caminhos físicos antigos para consulta; o LOG e os inventários históricos não foram reescritos. A autorização não muda o destino público dos materiais FIAP nem do CLAUDE.md; também não altera ArgoCD/PyYAML ou concede apply/PR/main. Treze pastas vazias continuam locais porque a revisão automática bloqueou a remoção. Retomar pelos arquivos do relatório, D-022 e primeiro checklist de PENDENCIAS.

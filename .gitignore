@@ -21,6 +21,11 @@ override.tf.json
 terraform.rc
 tfplan
 *.tfplan
+# Convencao para exportacoes de terraform show -json (podem conter segredos).
+*.tfplan.json
+tfplan.json
+plan.json
+*-plan.json
 
 # ---------------------------------------------------------------
 # Credenciais e segredos
@@ -95,7 +100,9 @@ output/
 tmp/
 
 
-# Trabalho de leitura/QA preservado localmente, reconstruível a partir das fontes.
+# Trabalho local de leitura/QA. Ignorado NAO significa descartavel:
+# estas pastas tambem guardam evidencias unicas (logs, traces e resultados).
+# Limpar somente caches/binarios explicitamente inventariados.
 00_COLAB_IA/**/__pycache__/
 00_COLAB_IA/02_TRABALHO/extracoes*/
 00_COLAB_IA/02_TRABALHO/qa-*/
@@ -104,6 +111,15 @@ tmp/
 00_COLAB_IA/02_TRABALHO/obs-aula1-p4.png
 00_COLAB_IA/02_TRABALHO/*.log
 00_COLAB_IA/02_TRABALHO/gitops-renderizado-*.yaml
+
+# Gravacoes locais: publicar por link apos revisar, nao como binario no Git.
+*.mp4
+*.mkv
+*.mov
+*.webm
+*.avi
+*.m4v
+*.wmv
 
 # Log do terraform test -verbose de 2026-10-28 (156 MB, acima do limite de
 # 100 MB do GitHub). O resultado fica no resumo ao lado (offline-test-resumo.txt).

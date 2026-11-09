@@ -1,0 +1,1112 @@
+{
+  "date": "2026-11-09",
+  "baseline_commit": "eb408a552ad29529e5af66339a7da6e8e4fa2e69",
+  "tracked": [
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-20_fechamento-importacao/DECISOES.md",
+      "category": "arquivo_redundante",
+      "bytes": 9703,
+      "sha256": "7f29752b3c2e11bb699748ba02ec485b5b700f56be916c135d944acfbfd05eca",
+      "git_blob": "d4873cab44a0166641f9d9d4ada7330c2b262a02",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-20_fechamento-importacao/DECISOES.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-20_fechamento-importacao/DOSSIE_CONTEXTO.md",
+      "category": "arquivo_redundante",
+      "bytes": 7166,
+      "sha256": "4f35cc1e31b4fb6ab5afd6bf10eb6a24fb753f2bbe1668635a18582c83b24414",
+      "git_blob": "28fe018a1cda1c699900b4efd4f342eaee7aaefd",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-20_fechamento-importacao/DOSSIE_CONTEXTO.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-20_fechamento-importacao/LEIA-PRIMEIRO.md",
+      "category": "arquivo_redundante",
+      "bytes": 2334,
+      "sha256": "088bd4225f4596ab39b1e51e1da56824a45b2bab863f34b37289a2952e9afd56",
+      "git_blob": "df7bbff3c6d18ea38ce1e2d9a18f9887c89b0e56",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-20_fechamento-importacao/LEIA-PRIMEIRO.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-20_fechamento-importacao/LOG_DE_TRABALHO.md",
+      "category": "arquivo_redundante",
+      "bytes": 22396,
+      "sha256": "443e3d0b03ce12c75e057c86e359cc66277d8ba4e56e66af86607dba328dc340",
+      "git_blob": "9924be5d63567accbfe86d1d6d0f0b783949ffdd",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-20_fechamento-importacao/LOG_DE_TRABALHO.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-20_fechamento-importacao/PENDENCIAS_E_PROXIMOS_PASSOS.md",
+      "category": "arquivo_redundante",
+      "bytes": 5955,
+      "sha256": "203e83d50a8d11824e0e67b30b139213415843af7e44ada6a48d0d485af48611",
+      "git_blob": "c41341f541662782e6e62828f05879e84c6cbdd1",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-20_fechamento-importacao/PENDENCIAS_E_PROXIMOS_PASSOS.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-20_ferramentas-guias/extrair-fontes-2026-09-16_v01.py",
+      "category": "arquivo_redundante",
+      "bytes": 1445,
+      "sha256": "b7c4eca339f897afdea0073d71902ee2ce6e017ec12efef5066cba38dfe128b2",
+      "git_blob": "d5290a91ce4f7f5e045f88f1fc43730f171aed4e",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-20_ferramentas-guias/extrair-fontes-2026-09-16_v01.py"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-20_ferramentas-guias/mapear-modulos-readme-2026-09-20_v01.py",
+      "category": "arquivo_redundante",
+      "bytes": 3823,
+      "sha256": "5865c6c8d17a9c62043bd16e1cb217672acc4c17e41ab93ec98eb89a75cae61c",
+      "git_blob": "32a24b1543132e798f79b42f6ec0036941b2542f",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-20_ferramentas-guias/mapear-modulos-readme-2026-09-20_v01.py"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-20_ferramentas-guias/validar-guias-2026-09-16_v01.py",
+      "category": "arquivo_redundante",
+      "bytes": 13416,
+      "sha256": "6a1c610587002161a18f42fcd40b999e797cb69176544290529b94c61b9b99ca",
+      "git_blob": "4ae47318036559962ca4a187b8febb662e78ae05",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-20_ferramentas-guias/validar-guias-2026-09-16_v01.py"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-21_conferencia-plano/LOG_DE_TRABALHO.md",
+      "category": "arquivo_redundante",
+      "bytes": 26934,
+      "sha256": "36bc70e0b6025aeedd3c66afbe0c8e8c6ba5c58191bde9884dcbae2a4cb13508",
+      "git_blob": "85c67777994089f3ac475b670fd6955e89702cf1",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-21_conferencia-plano/LOG_DE_TRABALHO.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-21_conferencia-plano/PENDENCIAS_E_PROXIMOS_PASSOS.md",
+      "category": "arquivo_redundante",
+      "bytes": 7183,
+      "sha256": "8c5c541e0f0a815a878c24ac3f58edd12a2e903d4e5b12ae0f9406bbc2624c5f",
+      "git_blob": "071820b1063b6e00e4006859fc56e89c6d56b63c",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-21_conferencia-plano/PENDENCIAS_E_PROXIMOS_PASSOS.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/.dockerignore",
+      "category": "arquivo_redundante",
+      "bytes": 133,
+      "sha256": "64bdfb22b742dcb4f82a60575ba80243b2d38d2b48bd3bdf17b30195be72a185",
+      "git_blob": "4e579a5971540b36871ee0e1d295ab9a481908c0",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/.dockerignore"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/Dockerfile",
+      "category": "arquivo_redundante",
+      "bytes": 2435,
+      "sha256": "6e32f16dd669dc265adb2cdc618a753105e66b32483564417380c831c5b49749",
+      "git_blob": "58c4fc58fdaa54554265e286bf3afb06af2d0417",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/Dockerfile"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/README.md",
+      "category": "arquivo_redundante",
+      "bytes": 2529,
+      "sha256": "207f3a21cbf6d9b234437bb2b1d5290e1512723afdcbcef19fb2f0d7387bbf37",
+      "git_blob": "a1af0c71282e8e365fdd84b14310ed8224c9c897",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/README.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/db/init.sql",
+      "category": "arquivo_redundante",
+      "bytes": 348,
+      "sha256": "0f954f856465549b76f18cbbcfd96bae969283c2e0d928d6e90b3a57d91c1faf",
+      "git_blob": "b5d51f7ae8981820ef48e1fc9b867f05469e3832",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/db/init.sql"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/go.mod",
+      "category": "arquivo_redundante",
+      "bytes": 686,
+      "sha256": "95d3610705605bd7555c6e51d107beb4a3b961712f771cb4481166a63e273cc0",
+      "git_blob": "84ef4783526ce9e50fc128ce07670f94542ca06f",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/go.mod"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/go.sum",
+      "category": "arquivo_redundante",
+      "bytes": 17853,
+      "sha256": "37da14e8aa9df0ddfc831b379bac1a660c025bb8c7c1ef39066c99ecff4a1835",
+      "git_blob": "bcdb7d7a9c6b42811dae5ccc16b7a42a2a06795e",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/go.sum"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/handlers.go",
+      "category": "arquivo_redundante",
+      "bytes": 4854,
+      "sha256": "e764c1ff8fa4069462c7c47d0b6a595133ec131a8f26bd06c19dcb5708b73d88",
+      "git_blob": "9dbd399647ee6f71dca5f7c457996d86bd3717bb",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/handlers.go"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/key.go",
+      "category": "arquivo_redundante",
+      "bytes": 866,
+      "sha256": "d876d78ddb758bebef0a06010d17f784823eb06b4215d1b808da04c6fbf19ece",
+      "git_blob": "47cf8df58c165052d1c1675998517fe9f07a3f08",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/key.go"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/main.go",
+      "category": "arquivo_redundante",
+      "bytes": 2526,
+      "sha256": "21bfe86e853f836088732b46548424989cfbef1b42231bf79039d6e52001738c",
+      "git_blob": "61e220cc4700d3cddccf64765f4b362bcd5a9329",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/main.go"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/.dockerignore",
+      "category": "arquivo_redundante",
+      "bytes": 133,
+      "sha256": "64bdfb22b742dcb4f82a60575ba80243b2d38d2b48bd3bdf17b30195be72a185",
+      "git_blob": "4e579a5971540b36871ee0e1d295ab9a481908c0",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/.dockerignore"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/Dockerfile",
+      "category": "arquivo_redundante",
+      "bytes": 2431,
+      "sha256": "8fd4d0363906aa9d2d9d5db7d38d86bc12ef86775b766cf6fefa2e0a5d9f1dc0",
+      "git_blob": "210b1a4dd97f9135123f03c4c9e70e7acfb3c28f",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/Dockerfile"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/README.md",
+      "category": "arquivo_redundante",
+      "bytes": 4290,
+      "sha256": "dfd5952fcc2e68d6b6b082794aee334edb725b6c14015cbceeb376802621c5d2",
+      "git_blob": "b05d81a1337725bf2098733ba9647391ebcc0df5",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/README.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/evaluator.go",
+      "category": "arquivo_redundante",
+      "bytes": 11359,
+      "sha256": "6782bb9f476edd3a973afde4e88bec83fd63b834944eca9a1b90f47e9b4ed559",
+      "git_blob": "2e8cc698189f279fd35d8a0b27d1b4054c39e39f",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/evaluator.go"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/go.mod",
+      "category": "arquivo_redundante",
+      "bytes": 578,
+      "sha256": "c261fdbb17d788caff1158e54b8baa1b76ffba02241ec703148e5701ea78e5f7",
+      "git_blob": "0e4274bd4c08baf73b3cc50e62061fcf848af630",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/go.mod"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/go.sum",
+      "category": "arquivo_redundante",
+      "bytes": 3885,
+      "sha256": "7a8f031365a8f06249f8e7e1f18c72c9b296b116124a86898330adee8defd917",
+      "git_blob": "a6639a3c7d62d2108e9988c245514b28e6ff9d1d",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/go.sum"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/handlers.go",
+      "category": "arquivo_redundante",
+      "bytes": 2875,
+      "sha256": "8c3db1592d05d3b6bffdaccb9ab819405291e8523326f080ecb5b16ede8cbbbc",
+      "git_blob": "7ef12c2f3328b4661cfe25b30b62c098cb4f8f76",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/handlers.go"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/main.go",
+      "category": "arquivo_redundante",
+      "bytes": 3432,
+      "sha256": "2d671cb883fb1f08228612bc4d31b7860c872740983926f177269da5eb1dd903",
+      "git_blob": "ec7d202f0fe4fa0096aa2c619be19d3dec12af13",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/main.go"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/sqs.go",
+      "category": "arquivo_redundante",
+      "bytes": 1347,
+      "sha256": "5b7be09cf27296c3b12ce17ca358afb3f45eb97b593edd58802cc646f4be0db5",
+      "git_blob": "ddf59942a21d768f36c981fa8c1dcac73dac0e0b",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/sqs.go"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/types.go",
+      "category": "arquivo_redundante",
+      "bytes": 1038,
+      "sha256": "8a03d794357e459f2903f7b96af35df3ced25b53a6c6a7cc63c928e708a66b9b",
+      "git_blob": "aabe81831fbc37f1d20f3d60ae0ba34e8d6c9c0d",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/types.go"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/analytics-service/Dockerfile",
+      "category": "arquivo_redundante",
+      "bytes": 2804,
+      "sha256": "ce064576b90eb7b4c8e0c1928fd557d5fa112caf7bc5131e96e414c16c9196fa",
+      "git_blob": "c122957ecbcd56fbee22911202641d1857f4ba97",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/analytics-service/Dockerfile"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/analytics-service/README.md",
+      "category": "arquivo_redundante",
+      "bytes": 4020,
+      "sha256": "cd4c9098ae72c5459c46442e11d1dc940c8dd448d00d129f7f0a54458d92e000",
+      "git_blob": "d4c561ec3aa3302842a074c2f60cb9d1c2deb2dc",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/analytics-service/README.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/analytics-service/app.py",
+      "category": "arquivo_redundante",
+      "bytes": 6135,
+      "sha256": "18a095dc1f80fc94b234150327f4b5e46e4c34bd66724f0f333bacdfd3740aab",
+      "git_blob": "4a3224204f18a14237f654cc1af9606066d8b77e",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/analytics-service/app.py"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/analytics-service/requirements.txt",
+      "category": "arquivo_redundante",
+      "bytes": 68,
+      "sha256": "3af096b370740170b3caa5a2778f869b22a1ca9fbf8b88b1db06833cc1a739a7",
+      "git_blob": "34acfeb0ccac7c41adbd75760d312eb4d2e5099f",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/analytics-service/requirements.txt"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/flag-service/Dockerfile",
+      "category": "arquivo_redundante",
+      "bytes": 2804,
+      "sha256": "402588037ffb0cb2a296f703bac04511857078e81b1e9c97c688921abc0e8538",
+      "git_blob": "d7fa38054055d50d070393a61bb1a1428fe25e2d",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/flag-service/Dockerfile"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/flag-service/README.md",
+      "category": "arquivo_redundante",
+      "bytes": 3487,
+      "sha256": "dc3fe2a4af8626c6cf1ddfcafa1c23eea4b253521d5b3eb82a2811235e340ab1",
+      "git_blob": "0e3c2f8e88a9e7d5446a7404699823df2b3e91b9",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/flag-service/README.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/flag-service/app.py",
+      "category": "arquivo_redundante",
+      "bytes": 9552,
+      "sha256": "5e027e82eac7494353c20c7ee48d5343b1ffb0297eddf97d69d86570367f4efb",
+      "git_blob": "1acbca93b8048de2d9d4c17d115ec7f2a02b1851",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/flag-service/app.py"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/flag-service/requirements.txt",
+      "category": "arquivo_redundante",
+      "bytes": 139,
+      "sha256": "76b93f3d9733468eb1abd30a49ad502eae13832810b89b0376625dfe6da91374",
+      "git_blob": "1305f6e4a17cd230cbf1d3d1810889a130788381",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/flag-service/requirements.txt"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/targeting-service/Dockerfile",
+      "category": "arquivo_redundante",
+      "bytes": 2804,
+      "sha256": "a47c0df280e73a302e0ab7203aa7ceb7322d47e311cefcf3f2b56c078f45ebcf",
+      "git_blob": "86e76f73cefbc5fd7f34bcab685e483919924a2f",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/targeting-service/Dockerfile"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/targeting-service/README.md",
+      "category": "arquivo_redundante",
+      "bytes": 3103,
+      "sha256": "bcedc94b2166ce26c386a34350e3db206f9fd39bc96ebb626a0eeb43456e2be5",
+      "git_blob": "bc191b61df42f6a0d3f79392cee71a8a8694bd41",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/targeting-service/README.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/targeting-service/app.py",
+      "category": "arquivo_redundante",
+      "bytes": 9080,
+      "sha256": "a5d6cc63377935cbea1f1f8f77a4f2d67d2b9c2b490c4086109c2c88e4e3fffd",
+      "git_blob": "933b2fc662dc405ed61836f84c0641f84d1fc295",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/targeting-service/app.py"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/targeting-service/requirements.txt",
+      "category": "arquivo_redundante",
+      "bytes": 124,
+      "sha256": "6225a3682e28de10fcc6c5da3c3e4e6fa950dc5ecaa8fbe2f524cf64dfdc84cf",
+      "git_blob": "5e0dd3ca3c24c0062c0236eb0145b69760d7debd",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-python/services/targeting-service/requirements.txt"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-03_pagerduty-oauth_v01/00_COLAB_IA/DOSSIE_CONTEXTO.md",
+      "category": "arquivo_redundante",
+      "bytes": 85427,
+      "sha256": "4ac37e2617062de7cc8d02d23029e1628a9c7ce81b361a9a0cf140db29d6a2ac",
+      "git_blob": "6df9a25382c81a97d650c09c00a25d3f5a281b3c",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-11-03_pagerduty-oauth_v01/00_COLAB_IA/DOSSIE_CONTEXTO.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-03_pagerduty-oauth_v01/00_COLAB_IA/LEIA-PRIMEIRO.md",
+      "category": "arquivo_redundante",
+      "bytes": 13391,
+      "sha256": "88dbb2e457520780a5ecc88720759b794a604de428807092874061d9373702df",
+      "git_blob": "7c91049903c98297178780efa4c98ad554649326",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-11-03_pagerduty-oauth_v01/00_COLAB_IA/LEIA-PRIMEIRO.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-03_pagerduty-oauth_v01/00_COLAB_IA/LOG_DE_TRABALHO.md",
+      "category": "arquivo_redundante",
+      "bytes": 112274,
+      "sha256": "9e66d317515ab928f2878d198a093205f3c08895e3056a886581e30daedbc92d",
+      "git_blob": "228477dc55a6beefff3b8b4606c1f8033b82fda9",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-11-03_pagerduty-oauth_v01/00_COLAB_IA/LOG_DE_TRABALHO.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-03_pagerduty-oauth_v01/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md",
+      "category": "arquivo_redundante",
+      "bytes": 56788,
+      "sha256": "170e90cffb5188ba1111e6c65268e877b20ac144f3114e3a30564ddb75935a81",
+      "git_blob": "a8247d3ea840551485500429b558d6a6e7e7c452",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-11-03_pagerduty-oauth_v01/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-03_pagerduty-oauth_v01/CLAUDE.md",
+      "category": "arquivo_redundante",
+      "bytes": 3020,
+      "sha256": "3805f51fa606b0266f90c2f6ca44a0045faa1dc639e9b44a7582bde7124d144a",
+      "git_blob": "d28d898064f1795df98dd0f3e6726e28617c2f79",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-11-03_pagerduty-oauth_v01/CLAUDE.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-04_pagerduty-proximos-passos_v01/00_COLAB_IA/DOSSIE_CONTEXTO.md",
+      "category": "arquivo_redundante",
+      "bytes": 88649,
+      "sha256": "e4f056b941068492c3890e68e477d6acefb8cee57e23eaa73e21dd7f9646e312",
+      "git_blob": "bf26c54aa5a2ea321fe3d4e8c787542adf278b49",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-11-04_pagerduty-proximos-passos_v01/00_COLAB_IA/DOSSIE_CONTEXTO.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-04_pagerduty-proximos-passos_v01/00_COLAB_IA/LEIA-PRIMEIRO.md",
+      "category": "arquivo_redundante",
+      "bytes": 14005,
+      "sha256": "91dd469ae1240d91e93c993661f4ff46576fc31e81ab75acf67fabb5193066f0",
+      "git_blob": "66276e911fde08aa2dfd8eacdb9d38a5c2291f23",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-11-04_pagerduty-proximos-passos_v01/00_COLAB_IA/LEIA-PRIMEIRO.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-04_pagerduty-proximos-passos_v01/00_COLAB_IA/LOG_DE_TRABALHO.md",
+      "category": "arquivo_redundante",
+      "bytes": 122124,
+      "sha256": "3f716605765904f6a0961b372b9598e67517951b1d7d91652d8eaabcc914c19b",
+      "git_blob": "e8f9b2e084ee38c82035ba1a8a5a6b0476d9a11a",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-11-04_pagerduty-proximos-passos_v01/00_COLAB_IA/LOG_DE_TRABALHO.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-04_pagerduty-proximos-passos_v01/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md",
+      "category": "arquivo_redundante",
+      "bytes": 61327,
+      "sha256": "4a26f60732e227eaf3e7b4cd052eca5bde2d4571508f2a4ac2a209c1752b8006",
+      "git_blob": "9f8a7a70a4ef74c6ce18f6dadde0a88421052ffc",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-11-04_pagerduty-proximos-passos_v01/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-04_pagerduty-proximos-passos_v01/CLAUDE.md",
+      "category": "arquivo_redundante",
+      "bytes": 3369,
+      "sha256": "3a1fab0edbd65492c5e3b402111f67e31d97d83944bdf36deddfb7c3c3dac829",
+      "git_blob": "5e91df08ffb0e40889bbd475aa6034c3cd175786",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-11-04_pagerduty-proximos-passos_v01/CLAUDE.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-04_preimplantacao_v01/services/flag-service/app.py",
+      "category": "arquivo_redundante",
+      "bytes": 11659,
+      "sha256": "a240bc25cfe8d78f83e067f0d2a1437402047afa38921709fb5c7d3b83541c19",
+      "git_blob": "8254ca532c229e12850120f60082e171d4369c53",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-11-04_preimplantacao_v01/services/flag-service/app.py"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-04_preimplantacao_v01/terraform/k8s/argocd.tf",
+      "category": "arquivo_redundante",
+      "bytes": 15305,
+      "sha256": "75507d8b91be3cfd609656ca4c6d3e23c829a55815c40d6aea7c0f32662894ba",
+      "git_blob": "562470943d715cf93c5b3617f89857b2fa3ea32c",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-11-04_preimplantacao_v01/terraform/k8s/argocd.tf"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-04_preimplantacao_v01/terraform/main.tf",
+      "category": "arquivo_redundante",
+      "bytes": 6220,
+      "sha256": "9a7ace45aacb87af1ed9ffcf5f9f22e72f86bdfb307ee3841d1879cb985e9799",
+      "git_blob": "2ce5176211d1608d02c987452dc96b5d79730669",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-11-04_preimplantacao_v01/terraform/main.tf"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-05_retomada-pre-b3_v01/.trivyignore",
+      "category": "arquivo_redundante",
+      "bytes": 3722,
+      "sha256": "6bcff0a01f79ec56db90a456159ca5f28abda79bff45b9c883691d1f3862a5c3",
+      "git_blob": "fec39d612b2a31359beed472606148ee989d4df5",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-11-05_retomada-pre-b3_v01/.trivyignore"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-05_retomada-pre-b3_v01/00_COLAB_IA/02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md",
+      "category": "arquivo_redundante",
+      "bytes": 12843,
+      "sha256": "8f323545afa721964dce6c91639bcc8d6e965fdb3567d69a3ec8ab9786ba19be",
+      "git_blob": "930c3fb86feabe8a4d402b4b90cf476b7e5cc54d",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-11-05_retomada-pre-b3_v01/00_COLAB_IA/02_TRABALHO/PREPARACAO_B3_2026-11-04_v01.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-05_retomada-pre-b3_v01/00_COLAB_IA/DECISOES.md",
+      "category": "arquivo_redundante",
+      "bytes": 159340,
+      "sha256": "3a160694d99d43058aa354232a75871d943f267746543d8cb185bc3bdf7de2bf",
+      "git_blob": "4496297604f3adbd1c7e708ae40009d9a88f8312",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-11-05_retomada-pre-b3_v01/00_COLAB_IA/DECISOES.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-05_retomada-pre-b3_v01/00_COLAB_IA/DOSSIE_CONTEXTO.md",
+      "category": "arquivo_redundante",
+      "bytes": 93532,
+      "sha256": "09da8e12740dd7095f41a137154ace84ebe5726b5bcf45c61cf3fab065ab03f8",
+      "git_blob": "867fae86be1639aca07ffcbce4701c01f918fe47",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-11-05_retomada-pre-b3_v01/00_COLAB_IA/DOSSIE_CONTEXTO.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-05_retomada-pre-b3_v01/00_COLAB_IA/LEIA-PRIMEIRO.md",
+      "category": "arquivo_redundante",
+      "bytes": 14013,
+      "sha256": "f79200af75ba31595a5c22c5497129c2deaeaa64390545be2be273d010ad877a",
+      "git_blob": "ab7d0156d748da747318c2072fd8777303bbf8b2",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-11-05_retomada-pre-b3_v01/00_COLAB_IA/LEIA-PRIMEIRO.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-05_retomada-pre-b3_v01/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md",
+      "category": "arquivo_redundante",
+      "bytes": 69234,
+      "sha256": "9f8f6fdf9d4ba4adf1ff23ee48b5ae1eb4b70a64e1cf05ce49af1d72157e1dd2",
+      "git_blob": "1f4a8f83b06f2d87173f4ff13d5eed51100f5d66",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-11-05_retomada-pre-b3_v01/00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-05_retomada-pre-b3_v01/CLAUDE.md",
+      "category": "arquivo_redundante",
+      "bytes": 3669,
+      "sha256": "29baa55143ddddd5e4304a4498959f31e8fa5b9216237306f57cf4e72beaf77d",
+      "git_blob": "8969fb00c58695d4921da073dfb289496ec6d648",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-11-05_retomada-pre-b3_v01/CLAUDE.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-05_retomada-pre-b3_v01/docs/ARQUITETURA.md",
+      "category": "arquivo_redundante",
+      "bytes": 30911,
+      "sha256": "215738a429efdd75d6e24536348f83155c0998fe5efb5138892a27fc7111aee5",
+      "git_blob": "4399f7a7fff6e1c2d46f548e9793fdd75b8457da",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-11-05_retomada-pre-b3_v01/docs/ARQUITETURA.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-05_retomada-pre-b3_v01/services/auth-service/Dockerfile",
+      "category": "arquivo_redundante",
+      "bytes": 2435,
+      "sha256": "6e32f16dd669dc265adb2cdc618a753105e66b32483564417380c831c5b49749",
+      "git_blob": "58c4fc58fdaa54554265e286bf3afb06af2d0417",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-11-05_retomada-pre-b3_v01/services/auth-service/Dockerfile"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-11-05_retomada-pre-b3_v01/services/evaluation-service/Dockerfile",
+      "category": "arquivo_redundante",
+      "bytes": 2431,
+      "sha256": "8fd4d0363906aa9d2d9d5db7d38d86bc12ef86775b766cf6fefa2e0a5d9f1dc0",
+      "git_blob": "210b1a4dd97f9135123f03c4c9e70e7acfb3c28f",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/2026-11-05_retomada-pre-b3_v01/services/evaluation-service/Dockerfile"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/.github/workflows/_ci-go.yml",
+      "category": "arquivo_redundante",
+      "bytes": 30529,
+      "sha256": "d3c72b10d1a01c6d51a3dc557ece4515154ee716e9f11593c7659ee8b129753f",
+      "git_blob": "54a74da07520a0bae758f07efd64c53a1a7202b6",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/.github/workflows/_ci-go.yml"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/.github/workflows/_ci-python.yml",
+      "category": "arquivo_redundante",
+      "bytes": 31453,
+      "sha256": "408d7cfc6ace9350cd435efed3a8989b7ee4ab08f4f5fb6f81a7ad563c507132",
+      "git_blob": "29529beb36adbdc1ed9d5128ac9bf29fa1db4cf0",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/.github/workflows/_ci-python.yml"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/.github/workflows/compose-integration.yml",
+      "category": "arquivo_redundante",
+      "bytes": 1032,
+      "sha256": "00e582b811d58024986765b46cd3297166a937440221d6f2cbdf448e3f1b8d7f",
+      "git_blob": "837ae012d07c5d01cfdb5ddf50537d04a59b3ad7",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/.github/workflows/compose-integration.yml"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/.github/workflows/terraform-check.yml",
+      "category": "arquivo_redundante",
+      "bytes": 3776,
+      "sha256": "0a830a9895753ff3df1034c8fe1251d66ea87d2a7302c97a6fd4cc0ffae43484",
+      "git_blob": "d3877837181b7a5461c3d3d598ef1ea5cbc35b15",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/.github/workflows/terraform-check.yml"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/.gitignore",
+      "category": "arquivo_redundante",
+      "bytes": 2281,
+      "sha256": "98ad1033b36a64c2424b6aff381a529c7308b3e1aed6eb3bb7f1da260a65ceb7",
+      "git_blob": "7d638cacc0f06070328dda50b0946ecad140b54c",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/.gitignore"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/00_COLAB_IA/02_TRABALHO/extrair-fontes-2026-09-16_v01.py",
+      "category": "arquivo_redundante",
+      "bytes": 1445,
+      "sha256": "b7c4eca339f897afdea0073d71902ee2ce6e017ec12efef5066cba38dfe128b2",
+      "git_blob": "d5290a91ce4f7f5e045f88f1fc43730f171aed4e",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/00_COLAB_IA/02_TRABALHO/extrair-fontes-2026-09-16_v01.py"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/00_COLAB_IA/02_TRABALHO/mapear-modulos-readme-2026-09-20_v01.py",
+      "category": "arquivo_redundante",
+      "bytes": 3823,
+      "sha256": "5865c6c8d17a9c62043bd16e1cb217672acc4c17e41ab93ec98eb89a75cae61c",
+      "git_blob": "32a24b1543132e798f79b42f6ec0036941b2542f",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/00_COLAB_IA/02_TRABALHO/mapear-modulos-readme-2026-09-20_v01.py"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/00_COLAB_IA/02_TRABALHO/validar-guias-2026-09-16_v01.py",
+      "category": "arquivo_redundante",
+      "bytes": 13416,
+      "sha256": "6a1c610587002161a18f42fcd40b999e797cb69176544290529b94c61b9b99ca",
+      "git_blob": "4ae47318036559962ca4a187b8febb662e78ae05",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/00_COLAB_IA/02_TRABALHO/validar-guias-2026-09-16_v01.py"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/README.md",
+      "category": "arquivo_redundante",
+      "bytes": 35848,
+      "sha256": "f1a3d14742020840ede0cbe699afcc710e65287b860468ec9e4a27bbedd14617",
+      "git_blob": "c844ed3537e04bca38e4b39c65ec68fc1a707b7a",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/README.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/docs/ARQUITETURA.md",
+      "category": "arquivo_redundante",
+      "bytes": 28347,
+      "sha256": "2457cf43f6168541093d3f7d263c4c42c07ecc494c363cac5a9ed20423d7e0af",
+      "git_blob": "42f1aed9379f05cbed73c9430c62734b54186f16",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/docs/ARQUITETURA.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/docs/GUIA_DE_REPRODUCAO.md",
+      "category": "arquivo_redundante",
+      "bytes": 55820,
+      "sha256": "3aab12b8a17be82ed4d18ac88704c00f9440655cc3158fec526b291e52a26e23",
+      "git_blob": "f632db71cad50757d09973de877c4ac544e566f3",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/docs/GUIA_DE_REPRODUCAO.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/docs/RELATORIO_DE_ENTREGA.md",
+      "category": "arquivo_redundante",
+      "bytes": 9867,
+      "sha256": "ed751f0665226bcdacba44fc1a6bf351fda2c162c98b63838b04e0c039ed4367",
+      "git_blob": "089c4b2986a712c1eb7c07263ae1783d5726e61b",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/docs/RELATORIO_DE_ENTREGA.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/gitops/README.md",
+      "category": "arquivo_redundante",
+      "bytes": 4709,
+      "sha256": "b7213a8486f3a71ac3727ac7f25a5be7408216193f29911fa10beef3428676fd",
+      "git_blob": "6a37c001acda9de64b6311947e48e8d5aa652b2a",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/gitops/README.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/gitops/overlays/prod/kustomization.yaml",
+      "category": "arquivo_redundante",
+      "bytes": 3086,
+      "sha256": "e97ba88022a02c2a445b4c248fc56ecf5a22cfa1af6571301fec1da8b3da98d1",
+      "git_blob": "b59f100d6bb39edb799c486fadf1d0e3bc237cbc",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/gitops/overlays/prod/kustomization.yaml"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/gitops/overlays/prod/patches/endpoints.yaml",
+      "category": "arquivo_redundante",
+      "bytes": 2228,
+      "sha256": "43dfbf0f72bd7fa2a90703894b6dc72fac516f3a79cbe5f11b05fa67b22efc8c",
+      "git_blob": "42bc89bc7c38bf73bf9ec5118e0307ac7df89772",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/gitops/overlays/prod/patches/endpoints.yaml"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/gitops/overlays/prod/patches/irsa.yaml",
+      "category": "arquivo_redundante",
+      "bytes": 2053,
+      "sha256": "bd5cb8fcdbc6f7f7e88dd4acf4d5a3b96e8908cb1b4fb9a025d0af2d75426c6c",
+      "git_blob": "6b885d6a3b2ecfc3e6b5c14c0fdc3cbb85bd2527",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/gitops/overlays/prod/patches/irsa.yaml"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/scripts/security-check.sh",
+      "category": "arquivo_redundante",
+      "bytes": 4125,
+      "sha256": "cb517de1ae5c416952dbf0ec9d6edd04ec5f1a9c8a3e4bfaa45e33f7fedc70fd",
+      "git_blob": "bab9b868219c2653220989a507783934c950141f",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/scripts/security-check.sh"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/scripts/test-compose.sh",
+      "category": "arquivo_redundante",
+      "bytes": 481,
+      "sha256": "235fa722c3adb00ecd8bec4a14eef1bd45fbc48f0d8c9e18a3e4c5d3c4217ff5",
+      "git_blob": "9379c1ee1c249e7f006dbe793e0b02814ae84d94",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/scripts/test-compose.sh"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/scripts/validate-all.sh",
+      "category": "arquivo_redundante",
+      "bytes": 4614,
+      "sha256": "face84e770b12e19a6ec93e5cc88bc4467ac7c1c192a82bfb253c9e63cc0f44d",
+      "git_blob": "a17675a671fa6641ddc810d659acf78b6744a28d",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/scripts/validate-all.sh"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/README.md",
+      "category": "arquivo_redundante",
+      "bytes": 5389,
+      "sha256": "8989d9dd69e6d23c1557c53d6c4756973926eeab65c4639761d6fbf63bbe0aef",
+      "git_blob": "d31effd093521d126a74f147c499eb89b61b24b1",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/README.md"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/backend.tf",
+      "category": "arquivo_redundante",
+      "bytes": 3857,
+      "sha256": "62ecc465542ee6968f1b7b81f2de0e7194ebad65fb1ee80c64fbb97f204d1482",
+      "git_blob": "220c699d25644c8a31d487adc80f6355ee492b56",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/backend.tf"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/cluster/backend.tf",
+      "category": "arquivo_redundante",
+      "bytes": 2386,
+      "sha256": "57fcb3070db62792b347afb141728310c16ed1595c426822725f90d90dfc0b68",
+      "git_blob": "cf1478be7035d80993f628aeac95a0798d0de239",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/cluster/backend.tf"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/cluster/data.tf",
+      "category": "arquivo_redundante",
+      "bytes": 2270,
+      "sha256": "8f37cc8210dd49ed63f31ede3e6045dec17695ffb6db8dd1a194bf1c588da0cb",
+      "git_blob": "f4d6d4951499dbb3b4f7271cc4563113ec67cedc",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/cluster/data.tf"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/cluster/providers.tf",
+      "category": "arquivo_redundante",
+      "bytes": 464,
+      "sha256": "8fa5cd2ded9a04713038bda404a13d85f146f979fb55fa0fa989691f54165283",
+      "git_blob": "95ab72a866a77dd3529b8e26a8b581abbc3af948",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/cluster/providers.tf"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/cluster/variables.tf",
+      "category": "arquivo_redundante",
+      "bytes": 5395,
+      "sha256": "f4c50a7ac9e4612ee0c9b009394558b2c16f4d671e7bd7d29346b0f264acd467",
+      "git_blob": "26a511ae5e515e0415a9a00b395cc9d237ca6ef2",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/cluster/variables.tf"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/k8s/argocd.tf",
+      "category": "arquivo_redundante",
+      "bytes": 13990,
+      "sha256": "ac9eda3610358f6d957f30dc5cd8a1c09d7f6aed914b1aa25985d45b41a1d054",
+      "git_blob": "12554b4c1d98d81b62852003c95a51364f6916d3",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/k8s/argocd.tf"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/k8s/backend.tf",
+      "category": "arquivo_redundante",
+      "bytes": 3190,
+      "sha256": "17d8a6692cb40c3a652a9976cdb38fb2fd067459c7441e8e5f301ab179552bbf",
+      "git_blob": "648a8a36a94c2dfba13406b8f958cbacfa67af33",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/k8s/backend.tf"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/k8s/data.tf",
+      "category": "arquivo_redundante",
+      "bytes": 2820,
+      "sha256": "074174d8afffa2840f87a0e756252a2e81f549e418c0941360a21a25f5ae79c0",
+      "git_blob": "9c93be7964e3e790879758bc446cc5af46bd1833",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/k8s/data.tf"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/k8s/providers.tf",
+      "category": "arquivo_redundante",
+      "bytes": 3212,
+      "sha256": "17a9e19a2cad69ab15654377df369932c72da8e446a0626b8e218e4d2fe96ed4",
+      "git_blob": "a6d32fe008fd26c44c1e300a4ada4997b6d41d37",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/k8s/providers.tf"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/k8s/variables.tf",
+      "category": "arquivo_redundante",
+      "bytes": 4851,
+      "sha256": "67f1a4826fd6f953e5c6c201d94a649c2663c276318fe98331b75c1e2bc550a9",
+      "git_blob": "605f63f7cfc7517b55a2135c85e26ee44ec628a4",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/k8s/variables.tf"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/providers.tf",
+      "category": "arquivo_redundante",
+      "bytes": 1093,
+      "sha256": "e1b0dd84b1b6a416247926f5c3404d723ace32997bcff77b75d063e5b8542eca",
+      "git_blob": "55ccf49d32c1be5d192a9082978f3fef156153be",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/providers.tf"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/terraform.tfvars.example",
+      "category": "arquivo_redundante",
+      "bytes": 3358,
+      "sha256": "90a53b35d4bf6887f882bad05f5bd90163fd29b50fd1a80d462f5e3fdd63884a",
+      "git_blob": "47a2aa97edd674da310d725fd83cb3e21b8a2f40",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/terraform.tfvars.example"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/variables.tf",
+      "category": "arquivo_redundante",
+      "bytes": 7160,
+      "sha256": "f9a66c9a6ea287ca5a9a69b18f7195bccfc78d213d63978eec8e0649593a7f8e",
+      "git_blob": "4c39fb4e0182dea14091ff8aa40c09d5d0a8050a",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/FASE3_BASE_6100879/terraform/variables.tf"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/GUIA-ESTUDO-Observabilidade-e-Monitoramento-2026-09-16_v01-codex.html",
+      "category": "arquivo_redundante",
+      "bytes": 189754,
+      "sha256": "85ac0a4bf357ff83985977bc42d02b7110364de96f8edb87528c0e93ed65ced7",
+      "git_blob": "28eab51358bee1774432e156321bb4d7b93bf324",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/GUIA-ESTUDO-Observabilidade-e-Monitoramento-2026-09-16_v01-codex.html"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/GUIA-ESTUDO-Welcome-to-Observabilidade-e-Monitoramento-2026-09-16_v01-codex.html",
+      "category": "arquivo_redundante",
+      "bytes": 21283,
+      "sha256": "6393d772f6424fd4d077838570a2a17656b7cdf9734b094e36e8869f1c333625",
+      "git_blob": "90d6f6a7a43e6aeb5fa82a5052e07119d3cf8cea",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/_ARQUIVO_MORTO/GUIA-ESTUDO-Welcome-to-Observabilidade-e-Monitoramento-2026-09-16_v01-codex.html"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/plano-fase4/partes/01-cabecalho.html",
+      "category": "partes_html_duplicadas",
+      "bytes": 11542,
+      "sha256": "f0a37a9b6475980157de41fd7ddbe092bf623640b4fd3d489b539bf331ce8981",
+      "git_blob": "b08f89f4f69637e948c5735bb9d6d0f3a1ac7025",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/02_TRABALHO/plano-fase4/partes/01-cabecalho.html"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/plano-fase4/partes/02-alto-nivel.html",
+      "category": "partes_html_duplicadas",
+      "bytes": 10426,
+      "sha256": "ee774380836510ef43befbd937e7ab8ac44f02c4f4f575ce8443371ee3f9f91d",
+      "git_blob": "787a4f77c62ee4d278303f77414e41cb2b652c39",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/02_TRABALHO/plano-fase4/partes/02-alto-nivel.html"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/plano-fase4/partes/03-entrega.html",
+      "category": "partes_html_duplicadas",
+      "bytes": 10499,
+      "sha256": "251b61f5ac854c5af928e320bb61344c3dc445fe897d22ba0e081bbaa458acd9",
+      "git_blob": "232f456eb988c438e4bd719e202e2f996e8637f6",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/02_TRABALHO/plano-fase4/partes/03-entrega.html"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/plano-fase4/partes/04-plataforma.html",
+      "category": "partes_html_duplicadas",
+      "bytes": 10065,
+      "sha256": "9abb721e2e124328ce3ca5cccbefd12c6309529bd84568e88c320992fa71034c",
+      "git_blob": "5728b13beb5ef57a34ab0a7ba4a60da52aa6e517",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/02_TRABALHO/plano-fase4/partes/04-plataforma.html"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/plano-fase4/partes/05-requisicao.html",
+      "category": "partes_html_duplicadas",
+      "bytes": 12178,
+      "sha256": "5209ac284b4edef5ee1814132c8552712840f64dfec80ae4238a22f549d24a93",
+      "git_blob": "a15bcabf0bc10bc4866a0f1054a532748d5d124d",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/02_TRABALHO/plano-fase4/partes/05-requisicao.html"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/plano-fase4/partes/06-telemetria.html",
+      "category": "partes_html_duplicadas",
+      "bytes": 10170,
+      "sha256": "79d15ebbf92c79f691861dde14e76663311bb9b7c2968c7704a7b7718c03b35c",
+      "git_blob": "b94764c911e2c2eae563624bfc60a08d87a4b3aa",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/02_TRABALHO/plano-fase4/partes/06-telemetria.html"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/plano-fase4/partes/07-resposta.html",
+      "category": "partes_html_duplicadas",
+      "bytes": 11614,
+      "sha256": "d5ac77a7a1064dc85c84e192ccfbea4de7e2346fa6f556b25c20a6fdc236c736",
+      "git_blob": "e58225c9bc05073be198f13e59b2548532ddee53",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/02_TRABALHO/plano-fase4/partes/07-resposta.html"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/plano-fase4/partes/08-exibicao-mudancas.html",
+      "category": "partes_html_duplicadas",
+      "bytes": 7117,
+      "sha256": "b198a7cc1feef15ca212c5f16b4c7b00eff1ebc67f9d901085337e3d8aa47d6e",
+      "git_blob": "2bbab70cb186243f5bc1adc77d8abe7f810ddfd3",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/02_TRABALHO/plano-fase4/partes/08-exibicao-mudancas.html"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/plano-fase4/partes/09-plano-fontes.html",
+      "category": "partes_html_duplicadas",
+      "bytes": 19130,
+      "sha256": "f10658c5b8d55ce45c07f4f7136523757157b37c15ec33e65b65c0e21bf7a199",
+      "git_blob": "f87eb3fef92107e1b68f1ad310b056aa02b21e49",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/02_TRABALHO/plano-fase4/partes/09-plano-fontes.html"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/empty-aws-config",
+      "category": "harness_substituido",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/empty-aws-config"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/harness/.terraform.lock.hcl",
+      "category": "harness_substituido",
+      "bytes": 1521,
+      "sha256": "0286d76092bc9081552e1da54a5ed6a242c1c602c4d85db5143e5740c9592174",
+      "git_blob": "8f692dc339a622b9a8466721feb67cc790cb5eb3",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/harness/.terraform.lock.hcl"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/harness/main.tf",
+      "category": "harness_substituido",
+      "bytes": 9497,
+      "sha256": "9cb117ea53ba05f5c96bb4777b5eb0ed1ea28d09e3673c4b45ec1e9935ea9fd6",
+      "git_blob": "d0e99cacf5cf98ebb5bdddbca2fdcba1f402eefa",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/harness/main.tf"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/harness/offline-test.tf",
+      "category": "harness_substituido",
+      "bytes": 611,
+      "sha256": "b4315f28a4d06cf6637608f179c4247e224ba28b36f6bdf3b6592e20a1557b03",
+      "git_blob": "56d93646bae7e7206158f71e0bd429183847329b",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/harness/offline-test.tf"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/harness/outputs.tf",
+      "category": "harness_substituido",
+      "bytes": 991,
+      "sha256": "584aa0853afd82de55ff7193114adf9815cc69111a4d83e95a73ac87dfcc4f7d",
+      "git_blob": "3a8d877d040158c28db01e21da112ceea24c1c71",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/harness/outputs.tf"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/harness/tests/trust.tftest.hcl",
+      "category": "harness_substituido",
+      "bytes": 3548,
+      "sha256": "cc01ae5a1ea12e3e574d7c44f8af9d4487e758f3502358ff73f63d5f464bf9f9",
+      "git_blob": "f536f71cea66933ddee9a97d2424f765dcae0fc5",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/harness/tests/trust.tftest.hcl"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/harness/variables.tf",
+      "category": "harness_substituido",
+      "bytes": 2667,
+      "sha256": "2db775afdc99d93382cda86d449cc2e68c73706a1822738a836e767dcf602a0a",
+      "git_blob": "336e34d4fbde18a4177a672c70074b9235f98aea",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/harness/variables.tf"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/offline-init.txt",
+      "category": "harness_substituido",
+      "bytes": 249,
+      "sha256": "7d8b523c8a00527cf1b3287120a15aec757009dccac610b7379a55dca7a4cd17",
+      "git_blob": "1f1dbfcc2daaa7ca602cb01f4803c5e7caddac1b",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/offline-init.txt"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/test-oidc-offline.py",
+      "category": "harness_substituido",
+      "bytes": 5983,
+      "sha256": "2df5f0b26787f18fb81b4cc0d03a6e8c29e80bd43990a19f5b10ff20053cbdce",
+      "git_blob": "2abeb7e78338861f1edc025cf972a77b31c8f0c7",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/test-oidc-offline.py"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/aula05-terraform-2026-10-22_v01/extracao.json",
+      "category": "extratos_aula_fase3",
+      "bytes": 16062,
+      "sha256": "c2ae44de7720e518c52405f149bfa7c77a1b61ecf6a07f227e8b647c65ed148d",
+      "git_blob": "93b91dc92ea192564b59b0f04f0fd1237636d8d9",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/02_TRABALHO/aula05-terraform-2026-10-22_v01/extracao.json"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/aula05-terraform-2026-10-22_v01/extracao.txt",
+      "category": "extratos_aula_fase3",
+      "bytes": 15334,
+      "sha256": "f00e812aaac41b33808341d6e05387e5406db11b2c8581ff7470418a5e5dc2b3",
+      "git_blob": "d4bb27dd6f83ddfc09eb17221d061af0fcc60dcd",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:00_COLAB_IA/02_TRABALHO/aula05-terraform-2026-10-22_v01/extracao.txt"
+    },
+    {
+      "path": "pyproject.toml",
+      "category": "config_sem_consumidor",
+      "bytes": 204,
+      "sha256": "aae739199e21678f85ad6233ae786b9c6012c29bcd4faaa9c1851d780d5cf385",
+      "git_blob": "9acf5d3171571f49dd4c0d53e5697c9be2a40cf0",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:pyproject.toml"
+    },
+    {
+      "path": "docs/apresentacao/ToggleMaster_Fase3.pptx",
+      "category": "apresentacao_fase3",
+      "bytes": 88890,
+      "sha256": "cc8c5bffe22545f8f2cb2ca07e5b0e753574301153838d046e61fae66337100a",
+      "git_blob": "af3d95cc9ed6ffb1fbf698a0d3b4dc7f14e88e30",
+      "recover": "git show eb408a552ad29529e5af66339a7da6e8e4fa2e69:docs/apresentacao/ToggleMaster_Fase3.pptx"
+    }
+  ],
+  "local": [
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/__pycache__",
+      "files": 4,
+      "bytes": 80779,
+      "kind": "cache_ou_binario_regeneravel"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/etapas8-9-2026-10-28_v01/terraform/harness/.terraform",
+      "files": 3,
+      "bytes": 904851039,
+      "kind": "cache_ou_binario_regeneravel"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/otel-python-2026-10-22_v01/.venv",
+      "files": 6836,
+      "bytes": 142240707,
+      "kind": "cache_ou_binario_regeneravel"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-otel-go-2026-10-27/auth-service-new.exe",
+      "files": 1,
+      "bytes": 28160512,
+      "kind": "cache_ou_binario_regeneravel"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-otel-go-2026-10-27/build-cache",
+      "files": 5525,
+      "bytes": 320061472,
+      "kind": "cache_ou_binario_regeneravel"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-otel-go-2026-10-27/evaluation-service-new.exe",
+      "files": 1,
+      "bytes": 34101248,
+      "kind": "cache_ou_binario_regeneravel"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-otel-go-2026-10-27/gopath",
+      "files": 1,
+      "bytes": 188,
+      "kind": "cache_ou_binario_regeneravel"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-otel-go-2026-10-27/mod-cache",
+      "files": 16727,
+      "bytes": 531241759,
+      "kind": "cache_ou_binario_regeneravel"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/qa-otel-python-2026-10-27/pycache",
+      "files": 170,
+      "bytes": 3668443,
+      "kind": "cache_ou_binario_regeneravel"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/validacao-ci04-2026-10-20/python-packages/_yaml/__pycache__",
+      "files": 1,
+      "bytes": 863,
+      "kind": "cache_ou_binario_regeneravel"
+    },
+    {
+      "path": "00_COLAB_IA/02_TRABALHO/validacao-ci04-2026-10-20/python-packages/yaml/__pycache__",
+      "files": 17,
+      "bytes": 250155,
+      "kind": "cache_ou_binario_regeneravel"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/auth-service/auth-service.exe",
+      "files": 1,
+      "bytes": 13870080,
+      "kind": "cache_ou_binario_regeneravel"
+    },
+    {
+      "path": "00_COLAB_IA/_ARQUIVO_MORTO/2026-10-22_instrumentacao-go/evaluation-service/evaluation-service.exe",
+      "files": 1,
+      "bytes": 18766336,
+      "kind": "cache_ou_binario_regeneravel"
+    },
+    {
+      "path": "scripts/integration/__pycache__",
+      "files": 1,
+      "bytes": 19170,
+      "kind": "cache_ou_binario_regeneravel"
+    },
+    {
+      "path": "services/analytics-service/__pycache__",
+      "files": 4,
+      "bytes": 34763,
+      "kind": "cache_ou_binario_regeneravel"
+    },
+    {
+      "path": "services/analytics-service/tests/__pycache__",
+      "files": 2,
+      "bytes": 39897,
+      "kind": "cache_ou_binario_regeneravel"
+    },
+    {
+      "path": "services/auth-service/auth-service.exe",
+      "files": 1,
+      "bytes": 28110336,
+      "kind": "cache_ou_binario_regeneravel"
+    },
+    {
+      "path": "services/evaluation-service/evaluation-service.exe",
+      "files": 1,
+      "bytes": 34050560,
+      "kind": "cache_ou_binario_regeneravel"
+    },
+    {
+      "path": "services/flag-service/__pycache__",
+      "files": 4,
+      "bytes": 46795,
+      "kind": "cache_ou_binario_regeneravel"
+    },
+    {
+      "path": "services/flag-service/tests/__pycache__",
+      "files": 3,
+      "bytes": 39617,
+      "kind": "cache_ou_binario_regeneravel"
+    },
+    {
+      "path": "services/targeting-service/__pycache__",
+      "files": 4,
+      "bytes": 42529,
+      "kind": "cache_ou_binario_regeneravel"
+    },
+    {
+      "path": "services/targeting-service/tests/__pycache__",
+      "files": 2,
+      "bytes": 31102,
+      "kind": "cache_ou_binario_regeneravel"
+    }
+  ],
+  "tracked_count": 121,
+  "tracked_bytes": 1951464,
+  "local_files": 29310,
+  "local_bytes": 2059708350
+}

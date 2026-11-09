@@ -1,10 +1,24 @@
 # Pendências e progresso
 
-TL;DR: 2026-11-07: o trabalho do Codex foi conferido e a auditoria de organização concluiu sem remoção ([relatório](02_TRABALHO/auditoria-organizacao-2026-11-06_v01/RELATORIO.md)). Antes do tópico 5, o usuário decide a versão do ArgoCD e o que a main mostra, e aprova os pacotes de limpeza. O roteiro vigente segue o [B3 v02](02_TRABALHO/PREPARACAO_B3_2026-11-05_v02.md). O B3, previsto para 06/11, não começou; o trial do PagerDuty vai até 11/11.
+TL;DR: Limpeza autorizada e executada em 2026-11-09: 121 arquivos versionados dispensáveis e 29.310 arquivos locais regeneráveis removidos; evidências e materiais da FIAP preservados. Ver [relatório da limpeza](02_TRABALHO/limpeza-2026-11-09_v01/RELATORIO.md). Seguem pendentes a decisão ArgoCD, a janela dos tópicos 5/6 e os itens úteis de B6.
 
-Última atualização: 2026-11-07, Claude (Opus 5.5).
+Última atualização: 2026-11-09, Codex.
 
-## Retomada vigente — 2026-11-07, Claude
+## Retomada vigente — 2026-11-09, Codex
+
+- [x] Rever a auditoria do Claude de 2026-11-07: ela não havia excluído arquivos.
+- [x] Excluir somente alvos conferidos: 99 cópias de arquivo morto, 20 auxiliares obsoletos, pyproject sem consumidor e apresentação Fase 3 duplicada; 22 alvos locais de cache/binários (29.310 arquivos; 1,92 GiB). Recuperação dos versionados no manifesto, baseline eb408a5.
+- [x] Preservar código/infraestrutura, todos os materiais FIAP/5 guias, credenciais, estados/planos, três caches Terraform ativos e 1.046 arquivos locais de evidência/configuração conferidos por hash.
+- [x] P2: proteger exportações de plano e vídeos no .gitignore; esclarecer que pastas ignoradas contêm evidências únicas.
+- [x] VERIFICAÇÃO: testes do Grafana, preflight, self-healing, segurança, renderizações e Terraform; resultados e comandos no relatório.
+- [ ] **ArgoCD (P-017):** decidir versão/correção e validar antes do apply k8s. Esta limpeza não altera a versão nem aceita o risco.
+- [ ] **Publicação P3:** materiais da FIAP, guias e CLAUDE.md permanecem como estavam. Mudar o que o avaliador verá exige escolha específica; excluir arquivos inúteis não autoriza perder material útil de estudo.
+- [ ] Preparar gerador contínuo de tráfego para o tópico 6; tópicos 5/6 continuam reservados.
+- [ ] B6: acesso do avaliador, relatório/PDF, regras de submissão Q-03/Q-05/Q-06, revisão .trivyignore e documentação ainda útil/desatualizada.
+
+Notas de retomada: o LOG antigo e os inventários continuam descrevendo os arquivos na data original; usar o manifesto de 2026-11-09 para recuperá-los. Não executar os scripts antigos de importação, remontagem de partes ou harness removido. O teste OIDC vigente fica em terraform/modules/iam-ci/tests. A revisão automática bloqueou remover 13 pastas vazias, sem justificativa além de “blocked by policy”; os arquivos já foram excluídos e essas pastas não entram no Git.
+
+## Retomada histórica — 2026-11-07, Claude
 
 - [x] Conferir o trabalho do Codex (`df766b2`, `fe7464b`):
   - 6 runs verdes;

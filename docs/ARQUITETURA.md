@@ -317,7 +317,7 @@ O job instala o kustomize 5.4.3 autônomo (o `kubectl` do runner não tem `edit`
 - No CI rodam `scripts/test-compose.sh` e `scripts/integration/` (Compose Integration), além de `scripts/gitops/`, `scripts/self-healing/test-restart.sh` e `scripts/security-check.sh` (GitOps Check). O `security-check.sh` procura chaves e tokens com `git grep`.
 - `scripts/validate-all.sh` é local. Ele junta o `security-check.sh`, fmt e validate do Terraform, `scripts/gitops/validate.sh`, os testes do self-healing, `compileall` e `go build`/`go test`.
 - O `.pylintrc` é usado pelo CI: `fail-under=7.0`, 120 colunas e regras desligadas com justificativa.
-- O `pyproject.toml` configura só o ruff, que nenhum workflow executa.
+- Os serviços Python usam flake8 e pylint no CI. A configuração isolada do Ruff, sem consumidor, foi removida em 2026-11-09.
 
 ## 6. Identidade, segredos e criptografia
 

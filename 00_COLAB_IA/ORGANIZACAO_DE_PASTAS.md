@@ -1,8 +1,8 @@
 # Organização
 
-TL;DR: Uma colaboração vigente em 00_COLAB_IA. Auxiliares em 02_TRABALHO e originais/versionamento em _ARQUIVO_MORTO; não criar outra memória ativa em docs.
+TL;DR: Estrutura de código preservada. A limpeza de 2026-11-09 retirou apenas redundâncias e caches explicitamente inventariados; caminhos anteriores são recuperáveis pelo manifesto/Git. Pastas ignoradas não são sinônimo de lixo.
 
-Última atualização: 2026-11-01, Codex (continuação do Claude).
+Última atualização: 2026-11-09, Codex.
 
 | Área | Uso |
 |---|---|
@@ -16,6 +16,14 @@ TL;DR: Uma colaboração vigente em 00_COLAB_IA. Auxiliares em 02_TRABALHO e ori
 Nomes auxiliares: descrição + data ISO + `_v01`; nomes dos entregáveis seguem o pedido. Acentos dos arquivos originais são preservados. HTML deve ser UTF-8 e funcionar por duplo clique, sem servidor/dependências de rede.
 
 Não criar diretórios genéricos vazios. CLAUDE.md já existe como ponteiro interno e é mantido conforme as instruções globais atuais; a regra de 2026-09-16 dizia respeito ao setup inicial de estudos. `tech-challenge-03` é exclusivamente referência de leitura.
+
+## Retificação vigente — 2026-11-09
+
+- A observabilidade e seus Compose/scripts estão versionados; a descrição herdada abaixo sobre estarem fora do Git retrata 2026-11-01.
+- A regra de exclusão do JSONL de 156 MB já existe. As proteções de planos JSON e vídeos foram adicionadas nesta limpeza.
+- Consultar o [manifesto de exclusões](02_TRABALHO/limpeza-2026-11-09_v01/manifesto-exclusoes.json) para recuperar as 121 versões removidas; não criar novas cópias desses artefatos sem necessidade.
+- Os alvos removidos do arquivo morto não eram consumidos pelo projeto. As demais versões e o acervo local da D-017 continuam disponíveis.
+- Históricos abaixo permanecem como fontes datadas; a autorização e o estado atuais estão em PENDENCIAS.
 
 ## Regras herdadas da Fase 3
 

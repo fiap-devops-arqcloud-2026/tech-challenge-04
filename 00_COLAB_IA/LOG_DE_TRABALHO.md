@@ -1,9 +1,31 @@
 # Log de trabalho
 
-TL;DR: 2026-11-07: trabalho do Codex de 2026-11-05 conferido (Alpine 3.24, roteiro B3 v02 e verificador 7/7, CI verde). Auditoria de organização concluída, sem remoção: pacotes aguardam aprovação em 02_TRABALHO/auditoria-organizacao-2026-11-06_v01/RELATORIO.md. Antes do tópico 5 o usuário decide o ArgoCD (chart 7.7.11 com CVE crítica) e o que a main mostra. O B3 previsto para 06/11 não começou. Tópicos 5/6 seguem reservados.
+TL;DR: limpeza autorizada concluída em 2026-11-09: 121 arquivos versionados dispensáveis e 29.310 arquivos de cache/binários locais removidos (1,92 GiB); código, originais FIAP, credenciais e evidências preservados por hash. Commit de exclusões e54023d; relatório e recuperação em 02_TRABALHO/limpeza-2026-11-09_v01. ArgoCD e tópicos 5/6 continuam pendentes.
 
-Última atualização: 2026-11-07, Claude (Opus 5.5).
+Última atualização: 2026-11-09, Codex.
 
+## 2026-11-09 10:07 (America/Sao_Paulo, UTC-03:00) — Codex — Limpeza aplicada e preservação conferida
+
+Feito: commit e54023d contém somente 121 exclusões: 99 cópias redundantes no arquivo morto, 20 auxiliares superados/duplicados, pyproject sem uso e apresentação Fase 3 duplicada. Mais 29.310 arquivos regeneráveis removidos de 22 alvos locais, 2.059.708.350 bytes (1,92 GiB). A seleção já estava na auditoria do Claude; datas B5/B6 para cópias sem consumidor foram antecipadas pela autorização atual, sem excluir evidências úteis.
+
+Decisão: D-022. Manifesto com caminho, blob, SHA-256 e git show para baseline eb408a552ad29529e5af66339a7da6e8e4fa2e69. De-para completo: [manifesto](02_TRABALHO/limpeza-2026-11-09_v01/manifesto-exclusoes.json). Originais dos documentos atualizados nesta sessão em _ARQUIVO_MORTO/2026-11-09_antes-limpeza_v01. Nenhum histórico Git reescrito; arquivos antigos do LOG continuam datados e recuperáveis por esse índice.
+
+Verificação: 677 arquivos versionados não editados e 1.046 locais protegidos intactos por SHA-256. Conferidos enunciado, aulas, 5 guias, fontes, código, CI, Terraform/GitOps e evidências únicas. Estados/planos, credenciais, backends/tfvars e 3 caches Terraform ativos mantidos. Testes: Grafana (11 casos), preflight (7), self-healing (11 cenários), security-check, 3 renders Kustomize e 3 terraform validate aprovados. Regras .gitignore testadas para planos JSON/vídeo/credenciais e para não ignorar lockfile, exemplo tfvars ou dashboard.
+
+Arquivos: [relatório](02_TRABALHO/limpeza-2026-11-09_v01/RELATORIO.md), manifesto, .gitignore, comentário de docs/ARQUITETURA, contexto/decisões/pendências/organização/CLAUDE. Saídas brutas em 02_TRABALHO/validacao-local-limpeza-2026-11-09/ (ignorada).
+
+Limitação: revisão automática bloqueou dois comandos de remoção de diretórios vazios, com a justificativa apenas “blocked by policy”. Os 13 diretórios ficaram vazios localmente; não são versionados. Não contornar esse bloqueio para completar cosmética.
+
+Estado para o próximo agente: limpeza de arquivos concluída. Não repetir exclusões nem restaurar cópias sem necessidade. Seguir o primeiro checklist de PENDENCIAS: decisão ArgoCD, material útil/publicação, gerador de tráfego e tópicos 5/6 reservados. Nenhum apply/destroy, PR/main, alteração funcional ou envio SaaS. Handoff: LOG + PENDENCIAS apontam relatório e recuperação.
+## 2026-11-09 09:58 (America/Sao_Paulo, UTC-03:00) — Codex — Limpeza autorizada após revisão do Claude
+
+Pedido: usuário solicitou analisar a auditoria do Claude e excluir os arquivos inúteis. A autorização de 2026-11-09 supera a espera por aprovação dos itens comprovadamente dispensáveis; não abrange materiais originais da FIAP, recursos AWS nem mudanças da main.
+
+Feito: leitura do relatório e dos itens estruturados; baseline eb408a5, dev limpa. Auditoria do Claude não havia removido arquivos. Seleção em conferência: caches/bytecode e binários regeneráveis, 99 cópias do arquivo morto, 20 auxiliares substituídos/duplicados, pyproject sem consumidor e apresentação histórica da Fase 3 com cópia idêntica no 03. Os registros e as evidências únicos permanecem. Manifesto com hash e recuperação por Git em 02_TRABALHO/limpeza-2026-11-09_v01/.
+
+Checklist: [x] ler auditoria; [x] selecionar e conferir dependências; [ ] excluir alvos explícitos; [ ] revisar referências e ignores; [ ] VERIFICAÇÃO de preservação, testes e handoff.
+
+Estado para o próximo agente: nenhuma exclusão executada nesta entrada; continuar pelo manifesto, verificar se a execução já ocorreu antes de repetir. Nunca usar git clean nem remover qa-* inteira.
 ## 2026-11-07 10:55 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — Revisão do trabalho do Codex e auditoria de organização
 
 Pedidos do usuário:

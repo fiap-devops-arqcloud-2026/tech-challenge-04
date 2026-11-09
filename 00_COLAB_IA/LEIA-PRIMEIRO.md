@@ -1,12 +1,12 @@
 # Colaboração entre agentes
 
-TL;DR: Retomar pelo checklist de 2026-11-07 em PENDENCIAS, pelo [roteiro vigente do B3](02_TRABALHO/PREPARACAO_B3_2026-11-05_v02.md) e pelo [relatório da auditoria de organização](02_TRABALHO/auditoria-organizacao-2026-11-06_v01/RELATORIO.md). Credenciais, orçamento e ensaios já foram validados; Alpine 3.24 está na dev. Antes do tópico 5 faltam duas decisões do usuário: o ArgoCD e o que a main mostra. Nenhum apply, PR/main, remoção ou destroy está autorizado.
+TL;DR: Retomar pelo checklist de 2026-11-09 em PENDENCIAS e pelo [relatório da limpeza](02_TRABALHO/limpeza-2026-11-09_v01/RELATORIO.md). Limpeza local autorizada concluída; arquivos removidos recuperáveis por Git no manifesto. Preservar material FIAP, dados locais e evidências. ArgoCD e implantação permanecem decisões separadas.
 
-Última atualização: 2026-11-07, Claude (Opus 5.5).
+Última atualização: 2026-11-09, Codex.
 
 ## Atualização de escopo — 2026-11-03
 
-D1–D5 registradas em PENDENCIAS superam restrições históricas abaixo: commits curados e push da dev autorizados; segredos já gravados no .env local com autorização. PR/main e apply/destroy continuam no B3, sujeitos a autorização específica. B0/B1 não devem ser repetidos. O diagnóstico antigo do 4.4 foi encerrado no LOG Claude das 14:50, após leitura do Slack. O webhook direto do Slack ainda não foi comprovado; seu teste aguarda autorização. Na orientação Codex de OAuth/Events V2 não houve ação externa. Preservar os registros anteriores como histórico.
+D1–D5 registradas em PENDENCIAS e a autorização de limpeza de 2026-11-09 superam restrições históricas abaixo: commits curados e push da dev autorizados; segredos já gravados no .env local com autorização. PR/main e apply/destroy continuam no B3, sujeitos a autorização específica. B0/B1 não devem ser repetidos. O diagnóstico antigo do 4.4 foi encerrado no LOG Claude das 14:50, após leitura do Slack. O webhook direto do Slack ainda não foi comprovado; seu teste aguarda autorização. Na orientação Codex de OAuth/Events V2 não houve ação externa. Preservar os registros anteriores como histórico.
 
 ## Ritual e retomada
 
