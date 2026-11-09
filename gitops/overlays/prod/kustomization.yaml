@@ -82,8 +82,8 @@ images:
   newName: registry.conta-pendente.invalid/evaluation-service
   newTag: conta-pendente
 - name: flag-service
-  newName: registry.conta-pendente.invalid/flag-service
-  newTag: conta-pendente
+  newName: 405241726140.dkr.ecr.us-east-2.amazonaws.com/flag-service
+  newTag: v1.0.0-0f2b9d2
 - name: targeting-service
   newName: 405241726140.dkr.ecr.us-east-2.amazonaws.com/targeting-service
   newTag: v1.0.0-0f2b9d2
