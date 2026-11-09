@@ -1,8 +1,8 @@
 # Terraform do ToggleMaster — Fase 4
 
-TL;DR: base da Fase 3 importada e adaptada ao repositório `fiap-devops-arqcloud-2026/tech-challenge-04`. A nova conta AWS ainda não foi informada. Nenhum estado, credencial ou recurso da conta anterior foi transportado. Não executar implantação antes de confirmar conta, orçamento, backend e parâmetros.
+TL;DR: infraestrutura da base da Fase 3, adaptada ao repositório `fiap-devops-arqcloud-2026/tech-challenge-04` e a uma conta AWS nova. Nenhum estado, credencial ou recurso da conta anterior foi transportado. Os arquivos `.example` mostram o que preencher localmente antes de cada camada.
 
-Última atualização: 2026-10-20, Codex. Fonte: arquivos `.tf`, exemplos e lockfiles deste diretório; configuração local, sem comprovação de infraestrutura ativa.
+Última atualização: 2026-11-09. Fonte: arquivos `.tf`, exemplos e lockfiles deste diretório.
 
 ## Camadas e estados separados
 
@@ -18,7 +18,7 @@ As três raízes usam backend S3 parcial: `backend.tf` fixa a chave, criptografi
 
 **Não copiar `terraform.tfstate`, planos, `.terraform/` ou o bucket/objetos da Fase 3. Não usar `init -migrate-state` para esta importação.** A base da Fase 4 deve começar com estados próprios e vazios, em um bucket novo. Nenhum bootstrap foi executado nesta etapa.
 
-## Parâmetros pendentes da conta
+## Parâmetros da conta
 
 | Parâmetro | Camadas | Origem/condição |
 |---|---|---|
@@ -31,7 +31,7 @@ As três raízes usam backend S3 parcial: `backend.tf` fixa a chave, criptografi
 | `create_github_oidc_provider` | base | `true` somente se a nova conta ainda não tiver o emissor do GitHub; não assumir o estado da conta anterior |
 | imagens, IRSA, SQS e Redis | overlay GitOps | substituir sentinelas somente pelos outputs/imagens da nova conta |
 
-Para preparar a configuração futura, preencher os `.example` em arquivos locais, definir o perfil AWS correto e conferir a identidade. A inicialização real usará `terraform -chdir=<camada> init -backend-config=backend.hcl -input=false`, **somente após o bucket e a conta terem sido confirmados**. Não executar esse comando enquanto houver sentinelas. A inicialização com `-backend=false` usada abaixo é outra operação: baixa dependências sem acessar S3.
+Para preparar a configuração, preencher os `.example` em arquivos locais, definir o perfil AWS correto e conferir a identidade. A inicialização real usará `terraform -chdir=<camada> init -backend-config=backend.hcl -input=false`, **somente após o bucket e a conta terem sido confirmados**. Não executar esse comando enquanto houver sentinelas. A inicialização com `-backend=false` usada abaixo é outra operação: baixa dependências sem acessar S3.
 
 Há `terraform.tfvars.example` por raiz. Os arquivos reais `terraform.tfvars` são ignorados pelo Git. `expected_aws_account_id` também pode ser passado por `TF_VAR_expected_aws_account_id`; nas raízes cluster/k8s, `TF_VAR_state_bucket` e `TF_VAR_state_region`. Os valores de backend não são preenchidos automaticamente por essas variáveis.
 
@@ -39,7 +39,7 @@ Há `terraform.tfvars.example` por raiz. Os arquivos reais `terraform.tfvars` s�
 
 - OIDC: `github_repository` padrão = `fiap-devops-arqcloud-2026/tech-challenge-04`.
 - ArgoCD: `gitops_repo_url` padrão = `https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04.git`; Secret `repo-tech-challenge-04`.
-- A branch observada continua `main`, destino futuro de publicação do pipeline. O trabalho autorizado atual ocorre na `dev`; não houve push, PR ou integração na `main`. Portanto, as alterações locais ainda não estão disponíveis ao ArgoCD.
+- A branch observada é a `main`, de onde o pipeline publica. O trabalho do dia a dia ocorre na `dev`, e as alterações só chegam ao ArgoCD depois do merge.
 - `github_token` precisa de leitura do conteúdo do repositório 04 se ele for privado; passar como variável sensível, nunca versionar token. A visibilidade/acesso remoto atual não foi validada nesta importação.
 - Tags AWS: `project=fiap`, `phase=4` nas três raízes. Nomes dos serviços e do namespace permanecem consistentes com os manifests e o código importado.
 
@@ -64,11 +64,10 @@ A inicialização baixa módulos/providers do registro, sem conectar ao backend 
 
 ## Cuidados operacionais e referências
 
-A topologia herdada ainda precisa ser revista conforme o [plano da Fase 4](../00_COLAB_IA/02_TRABALHO/PLANO_E_ARQUITETURA_FASE4_2026-09-23_v02.html); esta importação não implementa a stack de observabilidade. Não assumir elegibilidade Free Tier nem preços pelos comentários históricos do código.
+A stack de observabilidade é entregue por GitOps (`gitops/observability`), com a Application e os Secrets criados em `terraform/k8s/observability.tf`. Não assumir elegibilidade Free Tier nem preços pelos comentários históricos do código.
 
 Qualquer destruição exige inventário/plano e autorização explícita separados. Antes de remover cluster/CSI, confirmar a remoção dos PVCs/PVs/EBS do PostgreSQL targeting; remover o bucket de estado por último. O [guia importado](../docs/GUIA_DE_REPRODUCAO.md) e a [arquitetura importada](../docs/ARQUITETURA.md) documentam a base técnica histórica e precisam ser lidos com o estado/pêndencias atuais. Para a nova conta, prevalecem os parâmetros e limites deste README.
 
 - [Contrato dos Secrets](../gitops/SECRETS-CONTRATO.md)
-- [GitOps e parâmetros pendentes](../gitops/README.md)
+- [GitOps](../gitops/README.md)
 - [Requisitos da Fase 4](../docs/requisitos/README.md)
-- [Backlog atual](../00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md)

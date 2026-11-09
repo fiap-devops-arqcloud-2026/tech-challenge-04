@@ -7,7 +7,7 @@ divergir, o pod não sobe.
 
 ## Por que existe este arquivo
 
-O External Secrets Operator foi descartado (ver [README, Decisões](../README.md#5-decisões-e-o-porquê)),
+O External Secrets Operator foi descartado,
 e com ele sumiu do Git a declaração de onde cada segredo vinha. O acoplamento
 continua: o Deployment faz `secretKeyRef` para um Secret que precisa existir.
 Este arquivo torna esse contrato explícito.

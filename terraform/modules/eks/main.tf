@@ -70,8 +70,8 @@ resource "aws_eks_cluster" "this" {
   # Role do bloco anterior.
   role_arn = aws_iam_role.cluster.arn
 
-  # Versao do Kubernetes. Confirmado em 2026-09-08 que a 1.31 esta
-  # disponivel nesta regiao (as opcoes iam de 1.31 a 1.36).
+  # Versao do Kubernetes, definida na camada cluster (default 1.34, em
+  # suporte padrao ate 2026-12-01).
   version = var.kubernetes_version
 
   vpc_config {

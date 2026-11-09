@@ -21,7 +21,7 @@ variable "subnet_ids" {
 }
 
 variable "kubernetes_version" {
-  description = "Versao do Kubernetes. Confirmado em 2026-09-08 que 1.31 a 1.36 estao disponiveis em us-east-2."
+  description = "Versao do Kubernetes do cluster EKS. O valor vem da camada cluster (default 1.34)."
   type        = string
 }
 

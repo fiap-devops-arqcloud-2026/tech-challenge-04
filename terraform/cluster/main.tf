@@ -52,8 +52,8 @@ module "eks" {
   # Subnets PRIVADAS lidas do estado da camada base (ver data.tf).
   subnet_ids = local.private_subnet_ids
 
-  # Versao do Kubernetes. Confirmado em 2026-09-08 que a 1.31 esta
-  # disponivel em us-east-2.
+  # Versao do Kubernetes: default 1.34 em variables.tf, em suporte padrao
+  # ate 2026-12-01.
   kubernetes_version = var.kubernetes_version
 
   # So tipos elegiveis no plano gratuito: a conta recusa t3.medium

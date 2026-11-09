@@ -2,7 +2,7 @@
 
 ## 1. TL;DR
 
-Última atualização: 2026-09-20, Codex (redação) e Claude (Opus 5) (auditoria e correções). Fonte normativa: [enunciado completo](../../POSTECH%20-%20Tech%20Challenge%20-%20Fase%204.pdf), 7 páginas; exigências nas p. 2–6.
+Última atualização: 2026-09-20. Fonte normativa: [enunciado completo](../../POSTECH%20-%20Tech%20Challenge%20-%20Fase%204.pdf), 7 páginas; exigências nas p. 2–6.
 
 O desafio conclui o ToggleMaster com observabilidade e resposta automática a incidentes.
 A base funcional das Fases 1, 2 e 3 deve continuar operando: cinco microsserviços, Terraform, CI/CD com DevSecOps e Kubernetes/GitOps.
@@ -99,7 +99,7 @@ O PDF rotula como “(Obrigatório)” apenas o OTel Collector (p. 4), o Self-He
 | <a id="req-bon-01"></a>REQ-BON-01 | Adotar Grafana Alloy como alternativa ao OTel Collector padrão, mantendo as funções centrais de OTel. Ver Q-10. | p. 4: “O uso do Grafana Alloy no lugar do OTel Collector padrão é opcional.” | 00 — Welcome; 02 — Monitoramento Opensource | Pendente |
 | <a id="req-bon-02"></a>REQ-BON-02 | Preferir bibliotecas OpenTelemetry da linguagem na instrumentação; a instrumentação em si continua obrigatória. Ver Q-08. | p. 4: “preferencialmente utilizando as bibliotecas do OpenTelemetry” | 01 — Observabilidade e Monitoramento; 02 — Monitoramento Opensource; 03 — APM | Pendente |
 
-## 7. 🔵 Sugestões — autoria Codex, não são exigências FIAP
+## 7. 🔵 Sugestões — não são exigências FIAP
 
 | ID | Sugestão | Justificativa | Módulo relacionado |
 |---|---|---|---|

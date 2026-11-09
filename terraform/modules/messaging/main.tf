@@ -86,8 +86,8 @@ resource "aws_dynamodb_table" "analytics" {
   # 24h por dia mesmo com a tabela parada.
   billing_mode = "PAY_PER_REQUEST"
 
-  # Chave de particao. Confirmada em duas fontes independentes: o
-  # put_item do analytics-service e o GUIA-AWS.md da Fase 2.
+  # Chave de particao: o put_item do analytics-service grava event_id
+  # como chave (services/analytics-service/app.py).
   hash_key = "event_id"
 
   # O DynamoDB so exige declarar os atributos que fazem parte de alguma
