@@ -28,7 +28,7 @@ metadata:
     # Anotacao lida pelo EKS. Ao ver isto, ele injeta no pod um token de
     # identidade e as variaveis que o SDK da AWS usa para assumir a role.
     # Permissao desta role: apenas sqs:SendMessage na fila do projeto.
-    eks.amazonaws.com/role-arn: arn:aws:iam::CONTA_AWS_PENDENTE:role/togglemaster-evaluation-irsa
+    eks.amazonaws.com/role-arn: arn:aws:iam::405241726140:role/togglemaster-evaluation-irsa
 
 ---
 # Documento 2: ServiceAccount do analytics-service.
@@ -40,4 +40,4 @@ metadata:
     # Permissoes desta role: ReceiveMessage e DeleteMessage na fila, mais
     # PutItem na tabela DynamoDB. Nao pode publicar na fila - separacao
     # de responsabilidades entre produtor e consumidor (S-06).
-    eks.amazonaws.com/role-arn: arn:aws:iam::CONTA_AWS_PENDENTE:role/togglemaster-analytics-irsa
+    eks.amazonaws.com/role-arn: arn:aws:iam::405241726140:role/togglemaster-analytics-irsa
