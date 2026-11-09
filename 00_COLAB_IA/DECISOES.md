@@ -1,8 +1,8 @@
 # Decisões
 
-TL;DR: D-001 a D-021 preservadas; D-022 registra a limpeza expressamente autorizada em 2026-11-09, com recuperação por Git e preservação das evidências únicas. Nenhuma alteração de infraestrutura decorre da limpeza.
+TL;DR: D-001 a D-022 preservadas. D-023 (2026-11-09) registra as escolhas do usuário antes do deploy: ArgoCD 7.7.23 com imagem v2.13.9, repositório público, PDFs da FIAP mantidos e `CLAUDE.md` em `.claude/`. A herança F3 é histórica.
 
-Última atualização: 2026-11-09, Codex.
+Última atualização: 2026-11-09, Claude (Opus 5.5).
 
 ## D-001 — Caminhos e organização (aceita, 2026-09-16)
 
@@ -213,6 +213,20 @@ Decisão: remover 121 arquivos versionados comprovados no manifesto e 22 alvos l
 Alternativas: apagar todo o diário (rejeitada: perderia handoff e evidências); apagar toda pasta ignorada (rejeitada: contém arquivos insubstituíveis); mover todo o lixo para nova pasta (não reduziria o conteúdo). A remoção no checkout não limpa o histórico do Git.
 
 Estado: executada; commit de exclusões separado e manifesto com path, SHA-256, blob e git show eb408a5:<caminho>. Os originais dos documentos atualizados nesta sessão foram preservados conforme a convenção do projeto em _ARQUIVO_MORTO/2026-11-09_antes-limpeza_v01. Relatório: [limpeza](02_TRABALHO/limpeza-2026-11-09_v01/RELATORIO.md). A limpeza não decide P3 sobre materiais úteis nem autoriza operações AWS.
+
+## D-023 — ArgoCD corrigido e publicação do repositório (decisão do usuário, 2026-11-09)
+
+Contexto: a auditoria de 2026-11-07 apresentou opções para a CVE-2025-55190 no ArgoCD e para o que a `main` mostra.
+
+Decisão, nas palavras do usuário: "Trocar para o chart 7.7.23 e forçar a imagem"; "não tire da árvore os pdfs da fiap"; "Mova o CLAUDE.md para .claude/CLAUDE.md"; "Acabei de deixar o repositório publico".
+
+Consequências:
+1. **ArgoCD.** Chart 7.7.23 e imagem v2.13.9, pela variável `argocd_image_tag` (`1388e6d`). A linha 2.13 segue fora de suporte, mas a CVE crítica está corrigida.
+2. **Token do ArgoCD.** Com o repositório público, o `TF_VAR_github_token` não é exportado e o Secret de repositório não nasce. O risco do item 2 da D-020 deixa de existir no cluster.
+3. **Materiais da FIAP** ficam na árvore pública, por escolha do usuário.
+4. **Histórico.** Nomes e RMs da Fase 3 e o ID da conta antiga seguem no histórico, agora público. A varredura de 2026-11-09 não achou segredos. Reescrever o histórico depende de pedido do usuário.
+
+Esta decisão não autoriza por si apply, PR/main ou destroy: o usuário os executa pelo guia.
 
 ## Decisões herdadas da Fase 3 — registro histórico revisado em 2026-11-01
 

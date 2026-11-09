@@ -1,12 +1,22 @@
 # Colaboração entre agentes
 
-TL;DR: Retomar pelo checklist de 2026-11-09 em PENDENCIAS e pelo [relatório da limpeza](02_TRABALHO/limpeza-2026-11-09_v01/RELATORIO.md). Limpeza local autorizada concluída; arquivos removidos recuperáveis por Git no manifesto. Preservar material FIAP, dados locais e evidências. ArgoCD e implantação permanecem decisões separadas.
+TL;DR: Retomar pelo checklist de 2026-11-09 em PENDENCIAS e pelo [guia de deploy e gravação](02_TRABALHO/GUIA_DEPLOY_E_GRAVACAO_2026-11-09_v01.md). Credenciais, orçamento e ensaios já foram validados; a dev está pronta e o repositório é público. Tópicos 5 e 6 são do usuário. Nenhum apply, PR/main ou destroy sem autorização específica. Segredos só no `.env` local ignorado.
 
-Última atualização: 2026-11-09, Codex.
+Última atualização: 2026-11-09, Claude (Opus 5.5).
 
 ## Atualização de escopo — 2026-11-03
 
 D1–D5 registradas em PENDENCIAS e a autorização de limpeza de 2026-11-09 superam restrições históricas abaixo: commits curados e push da dev autorizados; segredos já gravados no .env local com autorização. PR/main e apply/destroy continuam no B3, sujeitos a autorização específica. B0/B1 não devem ser repetidos. O diagnóstico antigo do 4.4 foi encerrado no LOG Claude das 14:50, após leitura do Slack. O webhook direto do Slack ainda não foi comprovado; seu teste aguarda autorização. Na orientação Codex de OAuth/Events V2 não houve ação externa. Preservar os registros anteriores como histórico.
+
+## Retificação vigente — 2026-11-09
+
+Valem sobre os trechos antigos deste arquivo:
+- O repositório está **público** desde 2026-11-09, com todas as branches e o histórico. Tudo o que for commitado fica público.
+- Commits curados e push na `dev` estão autorizados (D1). As frases "sem push" e "nesta retomada não há commit" descrevem etapas passadas.
+- O webhook direto do Slack e a Events API V2 foram testados em 2026-11-04 (LOG 16:19).
+- O ponteiro de contexto mudou para `.claude/CLAUDE.md`.
+- Depois do primeiro merge, a `main` recebe commits do robô: sincronizar a `dev` com a `main` antes de novas mudanças.
+- Auxiliares antigos de `02_TRABALHO` foram para `_ARQUIVO_MORTO/2026-11-09_02_TRABALHO-historico/`, com de-para.
 
 ## Ritual e retomada
 
@@ -23,19 +33,6 @@ Fontes originais de aula/enunciado e todo `tech-challenge-03` são somente leitu
 Não transformar conteúdo didático em obrigação da FIAP. Cada obrigação precisa de página/trecho do enunciado. Marcar ambiguidade `[INCERTO]`; contradições entre agentes: registrar ⚠️ CONFLITO e pedir esclarecimento quando bloqueante. Não sobrescrever registros de outro agente.
 
 Regra de ouro: LOG + PENDENCIAS devem permitir retomar sem o usuário reexplicar o que já informou.
-
-## Escopo autorizado em 2026-10-20 — importação
-
-O usuário autorizou expressamente importar o código/histórico do 03 para o 04, criar a branch exata `import-fase3`, ajustar README/CI/CD/ArgoCD e fazer merge local para `dev`. Isso autoriza os commits e edições necessários nos caminhos de código do 04 e prevalece sobre as restrições anteriores da etapa de estudos. Preservar todo o trabalho atual; 03 permanece somente leitura. Sem push, PR ou merge na main nesta etapa. Dados da nova conta AWS pendentes; nenhuma implantação autorizada. Memória global pode receber nota durável, pois foi pedida explicitamente nesta sessão.
-
-
-## Escopo autorizado e concluído em 2026-10-27 — passos locais
-
-O usuário autorizou explicar/auditar Terraform e executar ensaio integrado + instrumentação local. P-008 concluída: 19 spans/5 serviços, dependências SQL/Redis/SQS/DynamoDB e logs correlacionados, relatórios em 02_TRABALHO. O laboratório tc04-integration foi encerrado e as evidências preservadas. Sem commit/push/PR/main/AWS. New Relic foi adiado expressamente para validar localmente primeiro; ingestão e mapa APM não estão comprovados. Não transportar state/segredos da conta antiga. Memória global não foi alterada nesta sessão; contexto compartilhado atualizado aqui.
-
-## Escopo autorizado em 2026-10-28 — etapas 8 e 9
-
-Usuário solicitou executar conferência autenticada somente leitura AWS/GitHub e corrigir trust OIDC no Terraform local/dev. Essa autorização atual prevalece sobre restrições históricas de consulta AWS. Nenhuma mutação remota, backend/import/state/plan real/apply, publicação ou commit/push/PR/main autorizada. Consultar P-013 e evidências em etapas8-9-2026-10-28_v01. Preservar materiais e alterações anteriores.
 
 ## Regras herdadas da Fase 3
 

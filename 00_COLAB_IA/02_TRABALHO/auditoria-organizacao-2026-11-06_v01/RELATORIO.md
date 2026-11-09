@@ -9,6 +9,8 @@ Nada foi removido. Os pacotes da seção 3 aguardam aprovação do usuário, e a
 
 Última atualização: 2026-11-07, Claude (Opus 5.5).
 
+*Atualização de 2026-11-09:* aprovados pelo usuário e aplicados. P1, P2 e as cópias, pelo Codex (D-022). ArgoCD (b), P4, P5 e o que o P6 permitia antes do deploy, pelo Claude (D-023). Os PDFs da FIAP ficaram na árvore, por escolha do usuário. Ficam para depois do destroy os `.terraform`, e para o B6 o que depende de evidência do deploy; ver PENDENCIAS.
+
 ## 1. Escopo e método
 
 - Três rodadas de agentes **somente leitura** sobre o HEAD `fe7464b`:

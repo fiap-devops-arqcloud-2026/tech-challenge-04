@@ -1,8 +1,41 @@
 # Log de trabalho
 
-TL;DR: limpeza autorizada concluída em 2026-11-09: 121 arquivos versionados dispensáveis e 29.310 arquivos de cache/binários locais removidos (1,92 GiB); código, originais FIAP, credenciais e evidências preservados por hash. Commit de exclusões e54023d; relatório e recuperação em 02_TRABALHO/limpeza-2026-11-09_v01. ArgoCD e tópicos 5/6 continuam pendentes.
+TL;DR: 2026-11-09: dev pronta para o deploy e o vídeo de hoje: ArgoCD 7.7.23 com imagem v2.13.9 (D-023), READMEs e documentos públicos atualizados, PyYAML removido, 116 auxiliares no arquivo morto, PENDENCIAS encurtada. Repositório público; histórico sem segredos. Plano da base: 8 import, 29 add, 7 change, 0 destroy. Guia: 02_TRABALHO/GUIA_DEPLOY_E_GRAVACAO_2026-11-09_v01.md. Tópicos 5/6 com o usuário.
 
-Última atualização: 2026-11-09, Codex.
+Última atualização: 2026-11-09, Claude (Opus 5.5).
+
+## 2026-11-09 11:40 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — Preparação final para o deploy e o vídeo
+
+Pedido do usuário: "Trocar para o chart 7.7.23 e forçar a imagem. Em relação ao P1 pode apagar tudo. Pode aplicar o P2. P3 corrija os readmes e apague o Pyyaml sem uso. P5 aplique tudo. P6 aplique tudo. Pode tirar as 89 copias, não tire da arvore os pdfs da fiap. Mova o CLAUDE.md para .claude/CLAUDE.md [...] Acabei de deixar o repositório publico. Apos finalizar tudo isso, me traga aqui na conversa o guia passo a passo para subir o cluster, iremos fazer o video hoje. Faça também um guia de gravação com oque a fiap quer ver de evidencia. adicione de quais locais tenho que tirar print para incluir no relatório."
+
+O Codex já tinha aplicado P1, P2, as 89 cópias e parte do P6 de manhã (`e54023d`, `8526088`, D-022). Conferi os commits e não repeti nada. Interpretei "P3 corrija os readmes e apague o PyYAML" como o conteúdo do P4 do relatório.
+
+Feito:
+- `1388e6d`: ArgoCD no chart 7.7.23 com a imagem v2.13.9, pela variável nova `argocd_image_tag`. Validado com o helm 3.15.4 oficial: mesmos 40 objetos, CRDs iguais e só uma chave explícita a mais no `argocd-cm`. A imagem existe no quay.io. A v2.13.9 embute o mesmo helm e o mesmo kustomize da v2.13.2, então a validação dos charts do B2 continua valendo.
+- `a0ee523`: PyYAML fora do flag-service, sem nenhum import. READMEs sem Python 3.9, `us-east-1` e chaves estáticas; o do flag-service explica a falha controlada.
+- `3269b68`: README com o estado real e um mapa de requisitos; READMEs de `terraform/`, `gitops/` e `observability/`, e requisitos, sem agentes, IDs internos e links ao diário. Comentários velhos do Terraform corrigidos.
+- `bed88f5`, só remoção e movimento: relatório da Fase 3 e estimativa fora da árvore; `CLAUDE.md` em `.claude/`.
+- `e94d8c9`, só movimento: 116 auxiliares para `_ARQUIVO_MORTO/2026-11-09_02_TRABALHO-historico`, com `DE-PARA.md`. `02_TRABALHO` foi de 259 para 143 arquivos versionados.
+- P5: PENDENCIAS de 525 para 116 linhas, com os blocos em `_ARQUIVO_MORTO/2026-11-09_blocos-historicos_v01`; retificações datadas em LEIA-PRIMEIRO, DOSSIE e ORGANIZACAO; D-023.
+- [Guia de deploy e gravação](02_TRABALHO/GUIA_DEPLOY_E_GRAVACAO_2026-11-09_v01.md).
+
+Verificação:
+- CI verde em `bed88f5`: GitOps Check, Terraform Check, Compose e os 4 serviços com arquivos alterados.
+- `terraform plan` real da base, só leitura: 8 import, 29 add, 7 change, 0 destroy.
+- Conta: usuário `fase4`, US$ 120, nenhum EKS em us-east-2. Variáveis no `.env` conferidas só pelo nome.
+- Repositório público: varredura de todo o histórico (152 commits) sem chaves AWS, New Relic, GitHub, Slack ou chave privada. Nomes e RMs da Fase 3 e o ID da conta antiga seguem no histórico.
+- OIDC sem mudança com a visibilidade: `use_immutable_subject` continua ligado.
+
+Decidido pelo Claude e levado ao usuário:
+- Os caches `.terraform` das 3 camadas ficam até o destroy, porque o deploy de hoje os usa. P6 e P1 não os apagam agora.
+- Do P6, ficam para o B6 o que depende de evidência do deploy: links do vídeo, matriz dos 42 e a reescrita de ARQUITETURA e GUIA.
+- `TF_VAR_github_token` não é mais exportado, porque o repositório é público; o token com escrita não vai para o cluster.
+- O relatório da Fase 3 saiu da árvore em vez de ir para o arquivo morto, que também é público.
+- IDs internos em comentários de código e as menções a agentes nos guias de estudo ficam como estão: não estavam na aprovação.
+
+Não provado: nada foi aplicado na AWS. O guia foi conferido contra o código, mas os passos depois do plano da base só se provam na execução.
+
+Estado p/ o próximo agente: tópicos 5 e 6 com o usuário, pelo guia. Não abrir PR, aplicar ou destruir sem pedido específico. Depois do primeiro merge, sincronizar a `dev` com a `main`.
 
 ## 2026-11-09 10:07 (America/Sao_Paulo, UTC-03:00) — Codex — Limpeza aplicada e preservação conferida
 

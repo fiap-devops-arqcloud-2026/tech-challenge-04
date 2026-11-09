@@ -4,6 +4,8 @@ TL;DR: a infraestrutura ainda não foi implantada. No primeiro ciclo, preparar a
 
 Última atualização: 2026-11-05, Codex. Este roteiro substitui a seção 6 da [preparação de 2026-11-04](PREPARACAO_B3_2026-11-04_v01.md), que preserva a memória de cálculo, as evidências dos testes, os tokens e o orçamento. As instruções de implantação e encerramento abaixo são para execução pelo usuário ou sob autorização específica. Não foram executadas nesta revisão.
 
+*Atualização de 2026-11-09:* use o [guia de deploy e gravação](GUIA_DEPLOY_E_GRAVACAO_2026-11-09_v01.md), em Git Bash, que segue esta ordem. Duas mudanças valem sobre o texto abaixo: com o repositório público, o `TF_VAR_github_token` não é mais exportado; e o ArgoCD já está no chart 7.7.23 com a imagem v2.13.9 (D-023).
+
 ## Onde estamos e quanto custa
 
 - Consulta em 2026-11-05: plano AWS FREE ativo, **US$ 120,00** disponíveis, nenhum cluster EKS em `us-east-2`. O orçamento acumulado `togglemaster-creditos` é de US$ 80 e tem cinco notificações. Orçamento é aviso de consumo, não um desligamento automático.

@@ -1,8 +1,8 @@
 # Organização
 
-TL;DR: Estrutura de código preservada. A limpeza de 2026-11-09 retirou apenas redundâncias e caches explicitamente inventariados; caminhos anteriores são recuperáveis pelo manifesto/Git. Pastas ignoradas não são sinônimo de lixo.
+TL;DR: Estrutura de código preservada. Em 2026-11-09 saíram redundâncias e caches, e os auxiliares antigos foram para o arquivo morto, com de-para. Pastas ignoradas não são sinônimo de lixo. O repositório é público.
 
-Última atualização: 2026-11-09, Codex.
+Última atualização: 2026-11-09, Claude (Opus 5.5).
 
 | Área | Uso |
 |---|---|
@@ -21,6 +21,11 @@ Não criar diretórios genéricos vazios. CLAUDE.md já existe como ponteiro int
 
 - A observabilidade e seus Compose/scripts estão versionados; a descrição herdada abaixo sobre estarem fora do Git retrata 2026-11-01.
 - A regra de exclusão do JSONL de 156 MB já existe. As proteções de planos JSON e vídeos foram adicionadas nesta limpeza.
+- O repositório é público desde 2026-11-09: revisar arquivo por arquivo antes de versionar.
+- `CLAUDE.md` agora está em `.claude/CLAUDE.md`.
+- O relatório e a apresentação da Fase 3 saíram da árvore, e `docs/evidencias/` recebe os prints da Fase 4, já revisados.
+- Auxiliares antigos estão em [`_ARQUIVO_MORTO/2026-11-09_02_TRABALHO-historico`](_ARQUIVO_MORTO/2026-11-09_02_TRABALHO-historico/DE-PARA.md), com de-para.
+- Os documentos antigos descritos abaixo como "sem commit" ou "fora do Git" retratam 2026-11-01.
 - Consultar o [manifesto de exclusões](02_TRABALHO/limpeza-2026-11-09_v01/manifesto-exclusoes.json) para recuperar as 121 versões removidas; não criar novas cópias desses artefatos sem necessidade.
 - Os alvos removidos do arquivo morto não eram consumidos pelo projeto. As demais versões e o acervo local da D-017 continuam disponíveis.
 - Históricos abaixo permanecem como fontes datadas; a autorização e o estado atuais estão em PENDENCIAS.

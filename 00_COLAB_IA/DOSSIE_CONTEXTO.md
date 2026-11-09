@@ -1,8 +1,8 @@
 # Dossiê de contexto
 
-TL;DR: Limpeza autorizada em 2026-11-09, detalhada na seção 30 e no [relatório da limpeza](02_TRABALHO/limpeza-2026-11-09_v01/RELATORIO.md). Auditoria original do Claude preservada; 121 arquivos redundantes/obsoletos retirados e caches regeneráveis removidos. Permanecem os requisitos, estudos, evidências e próximos passos úteis; ArgoCD e tópicos 5/6 pendentes.
+TL;DR: Dev pronta para o primeiro deploy e repositório público. Ver a seção 31 (2026-11-09) e o [guia de deploy e gravação](02_TRABALHO/GUIA_DEPLOY_E_GRAVACAO_2026-11-09_v01.md). As seções 1 a 12 descrevem o estado de setembro e outubro. Tópicos 5 e 6 são do usuário.
 
-Última atualização: 2026-11-09, Codex.
+Última atualização: 2026-11-09, Claude (Opus 5.5).
 
 Atualização 2026-10-28 14:47: usuário informou conclusão do guia IAM/OIDC até passo7. Provedor, policy, role, Variables e consultas IAM são concluídos por relato; nenhuma prova de CI remoto/cluster decorre disso. Prosseguir com inventário, correção F-023 na dev, backend próprio, adoção de recursos manuais e plan revisado. Não recriar role nem reutilizar state antigo. PR/main/apply permanecem fora do pedido de orientação. Registros seguintes sobre ausência da role refletem momentos anteriores.
 
@@ -11,6 +11,14 @@ F-023/P-012 em 2026-10-28: usuário informou que a role IAM ainda não existe e 
 Atualização de conta em 2026-10-28: usuário informou ter criado nova conta AWS e feito login CLI; ECR em preparação pela interface. Não houve validação autenticada da identidade, créditos ou recursos pelo agente. Inventariar criações manuais antes do Terraform e importar se necessário. CI continua consumindo Variables AWS_REGION/ECR_REGISTRY/AWS_ROLE_ARN e autenticação OIDC; login local não configura o GitHub. P-003 permanece aberto para validação/cobrança/cotas/backend.
 
 Orientação de contas em 2026-10-28 (P-011): [guia AWS/GitHub/New Relic/PagerDuty/Slack](02_TRABALHO/GUIA_CONTAS_E_ACESSOS_FASE4_2026-10-28_v01.md) concluído. Cadastro, permissões e integrações descritos; nenhuma conta/configuração externa criada ou validada. P-003/E1 externa e demais provas externas continuam pendentes. Confirmar elegibilidade/cobrança AWS e continuidade do plano Free PagerDuty; não solicitar segredos no chat. Primeiro aceite externo recomendado: exportar os traces locais ao New Relic. Guia não altera D-009/D-014/D-016 nem autoriza implantação/publicação/envio de notificações.
+
+## Retificação vigente — 2026-11-09
+
+As seções 2, 3, 6, 7 e 12 abaixo foram escritas em setembro e outubro e não descrevem o estado atual:
+- commits e push na `dev` estão autorizados (D1);
+- as decisões vão até D-023;
+- o orçamento foi criado em 2026-11-05, e o New Relic foi validado no B1;
+- a retomada é pelo primeiro checklist de PENDENCIAS.
 
 ## 1. Objetivo
 Ler integralmente o enunciado e as aulas; produzir requisitos obrigatórios/bônus com evidência por página e cinco guias HTML autocontidos, no padrão do guia CI/CD da Fase 3, ligados aos requisitos por selos. Código-base importado e validado localmente; nada foi implantado na nova conta. Guias são material de estudo, não prova de infraestrutura.
@@ -509,7 +517,7 @@ O .env está ignorado pelo Git; foram conferidos apenas nomes de variáveis, sem
 
 Próximo: concluir exercício e seus testes; validar nova integração e webhook Slack; disponibilizar tokens; preparar estimativa, orçamento e planos B3; após aprovação específica, implantar e promover dev → main; então demonstrar cadeia completa, registrar evidências e finalizar entrega. O teste direto do webhook Slack continua dependendo da autorização específica já pendente; nenhum evento ou mensagem foi enviado nesta consulta. OAuth do assistente não é pré-requisito de alertas. Sequência e fontes oficiais consultadas em 2026-11-04 no checkpoint de PENDENCIAS. Sem nova decisão de arquitetura, publicação ou operação AWS.
 
-## 24. Preparação do B3 — 2026-11-04, Codex e Claude
+## 24-B. Preparação do B3 — 2026-11-04, Codex e Claude
 
 - **Notificações reais com a nova Events API V2:** trigger e resolve `202`, webhook do Slack `200`, cartão até Resolved (Codex).
 - **Testes:**
@@ -592,3 +600,11 @@ Pedido expresso: analisar o trabalho de limpeza do Claude e excluir os arquivos 
 Código, Terraform ativo, GitOps, scripts vigentes, READMEs usados, aulas/guia/enunciado e arquivos locais protegidos foram preservados. Evidências únicas de qa-* não foram apagadas. Os três caches Terraform ativos, estados, planos, backend.hcl, tfvars e .env ficaram. Não alterar fontes do 03; só foi conferida a cópia idêntica da apresentação e a existência do PDF da aula 5.
 
 O manifesto substitui os caminhos físicos antigos para consulta; o LOG e os inventários históricos não foram reescritos. A autorização não muda o destino público dos materiais FIAP nem do CLAUDE.md; também não altera ArgoCD/PyYAML ou concede apply/PR/main. Treze pastas vazias continuam locais porque a revisão automática bloqueou a remoção. Retomar pelos arquivos do relatório, D-022 e primeiro checklist de PENDENCIAS.
+
+## 31. Preparação final para o deploy — 2026-11-09, Claude
+
+- O ArgoCD passou ao chart 7.7.23 com a imagem v2.13.9 (D-023). Validado com helm 3.15.4: mesmos 40 objetos e CRDs iguais. A v2.13.9 embute o mesmo helm e kustomize da v2.13.2, então a renderização da observabilidade não muda.
+- Repositório público em 2026-11-09. O ArgoCD lê sem credencial, e o `TF_VAR_github_token` não é mais exportado.
+- Varredura de todo o histórico: sem segredos. Nomes e RMs da Fase 3 e o ID da conta antiga continuam no histórico.
+- Plano real da base em 2026-11-09: 8 import, 29 add, 7 change, 0 destroy.
+- [Guia de deploy e gravação](02_TRABALHO/GUIA_DEPLOY_E_GRAVACAO_2026-11-09_v01.md): passo a passo em Git Bash, com tráfego dentro do cluster para sobreviver ao restart e os prints do relatório. O cooldown de 600 s do self-healing exige 10 min entre o ensaio e a gravação.
