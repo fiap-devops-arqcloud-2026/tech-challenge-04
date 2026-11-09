@@ -427,7 +427,7 @@ kubectl get nodes
 
 ## 7. Camada k8s e ArgoCD
 
-A camada k8s cria dentro do cluster os 2 namespaces, os 5 Secrets, a StorageClass `gp3`, o ArgoCD (chart 7.7.11) e a Application que aponta para o Git. A partir daí, o ArgoCD aplica sozinho os manifestos de `gitops/overlays/prod`.
+A camada k8s cria dentro do cluster os 2 namespaces, os 5 Secrets, a StorageClass `gp3`, o ArgoCD (chart 7.7.23 com a imagem v2.13.9) e a Application que aponta para o Git. A partir daí, o ArgoCD aplica sozinho os manifestos de `gitops/overlays/prod`.
 
 **Só para repositório privado.** Crie no GitHub um token *fine-grained* com **Resource owner** igual ao dono do repositório (a organização, se for o caso), acesso só ao repositório da cópia e permissão **Contents: Read-only**. Com repositório público, inclusive fork, pule este bloco: o Secret de credencial nem é criado.
 

@@ -90,9 +90,28 @@ variable "argocd_chart_version" {
     FIXA de proposito: com a versao em aberto, um apply feito na semana
     da gravacao poderia trazer uma release nova e mudar o comportamento
     sem ninguem pedir.
+
+    7.7.23 e o ultimo chart da linha 7.7 (Argo CD 2.13). Sozinho ele
+    instalaria a v2.13.4; a imagem corrigida vem de argocd_image_tag.
   EOT
   type        = string
-  default     = "7.7.11"
+  default     = "7.7.23"
+}
+
+variable "argocd_image_tag" {
+  description = <<-EOT
+    Tag da imagem do Argo CD usada por todos os componentes do chart
+    (values global.image.tag).
+
+    v2.13.9 corrige a CVE-2025-55190 (critica: um token de projeto podia
+    ler as credenciais de repositorio). Nenhum chart da linha 7.7 traz
+    essa versao, e as linhas 3.x mudam a configuracao. Por isso o chart
+    fica no 7.7.23 e so a imagem sobe. A v2.13.9 embute o mesmo helm
+    3.15.4 e o mesmo kustomize 5.4.3 da v2.13.2, entao a renderizacao dos
+    charts da observabilidade nao muda.
+  EOT
+  type        = string
+  default     = "v2.13.9"
 }
 
 variable "gitops_repo_url" {

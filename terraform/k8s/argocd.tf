@@ -194,7 +194,7 @@ resource "helm_release" "argocd" {
       }
 
       # Uma replica de cada componente. O padrao do chart e maior e nao
-      # cabe confortavelmente em 2 nos c7i-flex.large (F-020).
+      # cabe confortavelmente em 2 nos m7i-flex.large (F-020).
       controller = {
         replicas = 1
       }
@@ -205,6 +205,14 @@ resource "helm_release" "argocd" {
 
       repoServer = {
         replicas = 1
+      }
+
+      # Imagem corrigida (CVE-2025-55190) para todos os componentes do
+      # Argo CD. O chart continua o da linha 7.7; ver argocd_image_tag.
+      global = {
+        image = {
+          tag = var.argocd_image_tag
+        }
       }
     })
   ]

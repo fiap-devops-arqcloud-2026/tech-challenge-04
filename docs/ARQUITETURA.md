@@ -4,13 +4,13 @@
 
 Este documento é a referência técnica da Fase 3 e complementa o [README](../README.md). Aqui ficam as tabelas: portas, recursos, versões, probes, permissões, Secrets e criptografia.
 
-O porquê das escolhas e as dificuldades estão no README, em [Decisões e o porquê](../README.md#5-decisões-e-o-porquê). Os comandos para subir, verificar e destruir o ambiente estão no [Guia de reprodução](GUIA_DE_REPRODUCAO.md). Cada pasta tem o próprio resumo em [`terraform/README.md`](../terraform/README.md) e [`gitops/README.md`](../gitops/README.md); o relatório está em [`RELATORIO_DE_ENTREGA.md`](RELATORIO_DE_ENTREGA.md).
+Os comandos para subir, verificar e destruir o ambiente estão no [Guia de reprodução](GUIA_DE_REPRODUCAO.md). Cada pasta tem o próprio resumo em [`terraform/README.md`](../terraform/README.md) e [`gitops/README.md`](../gitops/README.md).
 
 Seções: [1. Serviços](#1-serviços) · [2. Terraform](#2-recursos-por-camada-do-terraform) · [3. Kubernetes e GitOps](#3-kubernetes-e-gitops) · [4. ArgoCD](#4-argocd) · [5. Pipeline](#5-pipeline-em-detalhe) · [6. Identidade e segredos](#6-identidade-segredos-e-criptografia) · [7. Limitações](#7-limitações-conhecidas-do-código)
 
 ## 1. Serviços
 
-**Atualização da Fase 4 (2026-11-05):** o runtime final dos serviços [auth](../services/auth-service/Dockerfile) e [evaluation](../services/evaluation-service/Dockerfile) passou para `alpine:3.24`. A tabela e a medição com 3.20 abaixo são o histórico da Fase 3. No teste da nova base, o Trivy não reportou vulnerabilidades críticas nas duas imagens com a política do CI.
+**Atualização da Fase 4 (2026-11-05):** o runtime final dos serviços [auth](../services/auth-service/Dockerfile) e [evaluation](../services/evaluation-service/Dockerfile) passou para `alpine:3.24`, já refletido na tabela abaixo; a medição com 3.20 na seção do Trivy é o histórico da Fase 3. Em 2026-11-09, o PyYAML sem uso saiu do flag-service e o ArgoCD passou ao chart 7.7.23 com a imagem v2.13.9. No teste da nova base, o Trivy não reportou vulnerabilidades críticas nas duas imagens com a política do CI.
 
 São cinco microsserviços herdados da Fase 2, sem mudança de lógica. Dois são escritos em Go e três em Python. Eles conversam entre si pelo nome do Service do Kubernetes, por exemplo `http://auth-service:8001`.
 
@@ -26,10 +26,10 @@ Imagens e dependências principais:
 
 | Serviço | Imagem de build → execução | Dependências fixadas |
 |---|---|---|
-| `auth-service` | `golang:1.25-alpine` → `alpine:3.20` | pgx/v4 v4.18.3; x/crypto v0.55.0 |
-| `evaluation-service` | `golang:1.25-alpine` → `alpine:3.20` | aws-sdk-go v1.51.10; go-redis/v8 v8.11.5 |
-| `flag-service` | `python:3.12-slim` | Flask 2.2.2, psycopg2-binary 2.9.5, gunicorn 20.1.0, python-dotenv 0.21.0, requests 2.28.1, `setuptools<81`, `Werkzeug<3`, PyYAML 6.0.1 |
-| `targeting-service` | `python:3.12-slim` | as mesmas do flag-service, sem PyYAML |
+| `auth-service` | `golang:1.25-alpine` → `alpine:3.24` | pgx/v4 v4.18.3; x/crypto v0.55.0 |
+| `evaluation-service` | `golang:1.25-alpine` → `alpine:3.24` | aws-sdk-go v1.51.10; go-redis/v8 v8.11.5 |
+| `flag-service` | `python:3.12-slim` | Flask 2.2.2, psycopg2-binary 2.9.5, gunicorn 20.1.0, python-dotenv 0.21.0, requests 2.28.1, `setuptools<81`, `Werkzeug<3` |
+| `targeting-service` | `python:3.12-slim` | as mesmas do flag-service |
 | `analytics-service` | `python:3.12-slim` | boto3 1.26.50 e python-dotenv 0.21.0; Flask, gunicorn e setuptools **sem versão** |
 
 Os cinco Dockerfiles são multi-estágio e declaram `USER app`.
@@ -136,7 +136,8 @@ As linhas tracejadas são o ponto em que uma conta nova exige edição de arquiv
 | `rds_instance_class` | cluster | `db.t3.micro` | 20 GB gp3 (teto 40), backup de 1 dia, sem Multi-AZ |
 | `elasticache_node_type` | cluster | `cache.t3.micro` | 1 nó, `default.redis7` |
 | `redis_transit_encryption` | cluster | `false` | ver [seção 6](#6-identidade-segredos-e-criptografia) |
-| `argocd_chart_version` | k8s | `7.7.11` | chart `argo-cd` |
+| `argocd_chart_version` | k8s | `7.7.23` | chart `argo-cd`, último da linha 7.7 |
+| `argocd_image_tag` | k8s | `v2.13.9` | imagem de todos os componentes; corrige a CVE-2025-55190 |
 | `gitops_repo_url`, `gitops_repo_path`, `gitops_repo_branch` | k8s | este repositório, `gitops/overlays/prod`, `main` | alvo da Application |
 | `github_token` | k8s | `""` | só para cópia privada |
 | `storage_class_name` | k8s | `gp3` | casa com o StatefulSet do targeting |
@@ -212,7 +213,7 @@ O `/health` dos serviços não consulta o banco. Pod pronto não prova que as ta
 
 O ArgoCD lê o overlay na branch `main` e aplica no cluster o que mudou. O CI nunca executa `kubectl apply`.
 
-**Instalação** (`terraform/k8s/argocd.tf`). Chart `argo-cd` 7.7.11 de `https://argoproj.github.io/argo-helm`, no namespace `argocd`, com `wait = true` e `timeout = 600`. Os values desligam `dex`, `applicationSet` e `notifications`, ligam `server.insecure = true` (acesso por port-forward, sem TLS de borda), baixam `timeout.reconciliation` para 30s (o padrão é 180 s) e usam 1 réplica de controller, server e repoServer.
+**Instalação** (`terraform/k8s/argocd.tf`). Chart `argo-cd` 7.7.23 de `https://argoproj.github.io/argo-helm`, com a imagem `v2.13.9` forçada em `global.image.tag` (o chart sozinho instalaria a v2.13.4, anterior à correção da CVE-2025-55190), no namespace `argocd`, com `wait = true` e `timeout = 600`. Os values desligam `dex`, `applicationSet` e `notifications`, ligam `server.insecure = true` (acesso por port-forward, sem TLS de borda), baixam `timeout.reconciliation` para 30s (o padrão é 180 s) e usam 1 réplica de controller, server e repoServer.
 
 **Application `togglemaster`:**
 
@@ -389,8 +390,7 @@ Estes pontos estão no código entregue. Não foram corrigidos porque mexer em `
 
 - **Versões sem pino no analytics.** Flask, gunicorn e setuptools não têm versão fixada em `services/analytics-service/requirements.txt`.
 - **Tags MUTABLE.** O ECR aceita sobrescrever tags (`ecr_image_tag_mutability = "MUTABLE"`).
-- **Sem testes unitários Python.** Não há `test_*.py`, e o passo de testes passa com aviso. A cobertura de comportamento vem do Compose Integration.
-- **PyYAML remanescente.** `services/flag-service/requirements.txt` termina com `PyYAML==6.0.1`, sobra da demonstração de DevSecOps. Nenhum arquivo `.py` do serviço importa a biblioteca.
+- **Poucos testes unitários Python.** Os três serviços Python têm testes em `tests/` (telemetria e, no flag-service, a falha controlada); a cobertura de comportamento vem principalmente do Compose Integration.
 - **Comentários antigos.** Alguns comentários ficaram para trás:
   - os workflows ainda citam `git pull --rebase` no job `gitops` e chamam esse job de "única permissão de escrita";
   - arquivos `.tf` citam o EKS 1.31, repositório privado e a ausência do provider helm;

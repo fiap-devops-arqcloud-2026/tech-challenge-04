@@ -1,8 +1,8 @@
-# Observabilidade local — Fase 4
+# Observabilidade — Fase 4
 
-TL;DR: os cinco serviços enviam traces OTLP/HTTP a um Collector local. O Collector remove atributos fora da lista permitida e grava OTLP JSON por linha. Logs JSON das aplicações contêm `trace_id`/`span_id` quando existe contexto ativo. O laboratório usa Moto para SQS/DynamoDB e não exige AWS ou New Relic.
+TL;DR: os cinco serviços enviam traces OTLP/HTTP a um OTel Collector. No laboratório local, o Collector remove atributos fora da lista permitida e grava OTLP JSON por linha, com Moto no lugar de SQS/DynamoDB, sem exigir AWS. Logs JSON das aplicações contêm `trace_id`/`span_id` quando existe contexto ativo. No cluster, a mesma instrumentação alimenta Prometheus, Loki, Grafana e New Relic (seção do cluster, abaixo).
 
-Última atualização: 2026-10-22, Codex. Este documento descreve a implementação e sua reprodução; os resultados executados ficam nos relatórios ligados no README principal.
+Última atualização: 2026-11-09. Este documento descreve a implementação e sua reprodução.
 
 ## Entenda o caminho
 
@@ -102,7 +102,7 @@ Fontes primárias consultadas em 2026-10-22: [Collector configuration](https://o
 
 No cluster, a mesma instrumentação ganha a stack completa: métricas, logs, alertas e incidente. Tudo é implantado pelo ArgoCD a partir de `gitops/observability/`, e os segredos vêm do Terraform (`terraform/k8s/observability.tf`).
 
-Situação em 2026-11-03: a configuração está pronta e validada localmente (ver "Validações locais" abaixo), mas ainda não foi implantada. Ela entra no ar junto com o cluster.
+A configuração foi validada localmente (ver "Validações locais" abaixo) e entra no ar junto com o cluster.
 
 ```text
 5 serviços ──OTLP/HTTP──► otel-gateway (Collector central)
@@ -152,7 +152,7 @@ kubectl -n observability get secret grafana-admin -o jsonpath='{.data.admin-pass
 
 ### Validações locais (2026-11-03)
 
-- `helm template` dos 4 charts com o helm do ArgoCD v2.13.2 (imagem oficial do Argo), nas versões e values acima: renderização sem erro.
+- `helm template` dos 4 charts com o helm do ArgoCD v2.13.2 (imagem oficial do Argo), nas versões e values acima: renderização sem erro. A v2.13.9, instalada desde 2026-11-09, embute o mesmo helm 3.15.4, então o resultado vale para ela.
 - `otelcol-contrib validate` (0.163.2) nas configurações finais do gateway e do agente, extraídas do `helm template`.
 - Grafana 13.3.0 sem rede, com os arquivos de `gitops/observability/grafana/`. Ele carregou os 2 contact points com as 3 integrações, a política, a regra, os templates, o dashboard e as datasources. Pela API de teste de templates, o corpo enviado ao GitHub sai como `{"event_type":"self-healing","client_payload":{...}}`.
 - O mesmo teste mostrou que o Grafana transforma em número um segredo que pareça número, e não sobe. Por isso o Terraform recusa uma Integration Key do PagerDuty nesse formato.
