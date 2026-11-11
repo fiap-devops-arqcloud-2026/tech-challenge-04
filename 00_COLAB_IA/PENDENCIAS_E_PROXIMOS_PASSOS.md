@@ -13,8 +13,8 @@ Pedido: relatório e prints exigidos pela FIAP, projeto atualizado, push na dev,
 - [x] Índices `docs/relatorio/README.md` e `docs/evidencias/README.md`; README, requisitos, ARQUITETURA e roteiro atualizados.
 - [x] Revisão do commit `e2e3930` do usuário: Grafana `$values`, eixo de 0 a 100%, logs dos Collectors e nomes dos workflows; CI da dev verde.
 - [ ] Link do vídeo: preencher `video_url` em `docs/relatorio/dados-entrega.json`, gerar o PDF de novo e atualizar o README.
-- [ ] PR dev → main, CI e merge (autorizados no pedido); depois sincronizar a dev com a main.
-- [ ] Depois do merge, consultar no Loki os logs dos próprios Collectors (REQ-OBR-08).
+- [x] PR #2 dev → main com 29 checks verdes e merge em 2026-11-11 13:04 (`6c71277`); pipelines da main e sincronização da dev em seguida.
+- [x] Depois do merge: alerta com `$values` no cluster, seis Applications Synced/Healthy e logs dos agents do Collector no Loki (REQ-OBR-08).
 - [ ] **Usuário:** submeter código, vídeo e relatório no canal oficial (Q-05/Q-06).
 - [ ] **Encerrar, quando o usuário decidir:** destroy de k8s e cluster com plano salvo e NAT desligado ([guia](02_TRABALHO/GUIA_DEPLOY_E_GRAVACAO_2026-11-09_v01.md), Parte 4). O cluster custa cerca de US$ 0,41/h ligado.
 

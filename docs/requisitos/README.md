@@ -17,7 +17,7 @@ Referências: enunciado, p. 2–6. Páginas 1 e 7 são elementos institucionais,
 
 ### Estado da entrega em 2026-11-11
 
-A cadeia **503 → Grafana Firing → PagerDuty/Slack → Actions → restart → HTTP 200** foi executada no ensaio de 2026-11-09 e de novo na gravação de 2026-11-11 ([execução 42956432177](https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04/actions/runs/42956432177)): da falha à volta do HTTP 200 em 2 min 50 s, sem intervenção humana. [Índice de evidências](../evidencias/README.md). O trace capturado tem 19 spans; o Service Map global foi mostrado no vídeo (relato do usuário). A coleta dos logs dos próprios Collectors entra no cluster com o merge de 2026-11-11.
+A cadeia **503 → Grafana Firing → PagerDuty/Slack → Actions → restart → HTTP 200** foi executada no ensaio de 2026-11-09 e de novo na gravação de 2026-11-11 ([execução 42956432177](https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04/actions/runs/42956432177)): da falha à volta do HTTP 200 em 2 min 50 s, sem intervenção humana. [Índice de evidências](../evidencias/README.md). O trace capturado tem 19 spans; o Service Map global foi mostrado no vídeo (relato do usuário). A coleta dos logs dos próprios Collectors foi confirmada no Loki depois do merge de 2026-11-11.
 
 O vídeo foi gravado em 2026-11-11 pelo [roteiro](../gravacao/README.md); falta publicá-lo e incluir o link. O [relatório v03](../relatorio/README.md) reúne identificação, os quatro prints, a linha do tempo da gravação e as justificativas, e fica pronto para submissão quando o link entrar.
 
@@ -63,7 +63,7 @@ O PDF rotula como “(Obrigatório)” apenas o OTel Collector (p. 4), o Self-He
 | <a id="req-obr-05"></a>REQ-OBR-05 | Implantar no Kubernetes (EKS, GKE ou AKS), com a implantação gerenciada via GitOps (ArgoCD/Flux). Ver Q-01. | p. 2: “Implantação no Kubernetes (EKS, GKE, AKS) gerenciada via GitOps” | 02 — Monitoramento Opensource; 04 — Automação de incidentes | Evidenciado: EKS e seis Applications Synced/Healthy em 2026-11-09 — [evidências](../evidencias/README.md) |
 | <a id="req-obr-06"></a>REQ-OBR-06 | Provisionar a stack de observabilidade no cluster e acrescentar Helm charts ao repositório GitOps. | p. 3: “adicionando os Helm charts ao seu repositório GitOps” | 02 — Monitoramento Opensource | Evidenciado: stack no cluster e Applications Helm versionadas — [GitOps](../../gitops/observability/applications) |
 | <a id="req-obr-07"></a>REQ-OBR-07 | Usar Prometheus para armazenar e consultar métricas de infraestrutura. | p. 3: “Prometheus: para armazenamento e consulta de métricas de infraestrutura.” | 00 — Welcome; 01 — Observabilidade e Monitoramento; 02 — Monitoramento Opensource | Evidenciado: métricas de recursos no Grafana/Prometheus — [evidências](../evidencias/README.md) |
-| <a id="req-obr-08"></a>REQ-OBR-08 | Usar Loki para centralizar e indexar todos os logs dos contêineres do cluster. | p. 3: “Loki: para centralização e indexação de todos os logs dos contêineres do cluster.” | 01 — Observabilidade e Monitoramento; 02 — Monitoramento Opensource; 03 — APM | Implementado; a coleta dos logs dos próprios Collectors entra no cluster com o merge de 2026-11-11 e ainda precisa de consulta no Loki — [agent](../../gitops/observability/values/otel-agent.yaml) |
+| <a id="req-obr-08"></a>REQ-OBR-08 | Usar Loki para centralizar e indexar todos os logs dos contêineres do cluster. | p. 3: “Loki: para centralização e indexação de todos os logs dos contêineres do cluster.” | 01 — Observabilidade e Monitoramento; 02 — Monitoramento Opensource; 03 — APM | Evidenciado em 2026-11-11, depois do merge: os logs dos próprios agents do Collector aparecem no Loki — [agent](../../gitops/observability/values/otel-agent.yaml) |
 | <a id="req-obr-09"></a>REQ-OBR-09 | Usar Grafana como visualização principal. | p. 3: “Grafana: como ferramenta principal de visualização.” | 00 — Welcome; 01 — Observabilidade e Monitoramento; 02 — Monitoramento Opensource; 03 — APM | Evidenciado: Grafana usado para métricas, logs e alertas — [evidências](../evidencias/README.md) |
 | <a id="req-obr-10"></a>REQ-OBR-10 | Criar no Grafana ao menos um dashboard customizado que centralize a saúde do ecossistema: (a) uso de recursos do cluster; (b) taxa de requisições dos microsserviços; (c) painel de logs em tempo real. | p. 3: “no mínimo, 1 Dashboard customizado” | 01 — Observabilidade e Monitoramento; 02 — Monitoramento Opensource; 03 — APM | Evidenciado: dashboard customizado com recursos, requisições e logs — [evidências](../evidencias/README.md) |
 | <a id="req-obr-11"></a>REQ-OBR-11 | Centralizar métricas, logs e traces dos microsserviços no OTel Collector, recebendo, processando e exportando para os backends corretos (Prometheus, Loki e APM). Ver Q-08. | p. 4: “receber, processar e exportar suas métricas, logs e traces” | 00 — Welcome; 01 — Observabilidade e Monitoramento; 02 — Monitoramento Opensource; 03 — APM | Evidenciado nos três destinos; métricas de aplicação derivadas dos spans no gateway — [arquitetura](../ARQUITETURA.md) |
@@ -143,7 +143,7 @@ Os exemplos não formam, sozinhos, um cenário único: o alerta e a reinicializa
 
 ## 9. Checklist final de entrega
 
-Marcação em 2026-11-11: itens assinalados têm implementação/execução indicada na matriz. Publicação do vídeo, link no PDF, cobertura ampliada de logs e prazo oficial ficam abertos até a prova correspondente; isso não representa uma previsão de nota.
+Marcação em 2026-11-11: itens assinalados têm implementação/execução indicada na matriz. Publicação do vídeo, link no PDF e prazo oficial ficam abertos até a prova correspondente; isso não representa uma previsão de nota.
 
 - [x] **REQ-OBR-01** — Manter toda a base das Fases 1, 2 e 3 funcionando.
 - [x] **REQ-OBR-02** — Manter os cinco microsserviços conteinerizados.
@@ -152,7 +152,7 @@ Marcação em 2026-11-11: itens assinalados têm implementação/execução indi
 - [x] **REQ-OBR-05** — Implantar no Kubernetes (EKS, GKE ou AKS), com a implantação gerenciada via GitOps (ArgoCD/Flux). Ver Q-01.
 - [x] **REQ-OBR-06** — Provisionar a stack de observabilidade no cluster e acrescentar Helm charts ao repositório GitOps.
 - [x] **REQ-OBR-07** — Usar Prometheus para armazenar e consultar métricas de infraestrutura.
-- [ ] **REQ-OBR-08** — Usar Loki para centralizar e indexar todos os logs dos contêineres do cluster.
+- [x] **REQ-OBR-08** — Usar Loki para centralizar e indexar todos os logs dos contêineres do cluster.
 - [x] **REQ-OBR-09** — Usar Grafana como visualização principal.
 - [x] **REQ-OBR-10** — Criar no Grafana ao menos um dashboard customizado que centralize a saúde do ecossistema: (a) uso de recursos do cluster; (b) taxa de requisições dos microsserviços; (c) painel de logs em tempo real.
 - [x] **REQ-OBR-11** — Centralizar métricas, logs e traces dos microsserviços no OTel Collector, recebendo, processando e exportando para os backends corretos (Prometheus, Loki e APM). Ver Q-08.

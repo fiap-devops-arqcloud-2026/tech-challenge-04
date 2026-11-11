@@ -4,6 +4,21 @@ TL;DR: 2026-11-11: vídeo gravado (relato do usuário) e relatório de entrega v
 
 Última atualização: 2026-11-11, Claude (Opus 5.5).
 
+## 2026-11-11 13:10 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — Merge do PR #2 e verificação no cluster
+
+O usuário escolheu fazer o merge agora e incluir o link do vídeo depois, em outro PR.
+
+- PR [#2](https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04/pull/2): 29 checks verdes e 10 pulados (jobs só de push); merge às 16:04:04 UTC (`6c71277`), sem `--delete-branch`.
+- O ArgoCD aplicou a revisão nova:
+  - ConfigMap da regra com `$values`;
+  - agents do Collector reiniciados às 16:05 UTC;
+  - seis Applications Synced/Healthy.
+  Foi pedido um refresh normal em `observability` e `togglemaster`.
+- REQ-OBR-08 comprovado: logs dos próprios pods `otel-agent-agent-*` no Loki desde 16:04 UTC.
+- Pipelines da main disparados pelos arquivos de workflow, que reconstroem as imagens e gravam as tags.
+
+Estado p/ o próximo agente: sincronizar a dev com a main depois dos commits de tag; quando o usuário mandar o link do vídeo, preencher `video_url`, gerar o PDF de novo, atualizar o README e abrir um PR pequeno.
+
 ## 2026-11-11 12:57 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — Relatório de entrega v03 depois da gravação
 
 Pedido do usuário: "Finalizei a gravação do video para a fiap e deu tudo certo porém ainda não iremos excluir o cluster na aws, preciso que você faça o relatório e tire os prints que eles exigem para termos nota. [...] Deixe o documento bonito e esteticamente agradavel sem perder o intuito. No projeto deixe tudo atualizado, faça o push na dev, pr para a main e merge."
