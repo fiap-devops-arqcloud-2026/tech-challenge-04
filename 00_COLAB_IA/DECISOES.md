@@ -1,8 +1,32 @@
 # Decisões
 
-TL;DR: D-001 a D-022 preservadas. D-023 (2026-11-09) registra as escolhas do usuário antes do deploy: ArgoCD 7.7.23 com imagem v2.13.9, repositório público, PDFs da FIAP mantidos e `CLAUDE.md` em `.claude/`. A herança F3 é histórica.
+TL;DR: D-001 a D-022 preservadas. D-023 (2026-11-09): ArgoCD 7.7.23 com imagem v2.13.9 e repositório público. D-024 (2026-11-09): ensaio e publicação autorizados. D-025 (2026-11-11): relatório v03 com RMs publicados, prints do ensaio reaproveitados e cluster mantido. A herança F3 é histórica.
 
-Última atualização: 2026-11-09, Claude (Opus 5.5).
+Última atualização: 2026-11-11, Claude (Opus 5.5).
+
+## D-025 — Relatório de entrega v03 e publicação após a gravação (decisão do usuário, 2026-11-11)
+
+Contexto: o usuário gravou o vídeo em 2026-11-11 ("deu tudo certo", por relato) e pediu o relatório com os prints exigidos, tudo atualizado, push na dev, PR para a main e merge. O cluster continua no ar por escolha do usuário.
+
+Decisão:
+- O PDF completo, com nomes, RMs e usernames dos cinco participantes, é publicado no repositório. A alternativa de manter o PDF com RMs só local foi oferecida e recusada.
+- Os 11 prints do ensaio de 2026-11-09 são reaproveitados, porque o usuário preferiu isso a novas capturas com cinco logins no navegador do app. A execução gravada fica documentada pelos registros: Loki, log do GitHub Actions e API do Slack.
+- O relatório v03 é gerado de HTML para PDF pelo Edge headless (`02_TRABALHO/entrega-relatorio-2026-11-11_v03/build_relatorio.py`). Os prints só são recortados, nunca editados.
+- O link do vídeo fica pendente até a publicação; pedir ao usuário antes do merge. O destroy continua adiado.
+
+Alternativas: capturas novas da gravação, com mais trabalho do usuário e qualidade limitada pela largura do painel; relatório sem RMs no repositório.
+
+Status: v03 gerado e revisado página a página. Falta o link do vídeo.
+
+## D-024 — Evidências de gravação e publicação autorizada (2026-11-09, Codex)
+
+Contexto: usuário pediu roteiro PDF/PPTX, capturas e relatório, README/Actions mais intuitivos, push dev, PR main e merge; confirmou ensaio real com notificações e reinício e indicou identificação no README da Fase 3.
+
+Decisão: usar os cinco participantes da fonte indicada; executar ensaio controlado com evidência autêntica; manter vídeo explicitamente pendente; publicar somente após revisão dos artefatos e CI. Essa autorização supera registros históricos de aguardar PR/main. Não inclui Terraform apply/destroy. Referências a agentes/IDs continuam internas.
+
+Alternativas: prints simulados não demonstrariam funcionamento; inventar link de vídeo ou preencher identidade por inferência não é aceitável.
+
+Status: ensaio concluído e quatro tipos de capturas obtidos. Artefatos, correção de annotation e publicação ainda pendentes. Handoff: 02_TRABALHO/HANDOFF_GRAVACAO_2026-11-09_v01.md.
 
 ## D-001 — Caminhos e organização (aceita, 2026-09-16)
 

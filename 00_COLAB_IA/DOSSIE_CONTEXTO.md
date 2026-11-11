@@ -12,7 +12,13 @@ Atualização de conta em 2026-10-28: usuário informou ter criado nova conta AW
 
 Orientação de contas em 2026-10-28 (P-011): [guia AWS/GitHub/New Relic/PagerDuty/Slack](02_TRABALHO/GUIA_CONTAS_E_ACESSOS_FASE4_2026-10-28_v01.md) concluído. Cadastro, permissões e integrações descritos; nenhuma conta/configuração externa criada ou validada. P-003/E1 externa e demais provas externas continuam pendentes. Confirmar elegibilidade/cobrança AWS e continuidade do plano Free PagerDuty; não solicitar segredos no chat. Primeiro aceite externo recomendado: exportar os traces locais ao New Relic. Guia não altera D-009/D-014/D-016 nem autoriza implantação/publicação/envio de notificações.
 
-## Retificação vigente — 2026-11-09
+## Retificação vigente — 2026-11-09 16:13, Codex
+
+O estado de preparação descrito nas seções históricas foi superado: dois nós e seis Applications saudáveis foram observados; ensaio integrado real com restart automático e recuperação HTTP 200 concluído. Fonte: execução GitHub 42679005683, kubectl e capturas Grafana/PagerDuty/Slack em docs/evidencias/2026-11-09. Não extrapolar essa prova para funcionamento futuro.
+
+Pedido atual autoriza push dev, PR e merge main após validação, além de roteiro PDF/PPTX, relatório e capturas. Identificação reutilizada do README Fase 3 por instrução explícita. Nenhum novo commit/push nesta rodada; artefatos ainda em revisão. Controle do navegador interrompido por impossibilidade de confirmar a URL do Brave. Retomada e limitações: [handoff](02_TRABALHO/HANDOFF_GRAVACAO_2026-11-09_v01.md). A falha controlada está recuperada; não repetir sem necessidade. Vídeo ainda não gravado.
+
+## Retificação anterior — 2026-11-09
 
 As seções 2, 3, 6, 7 e 12 abaixo foram escritas em setembro e outubro e não descrevem o estado atual:
 - commits e push na `dev` estão autorizados (D1);

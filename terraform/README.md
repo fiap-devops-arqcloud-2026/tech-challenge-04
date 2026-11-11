@@ -2,7 +2,7 @@
 
 TL;DR: infraestrutura da base da Fase 3, adaptada ao repositório `fiap-devops-arqcloud-2026/tech-challenge-04` e a uma conta AWS nova. Nenhum estado, credencial ou recurso da conta anterior foi transportado. Os arquivos `.example` mostram o que preencher localmente antes de cada camada.
 
-Última atualização: 2026-11-09. Fonte: arquivos `.tf`, exemplos e lockfiles deste diretório.
+Última atualização: 2026-11-10. Fonte: arquivos `.tf`, exemplos e lockfiles deste diretório.
 
 ## Camadas e estados separados
 
@@ -16,7 +16,7 @@ A ordem de dependências é base → publicação das imagens → cluster → k8
 
 As três raízes usam backend S3 parcial: `backend.tf` fixa a chave, criptografia e lock; bucket/região vêm de um arquivo local `backend.hcl`, preparado a partir de `backend.hcl.example`. O arquivo local é ignorado por `terraform/.gitignore`. Os exemplos têm sentinelas explícitas que precisam ser substituídas pelos dados confirmados da nova conta.
 
-**Não copiar `terraform.tfstate`, planos, `.terraform/` ou o bucket/objetos da Fase 3. Não usar `init -migrate-state` para esta importação.** A base da Fase 4 deve começar com estados próprios e vazios, em um bucket novo. Nenhum bootstrap foi executado nesta etapa.
+**Não copiar `terraform.tfstate`, planos, `.terraform/` ou o bucket/objetos da Fase 3. Não usar `init -migrate-state` para esta importação.** Uma reprodução nova deve começar com estados próprios em bucket próprio, sem migrar o state antigo. O ambiente da Fase 4 já foi implantado: há [evidência de execução em 2026-11-09](../docs/evidencias/README.md). Não repetir bootstrap no ambiente existente.
 
 ## Parâmetros da conta
 
@@ -40,7 +40,7 @@ Há `terraform.tfvars.example` por raiz. Os arquivos reais `terraform.tfvars` s�
 - OIDC: `github_repository` padrão = `fiap-devops-arqcloud-2026/tech-challenge-04`.
 - ArgoCD: `gitops_repo_url` padrão = `https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04.git`; Secret `repo-tech-challenge-04`.
 - A branch observada é a `main`, de onde o pipeline publica. O trabalho do dia a dia ocorre na `dev`, e as alterações só chegam ao ArgoCD depois do merge.
-- `github_token` precisa de leitura do conteúdo do repositório 04 se ele for privado; passar como variável sensível, nunca versionar token. A visibilidade/acesso remoto atual não foi validada nesta importação.
+- `github_token` precisa de leitura do conteúdo do repositório 04 se ele for privado; passar como variável sensível, nunca versionar token. O repositório do projeto está público desde 2026-11-09; a implantação atual dispensa esse token de leitura. Em uma cópia privada, configurar acesso próprio.
 - Tags AWS: `project=fiap`, `phase=4` nas três raízes. Nomes dos serviços e do namespace permanecem consistentes com os manifests e o código importado.
 
 ## Validação local, sem acesso à AWS
@@ -66,7 +66,7 @@ A inicialização baixa módulos/providers do registro, sem conectar ao backend 
 
 A stack de observabilidade é entregue por GitOps (`gitops/observability`), com a Application e os Secrets criados em `terraform/k8s/observability.tf`. Não assumir elegibilidade Free Tier nem preços pelos comentários históricos do código.
 
-Qualquer destruição exige inventário/plano e autorização explícita separados. Antes de remover cluster/CSI, confirmar a remoção dos PVCs/PVs/EBS do PostgreSQL targeting; remover o bucket de estado por último. O [guia importado](../docs/GUIA_DE_REPRODUCAO.md) e a [arquitetura importada](../docs/ARQUITETURA.md) documentam a base técnica histórica e precisam ser lidos com o estado/pêndencias atuais. Para a nova conta, prevalecem os parâmetros e limites deste README.
+Qualquer destruição exige inventário/plano e autorização explícita separados. Antes de remover cluster/CSI, confirmar a remoção dos PVCs/PVs/EBS do PostgreSQL targeting; remover o bucket de estado por último. O [guia de reprodução](../docs/GUIA_DE_REPRODUCAO.md) e a [arquitetura](../docs/ARQUITETURA.md) foram atualizados para a Fase 4. Para estado runtime, consultar as evidências datadas e reconferir a conta antes de executar planos.
 
 - [Contrato dos Secrets](../gitops/SECRETS-CONTRATO.md)
 - [GitOps](../gitops/README.md)

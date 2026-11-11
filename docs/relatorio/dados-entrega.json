@@ -1,0 +1,31 @@
+{
+  "participantes": "Gabriel Pinelli Silva - RM373763 - @Tocaccelli; João Vitor de Jesus Ciardullo - RM372155 - @joaociardullo; Douglas Deveza dos Santos - RM373827 - @Douglasdeveza; João Carlos da Silva Brito - RM371738 - @Durmiand; João Gabriel da Cruz Sales - RM372444 - @jgabrieldev1",
+  "fonte_identificacao": "README.md da Fase 3, linhas 445-451; reutilização indicada pelo usuário em 2026-11-09.",
+  "repositorio": "https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04",
+  "video_url": "",
+  "edicao": "2026-11-11",
+  "execucao_gravacao": {
+    "id": "42956432177",
+    "url": "https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04/actions/runs/42956432177",
+    "data": "2026-11-11"
+  },
+  "execucao_ensaio": {
+    "id": "42679005683",
+    "url": "https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04/actions/runs/42679005683",
+    "data": "2026-11-09"
+  },
+  "linha_do_tempo_gravacao": {
+    "fuso": "America/Sao_Paulo (UTC-03)",
+    "falha_ativada": "00:58:48",
+    "firing": "01:00:50",
+    "repository_dispatch": "01:00:53",
+    "slack_alerta": "01:01:00",
+    "pagerduty_no_slack": "01:01:04",
+    "restart": "01:01:09",
+    "rollout_concluido": "01:01:31",
+    "http_200": "01:01:38",
+    "resolved": "01:03:00",
+    "respostas_503": 159,
+    "fontes": "Loki (pods trafego e flag-service), log do GitHub Actions e API do Slack, consultados em 2026-11-11."
+  }
+}

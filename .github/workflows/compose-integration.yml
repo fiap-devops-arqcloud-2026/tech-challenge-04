@@ -1,4 +1,6 @@
-name: Compose Integration
+# GUIA DE LEITURA: docs/CI-CD.md descreve gatilhos, testes e limites.
+# Os emojis sao apenas nomes de exibicao; IDs, permissoes e comandos permanecem iguais.
+name: "🧪 Integração · cinco serviços"
 
 # FILTRO DE DOCUMENTACAO
 # O ensaio sobe os 5 servicos e leva cerca de 4 minutos. Um commit que
@@ -39,14 +41,14 @@ jobs:
       COMPOSE_PROJECT_NAME: tc04-integration
     steps:
       - uses: actions/checkout@v4
-      - name: Build and test the Compose stack
+      - name: 🧪 Construir e testar os cinco serviços
         run: bash scripts/test-compose.sh
-      - name: Container status
+      - name: 📋 Estado dos contêineres
         if: always()
         run: docker compose --env-file .env.example -f docker-compose.yaml -f docker-compose.integration.yaml ps -a
-      - name: Diagnostic logs
+      - name: 🔎 Logs em caso de falha
         if: failure()
         run: docker compose --env-file .env.example -f docker-compose.yaml -f docker-compose.integration.yaml logs --no-color --tail=100
-      - name: Remove disposable test containers and volumes
+      - name: 🧹 Remover o ambiente descartável do teste
         if: always()
         run: docker compose --env-file .env.example -f docker-compose.yaml -f docker-compose.integration.yaml down -v --remove-orphans

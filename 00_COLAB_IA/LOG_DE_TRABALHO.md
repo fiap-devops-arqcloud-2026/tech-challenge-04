@@ -1,8 +1,76 @@
 # Log de trabalho
 
-TL;DR: 2026-11-09: dev pronta para o deploy e o vídeo de hoje: ArgoCD 7.7.23 com imagem v2.13.9 (D-023), READMEs e documentos públicos atualizados, PyYAML removido, 116 auxiliares no arquivo morto, PENDENCIAS encurtada. Repositório público; histórico sem segredos. Plano da base: 8 import, 29 add, 7 change, 0 destroy. Guia: 02_TRABALHO/GUIA_DEPLOY_E_GRAVACAO_2026-11-09_v01.md. Tópicos 5/6 com o usuário.
+TL;DR: 2026-11-11: vídeo gravado (relato do usuário) e relatório de entrega v03 pronto em docs/relatorio, faltando só o link do vídeo (D-025). Gravação comprovada nos registros: falha às 00:58:48, restart às 01:01:09 e HTTP 200 às 01:01:38 (execução 42956432177). PR dev → main e merge autorizados; cluster mantido no ar.
 
-Última atualização: 2026-11-09, Claude (Opus 5.5).
+Última atualização: 2026-11-11, Claude (Opus 5.5).
+
+## 2026-11-11 12:57 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — Relatório de entrega v03 depois da gravação
+
+Pedido do usuário: "Finalizei a gravação do video para a fiap e deu tudo certo porém ainda não iremos excluir o cluster na aws, preciso que você faça o relatório e tire os prints que eles exigem para termos nota. [...] Deixe o documento bonito e esteticamente agradavel sem perder o intuito. No projeto deixe tudo atualizado, faça o push na dev, pr para a main e merge."
+
+Decisões do usuário: vídeo ainda não publicado; PDF completo com RMs publicado; prints do ensaio reaproveitados em vez de capturas novas, que exigiriam cinco logins no navegador do app (D-025).
+
+Feito:
+- Enunciado relido (p. 2–6): o relatório pede identificação, links, quatro prints e justificativa; a regra da p. 5 desconta o que não for demonstrado.
+- Linha do tempo da gravação montada só com registros:
+  - Loki: `fault.enabled` às 03:58:48 UTC, primeiro 503 e primeiro 200 às 04:01:38 UTC, 159 respostas 503;
+  - log da execução 42956432177: restart às 04:01:09 UTC e rollout às 04:01:31 UTC;
+  - Slack: FIRING às 01:01 e RESOLVED às 01:03.
+- Relatório v03 com 17 páginas, gerado por `02_TRABALHO/entrega-relatorio-2026-11-11_v03/build_relatorio.py`: HTML, Edge headless, PDF. Renderizado com pypdfium2, instalado com `pip --user`, e revisado página a página; duas sobreposições corrigidas.
+- Justificativa com fontes de 2026-11-11: plano gratuito do New Relic; Datadog com APM só no teste ou pago; OpsGenie sem venda desde 2025-06-04 e com fim do suporte em 2027-04-05.
+- Docs: `docs/relatorio/README.md` e `docs/evidencias/README.md` criados (eram links quebrados); README, requisitos (status da gravação), ARQUITETURA, roteiro e gitops atualizados; 0 links quebrados em 14 documentos.
+- Revisado o commit `e2e3930` ("update readme", do usuário, 68 arquivos): mudanças funcionais no GitOps conferidas; CI da dev verde.
+
+Não provado: o conteúdo do vídeo não foi assistido; os itens de vídeo constam como "relato do usuário". A coleta dos logs dos Collectors só passa a valer no cluster depois do merge.
+
+Estado p/ o próximo agente: pedir o link do vídeo, gerar o PDF de novo, PR/merge e sincronizar a dev. Não destruir o cluster sem pedido do usuário.
+
+## 2026-11-11 00:15 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — Guia único de gravação
+
+Pedidos do usuário: comandos e telas por cena ligados às falas; túneis; explicação de 5xx e p95; conferir README × guia; juntar tudo num guia só, em PowerPoint.
+
+Feito, sem commit (somado às alterações locais da rodada anterior, também sem commit):
+- `docs/gravacao/PASSO_A_PASSO_POR_CENA.md`: mesa, túneis em laço, terminais A–D e cada frase do roteiro com tela, clique, esperado e comando. Alinhado ao README publicado na `main`.
+- `docs/gravacao/ROTEIRO_GRAVACAO_2026-11-11_v03.pptx` e `.pdf`, 19 slides. Gerador: `02_TRABALHO/entrega-gravacao-2026-11-11_v03/build_guia_unico.py`, que confere as falas contra `roteiro-conteudo.json` e os comandos contra o passo a passo. Renderizado pelo PowerPoint e revisado slide a slide.
+- Uma linha de ligação no README local, no roteiro e no `COMANDOS.md`; links do roteiro v02 trocados pelo v03.
+
+Verificação (somente leitura, 2026-11-10 23:45): tráfego em 200, seis Applications Synced/Healthy, chave com 71 caracteres, Docker local parado, um único self-healing (ensaio de 2026-11-09). Consultas do Loki por `service_name` testadas pela API.
+
+Achados levados ao usuário: o GitHub mostra o README de 2026-11-09; `docs/gravacao`, `docs/relatorio`, `docs/evidencias`, `CI-CD.md` e `CONCEITOS_OBSERVABILIDADE.md` não estão na `main`. O README local ainda aponta para `docs/relatorio/README.md` e `docs/evidencias/README.md`, que não existem. A mensagem do Slack mostra o texto do modelo do alerta (correção local, não publicada). Recomendado: gravar com o README publicado e não fazer merge antes da gravação.
+
+Estado p/ o próximo agente: gravação com o usuário. Depois dela: corrigir os links, publicar a documentação com o link do vídeo e seguir para o encerramento com plano salvo. Não publicar mudanças em `gitops/` durante a gravação.
+
+## 2026-11-09 20:26 (America/Sao_Paulo, UTC-03:00) — Codex — Fechamento para gravação em 2026-11-10
+
+Pedido: revisar documentação e concluir preparação para gravação em 2026-11-10; push dev, PR main e merge novamente autorizados. D-024 continua aplicável; nenhum apply/destroy novo.
+Feito: leitura do protocolo, pendências, handoff e Git. Dev em 484cdcb, alterações da rodada anterior preservadas, nenhum PR aberto. Run 42679005683 reconfirmado via API GitHub: repository_dispatch, success.
+Plano: [ ] corrigir annotation e regressão; [ ] revisar docs/matriz; [ ] concluir PDF/PPTX/relatório; [ ] conferir estado e roteiro; [ ] VERIFICAÇÃO local e CI; [ ] push/PR/merge e sincronização; [ ] handoff final.
+Divisão de trabalho: agente corrigir_alerta_gravacao atua em Grafana/checker; revisar_documentacao_entrega em README/arquitetura/reprodução/requisitos; finalizar_materiais em roteiro/relatório/evidências. Agente principal coordena verificações, contexto e Git, sem escritas concorrentes nos mesmos arquivos.
+Estado p/ próximo agente: continuar as tarefas acima; não repetir o ensaio de falha sem motivo. Materiais anteriores ainda são rascunhos, e o vídeo só será gravado em 2026-11-10.
+
+## 2026-11-09 16:13 (America/Sao_Paulo, UTC-03:00) — Codex — Ensaio concluído; revisão interrompida pelo controle do navegador
+
+Feito: falha real 503 gerou Firing às 18:59:20 UTC, incidente PagerDuty #4, Slack e repository_dispatch. Execução [42679005683](https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04/actions/runs/42679005683) concluída com sucesso, restart automático às 18:59:39, rollout às 19:00:03, HTTP 200 observado às 19:00:19 e Resolved às 19:01:30 UTC. Nenhuma recuperação manual; falha não ficou ativa.
+Decisão: D-024 registra autorização vigente e identificação do README Fase 3. Os quatro tipos de prints exigidos pela FIAP foram capturados. Roteiro PDF/PPTX e relatório existem como rascunhos em revisão, não entregáveis finais.
+Descoberta: summary do alerta usa $$values indevidamente; corrigir para $values nas annotations, com teste. Não alterou o resultado da automação. Service Map global cinco serviços ainda precisa de enquadramento; spans dos cinco já capturados.
+Interrupção: ferramenta de computador encerrou a sessão por não conseguir confirmar a URL da janela Brave. Não houve tentativa de contornar. Nenhum commit/push/PR desta rodada.
+Arquivos/estado para próximo agente: [handoff completo](02_TRABALHO/HANDOFF_GRAVACAO_2026-11-09_v01.md), docs/gravacao, docs/relatorio, docs/evidencias, README e workflows editados. Retomar pela correção do template, regeneração do relatório, revisão dos PDFs/slides e CI; só então push dev/PR/merge já autorizados.
+
+## 2026-11-09 15:57 (America/Sao_Paulo, UTC-03:00) — Codex — Ensaio integrado autorizado e iniciado
+
+Feito: usuário autorizou explicitamente falha 503, notificações reais, restart e capturas; informou login no PagerDuty e indicou nomes/RMs/usernames do README da Fase 3. Leitura realizada nas linhas 445-451.
+Ação: POST /admin/fault pelo pod trafego usando a CHAVE já existente, sem exibir valores. Ativação confirmada às 18:57:23 UTC. Aguardar alerta Firing → incidente/Slack → repository_dispatch → restart → HTTP 200.
+Artefatos em revisão: roteiro PDF (13 páginas) e PowerPoint (13 slides), README/CI-CD e comentários/nomes dos workflows. Capturas: Grafana, trace real 19 spans, ArgoCD e Lens.
+Estado p/ próximo agente: ensaio em andamento, não repetir falha; se automação não recuperar, usar contingência enabled=false e registrar intervenção. Nenhum commit/push desta rodada ainda.
+
+## 2026-11-09 15:30 (America/Sao_Paulo, UTC-03:00) — Codex — Roteiro, evidências e publicação autorizada
+
+Feito: leitura integral do enunciado (7 páginas), guia vigente e estado real. Dois nós Ready, seis Applications Synced/Healthy e 5 serviços Running. A main já recebeu a publicação do usuário; dev atualizada por fast-forward para 484cdcb antes das edições.
+Escopo autorizado nesta solicitação: PDF e PPTX do roteiro, captura de telas Brave/Lens, relatório PDF, revisão do README/workflows, push dev, PR e merge main. Supera a espera histórica por autorização de PR/main; não inclui apply/destroy.
+Checklist: [x] fontes e estado; [ ] capturas revisadas; [ ] roteiro PDF/PPTX; [ ] relatório e pasta de prints; [ ] README/Actions; [ ] VERIFICAÇÃO; [ ] push/PR/checks/merge; [ ] handoff.
+Descobertas: relatório exige quatro prints (PDF p. 6); vídeo até 25 min (p. 5). Identificação dos participantes solicitada. Não declarar self-healing no EKS sem execução comprovada.
+Arquivos: trabalho privado em 02_TRABALHO/validacao-local-gravacao-2026-11-09; saídas em docs/gravacao, docs/relatorio e docs/evidencias.
+Estado p/ próximo agente: capturar as quatro evidências, registrar lacunas reais, produzir artefatos e validar antes da publicação.
 
 ## 2026-11-09 11:40 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — Preparação final para o deploy e o vídeo
 

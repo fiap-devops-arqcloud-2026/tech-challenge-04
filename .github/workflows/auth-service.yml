@@ -1,3 +1,5 @@
+# GUIA DE LEITURA: docs/CI-CD.md descreve gatilhos, testes e limites.
+# Os emojis sao apenas nomes de exibicao; IDs, permissoes e comandos permanecem iguais.
 # ============================================================
 # PIPELINE DE CI - auth-service
 # ============================================================
@@ -20,7 +22,7 @@
 
 # Nome exibido na aba Actions. Igual ao nome do servico para que a
 # lista de execucoes seja lida de bate-pronto.
-name: auth-service
+name: "🔑 Auth · CI/CD"
 
 # ------------------------------------------------------------
 # QUANDO ESTE PIPELINE RODA (O-11)

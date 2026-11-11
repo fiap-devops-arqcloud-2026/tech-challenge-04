@@ -2,7 +2,7 @@
 
 TL;DR: os cinco serviços enviam traces OTLP/HTTP a um OTel Collector. No laboratório local, o Collector remove atributos fora da lista permitida e grava OTLP JSON por linha, com Moto no lugar de SQS/DynamoDB, sem exigir AWS. Logs JSON das aplicações contêm `trace_id`/`span_id` quando existe contexto ativo. No cluster, a mesma instrumentação alimenta Prometheus, Loki, Grafana e New Relic (seção do cluster, abaixo).
 
-Última atualização: 2026-11-09. Este documento descreve a implementação e sua reprodução.
+Última atualização: 2026-11-10. Este documento descreve a implementação e sua reprodução.
 
 ## Entenda o caminho
 
@@ -18,7 +18,7 @@ SDKs Go/Python ── OTLP HTTP :4318/v1/traces ──► Collector
                               debug básico + arquivo traces.jsonl
 ```
 
-O arquivo é uma evidência local de diagnóstico, não um backend consultável como o New Relic. Ainda não há envio ao APM, métricas de aplicação/infraestrutura, coleta de logs pelo Collector, Loki, Prometheus ou Grafana nesta composição. Esses componentes continuam nas etapas seguintes do plano.
+O arquivo é uma evidência local de diagnóstico, não um backend consultável como o New Relic. Esta composição local básica não inclui envio ao APM, métricas de aplicação/infraestrutura, coleta de logs pelo Collector, Loki, Prometheus ou Grafana. A exportação opcional e a stack do EKS são descritas nas seções seguintes; não confundir esse limite do laboratório com o estado da implantação.
 
 ## Executar o ensaio completo
 
@@ -102,7 +102,7 @@ Fontes primárias consultadas em 2026-10-22: [Collector configuration](https://o
 
 No cluster, a mesma instrumentação ganha a stack completa: métricas, logs, alertas e incidente. Tudo é implantado pelo ArgoCD a partir de `gitops/observability/`, e os segredos vêm do Terraform (`terraform/k8s/observability.tf`).
 
-A configuração foi validada localmente (ver "Validações locais" abaixo) e entra no ar junto com o cluster.
+Além da validação local, a stack foi observada funcionando no EKS em 2026-11-09: dashboard com recursos/requisições/logs, trace de 19 spans no New Relic e cadeia de self-healing automática. [Evidências datadas](../docs/evidencias/README.md); reconferir antes da gravação.
 
 ```text
 5 serviços ──OTLP/HTTP──► otel-gateway (Collector central)
@@ -130,7 +130,7 @@ Acesso durante a gravação, sem Ingress (`localhost:3000`):
 kubectl -n observability port-forward svc/grafana 3000:80
 ```
 
-Usuário `admin`; a senha é gerada pelo Terraform e fica no Secret `grafana-admin`:
+**Preparação privada, fora da gravação:** usuário `admin`; a senha é gerada pelo Terraform e fica no Secret `grafana-admin`. O comando abaixo exibe a senha; não executá-lo durante captura de tela:
 
 ```bash
 kubectl -n observability get secret grafana-admin -o jsonpath='{.data.admin-password}' | base64 -d
@@ -149,6 +149,12 @@ kubectl -n observability get secret grafana-admin -o jsonpath='{.data.admin-pass
 2. Acompanhar o self-healing na aba **Actions** do repositório: o job registra o motivo, o resultado (`restarted`, `cooldown`, `refused` ou `ignored`) e os pods depois do reinício.
 3. Ver a troca de pods: `kubectl -n togglemaster get pods -l app=flag-service -w`.
 4. Se o alerta continuar depois do reinício, a causa não é um estado em memória. Investigar pelo trace no New Relic e pelos logs antes de reiniciar de novo, porque o intervalo mínimo impede reinícios seguidos.
+
+### Evidência integrada (2026-11-09)
+
+O [run 42679005683](https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04/actions/runs/42679005683) foi disparado automaticamente por `repository_dispatch`, reiniciou o flag-service e terminou com sucesso. Firing às 18:59:20 UTC; restart às 18:59:39; rollout concluído às 19:00:03; HTTP 200 observado às 19:00:19; mensagem Resolved às 19:01:30. O incidente PagerDuty #4 foi resolvido sem recuperação manual.
+
+A captura desse ensaio conserva um defeito no texto da annotation (`$$values` literal), identificado depois: a revisão do provisionamento corrige para `$values`. O defeito de texto não impediu a detecção, a notificação ou o restart; imagens não foram alteradas para ocultá-lo.
 
 ### Validações locais (2026-11-03)
 

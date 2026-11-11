@@ -1,8 +1,8 @@
 # Tech Challenge Fase 4 — contexto para assistentes
 
-TL;DR: Dev pronta para o primeiro deploy; repositório público desde 2026-11-09. Ler o primeiro checklist de `00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md` e o guia `00_COLAB_IA/02_TRABALHO/GUIA_DEPLOY_E_GRAVACAO_2026-11-09_v01.md`. ArgoCD no chart 7.7.23 com a imagem v2.13.9 (D-023). O deploy (tópico 5), a demonstração (6) e o destroy são do usuário ou exigem autorização específica. Tudo o que for commitado fica público.
+TL;DR: deploy feito em 2026-11-09 e vídeo gravado em 2026-11-11. O relatório de entrega v03 está em `docs/relatorio`, faltando só o link do vídeo (D-025). O cluster segue no ar por decisão do usuário; o destroy (guia de deploy, Parte 4) exige pedido específico. Ler primeiro o checklist de `00_COLAB_IA/PENDENCIAS_E_PROXIMOS_PASSOS.md`. Tudo o que for commitado fica público.
 
-Última atualização: 2026-11-09, Claude (Opus 5.5).
+Última atualização: 2026-11-11, Claude (Opus 5.5).
 
 - SaaS (atualização 2026-11-05): New Relic conferido; nova chave Events API V2 e webhook direto do Slack testados em 2026-11-04 (LOG 16:19), com PRTG mantido. Senha do PagerDuty mantida pelo usuário, risco aceito (D-020); agentes não a usam. D5 autorizou segredos no .env local ignorado; não gravar valores em arquivos versionados, LOG ou chat. Guia: `00_COLAB_IA/02_TRABALHO/PAGERDUTY_OAUTH_EVENTS_API_2026-11-03_v01.md`.
 

@@ -19,8 +19,10 @@
 # o incidente no PagerDuty e avisa o Slack; selfheal=true dispara o
 # self-healing; service diz ao workflow QUAL Deployment reiniciar.
 #
-# ATENCAO AO CIFRAO: nas annotations, $$values escreve $values (o
-# Grafana trocaria $values por uma variavel de ambiente).
+# ATENCAO AO CIFRAO: annotations nao interpolam variaveis de ambiente.
+# O template recebe $values diretamente; $$values quebra sua avaliacao.
+# Fonte: documentacao Grafana, "Template variable interpolation":
+# https://grafana.com/docs/grafana/latest/alerting/set-up/provision-alerting-resources/file-provisioning/#template-variable-interpolation
 # ============================================================
 apiVersion: 1
 
@@ -79,6 +81,6 @@ groups:
           service: flag-service
           selfheal: "true"
         annotations:
-          summary: 'flag-service com {{ humanizePercentage $$values.A.Value }} das respostas em erro 5xx'
+          summary: 'flag-service com {{ humanizePercentage $values.A.Value }} das respostas em erro 5xx'
           description: 'A proporcao de respostas 5xx do flag-service passou de 10% por 1 minuto. O self-healing reinicia o Deployment pelo GitHub Actions; se o alerta continuar, investigar pelo dashboard e pelos logs no Loki.'
           runbook_url: https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04/blob/main/observability/README.md#runbook-flag-service-5xx

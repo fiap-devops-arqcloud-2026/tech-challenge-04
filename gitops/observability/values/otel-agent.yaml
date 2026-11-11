@@ -25,10 +25,15 @@ command:
 presets:
   # Receptor file_log em /var/log/pods/*/*/*.log com o operador container
   # (k8s.namespace.name, k8s.pod.name, k8s.container.name a partir do
-  # caminho do arquivo). Os logs do proprio Collector ficam de fora.
+  # caminho do arquivo). Inclui tambem os logs operacionais do Collector,
+  # para nao excluir containers do escopo de coleta exigido no desafio.
   logsCollection:
     enabled: true
-    includeCollectorLogs: false
+    # Seguro porque agente E gateway removem o exporter debug: os logs
+    # seguem por OTLP ate o Loki, sem serem reimpressos em stdout e
+    # recolhidos em ciclo. Nao habilitar debug nessas pipelines.
+    # https://opentelemetry.io/docs/platforms/kubernetes/helm/collector/#logs-collection-preset
+    includeCollectorLogs: true
     # Guarda no disco do no ate onde cada arquivo ja foi lido: um
     # reinicio do agente nao reenvia nem perde logs. Com isto o chart roda
     # o container como root, necessario para ler os logs dos outros pods
@@ -69,6 +74,8 @@ config:
     prometheus: null
 
   exporters:
+    # Obrigatorio enquanto includeCollectorLogs=true: nao reimprimir os
+    # registros coletados no stdout que o proprio agente acompanha.
     debug: null
     otlp_grpc:
       endpoint: otel-gateway.observability.svc.cluster.local:4317

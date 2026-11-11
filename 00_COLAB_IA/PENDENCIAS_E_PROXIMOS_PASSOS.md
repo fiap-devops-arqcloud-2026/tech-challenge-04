@@ -1,8 +1,39 @@
 # Pendências e progresso
 
-TL;DR: Em 2026-11-09 o objetivo é subir o ambiente e gravar o vídeo, seguindo o [guia de deploy e gravação](02_TRABALHO/GUIA_DEPLOY_E_GRAVACAO_2026-11-09_v01.md). A dev está pronta e o repositório é público. Os blocos antigos desta lista foram para o [arquivo morto](_ARQUIVO_MORTO/2026-11-09_blocos-historicos_v01/PENDENCIAS_blocos-ate-2026-11-09.md).
+TL;DR: o vídeo foi gravado em 2026-11-11 e o [relatório v03](../docs/relatorio/README.md) está pronto; falta só o link do vídeo. O cluster continua no ar por decisão do usuário (D-025). Os blocos antigos desta lista foram para o [arquivo morto](_ARQUIVO_MORTO/2026-11-09_blocos-historicos_v01/PENDENCIAS_blocos-ate-2026-11-09.md).
 
-Última atualização: 2026-11-09, Claude (Opus 5.5).
+Última atualização: 2026-11-11, Claude (Opus 5.5).
+
+## Pedido vigente — 2026-11-11 12:57, Claude
+
+Pedido: relatório e prints exigidos pela FIAP, projeto atualizado, push na dev, PR para a main e merge. O cluster não será destruído agora.
+
+- [x] Gravação do vídeo, por relato do usuário. A cadeia completa aparece nos registros: falha às 00:58:48, Firing às 01:00:50, restart às 01:01:09, HTTP 200 às 01:01:38 e Resolved às 01:03:00, com a execução 42956432177.
+- [x] Relatório v03 em `docs/relatorio`, 17 páginas: capa com participantes, os quatro prints, justificativas, linha do tempo e matriz.
+- [x] Índices `docs/relatorio/README.md` e `docs/evidencias/README.md`; README, requisitos, ARQUITETURA e roteiro atualizados.
+- [x] Revisão do commit `e2e3930` do usuário: Grafana `$values`, eixo de 0 a 100%, logs dos Collectors e nomes dos workflows; CI da dev verde.
+- [ ] Link do vídeo: preencher `video_url` em `docs/relatorio/dados-entrega.json`, gerar o PDF de novo e atualizar o README.
+- [ ] PR dev → main, CI e merge (autorizados no pedido); depois sincronizar a dev com a main.
+- [ ] Depois do merge, consultar no Loki os logs dos próprios Collectors (REQ-OBR-08).
+- [ ] **Usuário:** submeter código, vídeo e relatório no canal oficial (Q-05/Q-06).
+- [ ] **Encerrar, quando o usuário decidir:** destroy de k8s e cluster com plano salvo e NAT desligado ([guia](02_TRABALHO/GUIA_DEPLOY_E_GRAVACAO_2026-11-09_v01.md), Parte 4). O cluster custa cerca de US$ 0,41/h ligado.
+
+## Pedido anterior — 2026-11-09 20:26, Codex
+
+Gravação prevista pelo usuário para **2026-11-10**. Revisão e fechamento em andamento; push dev, PR main e merge autorizados novamente. Ver entrada 20:26 do LOG para divisão de trabalho e verificação final.
+
+Retomar pelo [handoff detalhado](02_TRABALHO/HANDOFF_GRAVACAO_2026-11-09_v01.md). Ensaio completo comprovado; serviço recuperado automaticamente. O controle do navegador foi interrompido por falha em confirmar a URL do Brave. Artefatos ainda em revisão; não publicar rascunho do relatório.
+
+- [x] Enunciado e implantação atual conferidos; dev sincronizada com main.
+- [x] Capturar os quatro tipos de evidência atuais; registrar limitações de enquadramento.
+- [x] Ensaio automático EKS → Firing → PagerDuty/Slack → Actions → restart → HTTP 200.
+- [ ] Corrigir annotation $$values e validar regressão; melhorar escala do gráfico.
+- [ ] Roteiro intuitivo PDF + PowerPoint e relatório PDF.
+- [ ] README, documentação e apresentação dos workflows.
+- [ ] VERIFICAÇÃO dos artefatos, links, segredo e CI.
+- [ ] Push dev, PR e merge main autorizados no pedido atual.
+- [ ] Handoff e lista de complementos para o usuário.
+
 
 ## Retomada vigente — 2026-11-09, Claude
 

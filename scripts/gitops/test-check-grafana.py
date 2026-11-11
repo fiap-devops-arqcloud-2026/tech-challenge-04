@@ -82,6 +82,8 @@ CASES = [
     ("consulta vazia reprova", edit_dashboard(empty_query), 1, "consulta (expr) vazia"),
     ("dashboard fora do kustomization reprova", extra_dashboard, 1, "fora do configMapGenerator"),
     ("regra apontando para painel inexistente reprova", replace(RULES, r"panelId: \d+", "panelId: 999"), 1, "painel 999 nao existe"),
+    ("annotation com escape indevido reprova", replace(RULES, r"humanizePercentage \$values", "humanizePercentage $$values"), 1, "cifrao duplicado"),
+    ("cifrao literal fora do template passa", replace(RULES, r"summary: 'flag-service", "summary: 'Custo literal $$; flag-service"), 0, "Grafana ok"),
     ("receiver inexistente reprova", replace(POLICIES, r"receiver: togglemaster-self-healing", "receiver: inexistente"), 1, "'inexistente' nao e um contact point"),
     ("regra renomeada sem ajustar a rota reprova", replace(RULES, r"title: FlagService5xxAlto", "title: FlagService5xxRenomeado"), 1, "nenhuma regra tem esse titulo"),
     ("YAML quebrado reprova", replace(RULES, r"(?m)^groups:", "groups: [\n  - :"), 1, "YAML invalido"),

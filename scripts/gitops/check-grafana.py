@@ -22,6 +22,7 @@ Sai com 0 se tudo estiver certo e com 1 se houver erro.
 """
 import json
 import pathlib
+import re
 import sys
 
 import yaml
@@ -145,6 +146,13 @@ def check_alerting(root, dashboards, datasources, errors):
                 title = rule.get("title", "?")
                 rule_titles.add(title)
                 label = f"{path.name}: regra '{title}'"
+                # Annotations nao passam pela interpolacao de ambiente.
+                # Impede a regressao observada no ensaio: $$values chega
+                # intacto ao template e causa erro, em vez de virar $values.
+                # E uma verificacao dirigida; nao e um parser Go template.
+                for name, annotation in (rule.get("annotations") or {}).items():
+                    if re.search(r"\{\{[^}]*\$\$(?:values|labels|value)\b", str(annotation)):
+                        errors.append(f"{label}: annotation '{name}' usa cifrao duplicado em variavel do template; use $ simples")
                 for query in rule.get("data", []) or []:
                     uid = query.get("datasourceUid")
                     if uid != EXPRESSION_UID and uid not in datasources:

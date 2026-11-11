@@ -1,3 +1,5 @@
+# GUIA DE LEITURA: docs/CI-CD.md descreve gatilhos, testes e limites.
+# Os emojis sao apenas nomes de exibicao; IDs, permissoes e comandos permanecem iguais.
 # ============================================================
 # TERRAFORM CHECK - validacao da infraestrutura em PR (S-08)
 # ============================================================
@@ -28,7 +30,7 @@
 # um plan completo dela so e possivel com o cluster no ar.
 # ============================================================
 
-name: Terraform Check
+name: "🏗️ Terraform · validação e OIDC"
 
 on:
   # Em Pull Request: barra o erro antes de entrar na main.
@@ -62,8 +64,8 @@ jobs:
       - name: Checkout do codigo
         uses: actions/checkout@v4
 
-      # Instala o Terraform. A versao precisa ser >= 1.11 por causa da
-      # flag use_lockfile usada nos backends (R-03).
+      # Instala a versao fixada pelo projeto. O use_lockfile existe desde
+      # Terraform 1.10; required_version >= 1.11 e a escolha desta base.
       - name: Instalar Terraform
         uses: hashicorp/setup-terraform@v3
         with:
