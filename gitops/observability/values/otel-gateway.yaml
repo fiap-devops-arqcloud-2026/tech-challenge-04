@@ -126,6 +126,8 @@ config:
           buckets: [5ms, 10ms, 25ms, 50ms, 100ms, 250ms, 500ms, 1s, 2500ms, 5s]
 
   exporters:
+    # O agente tambem coleta os logs deste pod. Nao exportar os registros
+    # recebidos para stdout: isso os devolveria ao agente em ciclo.
     debug: null
 
     otlp_http/newrelic:

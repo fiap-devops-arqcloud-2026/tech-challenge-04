@@ -4,6 +4,23 @@ TL;DR: Em 2026-11-09 o objetivo é subir o ambiente e gravar o vídeo, seguindo 
 
 Última atualização: 2026-11-09, Claude (Opus 5.5).
 
+## Pedido vigente — 2026-11-09 20:26, Codex
+
+Gravação prevista pelo usuário para **2026-11-10**. Revisão e fechamento em andamento; push dev, PR main e merge autorizados novamente. Ver entrada 20:26 do LOG para divisão de trabalho e verificação final.
+
+Retomar pelo [handoff detalhado](02_TRABALHO/HANDOFF_GRAVACAO_2026-11-09_v01.md). Ensaio completo comprovado; serviço recuperado automaticamente. O controle do navegador foi interrompido por falha em confirmar a URL do Brave. Artefatos ainda em revisão; não publicar rascunho do relatório.
+
+- [x] Enunciado e implantação atual conferidos; dev sincronizada com main.
+- [x] Capturar os quatro tipos de evidência atuais; registrar limitações de enquadramento.
+- [x] Ensaio automático EKS → Firing → PagerDuty/Slack → Actions → restart → HTTP 200.
+- [ ] Corrigir annotation $$values e validar regressão; melhorar escala do gráfico.
+- [ ] Roteiro intuitivo PDF + PowerPoint e relatório PDF.
+- [ ] README, documentação e apresentação dos workflows.
+- [ ] VERIFICAÇÃO dos artefatos, links, segredo e CI.
+- [ ] Push dev, PR e merge main autorizados no pedido atual.
+- [ ] Handoff e lista de complementos para o usuário.
+
+
 ## Retomada vigente — 2026-11-09, Claude
 
 Feito em 2026-11-09, a pedido do usuário:

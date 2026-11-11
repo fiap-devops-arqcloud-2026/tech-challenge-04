@@ -138,3 +138,7 @@ tmp/
 
 # Renderizacoes das paginas do enunciado usadas na auditoria (o PDF original fica na raiz).
 00_COLAB_IA/02_TRABALHO/auditoria-codex-2026-10-30_v01/fontes/*.png
+
+# Prints recebidos, antes da revisao para publicacao.
+docs/evidencias/entrada-local/*
+!docs/evidencias/entrada-local/LEIA-ME.md

@@ -4,6 +4,38 @@ TL;DR: 2026-11-09: dev pronta para o deploy e o vídeo de hoje: ArgoCD 7.7.23 co
 
 Última atualização: 2026-11-09, Claude (Opus 5.5).
 
+## 2026-11-09 20:26 (America/Sao_Paulo, UTC-03:00) — Codex — Fechamento para gravação em 2026-11-10
+
+Pedido: revisar documentação e concluir preparação para gravação em 2026-11-10; push dev, PR main e merge novamente autorizados. D-024 continua aplicável; nenhum apply/destroy novo.
+Feito: leitura do protocolo, pendências, handoff e Git. Dev em 484cdcb, alterações da rodada anterior preservadas, nenhum PR aberto. Run 42679005683 reconfirmado via API GitHub: repository_dispatch, success.
+Plano: [ ] corrigir annotation e regressão; [ ] revisar docs/matriz; [ ] concluir PDF/PPTX/relatório; [ ] conferir estado e roteiro; [ ] VERIFICAÇÃO local e CI; [ ] push/PR/merge e sincronização; [ ] handoff final.
+Divisão de trabalho: agente corrigir_alerta_gravacao atua em Grafana/checker; revisar_documentacao_entrega em README/arquitetura/reprodução/requisitos; finalizar_materiais em roteiro/relatório/evidências. Agente principal coordena verificações, contexto e Git, sem escritas concorrentes nos mesmos arquivos.
+Estado p/ próximo agente: continuar as tarefas acima; não repetir o ensaio de falha sem motivo. Materiais anteriores ainda são rascunhos, e o vídeo só será gravado em 2026-11-10.
+
+## 2026-11-09 16:13 (America/Sao_Paulo, UTC-03:00) — Codex — Ensaio concluído; revisão interrompida pelo controle do navegador
+
+Feito: falha real 503 gerou Firing às 18:59:20 UTC, incidente PagerDuty #4, Slack e repository_dispatch. Execução [42679005683](https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04/actions/runs/42679005683) concluída com sucesso, restart automático às 18:59:39, rollout às 19:00:03, HTTP 200 observado às 19:00:19 e Resolved às 19:01:30 UTC. Nenhuma recuperação manual; falha não ficou ativa.
+Decisão: D-024 registra autorização vigente e identificação do README Fase 3. Os quatro tipos de prints exigidos pela FIAP foram capturados. Roteiro PDF/PPTX e relatório existem como rascunhos em revisão, não entregáveis finais.
+Descoberta: summary do alerta usa $$values indevidamente; corrigir para $values nas annotations, com teste. Não alterou o resultado da automação. Service Map global cinco serviços ainda precisa de enquadramento; spans dos cinco já capturados.
+Interrupção: ferramenta de computador encerrou a sessão por não conseguir confirmar a URL da janela Brave. Não houve tentativa de contornar. Nenhum commit/push/PR desta rodada.
+Arquivos/estado para próximo agente: [handoff completo](02_TRABALHO/HANDOFF_GRAVACAO_2026-11-09_v01.md), docs/gravacao, docs/relatorio, docs/evidencias, README e workflows editados. Retomar pela correção do template, regeneração do relatório, revisão dos PDFs/slides e CI; só então push dev/PR/merge já autorizados.
+
+## 2026-11-09 15:57 (America/Sao_Paulo, UTC-03:00) — Codex — Ensaio integrado autorizado e iniciado
+
+Feito: usuário autorizou explicitamente falha 503, notificações reais, restart e capturas; informou login no PagerDuty e indicou nomes/RMs/usernames do README da Fase 3. Leitura realizada nas linhas 445-451.
+Ação: POST /admin/fault pelo pod trafego usando a CHAVE já existente, sem exibir valores. Ativação confirmada às 18:57:23 UTC. Aguardar alerta Firing → incidente/Slack → repository_dispatch → restart → HTTP 200.
+Artefatos em revisão: roteiro PDF (13 páginas) e PowerPoint (13 slides), README/CI-CD e comentários/nomes dos workflows. Capturas: Grafana, trace real 19 spans, ArgoCD e Lens.
+Estado p/ próximo agente: ensaio em andamento, não repetir falha; se automação não recuperar, usar contingência enabled=false e registrar intervenção. Nenhum commit/push desta rodada ainda.
+
+## 2026-11-09 15:30 (America/Sao_Paulo, UTC-03:00) — Codex — Roteiro, evidências e publicação autorizada
+
+Feito: leitura integral do enunciado (7 páginas), guia vigente e estado real. Dois nós Ready, seis Applications Synced/Healthy e 5 serviços Running. A main já recebeu a publicação do usuário; dev atualizada por fast-forward para 484cdcb antes das edições.
+Escopo autorizado nesta solicitação: PDF e PPTX do roteiro, captura de telas Brave/Lens, relatório PDF, revisão do README/workflows, push dev, PR e merge main. Supera a espera histórica por autorização de PR/main; não inclui apply/destroy.
+Checklist: [x] fontes e estado; [ ] capturas revisadas; [ ] roteiro PDF/PPTX; [ ] relatório e pasta de prints; [ ] README/Actions; [ ] VERIFICAÇÃO; [ ] push/PR/checks/merge; [ ] handoff.
+Descobertas: relatório exige quatro prints (PDF p. 6); vídeo até 25 min (p. 5). Identificação dos participantes solicitada. Não declarar self-healing no EKS sem execução comprovada.
+Arquivos: trabalho privado em 02_TRABALHO/validacao-local-gravacao-2026-11-09; saídas em docs/gravacao, docs/relatorio e docs/evidencias.
+Estado p/ próximo agente: capturar as quatro evidências, registrar lacunas reais, produzir artefatos e validar antes da publicação.
+
 ## 2026-11-09 11:40 (America/Sao_Paulo, UTC-03:00) — Claude (Opus 5.5) — Preparação final para o deploy e o vídeo
 
 Pedido do usuário: "Trocar para o chart 7.7.23 e forçar a imagem. Em relação ao P1 pode apagar tudo. Pode aplicar o P2. P3 corrija os readmes e apague o Pyyaml sem uso. P5 aplique tudo. P6 aplique tudo. Pode tirar as 89 copias, não tire da arvore os pdfs da fiap. Mova o CLAUDE.md para .claude/CLAUDE.md [...] Acabei de deixar o repositório publico. Apos finalizar tudo isso, me traga aqui na conversa o guia passo a passo para subir o cluster, iremos fazer o video hoje. Faça também um guia de gravação com oque a fiap quer ver de evidencia. adicione de quais locais tenho que tirar print para incluir no relatório."

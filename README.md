@@ -1,102 +1,45 @@
-# ToggleMaster — Tech Challenge Fase 4
+<div align="center">
 
-O ToggleMaster é uma plataforma de feature flags composta por cinco microsserviços. A Fase 4 acrescenta observabilidade e resposta a incidentes à base de Terraform, CI/CD e GitOps construída na Fase 3.
+# 🚦 ToggleMaster
+### Tech Challenge · Fase 4
+**Observabilidade • GitOps • Resposta a incidentes • Self-healing**
 
-**Última atualização: 2026-11-09.** A Fase 4 está configurada neste repositório e testada localmente: instrumentação dos cinco serviços, stack de observabilidade por GitOps, dashboard, alerta, PagerDuty, Slack e self-healing. A prova da cadeia completa no EKS é apresentada no vídeo e no relatório da entrega.
+[🎬 Gravar o vídeo](docs/gravacao/README.md) · [📄 Relatório](docs/relatorio/README.md) · [📸 Evidências](docs/evidencias/README.md) · [🚦 Entender o CI/CD](docs/CI-CD.md)
 
-Repositório: [fiap-devops-arqcloud-2026/tech-challenge-04](https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04). A base importada é o commit [6100879 da Fase 3](https://github.com/fiap-devops-arqcloud-2026/tech-challenge-03/commit/61008794090f582c098e2edc42041339c556f14c), com histórico preservado.
+</div>
 
-## Requisitos e estudos
+O ToggleMaster controla funcionalidades por **feature flags**, usando cinco microsserviços. Esta fase adiciona visibilidade do sistema e resposta automática a falhas à base de Terraform, Kubernetes e CI/CD.
 
-- [Requisitos oficiais mapeados](docs/requisitos/README.md): 42 obrigatórios, 2 opções/preferências chamadas de bônus e 4 sugestões, com evidências por página. O PDF não promete pontos extras.
-- [Requisitos em HTML](docs/requisitos/REQUISITOS.html): leitura local e navegação pelos selos dos guias.
-- [Enunciado da Fase 4](POSTECH%20-%20Tech%20Challenge%20-%20Fase%204.pdf).
-- [Welcome](docs/aulas-fiap/00.Welcome%20to%20Observabilidade%20e%20Monitoramento/GUIA-ESTUDO-Welcome-to-Observabilidade-e-Monitoramento.html).
-- [Observabilidade e Monitoramento](docs/aulas-fiap/01.Observabilidade%20e%20Monitoramento/GUIA-ESTUDO-Observabilidade-e-Monitoramento.html).
-- [Monitoramento Opensource](docs/aulas-fiap/02.Monitoramento%20Opensource/GUIA-ESTUDO-Monitoramento-Opensource.html).
-- [APM](docs/aulas-fiap/03.APM/GUIA-ESTUDO-APM.html).
-- [Automação de incidentes](docs/aulas-fiap/04.Automa%C3%A7%C3%A3o%20de%20incidentes/GUIA-ESTUDO-Automacao-de-incidentes.html).
+> **Documentação atualizada em 2026-11-10. Evidência de execução: 2026-11-09.** O EKS tinha dois nós `Ready`, cinco serviços em execução e seis Applications `Synced/Healthy`. O ensaio real percorreu **503 → Firing → PagerDuty/Slack → GitHub Actions → restart automático → HTTP 200**. Grafana e trace de 19 spans foram capturados. [Execução automática](https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04/actions/runs/42679005683) · [Evidências e limites](docs/evidencias/README.md). O vídeo ainda precisa ser gravado e seu link incluído no relatório.
 
-Os guias abrem diretamente no navegador. O vídeo de até 25 minutos e o relatório PDF são publicados ao final da entrega, e os links entram nesta seção.
+## 🧭 Comece por aqui
 
-## Onde está cada requisito da Fase 4
-
-| Requisito | Onde está |
+| Quero… | Abrir |
 |---|---|
-| Prometheus, Loki e Grafana por Helm, no repositório GitOps | [`gitops/observability/applications`](gitops/observability/applications) e [`values`](gitops/observability/values) |
-| Dashboard customizado: recursos do cluster, requisições e logs | [`togglemaster-overview.json`](gitops/observability/grafana/dashboards/togglemaster-overview.json) |
-| OTel Collector como peça central | [`otel-gateway.yaml`](gitops/observability/values/otel-gateway.yaml) e [`otel-agent.yaml`](gitops/observability/values/otel-agent.yaml) |
-| APM comercial e instrumentação | New Relic, pelo gateway; `telemetry.py` e `telemetry.go` em cada [serviço](services) |
-| Alerta inteligente | [`rules.yaml`](gitops/observability/grafana/alerting/rules.yaml): 5xx do flag-service acima de 10% por 1 minuto |
-| PagerDuty e Slack | [`contactpoints.yaml`](gitops/observability/grafana/alerting/contactpoints.yaml) e [`policies.yaml`](gitops/observability/grafana/alerting/policies.yaml) |
-| Self-healing | [`self-healing.yml`](.github/workflows/self-healing.yml), [`restart.sh`](scripts/self-healing/restart.sh) e [`self-healing-rbac.yaml`](gitops/base/self-healing-rbac.yaml) |
+| Entender o desenho | [Arquitetura abaixo](#arquitetura) · [referência técnica completa](docs/ARQUITETURA.md) |
+| Saber o que a FIAP pede | [Requisitos com páginas do enunciado](docs/requisitos/README.md) |
+| Preparar a gravação | [Roteiro e falas](docs/gravacao/README.md) · [comandos](docs/gravacao/COMANDOS.md) · [passo a passo por cena](docs/gravacao/PASSO_A_PASSO_POR_CENA.md) |
+| Ler o roteiro fora do navegador | [PDF](docs/gravacao/ROTEIRO_GRAVACAO_2026-11-10_v02.pdf) · [PowerPoint](docs/gravacao/ROTEIRO_GRAVACAO_2026-11-10_v02.pptx) |
+| Entender uma execução do Actions | [Guia dos workflows](docs/CI-CD.md) |
+| Reproduzir e conferir o ambiente | [Guia da Fase 4](docs/GUIA_DE_REPRODUCAO.md) · [validação local abaixo](#validacao-local) |
+| Ver infraestrutura e deploy | [Terraform](terraform/README.md) · [GitOps](gitops/README.md) |
+| Entender métricas, logs, traces, pods e agents | [Conceitos explicados](docs/CONCEITOS_OBSERVABILIDADE.md) |
 
-## O que foi reaproveitado e o que a Fase 4 acrescentou
+## 🎯 O que a entrega precisa demonstrar
 
-| Área | Base importada | Trabalho da Fase 4 |
-|---|---|---|
-| Aplicação | auth/evaluation em Go; flag/targeting/analytics em Python | Cinco serviços instrumentados com OpenTelemetry e logs JSON com `trace_id`; falha controlada no flag-service |
-| Local | Compose, PostgreSQL, Redis e Moto para SQS/DynamoDB | Collector, ensaio de 19 spans e exportação para o New Relic |
-| Infraestrutura | Terraform em três camadas e cluster EKS | Conta AWS nova, estados próprios e role do self-healing |
-| CI/CD | Build, lint, SAST, SCA e scan de imagem | Teste da confiança OIDC, GitOps Check e scan da imagem também no pull request |
-| GitOps | ArgoCD/Kustomize e 23 objetos Kubernetes | Observabilidade por Helm/GitOps, com dashboard e alertas em ConfigMaps |
-| Observabilidade | — | Prometheus, Loki, Grafana, Collector gateway e agents, APM New Relic |
-| Incidentes | — | Alerta no Grafana, PagerDuty, Slack e self-healing por GitHub Actions |
+1. **Base funcionando:** cinco serviços, IaC, CI/CD com DevSecOps e Kubernetes com GitOps.
+2. **Observabilidade:** Prometheus, Loki, Grafana e Collector; dashboard com recursos, requisições e logs.
+3. **APM:** instrumentação, mapa dos cinco serviços e trace de uma requisição ao evaluation-service.
+4. **Resposta ativa:** falha proposital → alerta Firing → incidente → ChatOps → correção automática.
+5. **Entrega:** código, vídeo de até **25 minutos** e PDF com identificação, links, quatro prints e justificativas.
 
-## Tecnologias escolhidas e onde são executadas
+Fonte: [enunciado FIAP](POSTECH%20-%20Tech%20Challenge%20-%20Fase%204.pdf), p. 2–6. A página 5 exige demonstração clara; configuração sozinha não comprova funcionamento. As duas alternativas chamadas de “bônus” na matriz não têm promessa de pontos adicionais.
 
-A tabela descreve os papéis escolhidos nesta arquitetura, não todas as capacidades dos produtos. As obrigações da FIAP e suas evidências continuam em [Requisitos](docs/requisitos/README.md).
+<a id="arquitetura"></a>
 
-APM significa *Application Performance Monitoring*: monitoramento do desempenho das aplicações.
+## 🏗️ Arquitetura de observabilidade e resposta
 
-| Tecnologia | Papel no projeto e caso de uso | Onde roda |
-|---|---|---|
-| OpenTelemetry (OTel) | Bibliotecas para instrumentar as aplicações, gerar telemetria e propagar o contexto das operações | Dentro dos contêineres dos microsserviços |
-| OTel Collector | Receber, processar e exportar telemetria; concentrar o encaminhamento para os diferentes destinos | Pods próprios no EKS: agents e gateway |
-| Prometheus | Armazenar e consultar métricas ao longo do tempo; investigar taxa de erros, requisições e uso de recursos | Dentro do cluster |
-| Loki | Centralizar, armazenar e consultar logs; investigar eventos de vários pods num mesmo período | Dentro do cluster |
-| Grafana | Consultar Prometheus/Loki, exibir dashboards e avaliar a regra de alerta | Dentro do cluster |
-| New Relic | APM e tracing distribuído; investigar uma requisição lenta e visualizar dependências no Service Map | SaaS externo ao cluster |
-| PagerDuty | Abrir/gerenciar incidentes e acionar responsáveis conforme políticas de plantão e escalonamento | SaaS externo ao cluster |
-| Slack | Comunicar o incidente e o resultado da tentativa de mitigação | Serviço externo ao cluster |
-| GitHub Actions | CI/CD e automação de self-healing, disparada por `repository_dispatch` | Runners do GitHub, fora do cluster |
-| Terraform, EKS e ArgoCD | Provisionar a infraestrutura e reconciliar os manifests/charts versionados por GitOps | Terraform executado pelo operador; EKS na AWS; ArgoCD dentro do cluster |
-
-O New Relic também oferece métricas, logs, dashboards e alertas; seu foco em APM/traces aqui é uma escolha do projeto. O Collector trata o transporte/processamento da telemetria; o histórico consultável fica nos backends. PagerDuty gerencia o atendimento humano, enquanto a tentativa de reinício é executada pelo GitHub Actions.
-
-## Métricas, logs e traces
-
-Telemetria são dados sobre o comportamento da aplicação e da infraestrutura. Os exemplos abaixo são didáticos, não resultados medidos nem limites definidos para o alerta.
-
-| Sinal | O que representa | Pergunta que ajuda a responder | Exemplo ilustrativo |
-|---|---|---|---|
-| Métrica | Medição numérica ao longo do tempo | Quanto? Com que frequência? | CPU em 85%, 120 requisições/s, 8% de erros |
-| Log | Registro de um evento, com data/hora e contexto | O que aconteceu naquele momento? | Mensagem de timeout ao consultar o banco |
-| Trace | Caminho de uma execução, relacionando suas operações e durações | Onde a execução demorou ou falhou? | `evaluation → flag → banco` |
-
-Cada operação de um trace é um **span**: receber uma chamada HTTP, consultar Redis ou executar uma consulta no banco. A propagação do contexto associa as operações à mesma execução. Incluir o identificador do trace nos logs permite correlacionar os eventos com essa execução; isso depende da instrumentação/configuração.
-
-Uma métrica pode indicar aumento de latência, um trace localizar a operação mais demorada e um log trazer o detalhe do erro. O percurso depende do caminho realmente executado: um acerto no cache evita chamadas a outros serviços. SQS e analytics participam de um fluxo assíncrono; a correlação com a requisição exige propagar o contexto pela mensagem. A resposta HTTP não aguarda todo o processamento analítico.
-
-## Pods, nós e distribuição do Collector
-
-| Conceito | Significado e aplicação neste projeto |
-|---|---|
-| Contêiner | Ambiente que executa um processo e suas dependências, como o servidor do `flag-service` |
-| Pod | Unidade de execução do Kubernetes com um ou mais contêineres no mesmo nó; eles compartilham a rede do Pod e podem compartilhar volumes configurados |
-| Nó de trabalho (worker) | Máquina que executa os pods; aqui, uma instância EC2 do EKS que hospeda vários pods |
-| Agent | Papel local do Collector: ler os arquivos de logs dos contêineres daquele nó e encaminhá-los ao gateway |
-| DaemonSet | Recurso que mantém um pod em cada nó elegível; é usado pelos agents |
-| Gateway | Papel central de recepção/processamento do Collector; recebe logs dos agents e traces das aplicações e os encaminha aos backends |
-| Deployment | Recurso que gerencia a quantidade desejada de réplicas e as atualizações dos pods; é usado pelo gateway |
-
-Agent e gateway são dois papéis do mesmo software Collector, com configurações diferentes. O agent não precisa ser repetido por microsserviço: um agent coleta os logs dos contêineres do nó. O gateway pode compartilhar um worker com outros pods; centralização não exige máquina dedicada nem uma única réplica.
-
-O cluster usa **dois workers** `m7i-flex.large` e uma réplica do gateway. Em situação estável, são **dois agents e um gateway**: três pods do Collector, sem contar os pods das aplicações e das outras ferramentas.
-
-## Arquitetura de observabilidade e resposta
-
-Este é o desenho de implantação da Fase 4 no EKS. O ensaio local de traces está descrito mais abaixo:
+Este é o desenho da Fase 4 no EKS, usado no ensaio integrado de 2026-11-09. A reprodução local também está descrita mais abaixo:
 
 ```mermaid
 flowchart TB
@@ -139,9 +82,10 @@ flowchart LR
   Actions -->|"kubectl rollout restart"| Pods["Deployment e pods do serviço"]
 ```
 
-O ciclo demonstrado: uma falha controlada no `flag-service` (`POST /admin/fault`) faz as rotas de flags responderem 503, enquanto o `/health` continua saudável; o Grafana detecta a taxa de erro; o PagerDuty abre o incidente; o Slack recebe a comunicação; o GitHub Actions reinicia o Deployment, com lista de serviços permitidos e intervalo mínimo entre reinícios. O processo novo nasce sem a falha, os erros param e o alerta se resolve. Um reinício resolve uma falha transitória do processo, mas não recupera uma dependência indisponível.
+O ciclo executado no ensaio de 2026-11-09 e previsto para a gravação: uma falha controlada no `flag-service` (`POST /admin/fault`) faz as rotas de flags responderem 503, enquanto o `/health` continua saudável; o Grafana detecta a taxa de erro; o PagerDuty abre o incidente; o Slack recebe a comunicação; o GitHub Actions reinicia o Deployment, com lista de serviços permitidos e intervalo mínimo entre reinícios. O processo novo nasce sem a falha, os erros param e o alerta se resolve. Um reinício resolve uma falha transitória do processo, mas não recupera uma dependência indisponível.
 
-## Serviços e arquitetura da base
+
+## 🧩 Cinco serviços, um fluxo de entrega
 
 | Serviço | Porta local | Responsabilidade |
 |---|---|---|
@@ -167,7 +111,45 @@ flowchart LR
 
 O trabalho do dia a dia fica na **dev**. Publicação de imagens e atualização automática de tags só acontecem no push na main; dev e PR validam o código sem autenticar na AWS.
 
-## Executar e validar localmente
+
+## 🔎 Do requisito ao código
+
+| Requisito | Onde está |
+|---|---|
+| Prometheus, Loki e Grafana por Helm, no repositório GitOps | [`gitops/observability/applications`](gitops/observability/applications) e [`values`](gitops/observability/values) |
+| Dashboard customizado: recursos do cluster, requisições e logs | [`togglemaster-overview.json`](gitops/observability/grafana/dashboards/togglemaster-overview.json) |
+| OTel Collector como peça central | [`otel-gateway.yaml`](gitops/observability/values/otel-gateway.yaml) e [`otel-agent.yaml`](gitops/observability/values/otel-agent.yaml) |
+| APM comercial e instrumentação | New Relic, pelo gateway; `telemetry.py` e `telemetry.go` em cada [serviço](services) |
+| Alerta inteligente | [`rules.yaml`](gitops/observability/grafana/alerting/rules.yaml): 5xx do flag-service acima de 10% por 1 minuto |
+| PagerDuty e Slack | [`contactpoints.yaml`](gitops/observability/grafana/alerting/contactpoints.yaml) e [`policies.yaml`](gitops/observability/grafana/alerting/policies.yaml) |
+| Self-healing | [`self-healing.yml`](.github/workflows/self-healing.yml), [`restart.sh`](scripts/self-healing/restart.sh) e [`self-healing-rbac.yaml`](gitops/base/self-healing-rbac.yaml) |
+
+
+## 🛠️ Ferramentas e responsabilidades
+
+A tabela descreve os papéis escolhidos nesta arquitetura, não todas as capacidades dos produtos. As obrigações da FIAP e suas evidências continuam em [Requisitos](docs/requisitos/README.md).
+
+APM significa *Application Performance Monitoring*: monitoramento do desempenho das aplicações.
+
+| Tecnologia | Papel no projeto e caso de uso | Onde roda |
+|---|---|---|
+| OpenTelemetry (OTel) | Bibliotecas para instrumentar as aplicações, gerar telemetria e propagar o contexto das operações | Dentro dos contêineres dos microsserviços |
+| OTel Collector | Receber, processar e exportar telemetria; concentrar o encaminhamento para os diferentes destinos | Pods próprios no EKS: agents e gateway |
+| Prometheus | Armazenar e consultar métricas ao longo do tempo; investigar taxa de erros, requisições e uso de recursos | Dentro do cluster |
+| Loki | Centralizar, armazenar e consultar logs; investigar eventos de vários pods num mesmo período | Dentro do cluster |
+| Grafana | Consultar Prometheus/Loki, exibir dashboards e avaliar a regra de alerta | Dentro do cluster |
+| New Relic | APM e tracing distribuído; investigar uma requisição lenta e visualizar dependências no Service Map | SaaS externo ao cluster |
+| PagerDuty | Abrir/gerenciar incidentes e acionar responsáveis conforme políticas de plantão e escalonamento | SaaS externo ao cluster |
+| Slack | Comunicar o incidente e o resultado da tentativa de mitigação | Serviço externo ao cluster |
+| GitHub Actions | CI/CD e automação de self-healing, disparada por `repository_dispatch` | Runners do GitHub, fora do cluster |
+| Terraform, EKS e ArgoCD | Provisionar a infraestrutura e reconciliar os manifests/charts versionados por GitOps | Terraform executado pelo operador; EKS na AWS; ArgoCD dentro do cluster |
+
+O New Relic também oferece métricas, logs, dashboards e alertas; seu foco em APM/traces aqui é uma escolha do projeto. O Collector trata o transporte/processamento da telemetria; o histórico consultável fica nos backends. PagerDuty gerencia o atendimento humano, enquanto a tentativa de reinício é executada pelo GitHub Actions.
+
+
+<a id="validacao-local"></a>
+
+## 🧪 Executar e validar localmente
 
 Pré-requisitos: Docker com engine Linux ativo; para o teste automatizado, Bash e Python 3. O teste usa somente valores fictícios do `.env.example` e Moto local, sem credenciais ou recursos AWS.
 
@@ -228,15 +210,24 @@ O backend guarda o **state**, não o código `.tf`: o código fica no Git, e o s
 
 O ArgoCD acompanha a `main` de `https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04.git`. Como o repositório é público, ele não precisa de credencial. Endpoints e IRSA do overlay recebem os outputs do Terraform no primeiro deploy, e as tags das imagens são gravadas pelo CI.
 
-## Documentação herdada da base
 
-[Arquitetura](docs/ARQUITETURA.md) e [guia de reprodução](docs/GUIA_DE_REPRODUCAO.md) vieram da Fase 3. Partes deles descrevem aquela entrega e a conta anterior; não são provas de execução da Fase 4. A configuração vigente é a deste README, de `terraform/README.md` e de `gitops/README.md`.
+## 📸 Relatório e gravação
 
-## Fontes das explicações técnicas
+O PDF da FIAP pede quatro prints no relatório: **dashboard Grafana, trace distribuído, notificação ChatOps e execução do self-healing** (p. 6). O [índice das evidências](docs/evidencias/README.md) separa capturas existentes e itens ainda pendentes.
 
-Conceitos conferidos na documentação oficial em **2026-10-22**. Estas fontes explicam as ferramentas; não acrescentam exigências ao enunciado da FIAP.
+- [Relatório PDF e estado de fechamento](docs/relatorio/README.md).
+- [Roteiro com falas, tempos e telas](docs/gravacao/README.md).
+- **Vídeo:** gravação preparada para 2026-11-10; URL ainda não disponibilizada. Incluir depois de gravar e testar o acesso.
+- **Antes de gravar:** conferir o Service Map global com os cinco serviços; o trace capturado não substitui essa demonstração.
+- Entrada local para novos prints: `docs/evidencias/entrada-local/` (ignorada pelo Git até revisão).
 
-- [OpenTelemetry: conceitos, logs e traces](https://opentelemetry.io/docs/concepts/observability-primer/), [Collector](https://opentelemetry.io/docs/collector/), [agent](https://opentelemetry.io/docs/collector/deploy/agent/) e [gateway](https://opentelemetry.io/docs/collector/deploy/gateway/).
-- [Kubernetes: Pods](https://kubernetes.io/docs/concepts/workloads/pods/), [DaemonSet](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) e [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/).
-- [Prometheus](https://prometheus.io/docs/introduction/overview/), [fontes de dados do Grafana](https://grafana.com/docs/grafana/latest/datasources/) e [Loki](https://grafana.com/docs/loki/latest/get-started/overview/).
-- [OpenTelemetry e New Relic](https://docs.newrelic.com/docs/opentelemetry/opentelemetry-introduction/) e [gestão de incidentes do PagerDuty](https://docs.pagerduty.com/incident-management/incidents/overview).
+## 📚 Material de estudo
+
+[Requisitos HTML](docs/requisitos/REQUISITOS.html) e [cinco módulos de aulas/guias](docs/aulas-fiap). Os HTMLs abrem por duplo clique.
+
+<details>
+<summary>Histórico da base</summary>
+
+A base foi importada do [commit 6100879 da Fase 3](https://github.com/fiap-devops-arqcloud-2026/tech-challenge-03/commit/61008794090f582c098e2edc42041339c556f14c), com histórico preservado. A [arquitetura](docs/ARQUITETURA.md) e o [guia de reprodução](docs/GUIA_DE_REPRODUCAO.md) foram revisados para a Fase 4 em 2026-11-10. Estados, credenciais e valores da conta anterior não foram transportados.
+
+</details>

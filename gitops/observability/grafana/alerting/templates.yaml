@@ -4,10 +4,12 @@
 # Lido pelo sidecar de alertas do Grafana (ConfigMap com o label
 # grafana_alert: "1", gerado em gitops/observability/kustomization.yaml).
 #
-# ATENCAO AO CIFRAO: o Grafana troca $NOME por variaveis de ambiente em
-# todo arquivo de provisionamento - e assim que os segredos entram nos
-# contact points. Por isso estes templates nao usam variaveis com $; um
-# $ literal precisaria ser escrito $$.
+# ATENCAO AO CIFRAO: templates[].template e annotations das regras sao
+# excecoes a interpolacao de variaveis de ambiente do provisionamento.
+# Nesses campos, variaveis do template usam $ simples. Os settings dos
+# contact points continuam interpolando as variaveis dos segredos.
+# Fonte: documentacao Grafana, "Template variable interpolation":
+# https://grafana.com/docs/grafana/latest/alerting/set-up/provision-alerting-resources/file-provisioning/#template-variable-interpolation
 #
 # Tres templates:
 #   togglemaster.title       titulo comum (PagerDuty e Slack)

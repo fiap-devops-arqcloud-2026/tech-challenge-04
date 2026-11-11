@@ -4,6 +4,16 @@ TL;DR: D-001 a D-022 preservadas. D-023 (2026-11-09) registra as escolhas do usu
 
 Última atualização: 2026-11-09, Claude (Opus 5.5).
 
+## D-024 — Evidências de gravação e publicação autorizada (2026-11-09, Codex)
+
+Contexto: usuário pediu roteiro PDF/PPTX, capturas e relatório, README/Actions mais intuitivos, push dev, PR main e merge; confirmou ensaio real com notificações e reinício e indicou identificação no README da Fase 3.
+
+Decisão: usar os cinco participantes da fonte indicada; executar ensaio controlado com evidência autêntica; manter vídeo explicitamente pendente; publicar somente após revisão dos artefatos e CI. Essa autorização supera registros históricos de aguardar PR/main. Não inclui Terraform apply/destroy. Referências a agentes/IDs continuam internas.
+
+Alternativas: prints simulados não demonstrariam funcionamento; inventar link de vídeo ou preencher identidade por inferência não é aceitável.
+
+Status: ensaio concluído e quatro tipos de capturas obtidos. Artefatos, correção de annotation e publicação ainda pendentes. Handoff: 02_TRABALHO/HANDOFF_GRAVACAO_2026-11-09_v01.md.
+
 ## D-001 — Caminhos e organização (aceita, 2026-09-16)
 
 Contexto: repositório novo; usuário autorizou escrita apenas em áreas específicas.

@@ -1,3 +1,5 @@
+# GUIA DE LEITURA: docs/CI-CD.md descreve gatilhos, testes e limites.
+# Os emojis sao apenas nomes de exibicao; IDs, permissoes e comandos permanecem iguais.
 # ============================================================
 # WORKFLOW REUTILIZAVEL - CI e DevSecOps para servicos em Go
 # ============================================================
@@ -19,7 +21,7 @@
 # ============================================================
 
 # Nome exibido na aba Actions. O sufixo avisa que nao roda sozinho.
-name: CI Go (reutilizavel)
+name: "🧩 CI Go · reutilizável"
 
 # Bloco "on": define o que dispara este workflow.
 on:

@@ -1,0 +1,11 @@
+{
+  "participantes": "Gabriel Pinelli Silva - RM373763 - @Tocaccelli; João Vitor de Jesus Ciardullo - RM372155 - @joaociardullo; Douglas Deveza dos Santos - RM373827 - @Douglasdeveza; João Carlos da Silva Brito - RM371738 - @Durmiand; João Gabriel da Cruz Sales - RM372444 - @jgabrieldev1",
+  "fonte_identificacao": "README.md da Fase 3, linhas 445-451; reutilização indicada pelo usuário em 2026-11-09.",
+  "video": "Gravação pendente; link a incluir após publicação e teste de acesso.",
+  "ultima_atualizacao": "2026-11-10",
+  "status": "Evidências do ensaio concluído em 2026-11-09. URL do vídeo pendente de gravação e publicação.",
+  "run_url": "https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04/actions/runs/42679005683",
+  "chatops": "Slack, 2026-11-09 16:01 UTC-03: notificação Resolved de FlagService5xxAlto. O início indicado, 18:59:20 UTC, corresponde ao alerta do ensaio. A captura preserva um erro de formatação no resumo; detecção e recuperação funcionaram.",
+  "selfhealing": "Execução 42679005683, iniciada por repository_dispatch, sucesso em 43 s. O log mostra o restart do flag-service e o rollout concluído às 19:00:03 UTC (16:00:03 UTC-03), sem intervenção manual.",
+  "incidente": "PagerDuty #4 resolvido; HTTP 200 observado após o restart automático."
+}

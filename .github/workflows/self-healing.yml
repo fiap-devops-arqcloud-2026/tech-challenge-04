@@ -1,3 +1,5 @@
+# GUIA DE LEITURA: docs/CI-CD.md descreve gatilhos, testes e limites.
+# Os emojis sao apenas nomes de exibicao; IDs, permissoes e comandos permanecem iguais.
 # ============================================================
 # SELF-HEALING - reinicia o servico com problema (Fase 4)
 # ============================================================
@@ -26,7 +28,7 @@
 #   camada terraform/cluster).
 # ============================================================
 
-name: self-healing
+name: "🩺 Self-healing · resposta a incidentes"
 
 on:
   repository_dispatch:

@@ -62,6 +62,7 @@
         "defaults": {
           "unit": "percentunit",
           "min": 0,
+          "max": 1,
           "custom": { "thresholdsStyle": { "mode": "line" } },
           "thresholds": {
             "mode": "absolute",
