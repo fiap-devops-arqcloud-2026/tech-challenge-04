@@ -74,7 +74,7 @@ configMapGenerator:
 images:
 - name: analytics-service
   newName: 405241726140.dkr.ecr.us-east-2.amazonaws.com/analytics-service
-  newTag: v1.0.0-0f2b9d2
+  newTag: v1.0.0-6c71277
 - name: auth-service
   newName: 405241726140.dkr.ecr.us-east-2.amazonaws.com/auth-service
   newTag: v1.0.0-0f2b9d2
