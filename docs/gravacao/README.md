@@ -1,11 +1,11 @@
 # 🎬 Roteiro de gravação - Fase 4
 
-**Atualizado em 2026-11-10. Gravação planejada para 2026-11-10.** Guia de fala e operação. A FIAP exige até 25 minutos; a sugestão abaixo usa 21 minutos, deixando 4 de margem. Não é garantia de nota: o funcionamento precisa aparecer. Fonte: enunciado, p. 5–6.
+**Atualizado em 2026-11-11. Gravação realizada em 2026-11-11.** A linha do tempo do incidente gravado está no [relatório de entrega](../relatorio/README.md). Guia de fala e operação, mantido para reproduzir a demonstração. A FIAP exige até 25 minutos; a sugestão abaixo usa 21 minutos, deixando 4 de margem. Não é garantia de nota: o funcionamento precisa aparecer. Fonte: enunciado, p. 5–6.
 
 ## Materiais prontos para abrir
 
-- [Roteiro em PDF](ROTEIRO_GRAVACAO_2026-11-10_v02.pdf): uma cena por página, ações e fala completa.
-- [PowerPoint editável](ROTEIRO_GRAVACAO_2026-11-10_v02.pptx): as mesmas cenas, com notas do apresentador.
+- **[Guia único em PowerPoint](ROTEIRO_GRAVACAO_2026-11-11_v03.pptx)** e [em PDF](ROTEIRO_GRAVACAO_2026-11-11_v03.pdf): a fala de cada cena ao lado da tela, do clique e do que deve aparecer, mais os comandos, a mesa montada, os prints e a contingência. Fala completa nas notas do apresentador.
+- [Roteiro anterior em PDF](ROTEIRO_GRAVACAO_2026-11-10_v02.pdf): uma cena por página, sem os comandos.
 - [Relatório com evidências](../relatorio/README.md): participantes e prints do ensaio de 2026-11-09; URL do vídeo pendente.
 - [Índice dos prints](../evidencias/README.md): origem, horário e o que cada imagem comprova.
 

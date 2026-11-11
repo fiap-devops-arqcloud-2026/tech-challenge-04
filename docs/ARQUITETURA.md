@@ -137,7 +137,7 @@ O workflow valida evento/serviço, assume role AWS por OIDC, usa RBAC limitado e
 - Não mostrar `.env`, Secret YAML, tfvars, state ou telas de integrações na gravação. O pod `trafego` contém uma chave; não exibir seu describe ou manifesto.
 - `selfHeal` do ArgoCD corrige divergência declarativa. O self-healing pedido pela FIAP é a reação ao alerta, executada pelo Actions; são mecanismos distintos.
 - Restart resolve a falha transitória demonstrada, mas não garante recuperar um banco indisponível. Não anunciar autorreparo de qualquer incidente.
-- O trace capturado contém os cinco serviços; o enquadramento do **Service Map global com cinco serviços** precisa ser conferido antes de gravar. O mapa de um trace não deve ser apresentado como comprovação automática desse requisito.
+- O trace capturado contém os cinco serviços. O **Service Map global** foi mostrado no vídeo de 2026-11-11, e o relatório traz o mapa de entidades do trace. Esse mapa de um trace não substitui o mapa global como prova do requisito.
 - A configuração é de laboratório: uma réplica de gateway e componentes sem promessa de alta disponibilidade. Não inferir gratuidade ou custo atual a partir de comentários históricos.
 
 Para reproduzir e gravar: [guia vigente](GUIA_DE_REPRODUCAO.md), [roteiro](gravacao/README.md) e [evidências](evidencias/README.md).

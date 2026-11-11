@@ -59,4 +59,4 @@ Em 2026-10-20, a renderização produziu 23 objetos. O `kubectl` não fornece `k
 - [Configuração das três raízes Terraform](../terraform/README.md)
 - [Requisitos da Fase 4](../docs/requisitos/README.md)
 - [Arquitetura](../docs/ARQUITETURA.md) e [guia de reprodução](../docs/GUIA_DE_REPRODUCAO.md): referências atualizadas para a Fase 4.
-- [Evidências de 2026-11-09](../docs/evidencias/README.md): seis Applications Synced/Healthy observadas no ensaio; conferir novamente antes de gravar.
+- [Evidências](../docs/evidencias/README.md): seis Applications Synced/Healthy no ensaio de 2026-11-09 e na gravação de 2026-11-11.

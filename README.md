@@ -4,13 +4,13 @@
 ### Tech Challenge · Fase 4
 **Observabilidade • GitOps • Resposta a incidentes • Self-healing**
 
-[🎬 Gravar o vídeo](docs/gravacao/README.md) · [📄 Relatório](docs/relatorio/README.md) · [📸 Evidências](docs/evidencias/README.md) · [🚦 Entender o CI/CD](docs/CI-CD.md)
+[🎬 Roteiro do vídeo](docs/gravacao/README.md) · [📄 Relatório](docs/relatorio/README.md) · [📸 Evidências](docs/evidencias/README.md) · [🚦 Entender o CI/CD](docs/CI-CD.md)
 
 </div>
 
 O ToggleMaster controla funcionalidades por **feature flags**, usando cinco microsserviços. Esta fase adiciona visibilidade do sistema e resposta automática a falhas à base de Terraform, Kubernetes e CI/CD.
 
-> **Documentação atualizada em 2026-11-10. Evidência de execução: 2026-11-09.** O EKS tinha dois nós `Ready`, cinco serviços em execução e seis Applications `Synced/Healthy`. O ensaio real percorreu **503 → Firing → PagerDuty/Slack → GitHub Actions → restart automático → HTTP 200**. Grafana e trace de 19 spans foram capturados. [Execução automática](https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04/actions/runs/42679005683) · [Evidências e limites](docs/evidencias/README.md). O vídeo ainda precisa ser gravado e seu link incluído no relatório.
+> **Documentação atualizada em 2026-11-11. Vídeo gravado em 2026-11-11; link a incluir.** O EKS roda com dois nós `Ready`, cinco serviços e seis Applications `Synced/Healthy`. Na gravação, a cadeia **503 → Firing → PagerDuty/Slack → GitHub Actions → restart automático → HTTP 200** levou 2 min 50 s, sem intervenção humana. [Relatório de entrega](docs/relatorio/RELATORIO_ENTREGA_2026-11-11_v03.pdf) · [execução da gravação](https://github.com/fiap-devops-arqcloud-2026/tech-challenge-04/actions/runs/42956432177) · [evidências](docs/evidencias/README.md).
 
 ## 🧭 Comece por aqui
 
@@ -19,7 +19,7 @@ O ToggleMaster controla funcionalidades por **feature flags**, usando cinco micr
 | Entender o desenho | [Arquitetura abaixo](#arquitetura) · [referência técnica completa](docs/ARQUITETURA.md) |
 | Saber o que a FIAP pede | [Requisitos com páginas do enunciado](docs/requisitos/README.md) |
 | Preparar a gravação | [Roteiro e falas](docs/gravacao/README.md) · [comandos](docs/gravacao/COMANDOS.md) · [passo a passo por cena](docs/gravacao/PASSO_A_PASSO_POR_CENA.md) |
-| Ler o roteiro fora do navegador | [PDF](docs/gravacao/ROTEIRO_GRAVACAO_2026-11-10_v02.pdf) · [PowerPoint](docs/gravacao/ROTEIRO_GRAVACAO_2026-11-10_v02.pptx) |
+| Ler o roteiro fora do navegador | [Guia único em PowerPoint](docs/gravacao/ROTEIRO_GRAVACAO_2026-11-11_v03.pptx) · [PDF](docs/gravacao/ROTEIRO_GRAVACAO_2026-11-11_v03.pdf) |
 | Entender uma execução do Actions | [Guia dos workflows](docs/CI-CD.md) |
 | Reproduzir e conferir o ambiente | [Guia da Fase 4](docs/GUIA_DE_REPRODUCAO.md) · [validação local abaixo](#validacao-local) |
 | Ver infraestrutura e deploy | [Terraform](terraform/README.md) · [GitOps](gitops/README.md) |
@@ -213,12 +213,12 @@ O ArgoCD acompanha a `main` de `https://github.com/fiap-devops-arqcloud-2026/tec
 
 ## 📸 Relatório e gravação
 
-O PDF da FIAP pede quatro prints no relatório: **dashboard Grafana, trace distribuído, notificação ChatOps e execução do self-healing** (p. 6). O [índice das evidências](docs/evidencias/README.md) separa capturas existentes e itens ainda pendentes.
+O PDF da FIAP pede quatro prints no relatório: **dashboard Grafana, trace distribuído, notificação ChatOps e execução do self-healing** (p. 6). Os quatro estão no relatório de entrega, junto com a identificação, os links, a justificativa técnica e a matriz de requisitos.
 
-- [Relatório PDF e estado de fechamento](docs/relatorio/README.md).
-- [Roteiro com falas, tempos e telas](docs/gravacao/README.md).
-- **Vídeo:** gravação preparada para 2026-11-10; URL ainda não disponibilizada. Incluir depois de gravar e testar o acesso.
-- **Antes de gravar:** conferir o Service Map global com os cinco serviços; o trace capturado não substitui essa demonstração.
+- [**Relatório de entrega v03 (PDF)**](docs/relatorio/RELATORIO_ENTREGA_2026-11-11_v03.pdf) e [como gerar de novo com o link do vídeo](docs/relatorio/README.md).
+- [Índice das evidências](docs/evidencias/README.md): onze prints do ensaio de 2026-11-09 e os registros da gravação de 2026-11-11.
+- [Roteiro com falas, telas e comandos](docs/gravacao/README.md) e [guia único em PowerPoint](docs/gravacao/ROTEIRO_GRAVACAO_2026-11-11_v03.pptx).
+- **Vídeo:** gravado em 2026-11-11, com até 25 minutos; o link entra aqui e no relatório depois da publicação.
 - Entrada local para novos prints: `docs/evidencias/entrada-local/` (ignorada pelo Git até revisão).
 
 ## 📚 Material de estudo

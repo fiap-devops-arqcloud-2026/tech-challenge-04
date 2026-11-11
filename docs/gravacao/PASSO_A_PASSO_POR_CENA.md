@@ -273,9 +273,9 @@ kubectl exec -n togglemaster trafego -- sh -c 'curl --fail-with-body -s -X POST 
 |---|---|---|
 | "Demonstramos a base automatizada…" | aba 1, segundo diagrama de **Arquitetura de observabilidade e resposta** | Grafana → PagerDuty, Slack e GitHub Actions → restart |
 | "O repositório reúne o código…" | aba 1, **Onde está cada requisito da Fase 4** | cada requisito apontando para o seu arquivo |
-| "O relatório traz os quatro prints…" | abra no Brave o PDF local `docs/relatorio/RELATORIO_ENTREGA_2026-11-10_v02.pdf` | os prints e as justificativas |
+| "O relatório traz os quatro prints…" | abra o PDF do relatório: `docs/relatorio/RELATORIO_ENTREGA_2026-11-11_v03.pdf` | os prints e as justificativas |
 
-O relatório e as evidências ainda não estão no GitHub, por isso mostre o PDF local. Revise o PDF inteiro antes de mostrá-lo.
+A versão de entrega do relatório é a v03; as anteriores eram rascunhos.
 
 ## 2. Depois do STOP
 
